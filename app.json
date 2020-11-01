@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "Xzero",
+    "slug": "Xzero",
+    "version": "22.1.14",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "platforms": ["ios", "android"],
+    "splash": {
+      "image": "./assets/splash_logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "enabled": false
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "facebookScheme": "fb366021757877568",
+    "facebookAppId": "366021757877568",
+    "facebookDisplayName": "Xzero App",
+    "ios": {
+      "icon": "./assets/icon_ios.png",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.media.xzero",
+      "usesAppleSignIn": true,
+      "infoPlist":{
+        "CFBundleShortVersionString": "22.1.14"
+      },
+      "config":{
+        "googleSignIn":{
+          "reservedClientId": "com.googleusercontent.apps.471013991175-4rroh153tfrmh484j6tu7dgbupq3tnpq"
+        }
+      }
+    },
+    "android":{
+      "package": "com.media.xzero",
+      "icon": "./assets/icon.png",
+      "googleServicesFile": "./google-services.json",
+      "permissions": [],
+      "versionCode": 22114
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}

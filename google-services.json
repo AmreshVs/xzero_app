@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1025815481991",
+    "firebase_url": "https://xzero-app-6321f.firebaseio.com",
+    "project_id": "xzero-app-6321f",
+    "storage_bucket": "xzero-app-6321f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025815481991:android:47c26fd8cba0b08d8cf222",
+        "android_client_info": {
+          "package_name": "com.media.xzero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025815481991-knl1it9o336po666jge46ct7cdn32rdu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdTLKAqzg3rNcMw_lvT39AbMVljIG6exQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025815481991-knl1it9o336po666jge46ct7cdn32rdu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
