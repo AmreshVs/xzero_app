@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import SafeView from 'components/safeView';
 import { BASE_URL } from 'constants/common';
-import colors from 'constants/colors';
 import TopNavigator from 'components/topNavigator';
 import ProgressiveImage from 'components/progressiveImage';
 import VHCenter from 'components/vhCenter';
+import styles from './styles';
 
 export default function Vouchers() {
   const { t } = useTranslation();
@@ -26,25 +26,3 @@ export default function Vouchers() {
     </SafeView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.white,
-    height: '100%',
-  },
-  image: {
-    width: 350,
-    height: 300,
-    marginBottom: -30,
-  },
-  title: {
-    color: colors.text_dark,
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  caption: {
-    color: colors.text_lite,
-    marginTop: 5,
-    textAlign: 'center',
-  },
-});

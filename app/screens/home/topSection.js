@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
@@ -14,6 +14,7 @@ import useUserData from 'hooks/useUserData';
 import { firstLetterUpper, getUserData } from 'constants/commonFunctions';
 import { getDeviceLang } from 'i18n';
 import AsyncStorage from '@react-native-community/async-storage';
+import styles from './styles';
 
 const TopSection = () => {
   const [lang, setLang] = useState('en');
@@ -47,7 +48,7 @@ const TopSection = () => {
   return (
     <>
       <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={styles.gradient} />
-      <SafeView style={styles.container} noBottom>
+      <SafeView style={styles.topSectionContainer} noBottom>
         <Box style={styles.navContainer}>
           <RippleFX style={styles.iconContainer} onPress={() => toggleDrawer()}>
             <FontAwesomeIcon icon="bars" color={colors.white} size={20} />
@@ -69,7 +70,7 @@ const TopSection = () => {
             <FontAwesomeIcon icon="user-circle" color={colors.white} size={45} />
             <View style={styles.textContiner}>
               <Text style={styles.username}>{firstLetterUpper(name)}</Text>
-              <Text style={styles.caption}>{email}</Text>
+              <Text style={styles.topCaption}>{email}</Text>
             </View>
           </Row>
         </Box>
@@ -79,42 +80,3 @@ const TopSection = () => {
 };
 
 export default memo(TopSection);
-
-const styles = StyleSheet.create({
-  gradient: {
-    height: 200,
-  },
-  container: {
-    position: 'absolute',
-    width: '100%',
-  },
-  navContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  iconContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  username: {
-    fontWeight: '700',
-    fontSize: 20,
-    color: colors.white,
-  },
-  textContiner: {
-    marginLeft: 10,
-  },
-  caption: {
-    color: colors.lite_gray,
-  },
-  language: {
-    marginHorizontal: 5,
-    color: colors.white,
-    fontWeight: '700',
-    fontSize: 15,
-  },
-});

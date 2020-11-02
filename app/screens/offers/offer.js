@@ -1,5 +1,5 @@
 import React, { useState, memo } from 'react';
-import { StyleSheet, Text, Image } from 'react-native';
+import { Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import Box from 'components/box';
 import Row from 'components/row';
 import colors from 'constants/colors';
-import { getShadowStyle } from 'constants/commonFunctions';
 import Chip from 'components/chip';
 import { IMAGE_URL } from 'constants/common';
 import Column from 'components/column';
@@ -17,6 +16,7 @@ import { OFFER_DETAIL } from 'navigation/routes';
 import { getUserData } from 'constants/commonFunctions';
 import addFavourite from './addFavourite';
 import useUserData from 'hooks/useUserData';
+import styles from './styles';
 
 function Offer({ data, favourites }) {
   const client = useApolloClient();
@@ -46,7 +46,7 @@ function Offer({ data, favourites }) {
   };
 
   return (
-    <Row style={styles.container}>
+    <Row style={styles.offerContainer}>
       <Box flex={2} style={styles.imgContainer}>
         <RippleFX onPress={() => handlePress()}>
           <Image source={{ uri: IMAGE_URL + data?.featured_img?.url }} style={styles.image} />
@@ -63,16 +63,16 @@ function Offer({ data, favourites }) {
           {data?.discount === 100 ? (
             <Chip style={styles.chip} title={t('free')} color={colors.danger} />
           ) : (
-            <Chip
-              style={styles.chip}
-              title={
-                language === 'en'
-                  ? `${data?.discount || 0}% ${t('discount')}`
-                  : `${t('discount')} ${data?.discount || 0}%`
-              }
-              color={colors.chip_1}
-            />
-          )}
+              <Chip
+                style={styles.chip}
+                title={
+                  language === 'en'
+                    ? `${data?.discount || 0}% ${t('discount')}`
+                    : `${t('discount')} ${data?.discount || 0}%`
+                }
+                color={colors.chip_1}
+              />
+            )}
         </RippleFX>
       </Column>
       <Row flex={1} height="100%" vcenter hcenter>
@@ -91,44 +91,3 @@ function Offer({ data, favourites }) {
 }
 
 export default memo(Offer);
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    padding: 10,
-    ...getShadowStyle(),
-    marginBottom: 10,
-  },
-  title: {
-    fontWeight: '700',
-    color: colors.text_dark,
-    marginBottom: 5,
-  },
-  image: {
-    height: 100,
-    width: '100%',
-  },
-  imgContainer: {
-    height: '100%',
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  nameContainer: {
-    height: '100%',
-    marginLeft: 15,
-  },
-  iconContainer: {
-    padding: 10,
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-  chip: {
-    width: '100%',
-  },
-  caption: {
-    color: colors.text_lite,
-    marginBottom: 5,
-  },
-});

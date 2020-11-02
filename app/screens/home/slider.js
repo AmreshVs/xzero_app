@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Image, Dimensions, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
 import Carousel from 'react-native-banner-carousel';
 
-import colors from 'constants/colors';
 import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
+import styles from './styles';
 
 export default function Slider({ data }) {
   return (
@@ -20,7 +20,7 @@ export default function Slider({ data }) {
         data.map((banner) => {
           return (
             <ProgressiveImage
-              style={styles.image}
+              style={styles.sliderImage}
               source={{ uri: IMAGE_URL + banner.banner_img.url }}
               resizeMode="stretch"
               key={banner.id}
@@ -32,21 +32,3 @@ export default function Slider({ data }) {
     </Carousel>
   );
 }
-
-const styles = StyleSheet.create({
-  image: {
-    width: Dimensions.get('window').width - 20,
-    height: 200,
-    marginTop: 5,
-    marginLeft: 10,
-    marginBottom: 0,
-    borderRadius: 10,
-  },
-  indicator: {
-    backgroundColor: colors.primary,
-  },
-  slider: {
-    backgroundColor: 'red',
-    overflow: 'hidden',
-  },
-});

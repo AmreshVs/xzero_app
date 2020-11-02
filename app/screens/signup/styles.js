@@ -1,65 +1,64 @@
 import { StyleSheet, StatusBar } from 'react-native';
 
-import colors from 'constants/colors';
 import isIphoneX from 'components/bottomTab/isIphoneX';
+import { w100, wh100, whiteBg, padding20, w150, h150, justifyContentCenter, alignItemsCenter, flexRow, colorPrimary, marginLeft5, fontWeight700, marginTop20, marginBottom20, positionAbsolute, colorDanger, textLite, paddingTop10 } from 'constants/commonStyles';
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: colors.white
+    ...wh100,
+    ...whiteBg
   },
   inputsContainer: {
-    width: '100%',
-    padding: 20,
+    ...w100,
+    ...padding20,
   },
   logo: {
-    width: 150,
-    height: 150,
+    ...w150,
+    ...h150,
   },
   topContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%'
+    ...justifyContentCenter,
+    ...alignItemsCenter,
+    ...w100
   },
   haveAccount: {
     bottom: 10,
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    ...w100,
+    ...flexRow,
+    ...justifyContentCenter,
+    ...alignItemsCenter,
   },
   signup: {
-    color: colors.primary,
-    marginLeft: 5,
-    fontWeight: '700',
+    ...colorPrimary,
+    ...marginLeft5,
+    ...fontWeight700,
   },
   error: {
-    color: colors.danger,
-    paddingTop: 10,
+    ...colorDanger,
+    ...paddingTop10,
   },
   btnContainer: {
-    marginTop: 20,
+    ...marginTop20,
   },
   termsContainer: {
-    marginBottom: 20,
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    ...marginBottom20,
+    ...w100,
+    ...flexRow,
+    ...justifyContentCenter,
+    ...alignItemsCenter,
   },
   terms: {
-    color: colors.text_lite,
+    ...textLite,
   },
   termsLink: {
-    fontWeight: '700',
-    color: colors.primary,
+    ...fontWeight700,
+    ...colorPrimary,
   },
   topNav: {
-    position: 'absolute',
     zIndex: 9,
     top: 10,
-    paddingTop: isIphoneX() ? StatusBar.currentHeight + 30 : 0
+    paddingTop: isIphoneX() ? StatusBar.currentHeight + 30 : 0,
+    ...positionAbsolute,
   },
 });
 

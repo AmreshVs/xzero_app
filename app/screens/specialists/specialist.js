@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
 
 import Card from 'components/card';
-import { IMAGE_URL, SCREEN_WIDTH, SCREEN_HEIGHT } from 'constants/common';
+import { IMAGE_URL } from 'constants/common';
 import Row from 'components/row';
 import colors from 'constants/colors';
 import { useTranslation } from 'react-i18next';
 import RippleFX from 'components/rippleFx';
 import { SPECIALIST_DETAIL } from 'navigation/routes';
 import ProgressiveImage from 'components/progressiveImage';
+import styles from './styles';
 
 export default function Specialist({ data }) {
   const { push } = useNavigation();
@@ -60,40 +61,3 @@ export default function Specialist({ data }) {
     </Card>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 10,
-  },
-  imageContainer: {
-    width: '30%',
-  },
-  image: {
-    borderRadius: 60,
-    borderRadius: Math.round(SCREEN_WIDTH + SCREEN_HEIGHT) / 2,
-    width: SCREEN_WIDTH * 0.27,
-    height: SCREEN_WIDTH * 0.27,
-  },
-  infoContainer: {
-    width: '70%',
-    paddingHorizontal: 10,
-  },
-  name: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: colors.text_dark,
-    marginBottom: 2,
-  },
-  caption: {
-    color: colors.text_lite,
-    marginBottom: 5,
-  },
-  specialization: {
-    color: colors.violet,
-    fontWeight: '700',
-    marginBottom: 5,
-  },
-  icon: {
-    marginRight: 3,
-  },
-});

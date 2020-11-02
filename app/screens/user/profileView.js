@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation, CommonActions } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import Divider from 'components/divider';
 import { MAIN_SCREEN } from 'navigation/routes';
 import { getUserData, handleDOB } from 'constants/commonFunctions';
 import RippleFX from 'components/rippleFx';
+import styles from './styles';
 
 export default function ProfileView({ data }) {
   const { t, i18n } = useTranslation();
@@ -61,8 +62,8 @@ export default function ProfileView({ data }) {
             {data?.mobile_number !== 0 ? (
               <Text style={styles.text}>{handleMobileNumber(data?.mobile_number)}</Text>
             ) : (
-              <Text style={styles.caption}>{t('fill_mobile')}</Text>
-            )}
+                <Text style={styles.caption}>{t('fill_mobile')}</Text>
+              )}
           </Box>
         </Row>
       </Box>
@@ -87,8 +88,8 @@ export default function ProfileView({ data }) {
             {data?.birthday ? (
               <Text style={styles.text}>{handleDOB(data?.birthday)}</Text>
             ) : (
-              <Text style={styles.caption}>{t('fill_birthday')}</Text>
-            )}
+                <Text style={styles.caption}>{t('fill_birthday')}</Text>
+              )}
           </Box>
         </Row>
       </Box>
@@ -122,23 +123,3 @@ export default function ProfileView({ data }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 16,
-    color: colors.text_dark,
-    paddingVertical: 18,
-  },
-  logout: {
-    fontSize: 16,
-    color: colors.danger,
-    paddingVertical: 18,
-    textAlign: 'left',
-  },
-  caption: {
-    fontSize: 16,
-    paddingVertical: 18,
-    color: colors.text_lite,
-    textAlign: 'left',
-  },
-});

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useQuery } from '@apollo/client';
 
 import { CATEGORIES } from 'graphql/queries';
 import TopNavigator from 'components/topNavigator';
 import NoData from 'components/noData';
-import { FlatList } from 'react-native-gesture-handler';
 import SafeView from 'components/safeView';
 import Categories from './categories';
+import styles from './styles';
 
 export default function SpecialistHelp() {
   const [reloading, setReloading] = useState(false);
@@ -27,29 +27,19 @@ export default function SpecialistHelp() {
       {!data?.categoriesWithCenterCount.length ? (
         <NoData topNav />
       ) : (
-        <FlatList
-          keyExtractor={(item) => String(item.id)}
-          data={data?.categoriesWithCenterCount}
-          renderItem={({ item }) => <Categories data={item} />}
-          numColumns={2}
-          initialNumToRender={6}
-          columnWrapperStyle={styles.centers}
-          contentContainerStyle={styles.flatlist}
-          refreshing={reloading}
-          onRefresh={reload}
-          removeClippedSubviews={true}
-        />
-      )}
+          <FlatList
+            keyExtractor={(item) => String(item.id)}
+            data={data?.categoriesWithCenterCount}
+            renderItem={({ item }) => <Categories data={item} />}
+            numColumns={2}
+            initialNumToRender={6}
+            columnWrapperStyle={styles.centers}
+            contentContainerStyle={styles.flatlist}
+            refreshing={reloading}
+            onRefresh={reload}
+            removeClippedSubviews={true}
+          />
+        )}
     </SafeView>
   );
 }
-
-const styles = StyleSheet.create({
-  centers: {
-    justifyContent: 'space-between',
-  },
-  flatlist: {
-    padding: 10,
-    height: '100%',
-  },
-});

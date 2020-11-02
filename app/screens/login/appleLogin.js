@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import jwtDecode from 'jwt-decode';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -7,6 +7,7 @@ import { faApple, faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icon
 
 import { ToastMsg } from 'components/toastMsg';
 import RippleFX from 'components/rippleFx';
+import styles from './styles';
 
 const AppleLoginButton = ({ handleSocialLogin }) => {
 
@@ -43,7 +44,7 @@ const AppleLoginButton = ({ handleSocialLogin }) => {
   }
 
   return (
-    <View style={styles.btnContainer}>
+    <View style={styles.appleBtnContainer}>
       <RippleFX
         cornerRadius={5}
         style={styles.button}
@@ -70,16 +71,3 @@ const AppleLoginButton = ({ handleSocialLogin }) => {
 }
 
 export default AppleLoginButton;
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#000',
-    padding: 15,
-    borderRadius: 10,
-    margin: 5,
-    marginTop: 0
-  },
-  btnContainer: {
-    flexDirection: 'row'
-  }
-})

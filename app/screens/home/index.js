@@ -15,6 +15,7 @@ import Row from 'components/row';
 import { GET_HOME } from 'graphql/queries';
 import MembershipBox from './membershipBox';
 import { GIFTS, VOUCHERS } from 'navigation/routes';
+import styles from './styles';
 
 export default function Home({ navigation }) {
   const { data, loading, refetch } = useQuery(GET_HOME);
@@ -91,10 +92,3 @@ export default function Home({ navigation }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  topContainer: {
-    top: -65,
-    marginBottom: -65,
-  },
-});

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, ScrollView, Platform, Image, View } from 'react-native';
+import { Text, ScrollView, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -9,8 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import SafeView from 'components/safeView';
 import colors from 'constants/colors';
 import TopNavigator from 'components/topNavigator';
-import { SCREEN_HEIGHT, SCREEN_WIDTH, BASE_URL } from 'constants/common';
-import { getShadowStyle, dialNumber, openMaps, firstLetterUpper } from 'constants/commonFunctions';
+import { BASE_URL } from 'constants/common';
+import { dialNumber, openMaps, firstLetterUpper } from 'constants/commonFunctions';
 import Row from 'components/row';
 import Button from 'components/button';
 import Card from 'components/card';
@@ -20,6 +20,7 @@ import addFavourite from 'screens/offers/addFavourite';
 import useUserData from 'hooks/useUserData';
 import DisabledContainer from 'components/disabledContainer';
 import Box from 'components/box';
+import styles from './styles';
 
 export default function OfferDetail() {
   const {
@@ -177,104 +178,3 @@ export default function OfferDetail() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
-  gradient: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-  },
-  discountContainer: {
-    marginTop: 10,
-    width: '100%',
-    height: SCREEN_HEIGHT / 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 0,
-  },
-  discountCircle: {
-    height: SCREEN_HEIGHT / 5,
-    width: SCREEN_HEIGHT / 5,
-    borderRadius: Platform.OS === 'ios' ? 80 : 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  discount: {
-    fontSize: SCREEN_HEIGHT / 15,
-    fontWeight: '700',
-    color: colors.white,
-  },
-  discountText: {
-    fontSize: 20,
-    color: colors.white,
-    fontWeight: '700',
-  },
-  caption: {
-    position: 'absolute',
-    bottom: 20,
-  },
-  card: {
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    ...getShadowStyle(),
-  },
-  infoContainer: {
-    width: SCREEN_WIDTH / 1.5,
-    height: SCREEN_HEIGHT / 10,
-  },
-  title: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: colors.text_dark,
-  },
-  location: {
-    color: colors.text_lite,
-    marginLeft: 5,
-  },
-  mapContainer: {
-    width: SCREEN_WIDTH / 4,
-    height: SCREEN_HEIGHT / 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mapText: {
-    marginTop: 5,
-    color: colors.text_dark,
-  },
-  descContainer: {
-    width: '100%',
-    height: 'auto',
-  },
-  descText: {
-    color: colors.text_lite,
-    marginTop: 5,
-  },
-  rightIcon: {
-    width: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 70,
-    overflow: 'hidden',
-    flex: 1,
-  },
-  offerBg: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    opacity: 0.5,
-  },
-  discountPrice: {
-    fontSize: 20,
-    color: colors.gradient2,
-    fontWeight: '700',
-    marginRight: 5,
-  },
-  originalPrice: {
-    color: colors.danger,
-    textDecorationLine: 'line-through',
-    fontSize: 20,
-  },
-});

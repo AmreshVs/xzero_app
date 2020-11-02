@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
@@ -8,7 +8,7 @@ import Card from 'components/card';
 import Button from 'components/button';
 import { sendWhatsappMessage, handleMobileNumber } from 'constants/commonFunctions';
 import useUserData from 'hooks/useUserData';
-import colors from 'constants/colors';
+import styles from './styles';
 
 export default function GetHelp() {
   const { t } = useTranslation();
@@ -19,14 +19,13 @@ export default function GetHelp() {
   };
 
   return (
-    <Row style={styles.container}>
+    <Row style={styles.helpContainer}>
       <Card style={styles.infoContainer}>
         <Text style={styles.about} numberOfLines={1}>
           {t('help_membership')}
         </Text>
-        <Text style={styles.caption}>{t('membership_difficulties')}</Text>
+        <Text style={styles.helpCaption}>{t('membership_difficulties')}</Text>
         <Button
-          style={styles.callButton}
           status="success"
           icon={faWhatsapp}
           disabled={!userData?.username}
@@ -40,23 +39,3 @@ export default function GetHelp() {
     </Row>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    margin: 10,
-  },
-  infoContainer: {
-    width: '100%',
-  },
-  callButton: {},
-  about: {
-    color: colors.text_dark,
-    textAlign: 'left',
-    fontWeight: '700',
-    marginBottom: 5,
-  },
-  caption: {
-    color: colors.text_lite,
-    marginBottom: 5,
-  },
-});

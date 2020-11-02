@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import colors from 'constants/colors';
 import Card from 'components/card';
+import styles from './styles';
 
 export default function Notification(data) {
   let {
@@ -18,19 +18,3 @@ export default function Notification(data) {
     </Card>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontWeight: '700',
-    color: colors.text_dark,
-  },
-  desc: {
-    color: colors.text_lite,
-    marginTop: 5,
-  },
-  timestamp: {
-    color: colors.text_lite,
-    marginTop: 5,
-    textAlign: 'right',
-  },
-});

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import WebView from 'react-native-webview';
 import RippleFX from 'components/rippleFx';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -15,6 +14,7 @@ import { PAYMENT_STATUS } from 'navigation/routes';
 import { getUserData, getJWT } from 'constants/commonFunctions';
 import { GENERATE_MEMBESHIP } from 'graphql/mutations';
 import Loader from 'components/loader';
+import styles from './styles';
 
 var captured = false;
 var failed = false;
@@ -182,18 +182,3 @@ export default function Payment() {
     </SafeView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    width: '100%',
-  },
-  rightIcon: {
-    width: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 70,
-    overflow: 'hidden',
-    flex: 1,
-  },
-});

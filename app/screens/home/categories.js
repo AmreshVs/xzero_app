@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import Category from './category';
+import styles from './styles';
 
 export default function Categories({ data }) {
   return (
@@ -12,12 +13,3 @@ export default function Categories({ data }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-});

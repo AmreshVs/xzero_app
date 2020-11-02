@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,14 +7,14 @@ import Box from 'components/box';
 import Row from 'components/row';
 import Divider from 'components/divider';
 import colors from 'constants/colors';
-import { getShadowStyle } from 'constants/commonFunctions';
 import Chip from 'components/chip';
-import { IMAGE_URL, SCREEN_WIDTH } from 'constants/common';
+import { IMAGE_URL } from 'constants/common';
 import RippleFX from 'components/rippleFx';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import { getUserData } from 'constants/commonFunctions';
+import styles from './styles';
 
-function Center({ data }) {
+const Center = ({ data }) => {
   const { push } = useNavigation();
   const { t, i18n } = useTranslation();
   const language = i18n.language;
@@ -59,8 +59,8 @@ function Center({ data }) {
               {data?.discount === 100 ? (
                 <Chip title={t('free')} color={colors.danger} />
               ) : (
-                <Chip title={`${data?.discount}% ${t('discount')}`} color={colors.chip_2} />
-              )}
+                  <Chip title={`${data?.discount}% ${t('discount')}`} color={colors.chip_2} />
+                )}
             </Row>
           </Box>
         </Row>
@@ -70,34 +70,3 @@ function Center({ data }) {
 }
 
 export default memo(Center);
-
-const styles = StyleSheet.create({
-  container: {
-    width: '48%',
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    ...getShadowStyle(),
-    justifyContent: 'space-between',
-    marginBottom: -5,
-  },
-  title: {
-    fontSize: 15,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  caption: {
-    color: colors.chip_1,
-    textAlign: 'center',
-    marginLeft: 3,
-  },
-  imgContainer: {
-    width: '100%',
-    height: SCREEN_WIDTH / 3,
-    overflow: 'hidden',
-  },
-  image: {
-    width: '90%',
-    height: '100%',
-    borderRadius: 10,
-  },
-});

@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
-import colors from 'constants/colors';
 import Button from 'components/button';
 import Box from 'components/box';
 import Card from 'components/card';
@@ -18,8 +17,8 @@ export default function Renew({ membershipData, expired }) {
   };
 
   return (
-    <Card style={styles.container}>
-      <Text style={styles.text}>
+    <Card style={styles.renewContainer}>
+      <Text style={styles.nenewText}>
         {expired ? t('renew_expired_membership') : t('renew_membership')}
       </Text>
       <Box marginTop={10}>
@@ -30,14 +29,3 @@ export default function Renew({ membershipData, expired }) {
     </Card>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 10,
-    marginHorizontal: 10,
-    marginBottom: 0,
-  },
-  text: {
-    color: colors.danger,
-  },
-});

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, FlatList, InteractionManager } from 'react-native';
+import { View, FlatList, InteractionManager } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useApolloClient } from '@apollo/client';
 
@@ -7,12 +7,12 @@ import Offer from 'screens/offers/offer';
 import NoData from 'components/noData';
 import SafeView from 'components/safeView';
 import Button from 'components/button';
-import { SCREEN_HEIGHT } from 'constants/common';
 import useUserData from 'hooks/useUserData';
 import { FAVOURITES_BY_USER } from 'graphql/queries';
 import { CLEAR_FAVOURITES } from 'graphql/mutations';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import TopStatusBar from 'components/topStatusBar';
+import styles from './styles';
 
 const Favourites = () => {
   const { t } = useTranslation();
@@ -56,50 +56,35 @@ const Favourites = () => {
         {data?.favouritesByUser === null || !data?.favouritesByUser.length ? (
           <NoData reload={() => reload()} reloading={reloading} />
         ) : (
-          <>
-            <TopStatusBar />
-            <FlatList
-              key={(item) => String(item.id)}
-              data={data?.favouritesByUser}
-              renderItem={({ item }) => (
-                <Offer data={{ ...item, is_favourite: true }} favourites={() => reload()} />
-              )}
-              initialNumToRender={6}
-              contentContainerStyle={styles.flatlist}
-              refreshing={reloading}
-              onRefresh={() => reload()}
-              removeClippedSubviews={true}
-            />
-            <View style={styles.clearButton}>
-              <Button
-                icon="broom"
-                status="danger"
-                onPress={() => handleClearAll()}
-                loading={reloading}
-              >
-                {t('clear_all')}
-              </Button>
-            </View>
-          </>
-        )}
+            <>
+              <TopStatusBar />
+              <FlatList
+                key={(item) => String(item.id)}
+                data={data?.favouritesByUser}
+                renderItem={({ item }) => (
+                  <Offer data={{ ...item, is_favourite: true }} favourites={() => reload()} />
+                )}
+                initialNumToRender={6}
+                contentContainerStyle={styles.flatlist}
+                refreshing={reloading}
+                onRefresh={() => reload()}
+                removeClippedSubviews={true}
+              />
+              <View style={styles.clearButton}>
+                <Button
+                  icon="broom"
+                  status="danger"
+                  onPress={() => handleClearAll()}
+                  loading={reloading}
+                >
+                  {t('clear_all')}
+                </Button>
+              </View>
+            </>
+          )}
       </SafeView>
     </>
   );
 };
 
 export default IsLoggedIn(Favourites);
-
-const styles = StyleSheet.create({
-  flatlist: {
-    padding: 10,
-    paddingBottom: SCREEN_HEIGHT / 13,
-  },
-  clearButton: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    zIndex: 1,
-    padding: 15,
-    paddingBottom: 10,
-  },
-});

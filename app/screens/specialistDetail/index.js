@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { Text, View, ScrollView, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ import { useQuery } from '@apollo/client';
 import SafeView from 'components/safeView';
 import colors from 'constants/colors';
 import TopNavigator from 'components/topNavigator';
-import { SCREEN_HEIGHT, IMAGE_URL } from 'constants/common';
+import { IMAGE_URL } from 'constants/common';
 import Row from 'components/row';
 import Button from 'components/button';
 import Card from 'components/card';
@@ -20,6 +20,7 @@ import { sendWhatsappMessage, handleMobileNumber } from 'constants/commonFunctio
 import { OFFERS_SCREEN } from 'navigation/routes';
 import useUserData from 'hooks/useUserData';
 import ProgressiveImage from 'components/progressiveImage';
+import styles from './styles';
 
 export default function SpecialistDetail() {
   const {
@@ -143,111 +144,3 @@ export default function SpecialistDetail() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
-  gradient: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-  },
-  specialistImageContainer: {
-    marginTop: 10,
-    width: '100%',
-    height: SCREEN_HEIGHT / 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 0,
-  },
-  specialistImage: {
-    height: 150,
-    width: 150,
-    borderRadius: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  specialistImagebg: {
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
-    opacity: 0.09,
-    resizeMode: 'cover',
-    borderRadius: 10,
-  },
-  caption: {
-    marginTop: 5,
-    color: colors.text_lite,
-  },
-  specializationCaption: {
-    marginTop: 5,
-    color: colors.chip_1,
-    fontWeight: '700',
-  },
-  infoContainer: {
-    width: '100%',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: colors.text_dark,
-    textAlign: 'center',
-  },
-  location: {
-    color: colors.text_lite,
-    marginLeft: 5,
-  },
-  descText: {
-    color: colors.text_lite,
-    marginTop: 5,
-  },
-  callButton: {
-    marginTop: 5,
-  },
-  about: {
-    color: colors.text_dark,
-    textAlign: 'left',
-    fontWeight: '700',
-    marginBottom: 5,
-  },
-  imageContainer: {
-    width: '30%',
-  },
-  image: {
-    height: 100,
-    width: '100%',
-    borderRadius: 10,
-  },
-  detailContainer: {
-    paddingLeft: 10,
-    width: '70%',
-    overflow: 'hidden',
-  },
-  icon: {
-    marginTop: 5,
-    marginRight: 5,
-  },
-  viewOffersContainer: {
-    backgroundColor: colors.chip_1,
-    padding: 10,
-    marginTop: 10,
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-  viewOffers: {
-    textAlign: 'center',
-    color: colors.white,
-    fontWeight: '700',
-  },
-  noTopMargin: {
-    marginTop: 0,
-  },
-  name: {
-    fontWeight: '700',
-  },
-  place: {
-    width: '90%',
-  },
-});

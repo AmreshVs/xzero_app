@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useQuery } from '@apollo/client';
 
@@ -9,6 +8,7 @@ import NoData from 'components/noData';
 import { FlatList } from 'react-native-gesture-handler';
 import SafeView from 'components/safeView';
 import Specialist from './specialist';
+import styles from './styles';
 
 export default function SpecialistHelp() {
   const [reloading, setReloading] = useState(false);
@@ -32,28 +32,19 @@ export default function SpecialistHelp() {
       {!data?.specialists.length ? (
         <NoData topNav />
       ) : (
-        <FlatList
-          keyExtractor={(item) => String(item.id)}
-          data={data?.specialists}
-          renderItem={({ item }) => <Specialist data={item} />}
-          initialNumToRender={6}
-          maxToRenderPerBatch={10}
-          windowSize={10}
-          contentContainerStyle={styles.flatlist}
-          refreshing={reloading}
-          onRefresh={reload}
-          removeClippedSubviews={true}
-        />
-      )}
+          <FlatList
+            keyExtractor={(item) => String(item.id)}
+            data={data?.specialists}
+            renderItem={({ item }) => <Specialist data={item} />}
+            initialNumToRender={6}
+            maxToRenderPerBatch={10}
+            windowSize={10}
+            contentContainerStyle={styles.flatlist}
+            refreshing={reloading}
+            onRefresh={reload}
+            removeClippedSubviews={true}
+          />
+        )}
     </SafeView>
   );
 }
-
-const styles = StyleSheet.create({
-  centers: {
-    justifyContent: 'space-between',
-  },
-  flatlist: {
-    padding: 10,
-  },
-});

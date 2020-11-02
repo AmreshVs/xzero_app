@@ -1,25 +1,24 @@
 import { StyleSheet } from 'react-native';
 
-import colors from 'constants/colors';
+import { wh100, whiteBg, alignItemsCenter, padding20, h300, w300, marginBottom15 } from 'constants/commonStyles';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    ...whiteBg
   },
   inputsContainer: {
-    width: '100%',
-    height: '100%',
-    padding: 20,
+    ...wh100,
+    ...padding20,
   },
   email: {
-    marginBottom: 15
+    ...marginBottom15
   },
   image: {
-    width: 300,
-    height: 300
+    ...w300,
+    ...h300
   },
   contentContainer: {
-    alignItems: 'center'
+    ...alignItemsCenter
   }
 });
 

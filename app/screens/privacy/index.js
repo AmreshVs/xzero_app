@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import WebView from 'react-native-webview';
 import { useTranslation } from 'react-i18next';
 
 import TopNavigator from 'components/topNavigator';
 import SafeView from 'components/safeView';
+import styles from './styles';
 
 export default function Privacy({ navigation }) {
   let { t, i18n } = useTranslation();
@@ -27,10 +27,3 @@ export default function Privacy({ navigation }) {
     </SafeView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    width: '100%',
-  },
-});

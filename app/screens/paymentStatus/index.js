@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
@@ -7,11 +7,10 @@ import { useTranslation } from 'react-i18next';
 
 import colors from 'constants/colors';
 import Row from 'components/row';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from 'constants/common';
 import SafeView from 'components/safeView';
-import { getShadowStyle } from 'constants/commonFunctions';
 import Button from 'components/button';
 import { HOME_TAB_SCREEN } from 'navigation/routes';
+import styles from './styles';
 
 export default function PaymentStatus({ status = 1 }) {
   const { replace } = useNavigation();
@@ -41,38 +40,3 @@ export default function PaymentStatus({ status = 1 }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: colors.success,
-    height: '100%',
-    width: '100%',
-  },
-  circleContainer: {
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  circle: {
-    height: SCREEN_HEIGHT / 5.5,
-    width: SCREEN_WIDTH / 2.5,
-    backgroundColor: colors.white,
-    borderRadius: SCREEN_WIDTH / 4,
-    ...getShadowStyle(),
-  },
-  title: {
-    color: colors.white,
-    marginTop: 20,
-    fontSize: 23,
-    fontWeight: '700',
-  },
-  backButton: {
-    marginTop: 40,
-    width: '70%',
-  },
-  gradient: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-  },
-});

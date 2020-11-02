@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { ScrollView, RefreshControl } from 'react-native';
 import { useApolloClient } from '@apollo/client';
 
 import SafeView from 'components/safeView';
@@ -13,6 +13,7 @@ import { GET_MEMBERSHIP_BY_USER } from 'graphql/queries';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import TopStatusBar from 'components/topStatusBar';
 import GetHelp from './getHelp';
+import styles from './styles';
 
 const Membership = () => {
   const [member, setMember] = useState(false);
@@ -74,7 +75,7 @@ const Membership = () => {
     <SafeView noBottom loading={loading}>
       <TopStatusBar />
       <ScrollView
-        style={styles.container}
+        style={styles.rootContainer}
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
         showsVerticalScrollIndicator={false}
@@ -101,9 +102,3 @@ const Membership = () => {
 };
 
 export default IsLoggedIn(Membership);
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-  },
-});

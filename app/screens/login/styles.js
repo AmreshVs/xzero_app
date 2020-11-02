@@ -1,72 +1,81 @@
 import { StyleSheet } from 'react-native';
 
-import colors from 'constants/colors';
+import { wh100, whiteBg, w150, h150, padding20, w100, textLite, textAlignRight, marginLeft10, flex, flexRow, justifyContentCenter, alignItemsCenter, flexSpaceBetween, marginLeft5, fontWeight700, positionAbsolute, marginTop20, colorPrimary, padding15, borderRadius10, marginTop10, marginBottom20, marginBottom15 } from 'constants/commonStyles';
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: colors.white,
+    ...wh100,
+    ...whiteBg,
   },
   logo: {
-    width: 150,
-    height: 150,
+    ...w150,
+    ...h150,
     marginTop: 50
   },
   inputsContainer: {
-    width: '100%',
-    padding: 20,
+    ...w100,
+    ...padding20,
   },
   forgotPassword: {
-    color: colors.text_lite,
-    textAlign: 'right',
-    marginBottom: 20,
-    marginTop: 10,
+    ...marginBottom20,
+    ...textAlignRight,
+    ...marginTop10,
+    ...textLite
   },
   btnContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    ...w100,
+    ...flex,
+    ...flexRow,
+    ...flexSpaceBetween,
   },
   socialLoginContainer: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    ...w100,
+    ...justifyContentCenter,
+    ...alignItemsCenter,
+    ...padding20,
     paddingVertical: 0,
   },
   loginOptionText: {
-    color: colors.text_lite,
-    marginBottom: 15,
+    ...marginBottom15,
+    ...textLite,
   },
   noAccount: {
-    flexDirection: 'row',
     marginTop: 15,
-    justifyContent: 'center',
+    ...flexRow,
+    ...justifyContentCenter,
   },
   signup: {
-    color: colors.primary,
-    marginLeft: 5,
-    fontWeight: '700',
+    ...colorPrimary,
+    ...marginLeft5,
+    ...fontWeight700,
   },
   skip: {
-    color: colors.text_lite,
-    position: 'absolute',
     top: 10,
     right: 10,
+    ...positionAbsolute,
+    ...textLite,
   },
   termsContainer: {
-    marginTop: 20,
-    marginBottom: 30
+    marginBottom: 30,
+    ...marginTop20,
   },
   terms: {
-    color: colors.text_lite,
+    ...textLite,
   },
   termsLink: {
-    fontWeight: '700',
-    color: colors.primary
+    ...fontWeight700,
+    ...colorPrimary
   },
+  button: {
+    backgroundColor: '#000',
+    margin: 5,
+    marginTop: 0,
+    ...borderRadius10,
+    ...padding15,
+  },
+  appleBtnContainer: {
+    ...flexRow
+  }
 });
 
 export default styles;

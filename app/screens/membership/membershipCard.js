@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 
 import Box from 'components/box';
 import colors from 'constants/colors';
-import { SCREEN_HEIGHT } from 'constants/common';
 import Row from 'components/row';
 import Column from 'components/column';
-import { getShadowStyle, firstLetterUpper, getFormatedDate } from 'constants/commonFunctions';
+import { firstLetterUpper, getFormatedDate } from 'constants/commonFunctions';
+import styles from './styles';
 
 export default function MembershipCard({ member, data, expired }) {
   const { t } = useTranslation();
@@ -56,51 +56,3 @@ export default function MembershipCard({ member, data, expired }) {
     </Box>
   );
 }
-
-const whiteColor = {
-  color: colors.white,
-};
-
-const styles = StyleSheet.create({
-  memberContainer: {
-    height: 230,
-    width: '100%',
-    paddingHorizontal: 10,
-    marginTop: 10,
-    ...getShadowStyle(),
-  },
-  gradient: {
-    height: '100%',
-    width: '100%',
-    borderRadius: 10,
-    padding: 15,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '800',
-    ...whiteColor,
-  },
-  cardName: {
-    ...whiteColor,
-  },
-  logo: {
-    width: 170,
-    height: 170,
-    position: 'absolute',
-    opacity: 0.2,
-    top: SCREEN_HEIGHT / 20,
-    transform: [
-      {
-        scale: 2,
-      },
-    ],
-  },
-  textContainer: {
-    justifyContent: 'space-between',
-    height: '100%',
-  },
-  serialContainer: {
-    justifyContent: 'space-between',
-    height: '50%',
-  },
-});

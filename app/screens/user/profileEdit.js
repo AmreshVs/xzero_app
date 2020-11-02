@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,7 @@ import {
 } from 'constants/commonFunctions';
 import Checkbox from 'components/checkbox';
 import { ToastMsg } from 'components/toastMsg';
+import styles from './styles';
 
 export default function ProfileEdit({ setEdit, data }) {
   const { t } = useTranslation();
@@ -120,74 +121,63 @@ export default function ProfileEdit({ setEdit, data }) {
           setFieldValue,
           handleSubmit,
         }) => (
-          <>
-            {(checked ? [...inputs, ...passwordInputs] : inputs).map(
-              ({ name, icon, marginTop }, index) => (
-                <View key={index}>
-                  <Textbox
-                    placeholder={name.charAt(0).toUpperCase() + name.slice(1)}
-                    value={values[name]}
-                    onChangeText={handleChange(name)}
-                    icon={icon}
-                    marginTop={marginTop}
-                    onBlur={() => setFieldTouched(name)}
-                    autoCapitalize="none"
-                    secureTextEntry={name.includes('password', 'repassword') ? true : false}
-                    onTouchStart={() => name === 'dob' && setDatePickerVisibility(true)}
+            <>
+              {(checked ? [...inputs, ...passwordInputs] : inputs).map(
+                ({ name, icon, marginTop }, index) => (
+                  <View key={index}>
+                    <Textbox
+                      placeholder={name.charAt(0).toUpperCase() + name.slice(1)}
+                      value={values[name]}
+                      onChangeText={handleChange(name)}
+                      icon={icon}
+                      marginTop={marginTop}
+                      onBlur={() => setFieldTouched(name)}
+                      autoCapitalize="none"
+                      secureTextEntry={name.includes('password', 'repassword') ? true : false}
+                      onTouchStart={() => name === 'dob' && setDatePickerVisibility(true)}
+                    />
+                    <FormError touched={touched[name]} errorText={errors[name]} />
+                  </View>
+                )
+              )}
+              {!checked && (
+                <Row marginTop={20}>
+                  <Checkbox
+                    label={t('edit_password')}
+                    checked={checked}
+                    handleChecked={handleChecked}
                   />
-                  <FormError touched={touched[name]} errorText={errors[name]} />
-                </View>
-              )
-            )}
-            {!checked && (
-              <Row marginTop={20}>
-                <Checkbox
-                  label={t('edit_password')}
-                  checked={checked}
-                  handleChecked={handleChecked}
-                />
+                </Row>
+              )}
+              <Row marginTop={20} spaceBetween>
+                <Button width="48%" icon="times" status="text_lite" onPress={() => setEdit(false)}>
+                  {t('cancel')}
+                </Button>
+                <Button
+                  width="48%"
+                  icon="save"
+                  status="success"
+                  loading={loading}
+                  onPress={() => handleSubmit()}
+                >
+                  {t('save')}
+                </Button>
               </Row>
-            )}
-            <Row marginTop={20} spaceBetween>
-              <Button width="48%" icon="times" status="text_lite" onPress={() => setEdit(false)}>
-                {t('cancel')}
-              </Button>
-              <Button
-                width="48%"
-                icon="save"
-                status="success"
-                loading={loading}
-                onPress={() => handleSubmit()}
-              >
-                {t('save')}
-              </Button>
-            </Row>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              date={date}
-              onConfirm={(date) => {
-                setDatePickerVisibility(false);
-                setDate(date);
-                setFieldValue('dob', getFormatedDate(date));
-              }}
-              onCancel={() => setDatePickerVisibility(false)}
-              isDarkModeEnabled={false}
-            />
-          </>
-        )}
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                date={date}
+                onConfirm={(date) => {
+                  setDatePickerVisibility(false);
+                  setDate(date);
+                  setFieldValue('dob', getFormatedDate(date));
+                }}
+                onCancel={() => setDatePickerVisibility(false)}
+                isDarkModeEnabled={false}
+              />
+            </>
+          )}
       </Formik>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  inputsContainer: {
-    width: '100%',
-    padding: 10,
-    paddingTop: 0,
-  },
-  btnContainer: {
-    marginTop: 20,
-  },
-});

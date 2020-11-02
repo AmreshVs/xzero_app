@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, Image, View, Platform, Linking } from 'react-native';
+import { Text, Image, View, Platform, Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import SafeView from 'components/safeView';
 import { BASE_URL } from 'constants/common';
-import colors from 'constants/colors';
 import TopNavigator from 'components/topNavigator';
 import VHCenter from 'components/vhCenter';
 import Button from 'components/button';
+import styles from './styles';
 
 export default function NewUpdate() {
   const { t } = useTranslation();
@@ -40,30 +40,3 @@ export default function NewUpdate() {
     </SafeView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.white,
-    height: '100%',
-  },
-  image: {
-    width: 300,
-    height: 300,
-  },
-  title: {
-    color: colors.text_dark,
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  caption: {
-    color: colors.text_lite,
-    marginTop: 5,
-    textAlign: 'center',
-  },
-  button: {
-    paddingHorizontal: 30,
-  },
-  btnContainer: {
-    marginTop: 10,
-  },
-});
