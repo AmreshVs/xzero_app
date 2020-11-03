@@ -1,8 +1,10 @@
 import * as Facebook from 'expo-facebook';
 
+import { FB_APP_ID, APP_NAME } from 'constants/common';
+
 const facebookLogin = async () => {
   try {
-    await Facebook.initializeAsync({ appId: '366021757877568', appName: 'Xzero App' });
+    await Facebook.initializeAsync({ appId: FB_APP_ID, appName: APP_NAME });
     const {
       type,
       token,

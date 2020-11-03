@@ -56,6 +56,7 @@ export default function Payment() {
         skipConfirmationPage: true,
       },
     };
+
     // Get Access Token
     const token_response = await useAxios(GENERATE_PAYMENT_ACCESS_TOKEN);
     const access_token = token_response?.access_token;

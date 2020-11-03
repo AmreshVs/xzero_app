@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -12,12 +12,10 @@ import RippleFX from 'components/rippleFx';
 import Row from 'components/row';
 import useUserData from 'hooks/useUserData';
 import { firstLetterUpper, getUserData } from 'constants/commonFunctions';
-import { getDeviceLang } from 'i18n';
 import AsyncStorage from '@react-native-community/async-storage';
 import styles from './styles';
 
 const TopSection = () => {
-  const [lang, setLang] = useState('en');
   const { push, toggleDrawer } = useNavigation();
   const userData = useUserData();
 
@@ -26,19 +24,9 @@ const TopSection = () => {
   let name = userData?.username ?? '';
   let email = userData?.email ?? '';
 
-  useEffect(() => {
-    getLanguage();
-  }, []);
-
-  const getLanguage = async () => {
-    let language = await getDeviceLang();
-    setLang(language);
-  };
-
   const handleLangSelect = async () => {
     let originalLanguage = i18n.language;
     let language = originalLanguage === 'ar' ? 'en' : 'ar';
-    setLang(language);
     await i18n.changeLanguage(language);
     let userData = await getUserData();
     let userDataWithLanguage = { ...userData, language: language };

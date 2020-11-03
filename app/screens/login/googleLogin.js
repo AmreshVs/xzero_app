@@ -1,11 +1,11 @@
 import * as GoogleSignIn from 'expo-google-sign-in';
 
+import { GOOGLE_CLIENT_ID } from 'constants/common';
+
 const googleSignin = async () => {
   try {
     await GoogleSignIn.initAsync({
-      androidClientId: "471013991175-qke7j7trsnv3hg9oju2d4fbdja65rk8j.apps.googleusercontent.com",
-      webClientId: "471013991175-iv356mr943l214f2vsupmfa60sigu7rg.apps.googleusercontent.com",
-      clientId: "471013991175-4rroh153tfrmh484j6tu7dgbupq3tnpq.apps.googleusercontent.com",
+      clientId: GOOGLE_CLIENT_ID,
       scopes: ["profile", "email"],
     });
     const { type, user, accessToken } = await GoogleSignIn.signInAsync();

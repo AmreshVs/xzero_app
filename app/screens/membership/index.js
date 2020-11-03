@@ -15,6 +15,12 @@ import TopStatusBar from 'components/topStatusBar';
 import GetHelp from './getHelp';
 import styles from './styles';
 
+let expiryMonth = null;
+let currentMonth = null;
+let expiryYear = null;
+let currentYear = null;
+let numOfDays = null;
+
 const Membership = () => {
   const [member, setMember] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -62,11 +68,11 @@ const Membership = () => {
     }
   };
 
-  let expiryMonth = new Date(memberData?.expiry).getMonth() + 1;
-  let currentMonth = new Date().getMonth() + 1;
-  let expiryYear = new Date(memberData?.expiry).getFullYear();
-  let currentYear = new Date().getFullYear();
-  let numOfDays = null;
+  expiryMonth = new Date(memberData?.expiry).getMonth() + 1;
+  currentMonth = new Date().getMonth() + 1;
+  expiryYear = new Date(memberData?.expiry).getFullYear();
+  currentYear = new Date().getFullYear();
+  numOfDays = null;
   if (expiryMonth === currentMonth && currentYear === expiryYear) {
     numOfDays = dateDiffInDays(new Date(), new Date(memberData?.expiry));
   }

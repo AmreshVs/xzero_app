@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { useApolloClient } from '@apollo/client';
+import { useNavigation } from '@react-navigation/native';
 
 import Box from 'components/box';
 import Row from 'components/row';
@@ -12,7 +13,6 @@ import { getUserData, getFormatedDate } from 'constants/commonFunctions';
 import colors from 'constants/colors';
 import { getJWT } from 'constants/commonFunctions';
 import { GET_MEMBERSHIP_BY_USER } from 'graphql/queries';
-import { useNavigation } from '@react-navigation/native';
 import { MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
 import styles from './styles';
 
@@ -43,7 +43,7 @@ export default function MembershipBox({ data }) {
       });
 
       if (data?.memberships !== null && data?.memberships.length > 0) {
-        setExpiry(data?.memberships[0].expiry);
+        setExpiry(data?.memberships[0]?.expiry);
       }
     }
   };

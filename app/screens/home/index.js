@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { StyleSheet, ScrollView, RefreshControl, InteractionManager } from 'react-native';
+import { ScrollView, RefreshControl, InteractionManager } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 

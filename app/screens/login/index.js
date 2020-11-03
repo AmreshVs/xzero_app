@@ -21,7 +21,7 @@ import { SIGNUP_SCREEN, HOME_SCREEN, FORGOT_PASSWORD, DRAWER_TERMS } from 'navig
 import { GET_USER_BY_EMAIL } from 'graphql/queries';
 import { USER_LOGIN, CREATE_USER, UPDATE_NOTIFICATION_TOKEN } from 'graphql/mutations';
 import { getNotificationToken } from '../../../helpers';
-import { SOCIAL_TOKEN } from 'constants/common';
+import { SOCIAL_TOKEN, ERROR_OCCURED } from 'constants/common';
 import Row from 'components/row';
 import AppleLoginButton from './appleLogin';
 
@@ -54,7 +54,7 @@ export default function Login({ navigation }) {
     if (loginData && loginData?.user) {
       await saveUserDataLocally('xzero_user', loginData?.user);
       await saveUserDataLocally('xzero_jwt', loginData?.jwt);
-      navigation.replace('Home');
+      navigation.replace(HOME_SCREEN);
       updateNotificationToken(loginData?.user?.id);
     }
   };
@@ -95,12 +95,12 @@ export default function Login({ navigation }) {
       if (data?.users.length === 0) {
         await handleCreateUser(socialData, type);
       } else {
-        // Login user if exist
+        // Login user, if already signed in
         handleSubmit({ ...socialData, password: socialData.email + SOCIAL_TOKEN });
       }
     } else {
       setLoading(false);
-      ToastMsg('Error Occured, Please try later!');
+      ToastMsg(ERROR_OCCURED);
     }
   };
 
@@ -119,7 +119,6 @@ export default function Login({ navigation }) {
           notification_token: String(token) || '',
         },
       });
-
       setLoading(false);
 
       if (errors && errors[0]?.extensions?.exception?.code === 400) {
@@ -130,14 +129,14 @@ export default function Login({ navigation }) {
       if (data && data?.createNewUser?.jwt) {
         saveUserDataLocally('xzero_jwt', data?.createNewUser?.jwt);
         saveUserDataLocally('xzero_user', data?.createNewUser?.user);
-        navigation.replace('Home');
+        navigation.replace(HOME_SCREEN);
         await updateNotificationToken(data?.createNewUser?.user?.id, provider);
       }
     } catch (error) {
       if (loading) {
         setLoading(!loading);
       }
-      ToastMsg('Error Occured, Please try later!');
+      ToastMsg(ERROR_OCCURED);
     }
   };
 
@@ -202,42 +201,42 @@ export default function Login({ navigation }) {
                   isValid,
                   handleSubmit,
                 }) => (
-                  <>
-                    <Textbox
-                      placeholder="Email"
-                      icon="at"
-                      value={values.email}
-                      onChangeText={handleChange('email')}
-                      onBlur={() => setFieldTouched('email')}
-                      autoCapitalize="none"
-                    />
-                    <FormError touched={touched.email} errorText={errors.email} />
-                    <Textbox
-                      placeholder="Password"
-                      icon="key"
-                      value={values.password}
-                      onChangeText={handleChange('password')}
-                      onBlur={() => setFieldTouched('password')}
-                      autoCapitalize="none"
-                      secureTextEntry
-                    />
-                    <FormError touched={touched.password} errorText={errors.password} />
-                    <Text
-                      style={styles.forgotPassword}
-                      onPress={() => navigation.push(FORGOT_PASSWORD)}
-                    >
-                      {t('forgot_password')}
-                    </Text>
-                    <Button
-                      icon="sign-in-alt"
-                      onPress={() => handleSubmit()}
-                      disabled={!isValid}
-                      loading={loading}
-                    >
-                      {t('login')}
-                    </Button>
-                  </>
-                )}
+                    <>
+                      <Textbox
+                        placeholder="Email"
+                        icon="at"
+                        value={values.email}
+                        onChangeText={handleChange('email')}
+                        onBlur={() => setFieldTouched('email')}
+                        autoCapitalize="none"
+                      />
+                      <FormError touched={touched.email} errorText={errors.email} />
+                      <Textbox
+                        placeholder="Password"
+                        icon="key"
+                        value={values.password}
+                        onChangeText={handleChange('password')}
+                        onBlur={() => setFieldTouched('password')}
+                        autoCapitalize="none"
+                        secureTextEntry
+                      />
+                      <FormError touched={touched.password} errorText={errors.password} />
+                      <Text
+                        style={styles.forgotPassword}
+                        onPress={() => navigation.push(FORGOT_PASSWORD)}
+                      >
+                        {t('forgot_password')}
+                      </Text>
+                      <Button
+                        icon="sign-in-alt"
+                        onPress={() => handleSubmit()}
+                        disabled={!isValid}
+                        loading={loading}
+                      >
+                        {t('login')}
+                      </Button>
+                    </>
+                  )}
               </Formik>
               <View style={styles.noAccount}>
                 <RenderNoAccount />

@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     ...borderRadius10,
   },
   indicator: {
-    ...colorPrimary,
+    backgroundColor: colors.primary,
   },
   slider: {
     ...overflowHidden,

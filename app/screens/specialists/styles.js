@@ -2,12 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import colors from 'constants/colors';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from 'constants/common';
-import { justifyContentSpaceBetween, padding10, marginBottom10, textBoldDark, font17, marginBottom5, fontWeight700, textLite, w70p, paddingHorizontal10, w30p } from 'constants/commonStyles';
+import { padding10, marginBottom10, textBoldDark, font17, marginBottom5, fontWeight700, textLite, w70p, paddingHorizontal10, w30p } from 'constants/commonStyles';
 
 const styles = StyleSheet.create({
-  centers: {
-    ...justifyContentSpaceBetween,
-  },
   flatlist: {
     ...padding10,
   },

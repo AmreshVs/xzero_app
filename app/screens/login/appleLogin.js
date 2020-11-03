@@ -7,6 +7,7 @@ import { faApple, faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icon
 
 import { ToastMsg } from 'components/toastMsg';
 import RippleFX from 'components/rippleFx';
+import { ERROR_OCCURED } from 'constants/common';
 import styles from './styles';
 
 const AppleLoginButton = ({ handleSocialLogin }) => {
@@ -30,15 +31,14 @@ const AppleLoginButton = ({ handleSocialLogin }) => {
         handleSocialLogin('apple', { email: decodeJwt?.email });
       }
       else {
-        ToastMsg('Error Occured, Try again later!');
+        ToastMsg(ERROR_OCCURED);
       }
-      // signed in
     } catch (e) {
       // console.log('Apple Login Error', e);
       if (e.code === 'ERR_CANCELED') {
         ToastMsg('You Cancelled Apple Sign In');
       } else {
-        ToastMsg('Error Occured, Please Try later!');
+        ToastMsg(ERROR_OCCURED);
       }
     }
   }
