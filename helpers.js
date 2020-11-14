@@ -4,7 +4,7 @@ import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 
-import { API_URL, BASE_URL } from "constants/common";
+import { BASE_URL } from "constants/common";
 import { ToastMsg } from "components/toastMsg";
 import colors from "constants/colors";
 
@@ -70,6 +70,7 @@ export const getNotificationToken = async () => {
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
       lightColor: colors.gradient2,
+      sound: true,
     });
   }
 
