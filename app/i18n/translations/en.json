@@ -83,5 +83,10 @@
   "whatsapp3": " from Xzero app, I have difficulties in buying membership, can you help?",
   "offer": "Offer",
   "update_available": "New update available!",
-  "please_update": "There is an new version of the app available. Please update to get the latest features and bug fixes"
+  "please_update": "There is an new version of the app available. Please update to get the latest features and bug fixes",
+  "center_scan": "Center's will scan this QR Code to verify your identity",
+  "availed_gifts": "Availed Gifts",
+  "availed_gifts_caption": "Gifts that you have availed so far",
+  "chance_to_win": "You have a chance to Win",
+  "gifts_listed_below": "From any one of the gift's listed below"
 }

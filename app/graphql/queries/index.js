@@ -127,6 +127,7 @@ export const GET_MEMBERSHIP_BY_USER = gql`
       id
       serial
       expiry
+      qrcode_url
       user{
         username
         email

@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   gradient: {
     width: '100%',
-    height: isIphoneX() ? 98 : 74,
+    height: isIphoneX() ? 94 : 74,
     position: 'absolute',
     top: 0,
     left: 0,

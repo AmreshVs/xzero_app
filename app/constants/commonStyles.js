@@ -57,6 +57,10 @@ export const padding0 = {
   padding: 0
 }
 
+export const padding5 = {
+  padding: 5
+}
+
 export const padding10 = {
   padding: 10
 }
@@ -277,6 +281,10 @@ export const colorPrimary = {
 
 export const resizeModeCover = {
   resizeMode: 'cover'
+}
+
+export const resizeModeContain = {
+  resizeMode: 'contain'
 }
 
 export const paddingVertical18 = {

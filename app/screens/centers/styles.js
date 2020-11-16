@@ -2,8 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import colors from 'constants/colors';
 import { getShadowStyle } from 'constants/commonFunctions';
-import { SCREEN_WIDTH } from 'constants/common';
-import { w100, h100, whiteBg, flexSpaceBetween, borderRadius10, font15, fontWeight700, textAlignCenter, overflowHidden } from 'constants/commonStyles';
+import { w100, whiteBg, flexSpaceBetween, borderRadius10, font15, fontWeight700, textAlignCenter, overflowHidden, w100px, h100px, padding10, paddingBottom10, justifyContentSpaceBetween } from 'constants/commonStyles';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,14 +24,21 @@ const styles = StyleSheet.create({
     ...textAlignCenter,
   },
   imgContainer: {
-    height: SCREEN_WIDTH / 3,
     ...w100,
     ...overflowHidden,
   },
   image: {
-    width: '90%',
+    resizeMode: 'contain',
     ...borderRadius10,
-    ...h100,
+    ...w100px,
+    ...h100px,
+  },
+  centers: {
+    ...justifyContentSpaceBetween,
+    ...padding10,
+  },
+  flatlist: {
+    ...paddingBottom10,
   },
 });
 

@@ -2,12 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { getShadowStyle } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT } from 'constants/common';
-import { colorWhite, h100, marginTop10, textBoldDark, textLite, marginTop5, margin10, w100, marginBottom5, textAlignLeft, wh100, padding15, borderRadius10, font18, positionAbsolute, flexSpaceBetween, colorDanger, marginBottom0, paddingHorizontal10, marginHorizontal10 } from 'constants/commonStyles';
+import { colorWhite, h100, marginTop10, textBoldDark, textLite, marginTop5, margin10, w100, marginBottom5, textAlignLeft, wh100, padding15, borderRadius10, font18, positionAbsolute, flexSpaceBetween, colorDanger, marginBottom0, paddingHorizontal10, marginHorizontal10, justifyContentCenter, alignItemsCenter, resizeModeContain, w200, h200 } from 'constants/commonStyles';
 
 const styles = StyleSheet.create({
-  rootContainer: {
-    ...h100,
-  },
   benefitsContainer: {
     ...marginTop10,
     ...marginHorizontal10,
@@ -96,6 +93,19 @@ const styles = StyleSheet.create({
   nenewText: {
     ...colorDanger,
   },
+  qrcode: {
+    ...w200,
+    ...h200,
+    ...resizeModeContain,
+    borderWidth: 1,
+    borderColor: '#EEE',
+    marginBottom: 10,
+    borderRadius: 10
+  },
+  imageContainer: {
+    ...justifyContentCenter,
+    ...alignItemsCenter
+  }
 });
 
 export default styles;

@@ -8,6 +8,7 @@ import MembershipCard from './membershipCard';
 import Renew from './renew';
 import Benefits from './benefits';
 import BuyMembership from './buyMembership';
+import QRCode from './qrcode';
 import { getJWT, getUserData, dateDiffInDays } from 'constants/commonFunctions';
 import { GET_MEMBERSHIP_BY_USER } from 'graphql/queries';
 import IsLoggedIn from 'hoc/isLoggedIn';
@@ -81,7 +82,6 @@ const Membership = () => {
     <SafeView noBottom loading={loading}>
       <TopStatusBar />
       <ScrollView
-        style={styles.rootContainer}
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
         showsVerticalScrollIndicator={false}
@@ -92,6 +92,7 @@ const Membership = () => {
           data={memberData}
           expired={member && numOfDays !== null && numOfDays <= 0}
         />
+        <QRCode data={memberData} />
         <Note data={note?.info} />
         <Benefits data={note?.benefits} />
         {member && numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? (

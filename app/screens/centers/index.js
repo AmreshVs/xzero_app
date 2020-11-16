@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { StyleSheet, FlatList, InteractionManager } from 'react-native';
+import { FlatList, InteractionManager } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 import SafeView from 'components/safeView';
@@ -8,6 +8,7 @@ import TopNavigator from 'components/topNavigator';
 import Center from './center';
 import { useQuery } from '@apollo/client';
 import { GET_CENTERS } from 'graphql/queries';
+import styles from './styles';
 
 export default function Centers() {
   const [reloading, setReloading] = useState(false);
@@ -35,31 +36,21 @@ export default function Centers() {
       {!data?.topCenters.length ? (
         <NoData topNav />
       ) : (
-        <FlatList
-          keyExtractor={(item) => String(item.id)}
-          data={data.topCenters}
-          renderItem={({ item }) => <Center data={item} />}
-          numColumns={2}
-          initialNumToRender={6}
-          maxToRenderPerBatch={10}
-          windowSize={10}
-          columnWrapperStyle={styles.centers}
-          contentContainerStyle={styles.flatlist}
-          refreshing={reloading}
-          onRefresh={() => reload()}
-          removeClippedSubviews={true}
-        />
-      )}
+          <FlatList
+            keyExtractor={(item) => String(item.id)}
+            data={data.topCenters}
+            renderItem={({ item }) => <Center data={item} />}
+            numColumns={2}
+            initialNumToRender={6}
+            maxToRenderPerBatch={10}
+            windowSize={10}
+            columnWrapperStyle={styles.centers}
+            contentContainerStyle={styles.flatlist}
+            refreshing={reloading}
+            onRefresh={() => reload()}
+            removeClippedSubviews={true}
+          />
+        )}
     </SafeView>
   );
 }
-
-const styles = StyleSheet.create({
-  centers: {
-    justifyContent: 'space-between',
-    padding: 10,
-  },
-  flatlist: {
-    paddingBottom: 10,
-  },
-});
