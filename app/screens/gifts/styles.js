@@ -5,9 +5,6 @@ import { getShadowStyle } from 'constants/commonFunctions';
 import colors from 'constants/colors';
 
 const styles = StyleSheet.create({
-  container: {
-    ...whiteBg,
-  },
   image: {
     ...w300,
     ...h300,
@@ -57,6 +54,18 @@ const styles = StyleSheet.create({
     ...zIndex1,
     ...getShadowStyle(),
   },
+  giftRevealImage: {
+    width: 80,
+    height: 80,
+    backgroundColor: colors.chip_1,
+    opacity: 0.9,
+    ...positionAbsolute,
+    ...borderRadius50,
+    ...zIndex1,
+    ...getShadowStyle(),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   wrapper: {
     flexWrap: 'wrap',
     ...flexRow,
@@ -69,6 +78,38 @@ const styles = StyleSheet.create({
   heading: {
     ...textBoldDark,
     ...font16
+  },
+  generateGift: {
+    width: '100%',
+    zIndex: 1
+  },
+  confetti: {
+    width: '100%',
+    position: 'absolute',
+    zIndex: 0,
+  },
+  lottieGiftContainer: {
+    margin: 10,
+  },
+  generate: {
+    alignItems: 'center'
+  },
+  hideOverflow: {
+    overflow: 'hidden'
+  },
+  giftReveal: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  giftRevealText: {
+    ...textBoldDark
+  },
+  sadIcon: {
+    width: '100%',
+    height: '100%',
   }
 });
 

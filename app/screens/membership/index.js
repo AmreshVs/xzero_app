@@ -102,7 +102,7 @@ const Membership = () => {
           <Renew membershipData={note.membershipData} expired />
         ) : null}
         {!member && <BuyMembership membershipData={note.membershipData} />}
-        <GetHelp />
+        {member && numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? <GetHelp /> : null}
       </ScrollView>
     </SafeView>
   );

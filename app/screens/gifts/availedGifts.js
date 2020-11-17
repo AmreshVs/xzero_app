@@ -21,7 +21,6 @@ const Gift = ({ data }) => {
         <View style={styles.giftImages}></View>
         <Image source={require('../../../assets/gift2.png')} style={styles.giftImage} />
         <Text style={styles.title} numberOfLines={2}>{data?.title_en}</Text>
-        <Text style={styles.caption} numberOfLines={2}>Title</Text>
       </View>
     </Card>
   )
