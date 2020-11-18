@@ -2,31 +2,11 @@ import React from 'react';
 import { View, ScrollView, Image, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import Card from 'components/card';
 import styles from './styles';
 import Box from 'components/box';
+import Gift from './Gift';
 
-const data = [
-  { id: 1, title_en: 'Title 1' },
-  { id: 2, title_en: 'Title 2' },
-  { id: 3, title_en: 'Title 3' },
-  { id: 4, title_en: 'Title 4' },
-  { id: 5, title_en: 'Title 5' },
-];
-
-const Gift = ({ data }) => {
-  return (
-    <Card style={styles.availableGiftsContainer}>
-      <View style={styles.giftImageContainer}>
-        <View style={styles.giftImages}></View>
-        <Image source={require('../../../assets/gift2.png')} style={styles.giftImage} />
-        <Text style={styles.title} numberOfLines={2}>{data?.title_en}</Text>
-      </View>
-    </Card>
-  )
-}
-
-export default function AvailedGifts() {
+export default function AvailedGifts({ data }) {
   const { t } = useTranslation();
 
   return (

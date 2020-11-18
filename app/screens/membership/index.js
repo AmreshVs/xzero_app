@@ -79,12 +79,11 @@ const Membership = () => {
   }
 
   return (
-    <SafeView noBottom loading={loading}>
+    <SafeView style={styles.safeContainer} noBottom loading={loading}>
       <TopStatusBar />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
-        showsVerticalScrollIndicator={false}
         removeClippedSubviews={true}
       >
         <MembershipCard

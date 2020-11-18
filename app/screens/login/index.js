@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, Image, View, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import { Formik } from 'formik';
@@ -24,12 +24,14 @@ import { getNotificationToken } from '../../../helpers';
 import { SOCIAL_TOKEN, ERROR_OCCURED } from 'constants/common';
 import Row from 'components/row';
 import AppleLoginButton from './appleLogin';
+import { UserDataContext } from 'context';
 
 export default function Login({ navigation }) {
   const { t, i18n } = useTranslation();
   let language = i18n.language;
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
+  const { setUserData } = useContext(UserDataContext);
 
   const handleSubmit = async (values) => {
     setLoading(true);
@@ -44,6 +46,14 @@ export default function Login({ navigation }) {
     });
 
     let loginData = response?.userlogin;
+
+    setUserData({
+      jwt: loginData?.jwt,
+      id: loginData?.user?.id,
+      email: loginData?.user?.email,
+      mobile_number: loginData?.user?.mobile_number
+    });
+
     setLoading(false);
 
     if (errors && errors[0]?.extensions?.exception?.code === 400) {

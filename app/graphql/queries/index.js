@@ -248,3 +248,25 @@ export const BASIC_INFORMATION = gql`
     }
   }
 `;
+
+export const GET_GIFTS = gql`
+  query GetGifts($membership_plan: Int){
+    AvailableGifts(where: {
+      membership_plan: $membership_plan
+    }){
+      gifts{
+        id
+        name_en
+        name_ar
+        desc_en
+        desc_ar
+        featured_img{
+          url
+        }
+      }
+      AvailedGifts{
+        id
+      }
+    }
+  }
+`;

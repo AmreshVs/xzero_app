@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   title: {
     ...textBoldDark,
-    ...font16
+    ...font16,
   },
   caption: {
     ...textLite,
@@ -110,7 +110,34 @@ const styles = StyleSheet.create({
   sadIcon: {
     width: '100%',
     height: '100%',
-  }
+    resizeMode: 'contain'
+  },
+  gift: {
+    width: 90,
+    height: 90,
+    resizeMode: 'contain',
+    borderRadius: 50,
+  },
+  overlay: {
+    position: 'absolute',
+    backgroundColor: '#000',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    borderRadius: 10,
+    margin: 5,
+    padding: 10,
+    paddingTop: 25,
+    opacity: 0.7
+  },
+  imageDesc: {
+    color: '#FFF'
+  },
+  closeContainer: {
+    position: 'absolute',
+    right: 10,
+    top: 10
+  },
 });
 
 export default styles;

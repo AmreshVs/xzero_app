@@ -145,3 +145,19 @@ export const FORGOT_PASSWORD = gql`
     }
   }
 `;
+
+export const GENERATE_GIFT = gql`
+  mutation GenerateGift($user_id: Int!){
+    GenerateGift(user_id: $user_id){
+      won
+      gift{
+        id
+        name_en
+        name_ar
+        featured_img{
+          url
+        }
+      }
+    }
+  }
+`;

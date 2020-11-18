@@ -77,18 +77,16 @@ export default function Home({ navigation }) {
   };
 
   return (
-    <>
-      <SafeView loading={loading} noTop noBottom>
-        <ScrollView
-          style={styles.scrollContainer}
-          refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
-          showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
-        >
-          <Header />
-          <Footer />
-        </ScrollView>
-      </SafeView>
-    </>
+    <SafeView loading={loading} noTop noBottom>
+      <ScrollView
+        style={styles.scrollContainer}
+        refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews={true}
+      >
+        <Header />
+        <Footer />
+      </ScrollView>
+    </SafeView>
   );
 }

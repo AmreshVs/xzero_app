@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   Text,
@@ -28,9 +28,11 @@ import { saveUserDataLocally } from 'screens/login/helpers';
 import { getNotificationToken } from '../../../helpers';
 import { ToastMsg } from 'components/toastMsg';
 import { firstLetterUpper, handleServerDOB, getFormatedDate } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
 
 export default function Signup({ navigation }) {
   const { t, i18n } = useTranslation();
+  const { setUserData } = useContext(UserDataContext);
   let language = i18n.language;
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(new Date());
@@ -74,6 +76,14 @@ export default function Signup({ navigation }) {
     });
 
     let userData = data?.createNewUser;
+
+    setUserData({
+      jwt: userData?.jwt,
+      id: userData?.user?.id,
+      email: userData?.user?.email,
+      mobile_number: userData?.user?.mobile_number
+    });
+
     setLoading(false);
 
     if (errors && errors[0]?.extensions?.exception?.code === 400) {
@@ -157,56 +167,56 @@ export default function Signup({ navigation }) {
                   handleSubmit,
                   setFieldValue,
                 }) => (
-                  <>
-                    {inputs.map(({ name, placeholder, icon, marginTop }, index) => (
-                      <View key={index}>
-                        <Textbox
-                          placeholder={placeholder ? placeholder : firstLetterUpper(name)}
-                          value={values[name]}
-                          onChangeText={handleChange(name)}
-                          icon={icon}
-                          marginTop={marginTop}
-                          onBlur={() => setFieldTouched(name)}
-                          autoCapitalize="none"
-                          secureTextEntry={name.includes('password', 'repassword') ? true : false}
-                          style={styles.textbox}
-                          keyboardType={
-                            name === 'phone'
-                              ? 'number-pad'
-                              : name === 'email'
-                              ? 'email-address'
-                              : 'default'
-                          }
-                          onTouchStart={() => name === 'dob' && setDatePickerVisibility(true)}
-                        />
-                        <FormError touched={touched[name]} errorText={errors[name]} />
+                    <>
+                      {inputs.map(({ name, placeholder, icon, marginTop }, index) => (
+                        <View key={index}>
+                          <Textbox
+                            placeholder={placeholder ? placeholder : firstLetterUpper(name)}
+                            value={values[name]}
+                            onChangeText={handleChange(name)}
+                            icon={icon}
+                            marginTop={marginTop}
+                            onBlur={() => setFieldTouched(name)}
+                            autoCapitalize="none"
+                            secureTextEntry={name.includes('password', 'repassword') ? true : false}
+                            style={styles.textbox}
+                            keyboardType={
+                              name === 'phone'
+                                ? 'number-pad'
+                                : name === 'email'
+                                  ? 'email-address'
+                                  : 'default'
+                            }
+                            onTouchStart={() => name === 'dob' && setDatePickerVisibility(true)}
+                          />
+                          <FormError touched={touched[name]} errorText={errors[name]} />
+                        </View>
+                      ))}
+                      <View style={styles.btnContainer}>
+                        <Button
+                          icon="sign-in-alt"
+                          width="100%"
+                          onPress={() => handleSubmit()}
+                          disabled={!isValid}
+                          loading={loading}
+                        >
+                          {t('signup')}
+                        </Button>
                       </View>
-                    ))}
-                    <View style={styles.btnContainer}>
-                      <Button
-                        icon="sign-in-alt"
-                        width="100%"
-                        onPress={() => handleSubmit()}
-                        disabled={!isValid}
-                        loading={loading}
-                      >
-                        {t('signup')}
-                      </Button>
-                    </View>
-                    <DateTimePickerModal
-                      isVisible={isDatePickerVisible}
-                      mode="date"
-                      date={date}
-                      onConfirm={(date) => {
-                        setDatePickerVisibility(false);
-                        setDate(date);
-                        setFieldValue('dob', getFormatedDate(date));
-                      }}
-                      onCancel={() => setDatePickerVisibility(false)}
-                      isDarkModeEnabled={false}
-                    />
-                  </>
-                )}
+                      <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="date"
+                        date={date}
+                        onConfirm={(date) => {
+                          setDatePickerVisibility(false);
+                          setDate(date);
+                          setFieldValue('dob', getFormatedDate(date));
+                        }}
+                        onCancel={() => setDatePickerVisibility(false)}
+                        isDarkModeEnabled={false}
+                      />
+                    </>
+                  )}
               </Formik>
             </View>
             <View style={styles.haveAccount}>

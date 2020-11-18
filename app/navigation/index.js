@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -54,6 +54,7 @@ import ForgotPassword from 'screens/forgotPassword';
 import Gifts from 'screens/gifts';
 import Vouchers from 'screens/vouchers';
 import NewUpdate from 'screens/newUpdate';
+import { UserDataContext } from 'context';
 
 const Tab = createBottomTabNavigator();
 
@@ -97,14 +98,18 @@ function StackNavigation() {
 const Drawer = createDrawerNavigator();
 
 function Navigation() {
+  const [userData, setUserData] = useState();
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName={DRAWER_HOME} drawerType="slide">
-          <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
-          <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
-          <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
-        </Drawer.Navigator>
+        <UserDataContext.Provider value={{ userData, setUserData }}>
+          <Drawer.Navigator initialRouteName={DRAWER_HOME} drawerType="slide">
+            <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
+            <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
+            <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
+          </Drawer.Navigator>
+        </UserDataContext.Provider>
       </NavigationContainer>
     </SafeAreaProvider>
   );
