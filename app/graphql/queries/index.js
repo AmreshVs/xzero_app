@@ -266,6 +266,13 @@ export const GET_GIFTS = gql`
       }
       AvailedGifts{
         id
+        name_en
+        name_ar
+        desc_en
+        desc_ar
+        featured_img{
+          url
+        }
       }
     }
   }

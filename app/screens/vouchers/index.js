@@ -3,11 +3,10 @@ import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import SafeView from 'components/safeView';
-import { BASE_URL } from 'constants/common';
 import TopNavigator from 'components/topNavigator';
-import ProgressiveImage from 'components/progressiveImage';
-import VHCenter from 'components/vhCenter';
+import Voucher from './voucher';
 import styles from './styles';
+import Box from 'components/box';
 
 export default function Vouchers() {
   const { t } = useTranslation();
@@ -15,14 +14,9 @@ export default function Vouchers() {
   return (
     <SafeView style={styles.container} topNav>
       <TopNavigator title={t('vouchers')} gradient />
-      <VHCenter padding={10}>
-        <ProgressiveImage
-          source={{ uri: BASE_URL + '/uploads/vouchers_2cb3c38e63.jpg' }}
-          style={styles.image}
-        />
-        <Text style={styles.title}>{t('working_on_vouchers_title')}</Text>
-        <Text style={styles.caption}>{t('working_on_vouchers_desc')}</Text>
-      </VHCenter>
+      <Box padding={10}>
+        {[1, 2, 3, 4, 5].map((key, index) => <Voucher />)}
+      </Box>
     </SafeView>
   );
 }

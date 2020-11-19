@@ -13,14 +13,14 @@ import { GET_GIFTS } from 'graphql/queries';
 export default function Gifts() {
   const { t } = useTranslation();
   const { data, loading, refetch: _refetch } = useQuery(GET_GIFTS);
-  console.log(data);
+
   return (
     <SafeView loading={loading} topNav>
       <TopNavigator title={t('gifts')} gradient />
       <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={_refetch} />} >
         <GenerateGift />
         <AvailableGifts data={data?.AvailableGifts?.gifts} />
-        {data?.AvailableGifts?.gifts.length > 0 && <AvailedGifts data={data?.AvailableGifts?.gifts} />}
+        {data?.AvailableGifts?.AvailedGifts.length > 0 && <AvailedGifts data={data?.AvailableGifts?.AvailedGifts} />}
       </ScrollView>
     </SafeView>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useApolloClient } from '@apollo/client';
@@ -45,11 +45,12 @@ export default function Main({ navigation }) {
       const jwt = await AsyncStorage.getItem('@xzero_jwt');
       const userData = await AsyncStorage.getItem('@xzero_user');
       if (userData !== null && userData !== '') {
+        let loginData = JSON.parse(userData);
         setUserData({
           jwt: JSON.parse(jwt),
-          id: userData?.id,
-          email: userData?.email,
-          mobile_number: userData?.mobile_number
+          id: loginData?.id,
+          email: loginData?.email,
+          mobile_number: loginData?.mobile_number
         });
         navigation.replace('Home');
         return;

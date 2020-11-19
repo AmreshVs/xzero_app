@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Image, Text } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import styles from './styles';

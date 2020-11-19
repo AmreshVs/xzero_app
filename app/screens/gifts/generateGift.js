@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Text, View, Animated, Image } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { useApolloClient } from '@apollo/client';
@@ -29,7 +29,7 @@ export default function GenerateGift() {
         user_id: Number(userData?.id)
       }
     });
-    console.log(data);
+
     setLoading(false);
     setData(data?.GenerateGift);
     Won(data?.GenerateGift?.won);
@@ -98,7 +98,7 @@ export default function GenerateGift() {
             transform: [{ translateY: giftTextAnim }],
           }}
         >
-          <Text style={styles.giftRevealText}>{data?.won ? data?.gift?.name_en : 'Sorry! Better luck next time!'}</Text>
+          <Text style={styles.giftRevealText}>{data?.won ? 'Great! You won ' + data?.gift?.name_en : 'Sorry! Better luck next time!'}</Text>
         </Animated.View>
         <View style={styles.generate}>
           <Button status="chip_1" width="50%" onPress={() => handleGenerate()} loading={loading}>Try your luck!</Button>
