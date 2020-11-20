@@ -42,6 +42,7 @@ import {
   GIFTS,
   VOUCHERS,
   NEW_UPDATE,
+  VOUCHER_DETAIL,
 } from './routes';
 import Notifications from 'screens/notifications';
 import PaymentStatus from 'screens/paymentStatus';
@@ -54,6 +55,7 @@ import ForgotPassword from 'screens/forgotPassword';
 import Gifts from 'screens/gifts';
 import Vouchers from 'screens/vouchers';
 import NewUpdate from 'screens/newUpdate';
+import VoucherDetail from 'screens/voucherDetail';
 import { UserDataContext } from 'context';
 
 const Tab = createBottomTabNavigator();
@@ -73,7 +75,7 @@ const Stack = createStackNavigator();
 
 function StackNavigation() {
   return (
-    <Stack.Navigator initialRouteName={MAIN_SCREEN} headerMode="none">
+    <Stack.Navigator initialRouteName={VOUCHER_DETAIL} headerMode="none">
       <Stack.Screen name={MAIN_SCREEN} component={Main} />
       <Stack.Screen name={HOME_SCREEN} component={HomeNavigation} />
       <Stack.Screen name={LOGIN_SCREEN} component={Login} />
@@ -91,6 +93,7 @@ function StackNavigation() {
       <Stack.Screen name={GIFTS} component={Gifts} />
       <Stack.Screen name={VOUCHERS} component={Vouchers} />
       <Stack.Screen name={NEW_UPDATE} component={NewUpdate} />
+      <Stack.Screen name={VOUCHER_DETAIL} component={VoucherDetail} />
     </Stack.Navigator>
   );
 }

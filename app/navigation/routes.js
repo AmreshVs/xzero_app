@@ -15,6 +15,7 @@ export const FORGOT_PASSWORD = 'ForgotPassword';
 export const GIFTS = 'Gifts';
 export const VOUCHERS = 'Vouchers';
 export const NEW_UPDATE = 'NewUpdate';
+export const VOUCHER_DETAIL = 'VoucherDetail';
 
 // Tab Routes
 export const HOME_TAB_SCREEN = 'Home';
