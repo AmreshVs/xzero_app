@@ -84,5 +84,10 @@
   "offer": "العرض",
   "update_available": "",
   "please_update": "",
-  "center_scan": ""
+  "center_scan": "",
+  "availed_gifts": "",
+  "availed_gifts_caption": "",
+  "chance_to_win": "",
+  "gifts_listed_below": "",
+  "need_help": ""
 }

@@ -27,7 +27,10 @@ export default function MembershipCard({ member, data, expired }) {
         <View style={styles.textContainer}>
           <Row spaceBetween vcenter>
             <Text style={styles.title}>XZERO</Text>
-            <Text style={styles.cardName}>{t('membership_card')}</Text>
+            <Column>
+              <Text style={styles.title}>PLATINUM</Text>
+              <Text style={styles.cardName}>{t('membership_card')}</Text>
+            </Column>
           </Row>
           <View style={styles.serialContainer}>
             <Row spaceBetween>

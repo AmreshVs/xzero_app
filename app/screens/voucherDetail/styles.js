@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { font16, padding15, paddingBottom10, positionAbsolute, textBoldDark, textLite, w100, wh100, zIndex1 } from 'constants/commonStyles';
+import { font16, textAlignCenter, textBoldDark, textLite } from 'constants/commonStyles';
 import { SCREEN_HEIGHT } from 'constants/common';
 import { getShadowStyle } from 'constants/commonFunctions';
 
@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
   },
   title: {
     ...textBoldDark,
-    ...font16
+    ...font16,
+    marginBottom: 3
   },
   caption: {
     ...textLite
@@ -36,6 +37,40 @@ const styles = StyleSheet.create({
   buyNowButton: {
     bottom: 60,
     padding: 10
+  },
+  membershipImg: {
+    width: '100%',
+    height: 220,
+    resizeMode: 'center',
+    marginBottom: 5
+  },
+  voucherContainer: {
+    marginBottom: 10,
+    padding: 0,
+  },
+  voucherImageContainer: {
+    width: '100%',
+    height: 200,
+  },
+  voucherImg: {
+    width: '100%',
+    height: '100%',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    resizeMode: 'cover'
+  },
+  infoTitle: {
+    ...textBoldDark,
+    ...font16,
+    marginRight: 5
+  },
+  infoCaption: {
+    ...textLite,
+    ...textAlignCenter,
+    marginTop: 2
+  },
+  modal: {
+    padding: 15
   }
 });
 
