@@ -4,9 +4,8 @@ import { colorWhite, h100, textBoldDark, font16, textLite, textAlignCenter, marg
 import colors from 'constants/colors';
 
 const styles = StyleSheet.create({
-  container: {
-    ...colorWhite,
-    ...h100,
+  vouchersScrollView: {
+    padding: 10,
   },
   image: {
     width: 350,

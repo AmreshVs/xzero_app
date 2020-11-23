@@ -1,22 +1,21 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import Voucher from './voucher';
 import styles from './styles';
-import Box from 'components/box';
 
 export default function Vouchers() {
   const { t } = useTranslation();
 
   return (
-    <SafeView style={styles.container} topNav>
+    <SafeView topNav>
       <TopNavigator title={t('vouchers')} gradient />
-      <Box padding={10}>
-        {[1, 2, 3, 4, 5].map((key, index) => <Voucher />)}
-      </Box>
+      <ScrollView contentContainerStyle={styles.vouchersScrollView} removeClippedSubviews>
+        {[1, 2, 3, 4, 5].map((key, index) => <Voucher key={index} />)}
+      </ScrollView>
     </SafeView>
   );
 }

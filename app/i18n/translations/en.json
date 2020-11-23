@@ -89,5 +89,11 @@
   "availed_gifts_caption": "Gifts that you have availed so far",
   "chance_to_win": "You have a chance to Win",
   "gifts_listed_below": "From any one of the gift's listed below",
-  "need_help": "Need help? Contact Us"
+  "need_help": "Need help? Contact Us",
+  "add_promocode": "Add Promocode",
+  "apply_promocode": "Apply promocode and get discount on this purchase",
+  "delivery_address": "Delivery Address",
+  "apply": "Apply",
+  "promocode": "Promocode",
+  "address": "Address"
 }

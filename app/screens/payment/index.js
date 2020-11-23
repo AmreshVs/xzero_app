@@ -179,6 +179,8 @@ export default function Payment() {
         source={{
           uri: state.url,
         }}
+        onLoadStart={() => setState({ ...state, reloading: true })}
+        onLoadEnd={() => setTimeout(() => setState({ ...state, reloading: false }), 3000)}
       />
     </SafeView>
   );

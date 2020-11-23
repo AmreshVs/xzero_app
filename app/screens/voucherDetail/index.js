@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 
 import SafeView from 'components/safeView';
@@ -17,8 +17,9 @@ import styles from './styles';
 import { SCREEN_HEIGHT } from 'constants/common';
 import ApplyPromocode from 'components/applyPromocode';
 import DeliveryAddress from 'components/deliveryAddress';
+import { PAYMENT } from 'navigation/routes';
 
-export default function VoucherDetail() {
+export default function VoucherDetail({ navigation }) {
 
   const modalizeRef = useRef(null);
 
@@ -44,9 +45,20 @@ export default function VoucherDetail() {
       <View style={styles.buyNowButton}>
         <Button onPress={() => handleOpenModal()}>200 AED - Buy Now</Button>
       </View>
-      <Modalize ref={modalizeRef} childrenStyle={styles.modal} modalHeight={SCREEN_HEIGHT / 1.5}>
-        <DeliveryAddress />
-        <ApplyPromocode />
+      <Modalize ref={modalizeRef} childrenStyle={styles.modal} modalHeight={SCREEN_HEIGHT / 1.5} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}>
+        <SafeView style={styles.safeView} noTop>
+          <DeliveryAddress />
+          <ApplyPromocode />
+          <View style={styles.continueButton}>
+            <Button onPress={() => navigation.push(PAYMENT, {
+              currency_code: 'AED',
+              amount: 100,
+              multiplier: 100
+            })}>
+              Continue to pay 200 AED
+            </Button>
+          </View>
+        </SafeView>
       </Modalize>
     </SafeView >
   )

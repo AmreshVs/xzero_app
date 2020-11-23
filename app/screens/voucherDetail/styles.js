@@ -38,6 +38,14 @@ const styles = StyleSheet.create({
     bottom: 60,
     padding: 10
   },
+  continueButton: {
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+  },
+  safeView: {
+    height: SCREEN_HEIGHT / 2.1
+  },
   membershipImg: {
     width: '100%',
     height: 220,
@@ -70,7 +78,7 @@ const styles = StyleSheet.create({
     marginTop: 2
   },
   modal: {
-    padding: 15
+    padding: 15,
   }
 });
 

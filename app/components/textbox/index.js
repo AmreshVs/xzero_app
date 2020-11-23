@@ -15,6 +15,7 @@ export default function Textbox({
   iconColor = '#CCC',
   ...args
 }) {
+  const styles = dynamicStyles(args);
   const [focus, setFocus] = useState(false);
 
   const handleBlur = () => {
@@ -48,25 +49,26 @@ export default function Textbox({
   );
 }
 
-const textboxStyle = {
-  height: 50,
-  width: '100%',
-  borderRadius: 50,
-  borderWidth: 1,
-  borderColor: '#DDD',
-  paddingHorizontal: 20,
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
+const textboxStyle = (multiline) => {
+  return {
+    height: 50,
+    width: '100%',
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: '#DDD',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: multiline ? 'flex-start' : 'center',
+  }
 };
 
-const styles = StyleSheet.create({
+const dynamicStyles = ({ multiline }) => StyleSheet.create({
   textbox: {
-    ...textboxStyle,
+    ...textboxStyle(multiline),
     backgroundColor: '#F9F9F9',
   },
   textboxFocus: {
-    ...textboxStyle,
+    ...textboxStyle(multiline),
     backgroundColor: '#f9f9f9',
     borderColor: colors.primary,
   },
@@ -83,10 +85,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   icon: {
-    marginRight: 10,
+    marginLeft: 15,
+    marginRight: -10,
+    marginTop: multiline ? 10 : 0
   },
   textInput: {
-    width: '90%',
-    paddingVertical: 15,
+    width: '100%',
+    height: '100%',
+    paddingHorizontal: 15,
+    paddingTop: multiline ? 10 : 0,
+    borderRadius: 50,
   },
 });

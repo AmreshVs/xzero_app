@@ -277,3 +277,101 @@ export const GET_GIFTS = gql`
     }
   }
 `;
+
+export const VOUCHERS = gql`
+  query Vouchers($membership_plan: Int!){
+    vouchers(where: {
+      membership_plans: $membership_plan,
+      status: 1
+    }){
+      id
+      featured_img{
+        url
+      }
+      buy_title_en
+      buy_title_ar
+      win_title_en
+      win_title_ar
+      desc_en
+      desc_ar
+      cost
+      limit
+      total_bought
+      draw_status
+    }
+  }
+`;
+
+export const VOUCHER_DETAIL = gql`
+  query Voucher($id: ID!){
+    voucher(id: $id){
+      id
+      featured_img{
+        url
+      }
+      buy_title_en
+      buy_title_ar
+      win_title_en
+      win_title_ar
+      desc_en
+      desc_ar
+      cost
+      limit
+      total_bought
+      product_id(where:{
+        status: 1
+      }){
+        id
+        featured_imgs{
+          url
+        }
+        title_en
+        title_ar
+        desc_en
+        desc_ar
+        cost
+      }
+      membership_plans(where: {
+        status: 1
+      }){
+        id
+        featured_img{
+          url
+        }      
+        name_en
+        name_ar
+        desc_en
+        desc_ar
+      }
+      assured_gift_id(where: {
+        status: 1
+      }){
+        id
+        featured_img{
+          url
+        }
+        title_en
+        title_ar
+        desc_en
+        desc_ar
+      }
+      draw_gift_id(where: {
+        status: 1
+      }){
+        id
+        featured_imgs{
+          url
+        }
+        title_en
+        title_ar
+        desc_en
+        desc_ar
+      }
+    }
+    voucherRule{
+      id
+      title_en
+      title_ar
+    }
+  }
+`;
