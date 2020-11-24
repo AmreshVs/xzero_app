@@ -318,7 +318,7 @@ export const VOUCHER_DETAIL = gql`
       cost
       limit
       total_bought
-      product_id(where:{
+      product(where:{
         status: 1
       }){
         id
@@ -343,7 +343,7 @@ export const VOUCHER_DETAIL = gql`
         desc_en
         desc_ar
       }
-      assured_gift_id(where: {
+      assured_gift(where: {
         status: 1
       }){
         id
@@ -355,7 +355,7 @@ export const VOUCHER_DETAIL = gql`
         desc_en
         desc_ar
       }
-      draw_gift_id(where: {
+      draw_gift(where: {
         status: 1
       }){
         id

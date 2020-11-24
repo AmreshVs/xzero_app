@@ -75,7 +75,7 @@ const Stack = createStackNavigator();
 
 function StackNavigation() {
   return (
-    <Stack.Navigator initialRouteName={VOUCHER_DETAIL} headerMode="none">
+    <Stack.Navigator initialRouteName={VOUCHERS} headerMode="none">
       <Stack.Screen name={MAIN_SCREEN} component={Main} />
       <Stack.Screen name={HOME_SCREEN} component={HomeNavigation} />
       <Stack.Screen name={LOGIN_SCREEN} component={Login} />

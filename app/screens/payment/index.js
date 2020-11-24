@@ -12,7 +12,7 @@ import { useAxios } from 'hooks';
 import colors from 'constants/colors';
 import { PAYMENT_STATUS } from 'navigation/routes';
 import { getUserData, getJWT } from 'constants/commonFunctions';
-import { GENERATE_MEMBESHIP } from 'graphql/mutations';
+import { BUY_VOUCHER, GENERATE_MEMBESHIP } from 'graphql/mutations';
 import Loader from 'components/loader';
 import styles from './styles';
 
@@ -41,7 +41,6 @@ export default function Payment() {
 
   const GeneratePaymentUrl = async () => {
     let { email, username } = await getUserData();
-
     const GENERATE_PAYMENT_BODY = {
       action: 'SALE',
       emailAddress: email,
@@ -124,18 +123,35 @@ export default function Payment() {
       setState({ ...state, reloading: true });
       let { id } = await getUserData();
       let jwt = await getJWT();
-      await client.mutate({
-        mutation: GENERATE_MEMBESHIP,
-        variables: {
-          user_id: id,
-          amount: Number(params?.amount),
-        },
-        context: {
-          headers: {
-            authorization: 'Bearer ' + jwt,
+
+      if (params?.voucher_id) {
+        await client.mutate({
+          mutation: BUY_VOUCHER,
+          variables: {
+            user_id: id,
+            voucher_id: Number(params?.voucher_id),
           },
-        },
-      });
+          context: {
+            headers: {
+              authorization: 'Bearer ' + jwt,
+            },
+          },
+        });
+      }
+      else {
+        await client.mutate({
+          mutation: GENERATE_MEMBESHIP,
+          variables: {
+            user_id: id,
+            amount: Number(params?.amount),
+          },
+          context: {
+            headers: {
+              authorization: 'Bearer ' + jwt,
+            },
+          },
+        });
+      }
       setState({ ...state, reloading: false });
       replace(PAYMENT_STATUS, { status: true });
       return;

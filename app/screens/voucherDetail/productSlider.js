@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel';
 
-import { SCREEN_WIDTH } from 'constants/common';
+import { IMAGE_URL, SCREEN_WIDTH } from 'constants/common';
 
 export default function ProductSlider({ data }) {
   const [slide, setSlide] = useState(1);
 
   const renderItem = ({ item, index }, parallaxProps) => {
     return (
-      <View style={styles.item}>
+      <View style={styles.item} key={index}>
         <ParallaxImage
-          source={{ uri: item.image }}
+          source={{ uri: IMAGE_URL + item.url }}
           containerStyle={styles.imageContainer}
           style={styles.sliderImage}
           parallaxFactor={0.4}

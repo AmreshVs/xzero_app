@@ -9,7 +9,7 @@ import Box from 'components/box';
 import { dialNumber } from 'constants/commonFunctions';
 import styles from './styles';
 
-const Help = ({ username, mobile_number }) => {
+const Help = () => {
   const { t } = useTranslation();
 
   return (

@@ -95,5 +95,18 @@
   "delivery_address": "Delivery Address",
   "apply": "Apply",
   "promocode": "Promocode",
-  "address": "Address"
+  "address": "Address",
+  "aed": "AED",
+  "buy": "Buy",
+  "win": "Win",
+  "buy_now": "Buy Now",
+  "out_of": "out of",
+  "share": "Share",
+  "check_below_for_more": "Check below for more details on the product, gift and prize details",
+  "you_will_get": "You will get",
+  "enjoy_all_benefits": "Enjoy all the benefits of Xzero Memership for",
+  "assured_gift": "Assured Gift",
+  "a_chance_to_win": "A Chance to win",
+  "rules": "Rules",
+  "continue_to_pay": "Continue to pay"
 }

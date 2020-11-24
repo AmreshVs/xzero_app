@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { colorWhite, h100, textBoldDark, font16, textLite, textAlignCenter, marginTop5 } from 'constants/commonStyles';
+import { colorWhite, textBoldDark, font16, textLite, marginBottom10, padding0, w100, h200, overflowHidden, padding10, wh100, resizeModeCover, positionAbsolute, paddingHorizontal10, fontWeight700 } from 'constants/commonStyles';
 import colors from 'constants/colors';
 
 const styles = StyleSheet.create({
   vouchersScrollView: {
-    padding: 10,
+    ...padding10,
   },
   image: {
     width: 350,
@@ -13,42 +13,41 @@ const styles = StyleSheet.create({
     marginBottom: -30,
   },
   title: {
+    marginRight: 5,
     ...textBoldDark,
     ...font16,
-    marginRight: 5
   },
   caption: {
+    marginTop: 2,
     ...textLite,
-    ...textAlignCenter,
-    marginTop: 2
   },
   voucherContainer: {
-    marginBottom: 10,
-    padding: 0,
+    ...marginBottom10,
+    ...padding0,
   },
   voucherImageContainer: {
-    width: '100%',
-    height: 200,
-  },
-  voucherImg: {
-    width: '100%',
-    height: '100%',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    resizeMode: 'cover'
+    ...w100,
+    ...h200,
+    ...overflowHidden,
+  },
+  voucherImg: {
+    ...wh100,
+    ...resizeModeCover
   },
   costContainer: {
-    position: 'absolute',
     bottom: 10,
     backgroundColor: colors.danger,
-    padding: 10,
-    paddingHorizontal: 15,
     borderTopRightRadius: 50,
     borderBottomRightRadius: 50,
+    ...padding10,
+    ...paddingHorizontal10,
+    ...positionAbsolute,
   },
   cost: {
-    fontWeight: '800',
-    color: '#FFF'
+    ...fontWeight700,
+    ...colorWhite
   },
 });
 

@@ -1,40 +1,45 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
-import styles from './styles';
 import Box from 'components/box';
 import Button from 'components/button';
 import Row from 'components/row';
 import Progress from 'components/progress';
-import Divider from 'components/divider';
+import { IMAGE_URL } from 'constants/common';
+import { calculatePercentage } from 'constants/commonFunctions';
+import styles from './styles';
 
-export default function VoucherInfo() {
+export default function VoucherInfo({ data }) {
+  const { t, i18n } = useTranslation();
+  let language = i18n.language;
+
   return (
     <Card style={styles.voucherContainer}>
       <View style={styles.voucherImageContainer}>
-        <Image source={{ uri: 'https://cdn.shopify.com/s/files/1/0067/3307/0421/files/WhatsApp_Image_2020-03-17_at_5.44.59_PM.jpeg?v=1584439244' }} style={styles.voucherImg} />
+        <Image source={{ uri: IMAGE_URL + data?.featured_img?.url }} style={styles.voucherImg} />
       </View>
       <Row padding={10} paddingBottom={5}>
         <Box width="70%">
-          <Row marginBottom={1}>
-            <Text style={styles.infoTitle}>Buy</Text>
-            <Text style={styles.infoCaption}>Xzero Pen</Text>
-          </Row>
-          <Row>
-            <Text style={styles.infoTitle}>Win</Text>
-            <Text style={styles.infoCaption}>Iphone Pro 12 Gold</Text>
-          </Row>
+          <Text numberOfLines={1}>
+            <Text style={styles.title}>{t('buy')} </Text>
+            <Text style={styles.caption}>{data?.[`buy_title_${language}`]}</Text>
+          </Text>
+          <Text numberOfLines={1}>
+            <Text style={styles.title}>{t('win')} </Text>
+            <Text style={styles.caption} numberOfLines={1}>{data?.[`win_title_${language}`]}</Text>
+          </Text>
         </Box>
         <Box width="30%" marginTop={2}>
-          <Button status="chip_1" size="small" icon="share-alt">Share</Button>
+          <Button status="chip_1" size="small" icon="share-alt">{t('share')}</Button>
         </Box>
       </Row>
       <Box padding={10} paddingTop={5}>
-        <Progress percent={30} countText="300 out of 700" />
+        <Progress percent={calculatePercentage(data?.total_bought, data?.limit)} countText={`${data?.total_bought} ${t('out of')} ${data?.limit}`} colorful />
       </Box>
       <Box padding={10} paddingTop={0}>
-        <Text style={styles.caption}>Check below for more details on the product, gift and prize details</Text>
+        <Text style={styles.caption}>{t('check_below_for_more')}</Text>
       </Box>
     </Card>
   )

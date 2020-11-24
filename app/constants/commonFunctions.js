@@ -98,3 +98,8 @@ export const handleServerDOB = (dobDate) => {
 
   return year + '-' + month + "-" + day;
 }
+
+export const calculatePercentage = (y, x) => {
+  let p = y / x;
+  return Math.round(p * 100);
+}

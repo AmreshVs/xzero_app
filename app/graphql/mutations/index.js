@@ -161,3 +161,20 @@ export const GENERATE_GIFT = gql`
     }
   }
 `;
+
+export const BUY_VOUCHER = gql`
+  mutation BuyVoucher($user_id: Int!, $voucher_id: Int!){
+    BuyVoucher(user_id: $user_id, voucher_id: $voucher_id){
+      disabled
+      bought
+      VoucherAvailed{
+        id
+        user{
+          username
+          email
+        }
+        is_won
+      }
+    }
+  }
+`;

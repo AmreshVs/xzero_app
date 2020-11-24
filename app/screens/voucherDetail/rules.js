@@ -1,16 +1,27 @@
 import React from 'react';
-import { Image, Text } from 'react-native';
+import { Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
 import styles from './styles';
 
-export default function Rules() {
+export default function Rules({ data }) {
+  const { t, i18n } = useTranslation();
+  const language = i18n.language;
+
   return (
     <Card marginBottom={10}>
-      <Text style={styles.title}>Rules</Text>
-      <Text style={styles.caption}>
-        {` 1. Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n2. Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n3. Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n4. Lorem Ipsum is simply dummy text of the printing and typesetting industry.`}
-      </Text>
+      <Text style={styles.title}>{t('rules')}</Text>
+      {data?.[`title_${language}`].split('\n').map((rule, index) => {
+        if (rule !== '') {
+          return (
+            <Text style={styles.caption} key={index}>
+              {index + 1 + '. ' + rule}
+            </Text>
+          );
+        }
+        return null;
+      })}
     </Card>
   )
 }

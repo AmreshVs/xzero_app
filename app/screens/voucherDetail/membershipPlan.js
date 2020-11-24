@@ -1,16 +1,19 @@
 import React from 'react';
 import { Image, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
-import styles from './styles';
 import { IMAGE_URL } from 'constants/common';
+import styles from './styles';
 
-export default function MembershipPlan() {
+export default function MembershipPlan({ data }) {
+  const { t } = useTranslation();
+
   return (
     <Card paddingBottom={15}>
-      <Image source={{ uri: IMAGE_URL + '/uploads/Xzero_Diamond_Plan_78a6d8c86e.png' }} style={styles.membershipImg} />
-      <Text style={styles.title}>Free Xzero Diamond Membership</Text>
-      <Text style={styles.caption}>{`Enjoy all the benefits of Xzero Memership for 1 Year`}</Text>
+      <Image source={{ uri: IMAGE_URL + data?.featured_img?.url }} style={styles.membershipImg} />
+      <Text style={styles.title}>Xzero {data?.name_en} Membership</Text>
+      <Text style={styles.caption}>{`${t('enjoy_all_benefits')} 1 Year`}</Text>
     </Card>
   )
 }
