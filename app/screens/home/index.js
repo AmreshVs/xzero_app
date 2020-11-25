@@ -14,7 +14,7 @@ import Button from 'components/button';
 import Row from 'components/row';
 import { GET_HOME } from 'graphql/queries';
 import MembershipBox from './membershipBox';
-import { GIFTS, VOUCHERS } from 'navigation/routes';
+import { GIFTS, MY_VOUCHERS, VOUCHERS } from 'navigation/routes';
 import styles from './styles';
 
 export default function Home({ navigation }) {
@@ -72,6 +72,9 @@ export default function Home({ navigation }) {
             {t('gifts')}
           </Button>
         </Row>
+        <Button icon="gifts" width="48%" onPress={() => navigation.push(MY_VOUCHERS)}>
+          My Vouchers
+        </Button>
       </Box>
     );
   };

@@ -17,6 +17,20 @@ import Favourites from 'screens/favourites';
 import Membership from 'screens/membership';
 import User from 'screens/user';
 import Payment from 'screens/payment';
+import Notifications from 'screens/notifications';
+import PaymentStatus from 'screens/paymentStatus';
+import SpecialistHelp from 'screens/specialistHelp';
+import Specialists from 'screens/specialists';
+import SpecialistDetail from 'screens/specialistDetail';
+import Privacy from 'screens/privacy';
+import Terms from 'screens/terms';
+import ForgotPassword from 'screens/forgotPassword';
+import Gifts from 'screens/gifts';
+import Vouchers from 'screens/vouchers';
+import NewUpdate from 'screens/newUpdate';
+import VoucherDetail from 'screens/voucherDetail';
+import MyVouchers from 'screens/myVouchers';
+import Refer from 'screens/refer';
 import {
   LOGIN_SCREEN,
   HOME_SCREEN,
@@ -43,19 +57,9 @@ import {
   VOUCHERS,
   NEW_UPDATE,
   VOUCHER_DETAIL,
+  MY_VOUCHERS,
+  REFER,
 } from './routes';
-import Notifications from 'screens/notifications';
-import PaymentStatus from 'screens/paymentStatus';
-import SpecialistHelp from 'screens/specialistHelp';
-import Specialists from 'screens/specialists';
-import SpecialistDetail from 'screens/specialistDetail';
-import Privacy from 'screens/privacy';
-import Terms from 'screens/terms';
-import ForgotPassword from 'screens/forgotPassword';
-import Gifts from 'screens/gifts';
-import Vouchers from 'screens/vouchers';
-import NewUpdate from 'screens/newUpdate';
-import VoucherDetail from 'screens/voucherDetail';
 import { UserDataContext } from 'context';
 
 const Tab = createBottomTabNavigator();
@@ -75,7 +79,7 @@ const Stack = createStackNavigator();
 
 function StackNavigation() {
   return (
-    <Stack.Navigator initialRouteName={VOUCHERS} headerMode="none">
+    <Stack.Navigator initialRouteName={REFER} headerMode="none">
       <Stack.Screen name={MAIN_SCREEN} component={Main} />
       <Stack.Screen name={HOME_SCREEN} component={HomeNavigation} />
       <Stack.Screen name={LOGIN_SCREEN} component={Login} />
@@ -94,6 +98,8 @@ function StackNavigation() {
       <Stack.Screen name={VOUCHERS} component={Vouchers} />
       <Stack.Screen name={NEW_UPDATE} component={NewUpdate} />
       <Stack.Screen name={VOUCHER_DETAIL} component={VoucherDetail} />
+      <Stack.Screen name={MY_VOUCHERS} component={MyVouchers} />
+      <Stack.Screen name={REFER} component={Refer} />
     </Stack.Navigator>
   );
 }

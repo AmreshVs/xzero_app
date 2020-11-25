@@ -16,6 +16,8 @@ export const GIFTS = 'Gifts';
 export const VOUCHERS = 'Vouchers';
 export const NEW_UPDATE = 'NewUpdate';
 export const VOUCHER_DETAIL = 'VoucherDetail';
+export const MY_VOUCHERS = 'MyVouchers';
+export const REFER = 'Refer';
 
 // Tab Routes
 export const HOME_TAB_SCREEN = 'Home';

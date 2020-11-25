@@ -375,3 +375,53 @@ export const VOUCHER_DETAIL = gql`
     }
   }
 `;
+
+export const MY_VOUCHER_BOUGHT = gql`
+  query VoucherAvailed($user_id: Int!){
+    voucherAvaileds(where: {
+      user: $user_id,
+      is_won: 0
+    }){
+      id
+      voucher{
+        id
+        featured_img{
+          url
+        }
+        buy_title_en
+        buy_title_ar
+        win_title_en
+        win_title_ar
+        cost
+      }
+      user{
+        id
+      }
+    }
+  }
+`;
+
+export const MY_VOUCHER_WON = gql`
+  query VoucherAvailed($user_id: Int!){
+    voucherAvaileds(where: {
+      user: $user_id,
+      is_won: 1
+    }){
+      id
+      voucher{
+        id
+        featured_img{
+          url
+        }
+        buy_title_en
+        buy_title_ar
+        win_title_en
+        win_title_ar
+        cost
+      }
+      user{
+        id
+      }
+    }
+  }
+`;

@@ -5,10 +5,10 @@ import { useApolloClient } from '@apollo/client';
 
 import Card from 'components/card';
 import Button from 'components/button';
-import styles from './styles';
 import { GENERATE_GIFT } from 'graphql/mutations';
 import { UserDataContext } from 'context';
 import { IMAGE_URL } from 'constants/common';
+import styles from './styles';
 
 export default function GenerateGift() {
   const [loading, setLoading] = useState(false);
