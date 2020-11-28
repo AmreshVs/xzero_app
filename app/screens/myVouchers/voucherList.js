@@ -7,9 +7,9 @@ import Card from 'components/card';
 import { IMAGE_URL } from 'constants/common';
 import Box from 'components/box';
 import Row from 'components/row';
-import styles from './styles';
 import RippleFX from 'components/rippleFx';
 import { VOUCHER_DETAIL } from 'navigation/routes';
+import styles from './styles';
 
 export default function VoucherList({ data }) {
   const { t, i18n } = useTranslation();

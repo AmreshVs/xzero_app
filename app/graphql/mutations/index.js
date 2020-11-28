@@ -178,3 +178,15 @@ export const BUY_VOUCHER = gql`
     }
   }
 `;
+
+export const APPLY_PROMOCODE = gql`
+  mutation ApplyPromocode($user_id: Int!, $price: Int!, $promocode: String!){
+    ApplyPromocode(user: $user_id, price: $price, promocode: $promocode){
+      discount
+      applied
+      promoCodeAapplied
+      discountYouGet
+      discountedPrice
+    }
+  }
+`;

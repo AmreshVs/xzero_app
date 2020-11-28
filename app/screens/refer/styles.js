@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
     backgroundColor: '#FFF',
   },
   share: {
@@ -13,12 +12,15 @@ const styles = StyleSheet.create({
     marginTop: -5
   },
   shareContainer: {
-    alignItems: 'center',
     padding: 10,
     paddingTop: 0
   },
   referTitle: {
     fontSize: 16,
+    fontWeight: '700',
+    color: colors.text_dark
+  },
+  title: {
     fontWeight: '700',
     color: colors.text_dark
   },
@@ -39,13 +41,11 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   countsContainer: {
-    width: '49%',
+    width: '48.7%',
     padding: 10,
-    alignItems: 'center',
     borderRadius: 10,
     borderWidth: 2,
     borderColor: '#EEE',
-    marginHorizontal: 5,
   },
   count: {
     fontSize: 18,
@@ -64,6 +64,27 @@ const styles = StyleSheet.create({
   check: {
     width: '100%',
     marginTop: 10
+  },
+  historyContainer: {
+    padding: 10
+  },
+  referContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+    alignItems: 'center'
+  },
+  earned: {
+    fontWeight: '700',
+    color: colors.success,
+  },
+  withdrawAmt: {
+    fontWeight: '700',
+    color: colors.danger,
+  },
+  modal: {
+    paddingBottom: 70,
+    backgroundColor: '#EEE',
+    borderRadius: 10
   }
 });
 

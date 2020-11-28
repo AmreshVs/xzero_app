@@ -26,7 +26,7 @@ export default function Button({
 
   return (
     <View style={styles.btnContainer}>
-      {disabled || loading && <View style={styles.disabled} />}
+      {(disabled || loading) && <View style={styles.disabled} />}
       <RippleFX onPress={onPress || null}>
         <View style={[style, buttonStyle]}>
           {loading ? (
@@ -100,7 +100,7 @@ const getStyles = (colors, status, width, color, size) => {
       height: '100%',
       width: '100%',
       position: 'absolute',
-      zIndex: 1,
+      zIndex: 99999999,
       opacity: 0.2,
     },
   });

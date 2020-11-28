@@ -25,6 +25,7 @@ export default function Row({
           flexDirection: 'row',
           alignItems: vcenter ? 'center' : 'flex-start',
           justifyContent: getJustifyContent(),
+          flexWrap: 'wrap',
           ...otherStyles,
         },
       }),

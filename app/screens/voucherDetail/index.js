@@ -80,11 +80,11 @@ export default function VoucherDetail({ navigation }) {
       <Modalize ref={modalizeRef} childrenStyle={styles.modal} modalHeight={SCREEN_HEIGHT / 1.5} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}>
         <SafeView style={styles.safeView} noTop>
           <DeliveryAddress />
-          <ApplyPromocode />
+          <ApplyPromocode price={voucher?.cost} />
           <View style={styles.continueButton}>
             <Button onPress={() => navigation.push(PAYMENT, {
               currency_code: 'AED',
-              amount: data?.cost,
+              amount: voucher?.cost,
               multiplier: 100,
               voucher_id: data?.id
             })}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Text } from 'react-native';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';

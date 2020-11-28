@@ -79,7 +79,7 @@ const Stack = createStackNavigator();
 
 function StackNavigation() {
   return (
-    <Stack.Navigator initialRouteName={REFER} headerMode="none">
+    <Stack.Navigator initialRouteName={MAIN_SCREEN} headerMode="none">
       <Stack.Screen name={MAIN_SCREEN} component={Main} />
       <Stack.Screen name={HOME_SCREEN} component={HomeNavigation} />
       <Stack.Screen name={LOGIN_SCREEN} component={Login} />
