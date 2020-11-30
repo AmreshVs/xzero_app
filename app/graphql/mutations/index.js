@@ -163,8 +163,8 @@ export const GENERATE_GIFT = gql`
 `;
 
 export const BUY_VOUCHER = gql`
-  mutation BuyVoucher($user_id: Int!, $voucher_id: Int!){
-    BuyVoucher(user_id: $user_id, voucher_id: $voucher_id){
+  mutation BuyVoucher($user_id: Int!, $voucher_id: Int!, $promocode: String){
+    BuyVoucher(user_id: $user_id, voucher_id: $voucher_id, promocode: $promocode){
       disabled
       bought
       VoucherAvailed{
@@ -184,7 +184,7 @@ export const APPLY_PROMOCODE = gql`
     ApplyPromocode(user: $user_id, price: $price, promocode: $promocode){
       discount
       applied
-      promoCodeAapplied
+      promoCodeApplied
       discountYouGet
       discountedPrice
     }

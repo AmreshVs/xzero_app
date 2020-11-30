@@ -40,11 +40,10 @@ const styles = StyleSheet.create({
   },
   continueButton: {
     width: '100%',
-    position: 'absolute',
-    bottom: 0,
-  },
-  safeView: {
-    height: SCREEN_HEIGHT / 2.1
+    // height: SCREEN_HEIGHT / 1.6,
+    // position: 'absolute',
+    // justifyContent: 'flex-end',
+    // zIndex: -1,
   },
   membershipImg: {
     width: '100%',

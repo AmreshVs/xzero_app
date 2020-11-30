@@ -30,14 +30,14 @@ export default function Button({
       <RippleFX onPress={onPress || null}>
         <View style={[style, buttonStyle]}>
           {loading ? (
-            <Spinner />
+            <Spinner color={colors[status]} />
           ) : (
               <>
                 {icon && (
                   <FontAwesomeIcon
                     style={styles.icon}
                     icon={icon}
-                    color={iconColor || colors.white}
+                    color={iconColor || outline ? colors[status] : colors.white}
                   />
                 )}
                 <Text style={textStyle}>{children}</Text>
@@ -71,29 +71,27 @@ const getStyles = (colors, status, width, color, size) => {
     },
     button: {
       backgroundColor: btnColor,
-      padding: size === 'small' ? 8 : 14,
+      padding: size === 'small' ? 7 : 14,
       borderRadius: 30,
       ...centerStyle,
     },
     outlineButton: {
       borderColor: color || btnColor,
-      borderWidth: 2,
-      padding: 14,
+      borderWidth: 1.5,
+      padding: size === 'small' ? 6 : 14,
       borderRadius: 30,
       ...centerStyle,
     },
     text: {
       color: color || colors.white,
-      fontSize: 16,
       fontWeight: '700',
     },
     outlineText: {
       color: color || btnColor,
-      fontSize: 16,
       fontWeight: '700',
     },
     icon: {
-      marginRight: 10,
+      marginRight: 5,
     },
     disabled: {
       backgroundColor: '#FFF',

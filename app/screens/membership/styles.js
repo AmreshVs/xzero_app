@@ -3,8 +3,12 @@ import { StyleSheet } from 'react-native';
 import { getShadowStyle } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT } from 'constants/common';
 import { colorWhite, h100, marginTop10, textBoldDark, textLite, marginTop5, margin10, w100, marginBottom5, textAlignLeft, wh100, padding15, borderRadius10, font18, positionAbsolute, flexSpaceBetween, colorDanger, marginBottom0, paddingHorizontal10, marginHorizontal10, justifyContentCenter, alignItemsCenter, resizeModeContain, w200, h200 } from 'constants/commonStyles';
+import colors from 'constants/colors';
 
 const styles = StyleSheet.create({
+  safeContainer: {
+    ...h100
+  },
   benefitsContainer: {
     ...marginTop10,
     ...marginHorizontal10,
@@ -105,6 +109,49 @@ const styles = StyleSheet.create({
   imageContainer: {
     ...justifyContentCenter,
     ...alignItemsCenter
+  },
+  modal: {
+    backgroundColor: colors.lite_gray,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  planCard: {
+    margin: 10,
+    marginBottom: 0,
+    padding: 0,
+  },
+  planColor: {
+    height: 50,
+    width: 50,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+  },
+  planTitle: {
+    color: colors.text_dark,
+    fontWeight: '700',
+    fontSize: 17
+  },
+  caption: {
+    color: colors.text_lite
+  },
+  price: {
+    color: colors.primary,
+    fontWeight: '700',
+    fontSize: 17
+  },
+  selectedPlan: {
+    borderWidth: 2,
+    borderColor: colors.gradient2,
+  },
+  ripplePlan: {
+    padding: 10
+  },
+  footer: {
+    borderTopWidth: 2,
+    borderColor: '#EEE',
+    padding: 10
   }
 });
 

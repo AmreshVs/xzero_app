@@ -51,39 +51,37 @@ const Favourites = () => {
   };
 
   return (
-    <>
-      <SafeView noBottom loading={loading}>
-        {data?.favouritesByUser === null || !data?.favouritesByUser.length ? (
-          <NoData reload={() => reload()} reloading={reloading} />
-        ) : (
-            <>
-              <TopStatusBar />
-              <FlatList
-                key={(item) => String(item.id)}
-                data={data?.favouritesByUser}
-                renderItem={({ item }) => (
-                  <Offer data={{ ...item, is_favourite: true }} favourites={() => reload()} />
-                )}
-                initialNumToRender={6}
-                contentContainerStyle={styles.flatlist}
-                refreshing={reloading}
-                onRefresh={() => reload()}
-                removeClippedSubviews={true}
-              />
-              <View style={styles.clearButton}>
-                <Button
-                  icon="broom"
-                  status="danger"
-                  onPress={() => handleClearAll()}
-                  loading={reloading}
-                >
-                  {t('clear_all')}
-                </Button>
-              </View>
-            </>
-          )}
-      </SafeView>
-    </>
+    <SafeView noBottom loading={loading}>
+      {data?.favouritesByUser === null || !data?.favouritesByUser.length ? (
+        <NoData reload={() => reload()} reloading={reloading} />
+      ) : (
+          <>
+            <TopStatusBar />
+            <FlatList
+              key={(item) => String(item.id)}
+              data={data?.favouritesByUser}
+              renderItem={({ item }) => (
+                <Offer data={{ ...item, is_favourite: true }} favourites={() => reload()} />
+              )}
+              initialNumToRender={6}
+              contentContainerStyle={styles.flatlist}
+              refreshing={reloading}
+              onRefresh={() => reload()}
+              removeClippedSubviews={true}
+            />
+            <View style={styles.clearButton}>
+              <Button
+                icon="broom"
+                status="danger"
+                onPress={() => handleClearAll()}
+                loading={reloading}
+              >
+                {t('clear_all')}
+              </Button>
+            </View>
+          </>
+        )}
+    </SafeView>
   );
 };
 

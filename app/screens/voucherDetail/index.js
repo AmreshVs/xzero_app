@@ -10,8 +10,8 @@ import TopNavigator from 'components/topNavigator';
 import Button from 'components/button';
 import ApplyPromocode from 'components/applyPromocode';
 import DeliveryAddress from 'components/deliveryAddress';
-import { SCREEN_HEIGHT } from 'constants/common';
 import NoData from 'components/noData';
+import Box from 'components/box';
 import VoucherInfo from './voucherInfo';
 import Buy from './buy';
 import Win from './win';
@@ -27,6 +27,7 @@ import styles from './styles';
 export default function VoucherDetail({ navigation }) {
   const { t } = useTranslation();
   const [reloading, setReloading] = useState(false);
+  const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
   const modalizeRef = useRef(null);
   const { params } = useRoute();
 
@@ -37,6 +38,7 @@ export default function VoucherDetail({ navigation }) {
   });
 
   const handleOpenModal = () => {
+    setPromocodeData({ discountedPrice: data?.voucher?.cost });
     modalizeRef.current?.open();
   };
 
@@ -77,21 +79,20 @@ export default function VoucherDetail({ navigation }) {
             </View>
           </>
         )}
-      <Modalize ref={modalizeRef} childrenStyle={styles.modal} modalHeight={SCREEN_HEIGHT / 1.5} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}>
-        <SafeView style={styles.safeView} noTop>
-          <DeliveryAddress />
-          <ApplyPromocode price={voucher?.cost} />
-          <View style={styles.continueButton}>
-            <Button onPress={() => navigation.push(PAYMENT, {
-              currency_code: 'AED',
-              amount: voucher?.cost,
-              multiplier: 100,
-              voucher_id: data?.id
-            })}>
-              {t('continue_to_pay')} {voucher?.cost} {t('aed')}
-            </Button>
-          </View>
-        </SafeView>
+      <Modalize ref={modalizeRef} childrenStyle={styles.modal} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}>
+        <DeliveryAddress />
+        <ApplyPromocode voucherPrice={voucher?.cost} price={promocodeData?.discountedPrice} setPromocodeData={setPromocodeData} />
+        <Box marginTop={10}>
+          <Button onPress={() => navigation.push(PAYMENT, {
+            currency_code: 'AED',
+            amount: promocodeData?.discountedPrice,
+            multiplier: 100,
+            voucher_id: voucher?.id,
+            promocode: promocodeData?.promoCodeApplied
+          })}>
+            {t('continue_to_pay')} {promocodeData?.discountedPrice} {t('aed')}
+          </Button>
+        </Box>
       </Modalize>
     </SafeView >
   )

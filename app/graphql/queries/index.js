@@ -425,3 +425,21 @@ export const MY_VOUCHER_WON = gql`
     }
   }
 `;
+
+export const MEMBERSHIP_PLANS = gql`
+  query{
+    membershipPlans( sort: "price:desc" ,where: { status: true }){
+      id
+      featured_img{
+        url
+      }
+      name_en
+      name_ar
+      desc_en
+      desc_ar
+      duration
+      price
+      color
+    }
+  }
+`;

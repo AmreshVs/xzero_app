@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import WebView from 'react-native-webview';
 import RippleFX from 'components/rippleFx';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -14,6 +14,7 @@ import { PAYMENT_STATUS } from 'navigation/routes';
 import { getUserData, getJWT } from 'constants/commonFunctions';
 import { BUY_VOUCHER, GENERATE_MEMBESHIP } from 'graphql/mutations';
 import Loader from 'components/loader';
+import { UserDataContext } from 'context';
 import styles from './styles';
 
 var captured = false;
@@ -25,6 +26,7 @@ export default function Payment() {
     url: '',
     access_token: '',
   };
+  const { userData } = useContext(UserDataContext);
   const { replace } = useNavigation();
   const { params } = useRoute();
   const [state, setState] = useState(initialState);
@@ -121,28 +123,27 @@ export default function Payment() {
   const postPayment = async (status) => {
     if (status === 'SUCCESS' || status === 'CAPTURED') {
       setState({ ...state, reloading: true });
-      let { id } = await getUserData();
       let jwt = await getJWT();
-
       if (params?.voucher_id) {
         await client.mutate({
           mutation: BUY_VOUCHER,
           variables: {
-            user_id: id,
+            user_id: Number(userData?.id),
             voucher_id: Number(params?.voucher_id),
+            promocode: params?.promocode || ""
           },
-          context: {
-            headers: {
-              authorization: 'Bearer ' + jwt,
-            },
-          },
+          // context: {
+          //   headers: {
+          //     authorization: 'Bearer ' + jwt,
+          //   },
+          // },
         });
       }
       else {
         await client.mutate({
           mutation: GENERATE_MEMBESHIP,
           variables: {
-            user_id: id,
+            user_id: Number(userData?.id),
             amount: Number(params?.amount),
           },
           context: {
