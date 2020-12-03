@@ -47,7 +47,7 @@ export default function ProfileView({ data }) {
     try {
       await AsyncStorage.setItem('@xzero_user', JSON.stringify(userDataWithLanguage));
     } catch (e) {
-      console.error('User Data Save', e);
+      // console.error('User Data Save', e);
     }
   };
 

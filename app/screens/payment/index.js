@@ -144,7 +144,8 @@ export default function Payment() {
           mutation: GENERATE_MEMBESHIP,
           variables: {
             user_id: Number(userData?.id),
-            amount: Number(params?.amount),
+            plan: Number(params?.plan),
+            promocode: params?.promocode
           },
           context: {
             headers: {

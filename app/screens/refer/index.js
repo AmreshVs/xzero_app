@@ -40,7 +40,7 @@ export default function Refer() {
         tintColor: colors.primary,
         dialogTitle: 'Refer your friends'
       });
-      console.log(result)
+
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
           // shared with activity type of result.activityType

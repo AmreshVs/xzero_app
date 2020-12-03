@@ -84,7 +84,8 @@ const Membership = () => {
     let jwt = await getJWT();
     if (jwt !== '' && jwt !== null) {
       setReloading(true);
-      getMemberData(jwt);
+      setLoading(true);
+      getMemberData();
       setReloading(false);
     }
   };
@@ -94,7 +95,7 @@ const Membership = () => {
   };
 
   const confirmBuy = () => {
-    push(PAYMENT, { ...note.membershipData, amount: promocodeData?.discountedPrice });
+    push(PAYMENT, { ...note.membershipData, amount: promocodeData?.discountedPrice, plan: planData?.data?.id, promocode: promocodeData?.promoCodeApplied });
   };
 
   expiryMonth = new Date(memberData?.expiry).getMonth() + 1;
@@ -129,7 +130,7 @@ const Membership = () => {
           <Renew membershipData={note.membershipData} expired />
         ) : null}
         {!member && <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />}
-        {member && numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? <GetHelp /> : null}
+        {!member || numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? <GetHelp /> : null}
       </ScrollView>
       <Modalize ref={modalizeRef} childrenStyle={styles.modal} modalTopOffset={250} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
         FooterComponent={
@@ -143,11 +144,27 @@ const Membership = () => {
         </Box>
         {membershipPlansData?.membershipPlans && membershipPlansData?.membershipPlans.map((plan, index) => {
           return (
-            <Plan data={plan} index={index} planIndex={planData?.index} key={index} setPlanData={setPlanData} setPromocodeData={setPromocodeData} />
+            <Plan
+              data={plan}
+              index={index}
+              planIndex={planData?.index}
+              setPlanData={setPlanData}
+              setPromocodeData={setPromocodeData}
+              key={index}
+            />
           )
         })}
+        <Card margin={10} marginBottom={0}>
+          <Text style={styles.planTitle}>{`${planData?.data?.name_en || membershipPlansData?.membershipPlans[0]?.name_en} Benefits`}</Text>
+          <Text style={styles.caption}>{planData?.data?.desc_en || membershipPlansData?.membershipPlans[0]?.desc_en}</Text>
+        </Card>
         <Card margin={10}>
-          <ApplyPromocode voucherPrice={Number(promocodeData?.discountedPrice || firstPlanPrice)} price={promocodeData?.discountedPrice} promocodeData={promocodeData} setPromocodeData={setPromocodeData} />
+          <ApplyPromocode
+            voucherPrice={Number(promocodeData?.discountedPrice || firstPlanPrice)}
+            price={promocodeData?.discountedPrice}
+            promocodeData={promocodeData}
+            setPromocodeData={setPromocodeData}
+          />
         </Card>
       </Modalize>
     </SafeView>

@@ -61,27 +61,6 @@ export default function Home({ navigation }) {
     );
   };
 
-  const Footer = () => {
-    return (
-      <Box padding={10} paddingTop={0}>
-        <Row spaceBetween>
-          <Button icon="ticket-alt" width="48%" onPress={() => navigation.push(VOUCHERS)}>
-            {t('vouchers')}
-          </Button>
-          <Button icon="gifts" width="48%" onPress={() => navigation.push(GIFTS)}>
-            {t('gifts')}
-          </Button>
-        </Row>
-        <Button icon="gifts" width="48%" onPress={() => navigation.push(MY_VOUCHERS)}>
-          My Vouchers
-        </Button>
-        <Button icon="gifts" width="48%" onPress={() => navigation.push(REFER)}>
-          Refer
-        </Button>
-      </Box>
-    );
-  };
-
   return (
     <SafeView loading={loading} noTop noBottom>
       <ScrollView
@@ -91,7 +70,6 @@ export default function Home({ navigation }) {
         removeClippedSubviews={true}
       >
         <Header />
-        <Footer />
       </ScrollView>
     </SafeView>
   );

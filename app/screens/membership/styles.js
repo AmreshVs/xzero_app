@@ -7,7 +7,7 @@ import colors from 'constants/colors';
 
 const styles = StyleSheet.create({
   safeContainer: {
-    ...h100
+    ...h100,
   },
   benefitsContainer: {
     ...marginTop10,
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
   },
   helpCaption: {
     ...textLite,
-    ...marginBottom5
+    ...marginBottom5,
+    ...w100
   },
   memberContainer: {
     height: 230,

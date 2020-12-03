@@ -13,6 +13,7 @@ import Row from 'components/row';
 import useUserData from 'hooks/useUserData';
 import { firstLetterUpper, getUserData } from 'constants/commonFunctions';
 import AsyncStorage from '@react-native-community/async-storage';
+import { GIFTS, NOTIFICATIONS } from 'navigation/routes';
 import styles from './styles';
 
 const TopSection = () => {
@@ -38,15 +39,22 @@ const TopSection = () => {
       <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={styles.gradient} />
       <SafeView style={styles.topSectionContainer} noBottom>
         <Box style={styles.navContainer}>
-          <RippleFX style={styles.iconContainer} onPress={() => toggleDrawer()}>
-            <FontAwesomeIcon icon="bars" color={colors.white} size={20} />
-          </RippleFX>
+          <Row>
+            <RippleFX style={styles.iconContainer} onPress={() => toggleDrawer()}>
+              <FontAwesomeIcon icon="bars" color={colors.white} size={20} />
+            </RippleFX>
+            <Box marginLeft={-15}>
+              <RippleFX style={styles.iconContainer} onPress={() => push(GIFTS)}>
+                <FontAwesomeIcon icon="gift" color={colors.white} size={20} />
+              </RippleFX>
+            </Box>
+          </Row>
           <Row marginRight={10}>
-            <RippleFX style={styles.iconContainer} onPress={() => push('Notifications')}>
+            <RippleFX style={styles.iconContainer} onPress={() => push(NOTIFICATIONS)}>
               <FontAwesomeIcon icon="bell" color={colors.white} size={20} />
             </RippleFX>
             <RippleFX style={styles.iconContainer} onPress={() => handleLangSelect()}>
-              <Row vcenter>
+              <Row flexWrap="nowrap" vcenter>
                 <FontAwesomeIcon icon="globe" color={colors.white} size={20} />
                 <Text style={styles.language}>{i18n.language === 'en' ? 'AR' : 'EN'}</Text>
               </Row>

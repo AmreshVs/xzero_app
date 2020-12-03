@@ -70,6 +70,7 @@ function HomeNavigation() {
       <Tab.Screen name={HOME_TAB_SCREEN} component={Home} />
       <Tab.Screen name={FAVOURITES_TAB_SCREEN} component={Favourites} />
       <Tab.Screen name={MEMBERSHIP_TAB_SCREEN} component={Membership} />
+      <Tab.Screen name={VOUCHERS} component={Vouchers} />
       <Tab.Screen name={PROFILE_TAB_SCREEN} component={User} />
     </Tab.Navigator>
   );
@@ -115,6 +116,8 @@ function Navigation() {
         <UserDataContext.Provider value={{ userData, setUserData }}>
           <Drawer.Navigator initialRouteName={DRAWER_HOME} drawerType="slide">
             <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
+            <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} />
+            <Drawer.Screen name={REFER} component={Refer} />
             <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
             <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
           </Drawer.Navigator>

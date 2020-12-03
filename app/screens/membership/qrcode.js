@@ -12,7 +12,7 @@ export default function QRCode({ data }) {
   return (
     <Card margin={10} marginBottom={0}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: 'http://localhost:1337' + data?.qrcode_url }} style={styles.qrcode} />
+        <Image source={{ uri: IMAGE_URL + data?.qrcode_url }} style={styles.qrcode} />
         <Text style={styles.helpCaption}>{t('center_scan')}</Text>
       </View>
     </Card>

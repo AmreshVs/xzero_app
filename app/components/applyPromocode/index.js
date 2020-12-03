@@ -15,7 +15,6 @@ import { APPLY_PROMOCODE } from 'graphql/mutations';
 let promoApplied = 0;
 
 export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, promocodeData }) {
-  console.log(voucherPrice, price)
   const { userData } = useContext(UserDataContext);
   const client = useApolloClient();
   const { t } = useTranslation();

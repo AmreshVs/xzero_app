@@ -129,8 +129,8 @@ export const UPDATE_NOTIFICATION_TOKEN = gql`
 `;
 
 export const GENERATE_MEMBESHIP = gql`
-  mutation generateMembership($user_id: ID!, $amount: Int!){
-    generateMembership(user_id: $user_id, amount: $amount){
+  mutation generateMembership($user_id: ID!, $plan: Int!, $promocode: String){
+    generateMembership(user_id: $user_id, plan: $plan, promocode: $promocode){
       id
       serial
       expiry

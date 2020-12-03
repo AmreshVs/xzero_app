@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import RippleFX from 'components/rippleFx';
 import colors from 'constants/colors';
 import isIphoneX from 'components/bottomTab/isIphoneX';
-
+console.log(StatusBar.currentHeight);
 export default function TopNavigator({
   title,
   style,

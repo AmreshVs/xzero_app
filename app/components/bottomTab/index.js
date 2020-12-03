@@ -10,7 +10,7 @@ import isIphoneX from './isIphoneX';
 
 export default function BottomTab({ state, descriptors, navigation }) {
   const insets = useSafeAreaInsets();
-
+  console.log(isIphoneX());
   const styles = StyleSheet.create({
     tabContainer: {
       backgroundColor: colors.white,
@@ -30,6 +30,17 @@ export default function BottomTab({ state, descriptors, navigation }) {
       borderRadius: 50,
       overflow: 'hidden',
     },
+    memberIconContainer: {
+      alignItems: 'center',
+      padding: 18,
+      borderRadius: 50,
+      overflow: 'hidden',
+      backgroundColor: colors.primary,
+      marginTop: -20,
+      position: 'absolute',
+      borderWidth: 2,
+      borderColor: colors.text_lite
+    },
   });
 
   return (
@@ -40,8 +51,8 @@ export default function BottomTab({ state, descriptors, navigation }) {
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
 
         const isFocused = state.index === index;
 
@@ -62,6 +73,29 @@ export default function BottomTab({ state, descriptors, navigation }) {
             target: route.key,
           });
         };
+
+        if (route.name === 'Member') {
+          return (
+            <View style={styles.tabItem} key={index}>
+              <RippleFX
+                accessibilityRole="button"
+                accessibilityStates={isFocused ? ['selected'] : []}
+                accessibilityLabel={options.tabBarAccessibilityLabel}
+                testID={options.tabBarTestID}
+                onPress={onPress}
+                onLongPress={onLongPress}
+                style={styles.memberIconContainer}
+              >
+                <FontAwesomeIcon
+                  icon={getIconName(route.name)}
+                  color={colors.white}
+                  size={26}
+                />
+                {/* <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>{label}</Text> */}
+              </RippleFX>
+            </View>
+          )
+        }
 
         return (
           <View style={styles.tabItem} key={index}>
