@@ -60,6 +60,12 @@ const styles = StyleSheet.create({
     ...font18,
     ...colorWhite,
   },
+  memberPlanTitle: {
+    fontWeight: '800',
+    textTransform: 'uppercase',
+    ...font18,
+    ...colorWhite,
+  },
   cardName: {
     ...colorWhite,
   },

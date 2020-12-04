@@ -7,7 +7,6 @@ import { getShadowStyle } from 'constants/commonFunctions';
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    position: 'relative'
   },
   imgContainer: {
     height: SCREEN_HEIGHT / 4,
@@ -40,10 +39,6 @@ const styles = StyleSheet.create({
   },
   continueButton: {
     width: '100%',
-    // height: SCREEN_HEIGHT / 1.6,
-    // position: 'absolute',
-    // justifyContent: 'flex-end',
-    // zIndex: -1,
   },
   membershipImg: {
     width: '100%',
@@ -78,6 +73,12 @@ const styles = StyleSheet.create({
   },
   modal: {
     padding: 15,
+  },
+  footer: {
+    borderTopWidth: 2,
+    borderColor: '#EEE',
+    padding: 10,
+    paddingBottom: 80
   }
 });
 

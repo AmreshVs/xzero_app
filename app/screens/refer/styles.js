@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '700',
-    color: colors.text_dark
+    color: colors.text_dark,
+    marginBottom: 3
   },
   gradient: {
     padding: 10,
@@ -38,7 +39,6 @@ const styles = StyleSheet.create({
   },
   caption: {
     color: colors.text_lite,
-    textAlign: 'center'
   },
   countsContainer: {
     width: '48.7%',
@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
   },
   referContainer: {
     flexDirection: 'row',
-    marginBottom: 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingVertical: 5
   },
   earned: {
     fontWeight: '700',

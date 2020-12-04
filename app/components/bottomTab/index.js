@@ -10,7 +10,6 @@ import isIphoneX from './isIphoneX';
 
 export default function BottomTab({ state, descriptors, navigation }) {
   const insets = useSafeAreaInsets();
-  console.log(isIphoneX());
   const styles = StyleSheet.create({
     tabContainer: {
       backgroundColor: colors.white,

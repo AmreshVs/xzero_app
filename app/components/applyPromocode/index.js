@@ -23,7 +23,7 @@ export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, 
   const [appliedPromocode, setAppliedPromocode] = useState({});
 
   useEffect(() => {
-    if (Object.keys(promocodeData).length <= 1 && promoApplied === 1) {
+    if (promocodeData && Object.keys(promocodeData).length <= 1 && promoApplied === 1) {
       clearPromocode();
       promoApplied = 0;
     }

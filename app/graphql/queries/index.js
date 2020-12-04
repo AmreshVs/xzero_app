@@ -128,6 +128,14 @@ export const GET_MEMBERSHIP_BY_USER = gql`
       serial
       expiry
       qrcode_url
+      package{
+        id
+        name_en
+        name_ar
+        featured_img{
+          url
+        }
+      }
       user{
         username
         email

@@ -77,23 +77,31 @@ export default function VoucherDetail({ navigation }) {
             <View style={styles.buyNowButton}>
               <Button onPress={() => handleOpenModal()}>{voucher?.cost} {t('aed')} - {t('buy_now')}</Button>
             </View>
+            <Modalize
+              ref={modalizeRef}
+              childrenStyle={styles.modal}
+              modalTopOffset={200}
+              scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
+              FooterComponent={
+                <View style={styles.footer}>
+                  <Button onPress={() => navigation.push(PAYMENT, {
+                    currency_code: 'AED',
+                    amount: promocodeData?.discountedPrice,
+                    multiplier: 100,
+                    voucher_id: voucher?.id,
+                    promocode: promocodeData?.promoCodeApplied
+                  })}>
+                    {t('continue_to_pay')} {promocodeData?.discountedPrice} {t('aed')}
+                  </Button>
+                </View>
+              }
+            >
+              <DeliveryAddress />
+              <Box marginVertical={10} />
+              <ApplyPromocode voucherPrice={voucher?.cost} price={promocodeData?.discountedPrice} setPromocodeData={setPromocodeData} />
+            </Modalize>
           </>
         )}
-      <Modalize ref={modalizeRef} childrenStyle={styles.modal} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}>
-        <DeliveryAddress />
-        <ApplyPromocode voucherPrice={voucher?.cost} price={promocodeData?.discountedPrice} setPromocodeData={setPromocodeData} />
-        <Box marginTop={10}>
-          <Button onPress={() => navigation.push(PAYMENT, {
-            currency_code: 'AED',
-            amount: promocodeData?.discountedPrice,
-            multiplier: 100,
-            voucher_id: voucher?.id,
-            promocode: promocodeData?.promoCodeApplied
-          })}>
-            {t('continue_to_pay')} {promocodeData?.discountedPrice} {t('aed')}
-          </Button>
-        </Box>
-      </Modalize>
     </SafeView >
   )
 }

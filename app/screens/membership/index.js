@@ -37,7 +37,7 @@ const Membership = () => {
   const [reloading, setReloading] = useState(false);
   const [memberData, setMemberData] = useState([]);
   const [note, setNote] = useState([]);
-  const [planData, setPlanData] = useState({ index: 0, selected: [] });
+  const [planData, setPlanData] = useState({ index: 0 });
   const modalizeRef = useRef(null);
   const client = useApolloClient();
   const { data: membershipPlansData } = useQuery(MEMBERSHIP_PLANS);
@@ -47,6 +47,7 @@ const Membership = () => {
 
   if (firstPlanPrice !== undefined && render === 0) {
     setPromocodeData({ discountedPrice: firstPlanPrice });
+    setPlanData({ ...planData, data: membershipPlansData?.membershipPlans[0] });
     render = 1;
   }
 
@@ -85,6 +86,8 @@ const Membership = () => {
     if (jwt !== '' && jwt !== null) {
       setReloading(true);
       setLoading(true);
+      setMember(false);
+      setMemberData([]);
       getMemberData();
       setReloading(false);
     }
@@ -132,7 +135,11 @@ const Membership = () => {
         {!member && <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />}
         {!member || numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? <GetHelp /> : null}
       </ScrollView>
-      <Modalize ref={modalizeRef} childrenStyle={styles.modal} modalTopOffset={250} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
+      <Modalize
+        ref={modalizeRef}
+        childrenStyle={styles.modal}
+        modalTopOffset={250}
+        scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
         FooterComponent={
           <View style={styles.footer}>
             <Button onPress={confirmBuy}>Buy Membership - {promocodeData?.discountedPrice || firstPlanPrice} AED</Button>

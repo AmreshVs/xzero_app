@@ -140,19 +140,25 @@ export default function Payment() {
         });
       }
       else {
-        await client.mutate({
+        console.log({
+          user_id: Number(userData?.id),
+          plan: Number(params?.plan),
+          promocode: params?.promocode
+        });
+        let data = await client.mutate({
           mutation: GENERATE_MEMBESHIP,
           variables: {
             user_id: Number(userData?.id),
             plan: Number(params?.plan),
             promocode: params?.promocode
           },
-          context: {
-            headers: {
-              authorization: 'Bearer ' + jwt,
-            },
-          },
+          // context: {
+          //   headers: {
+          //     authorization: 'Bearer ' + jwt,
+          //   },
+          // },
         });
+        console.log(data)
       }
       setState({ ...state, reloading: false });
       replace(PAYMENT_STATUS, { status: true });

@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import RippleFX from 'components/rippleFx';
 import colors from 'constants/colors';
 import isIphoneX from 'components/bottomTab/isIphoneX';
-console.log(StatusBar.currentHeight);
+
 export default function TopNavigator({
   title,
   style,
