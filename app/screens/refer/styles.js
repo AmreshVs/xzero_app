@@ -40,9 +40,13 @@ const styles = StyleSheet.create({
   caption: {
     color: colors.text_lite,
   },
+  referCaption: {
+    color: colors.text_lite,
+    textAlign: 'center'
+  },
   countsContainer: {
-    width: '48.7%',
-    padding: 10,
+    width: '31.5%',
+    padding: 5,
     borderRadius: 10,
     borderWidth: 2,
     borderColor: '#EEE',
@@ -55,11 +59,12 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   iconContainer: {
-    width: '30%',
-    height: 50,
+    width: '100%',
+    height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5
+    borderRadius: 5,
+    marginBottom: 10
   },
   check: {
     width: '100%',

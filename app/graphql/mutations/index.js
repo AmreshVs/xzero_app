@@ -182,14 +182,40 @@ export const BUY_VOUCHER = gql`
   }
 `;
 
-export const APPLY_PROMOCODE = gql`
-  mutation ApplyPromocode($user_id: Int!, $price: Int!, $promocode: String!){
-    ApplyPromocode(user: $user_id, price: $price, promocode: $promocode){
+export const APPLY_CODE = gql`
+  mutation ApplyCode($receiver: Int!, $price: Int!, $code: String!){
+    ApplyCode(receiver: $receiver, price: $price, code: $code){
       discount
       applied
-      promoCodeApplied
+      codeApplied
       discountYouGet
       discountedPrice
     }
   }
 `;
+
+export const EDIT_ADDRESS = gql`
+  mutation EditAddress($user_id: ID!, $username: String, $mobile_number: Long, $address: String){
+    updateUser(input: {
+      where: {
+        id: $user_id
+      },
+      data: {
+        username: $username,
+        mobile_number: $mobile_number,
+        address: $address
+      }
+    }){
+      user{
+        id
+        username
+        mobile_number
+        address
+      }
+    }
+  }
+`;
+
+// export const WITHDRAW_AMOUNT = gql`
+
+// `;

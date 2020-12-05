@@ -451,3 +451,41 @@ export const MEMBERSHIP_PLANS = gql`
     }
   }
 `;
+
+export const GET_ADDRESS = gql`
+  query GetAddress($user_id: ID!){
+    user(id: $user_id){
+      username
+      mobile_number
+      address
+    }
+  }
+`;
+
+export const GET_REFER_HISTORY = gql`
+  query GetReferHistory($user_id: Int!){
+    GetReferHistory(referrer: $user_id) {
+      referralCode
+      totalEarned
+      totalReferred
+      balance
+    }
+  }
+`;
+
+export const REFER_HISTORY = gql`
+  query ReferralCodeTransactions($referrer: Int!){
+    referralCodeTransactions(where: {
+      referrer: $referrer
+    }){
+      id
+      user{
+        id
+        username
+        mobile_number
+      }
+      referrer_credit
+      created_at
+    }
+  }
+`;

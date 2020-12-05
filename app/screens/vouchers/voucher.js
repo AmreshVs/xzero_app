@@ -15,7 +15,7 @@ import RippleFX from 'components/rippleFx';
 import { useNavigation } from '@react-navigation/native';
 import { PAYMENT, VOUCHER_DETAIL } from 'navigation/routes';
 
-export default function Voucher({ data }) {
+export default function Voucher({ data, handleOpenModal }) {
   const { t } = useTranslation();
   const { push } = useNavigation();
 
@@ -48,11 +48,7 @@ export default function Voucher({ data }) {
         </Box>
         <Box width="30%" marginTop={2}>
           <Button size="small" onPress={() => {
-            push(PAYMENT, {
-              currency_code: 'AED',
-              amount: data?.cost,
-              multiplier: 100
-            });
+            handleOpenModal(data);
           }}>
             {t('buy_now')}
           </Button>

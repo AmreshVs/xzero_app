@@ -92,20 +92,24 @@ export default function EditBankInfo({ setEdit, data }) {
         }) => (
             <>
               {(inputs).map(
-                ({ name, icon, marginTop }, index) => (
-                  <View key={index}>
-                    <Textbox
-                      placeholder={name.charAt(0).toUpperCase() + name.slice(1)}
-                      value={values[name]}
-                      onChangeText={handleChange(name)}
-                      icon={icon}
-                      marginTop={marginTop}
-                      onBlur={() => setFieldTouched(name)}
-                      autoCapitalize="none"
-                    />
-                    <FormError touched={touched[name]} errorText={errors[name]} />
-                  </View>
-                )
+                ({ name, icon, marginTop }, index) => {
+                  let newName = name.replace('_', ' ');
+                  return (
+                    <View key={index}>
+                      <Textbox
+                        name={name}
+                        placeholder={newName.charAt(0).toUpperCase() + newName.slice(1)}
+                        value={values[newName]}
+                        onChangeText={handleChange(newName)}
+                        icon={icon}
+                        marginTop={marginTop}
+                        onBlur={() => setFieldTouched(newName)}
+                        autoCapitalize="none"
+                      />
+                      <FormError touched={touched[newName]} errorText={errors[newName]} />
+                    </View>
+                  )
+                }
               )}
               <Row marginTop={20} justifyContent="flex-end">
                 <Button

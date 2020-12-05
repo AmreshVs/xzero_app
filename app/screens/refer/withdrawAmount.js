@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text } from 'react-native';
+import { useApolloClient } from '@apollo/client';
 
 import Box from 'components/box';
 import Card from 'components/card';
@@ -8,14 +9,23 @@ import Row from 'components/row';
 import Textbox from 'components/textbox';
 import Button from 'components/button';
 import { ToastMsg } from 'components/toastMsg';
+import { UserDataContext } from 'context';
 import styles from './styles';
 
 const WithdrawAmount = () => {
   const [amount, setAmount] = useState('');
+  const { userData } = useContext(UserDataContext);
+  const client = useApolloClient();
 
-  const handleWithdraw = () => {
-    if (amount > 5) {
-      ToastMsg('Amount cannot be more than 5');
+  const handleWithdraw = async () => {
+    if (amount < 30) {
+      ToastMsg('Amount cannot be less than 30 AED');
+    }
+    else if (amount >= 200) {
+      ToastMsg('Amount cannot be more than your wallet balance');
+    }
+    else {
+      // const data = 
     }
   };
 
@@ -29,6 +39,7 @@ const WithdrawAmount = () => {
         <Box width="58%">
           <Textbox
             placeholder="Enter amount in AED"
+            icon="money-bill"
             value={String(amount)}
             onChangeText={(text) => setAmount(text)}
             keyboardType='numeric'
@@ -36,9 +47,12 @@ const WithdrawAmount = () => {
           />
         </Box>
         <Box width="40%">
-          <Button icon="bolt" onPress={() => handleWithdraw()} disabled={amount === ''}>Withdraw</Button>
+          <Button icon="coins" onPress={() => handleWithdraw()} disabled={amount === ''}>Withdraw</Button>
         </Box>
       </Row>
+      <Box paddingTop={10}>
+        <Text style={styles.caption}>Note: Mininum wallet balance to withdraw is 30 AED</Text>
+      </Box>
     </Card>
   );
 };

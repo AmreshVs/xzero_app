@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { ScrollView, Text, View, Share } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import LottieView from 'lottie-react-native';
+import { useQuery } from '@apollo/client';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
@@ -10,25 +11,42 @@ import colors from 'constants/colors';
 import Row from 'components/row';
 import Box from 'components/box';
 import Button from 'components/button';
+import RippleFX from 'components/rippleFx';
 import ReferHistory from './referHistory';
 import styles from './styles';
 import Withdraw from './withdraw';
+import Column from 'components/column';
+import { UserDataContext } from 'context';
+import { GET_REFER_HISTORY } from 'graphql/queries';
 
 export default function Refer() {
   const [modalComp, setModalComp] = useState(false);
+  const [playAnim, setPlayAnim] = useState(true);
   const shareRef = useRef(null);
   const modalizeRef = useRef(null);
+  const { userData } = useContext(UserDataContext);
+  const { data, loading } = useQuery(GET_REFER_HISTORY, {
+    variables: {
+      user_id: Number(userData?.id)
+    }
+  });
 
   const handleOpenModal = (status) => {
     setModalComp(status);
     modalizeRef.current?.open();
   };
 
-  useEffect(() => {
+  const handlePlayAnim = () => {
     if (shareRef.current) {
+      if (playAnim) {
+        shareRef.current.reset();
+        setPlayAnim(!playAnim);
+        return;
+      }
       shareRef.current.play();
+      setPlayAnim(!playAnim);
     }
-  }, []);
+  }
 
   const handleShare = async () => {
     try {
@@ -56,40 +74,52 @@ export default function Refer() {
   }
 
   return (
-    <SafeView style={styles.container} topNav>
+    <SafeView style={styles.container} loading={loading} topNav>
       <TopNavigator title="Refer and Earn" gradient />
       <ScrollView contentContainerStyle={styles.shareContainer}>
         <Box alignItems="center">
-          <LottieView
-            ref={shareRef}
-            style={styles.share}
-            source={require("../../../assets/share.json")}
-          />
+          <RippleFX onPress={handlePlayAnim}>
+            <LottieView
+              ref={shareRef}
+              style={styles.share}
+              source={require("../../../assets/share.json")}
+              autoPlay
+            />
+          </RippleFX>
           <Text style={styles.referTitle}>Your Referral Code is</Text>
           <View style={styles.gradient}>
-            <Text style={styles.code}>ASD0SA57</Text>
+            <Text style={styles.code}>{data?.GetReferHistory?.referralCode}</Text>
           </View>
           <Text style={styles.caption}>{`Refer the app to your friends and family members. While buying membership or paying for voucher ask them to use this code to get discount. And you will receive the discounted amount to your xzero account.\nRefer and start Earning now!`}</Text>
         </Box>
         <Row justifyContent="space-between" marginTop={10}>
-          <Row style={styles.countsContainer}>
-            <Box style={styles.iconContainer} backgroundColor={colors.chip_1}>
-              <FontAwesomeIcon icon="bullhorn" size={25} color="#FFF" />
+          <Column style={styles.countsContainer}>
+            <Box style={styles.iconContainer} backgroundColor="#d8ddfe">
+              <FontAwesomeIcon icon="bullhorn" size={25} color={colors.chip_1} />
             </Box>
-            <Box width="70%">
-              <Text style={styles.count}>50</Text>
-              <Text style={styles.caption}>Total Referred</Text>
+            <Box width="100%">
+              <Text style={styles.count}>{data?.GetReferHistory?.totalReferred || 0}</Text>
+              <Text style={styles.referCaption}>Total Referred</Text>
             </Box>
-          </Row>
-          <Row style={styles.countsContainer}>
-            <Box style={styles.iconContainer} backgroundColor={colors.chip_2}>
-              <FontAwesomeIcon icon="money-bill-wave" size={25} color="#FFF" />
+          </Column>
+          <Column style={styles.countsContainer}>
+            <Box style={styles.iconContainer} backgroundColor="#fee5d0">
+              <FontAwesomeIcon icon="money-bill-wave" size={25} color={colors.chip_2} />
             </Box>
-            <Box width="70%">
-              <Text style={styles.count}>200 AED</Text>
-              <Text style={styles.caption}>Total Earned</Text>
+            <Box width="100%">
+              <Text style={styles.count}>{data?.GetReferHistory?.totalEarned} AED</Text>
+              <Text style={styles.referCaption}>Total Earned</Text>
             </Box>
-          </Row>
+          </Column>
+          <Column style={styles.countsContainer}>
+            <Box style={styles.iconContainer} backgroundColor="#fbcfd0">
+              <FontAwesomeIcon icon="coins" size={25} color={colors.danger} />
+            </Box>
+            <Box width="100%">
+              <Text style={styles.count}>{data?.GetReferHistory?.balance || 0} AED</Text>
+              <Text style={styles.referCaption}>Wallet Balance</Text>
+            </Box>
+          </Column>
         </Row>
         <Row style={styles.check} justifyContent="space-between">
           <Button width="49%" status="chip_1" icon="history" onPress={() => handleOpenModal(true)}>Refer History</Button>

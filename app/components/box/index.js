@@ -1,7 +1,8 @@
+import Loader from 'components/loader';
 import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-export default function Box({ children, padding, style, ...otherStyles }) {
+export default function Box({ children, padding, style, loading, ...otherStyles }) {
   const styles = useMemo(
     () =>
       StyleSheet.create({
@@ -13,5 +14,5 @@ export default function Box({ children, padding, style, ...otherStyles }) {
     []
   );
 
-  return <View style={[style, styles.container]}>{children}</View>;
+  return <View style={[style, styles.container]}>{loading ? <Loader spinner /> : children}</View>;
 }

@@ -39,7 +39,8 @@ export const client = new ApolloClient({
           favouritesByUser: useIncomingData,
           memberships: useIncomingData,
           notifications: useIncomingData,
-          voucherAvaileds: useIncomingData
+          voucherAvaileds: useIncomingData,
+          UsersPermissionsUser: useIncomingData
         }
       }
     }

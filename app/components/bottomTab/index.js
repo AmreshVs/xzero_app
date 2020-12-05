@@ -31,11 +31,11 @@ export default function BottomTab({ state, descriptors, navigation }) {
     },
     memberIconContainer: {
       alignItems: 'center',
-      padding: 18,
+      padding: 16,
       borderRadius: 50,
       overflow: 'hidden',
       backgroundColor: colors.primary,
-      marginTop: -20,
+      marginTop: -10,
       position: 'absolute',
       borderWidth: 2,
       borderColor: colors.text_lite

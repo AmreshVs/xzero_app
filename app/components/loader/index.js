@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
 
-export default function Loader() {
+export default function Loader({ spinner = false }) {
   return (
     <View style={styles.container}>
-      <Image source={require('../../../assets/loader.gif')} style={styles.image} />
+      {!spinner ?
+        <Image source={require('../../../assets/loader.gif')} style={styles.image} />
+        :
+        <ActivityIndicator />
+      }
     </View>
   );
 }

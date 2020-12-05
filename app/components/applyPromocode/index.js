@@ -10,7 +10,7 @@ import Box from 'components/box';
 import Row from 'components/row';
 import { font16, font17, fontWeight700, marginTop10, paddingTop10, textBoldDark, textLite } from 'constants/commonStyles';
 import { UserDataContext } from 'context';
-import { APPLY_PROMOCODE } from 'graphql/mutations';
+import { APPLY_CODE } from 'graphql/mutations';
 
 let promoApplied = 0;
 
@@ -32,18 +32,18 @@ export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, 
   const handleApply = async () => {
     setLoading(true);
     const { data } = await client.mutate({
-      mutation: APPLY_PROMOCODE,
+      mutation: APPLY_CODE,
       variables: {
-        user_id: Number(userData?.id),
+        receiver: Number(userData?.id),
         price: Number(price),
-        promocode
+        code: promocode
       }
     });
 
-    if (data?.ApplyPromocode?.applied) {
+    if (data?.ApplyCode?.applied) {
       promoApplied = 1;
-      setPromocodeData(data?.ApplyPromocode);
-      setAppliedPromocode(data?.ApplyPromocode);
+      setPromocodeData(data?.ApplyCode);
+      setAppliedPromocode(data?.ApplyCode);
     }
 
     setLoading(false);
@@ -63,7 +63,7 @@ export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, 
             <Text style={styles.title}>Applied Promocode / Referal code</Text>
             <Row justifyContent="space-between" marginTop={5}>
               <Box width="35%">
-                <Text style={styles.code}>{appliedPromocode?.promoCodeApplied}</Text>
+                <Text style={styles.code}>{appliedPromocode?.codeApplied}</Text>
               </Box>
               <Box>
                 <Text style={styles.promoText}>Discount</Text>

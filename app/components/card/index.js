@@ -2,8 +2,9 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import colors from 'constants/colors';
 import { getShadowStyle } from 'constants/commonFunctions';
+import Loader from 'components/loader';
 
-export default function Card({ children, style, ...otherStyles }) {
+export default function Card({ children, style, loading, ...otherStyles }) {
   const styles = StyleSheet.create({
     container: {
       padding: 10,
@@ -14,5 +15,5 @@ export default function Card({ children, style, ...otherStyles }) {
     },
   });
 
-  return <View style={[styles.container, style]}>{children}</View>;
+  return <View style={[styles.container, style]}>{loading ? <Loader spinner /> : children}</View>;
 }

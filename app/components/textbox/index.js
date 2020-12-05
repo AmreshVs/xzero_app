@@ -51,7 +51,7 @@ export default function Textbox({
 
 const textboxStyle = (multiline) => {
   return {
-    height: 50,
+    height: 45,
     width: '100%',
     borderRadius: 50,
     borderWidth: 1,
@@ -73,7 +73,7 @@ const dynamicStyles = ({ multiline }) => StyleSheet.create({
     borderColor: colors.primary,
   },
   outlined: {
-    height: 40,
+    height: 45,
     width: '100%',
     borderBottomWidth: 1,
     borderColor: colors.primary,

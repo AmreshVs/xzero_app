@@ -72,13 +72,15 @@ const styles = StyleSheet.create({
     marginTop: 2
   },
   modal: {
-    padding: 15,
+    backgroundColor: '#EEE',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   footer: {
     borderTopWidth: 2,
     borderColor: '#EEE',
     padding: 10,
-    paddingBottom: 80
+    paddingBottom: 30
   }
 });
 

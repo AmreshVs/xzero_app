@@ -26,14 +26,9 @@ export const passwordValidationSchema = () =>
       .label('Retype Password'),
   });
 
-export const passwordInputs = [
-  { name: 'password', icon: 'key' },
-  { name: 'repassword', icon: 'key' },
-];
-
 export const inputs = [
-  { name: 'bank name', icon: 'at' },
-  { name: 'holder name', icon: 'phone-alt' },
-  { name: 'account number', icon: 'birthday-cake' },
-  { name: 'IBAN number', icon: 'birthday-cake' },
+  { name: 'bank_name', icon: 'university' },
+  { name: 'holder_name', icon: 'user' },
+  { name: 'account_number', icon: 'grip-horizontal' },
+  { name: 'IBAN_number', icon: 'grip-horizontal' },
 ];

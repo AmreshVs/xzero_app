@@ -13,7 +13,7 @@ const Plan = ({ data, index, planIndex, setPlanData, setPromocodeData }) => {
 
   return (
     <Card style={[styles.planCard, index === planIndex ? styles.selectedPlan : {}]}>
-      <RippleFX style={styles.ripplePlan} onPress={() => {
+      <RippleFX style={styles.ripplePlan} rippleSize={200} onPress={() => {
         setPlanData({ index, data });
         setPromocodeData({ discountedPrice: data?.price });
       }}>
