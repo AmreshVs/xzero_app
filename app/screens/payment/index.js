@@ -124,13 +124,14 @@ export default function Payment() {
     if (status === 'SUCCESS' || status === 'CAPTURED') {
       setState({ ...state, reloading: true });
       let jwt = await getJWT();
+
       if (params?.voucher_id) {
         await client.mutate({
           mutation: BUY_VOUCHER,
           variables: {
             user_id: Number(userData?.id),
             voucher_id: Number(params?.voucher_id),
-            promocode: params?.promocode || ""
+            code: params?.promocode || ""
           },
           // context: {
           //   headers: {
@@ -140,17 +141,12 @@ export default function Payment() {
         });
       }
       else {
-        console.log({
-          user_id: Number(userData?.id),
-          plan: Number(params?.plan),
-          promocode: params?.promocode
-        });
-        let data = await client.mutate({
+        await client.mutate({
           mutation: GENERATE_MEMBESHIP,
           variables: {
             user_id: Number(userData?.id),
             plan: Number(params?.plan),
-            promocode: params?.promocode
+            code: params?.promocode
           },
           // context: {
           //   headers: {
@@ -158,7 +154,6 @@ export default function Payment() {
           //   },
           // },
         });
-        console.log(data)
       }
       setState({ ...state, reloading: false });
       replace(PAYMENT_STATUS, { status: true });

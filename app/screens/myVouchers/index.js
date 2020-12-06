@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
@@ -22,6 +23,7 @@ export default function MyVouchers() {
   const [data, setData] = useState([]);
   const { userData } = useContext(UserDataContext);
   const client = useApolloClient();
+  const { t } = useTranslation();
 
   const reload = async () => {
     setReloading(true);
@@ -34,8 +36,8 @@ export default function MyVouchers() {
   }, []);
 
   const tab = [
-    { id: 0, name: 'Bought' },
-    { id: 1, name: 'Won' },
+    { id: 0, name: t('bought') },
+    { id: 1, name: t('won') },
   ];
 
   const handlePress = async (tab) => {
@@ -53,7 +55,7 @@ export default function MyVouchers() {
 
   return (
     <SafeView topNav>
-      <TopNavigator title="My Vouchers" gradient />
+      <TopNavigator title={t('my_vouchers')} gradient />
       <Row>
         {tab.map((item, index) => (
           <RippleFX style={[styles.textContainer, select === item?.id ? styles.selectedBorder : {}]} onPress={() => handlePress(item?.id)} key={index}>

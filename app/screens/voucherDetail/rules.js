@@ -7,7 +7,7 @@ import styles from './styles';
 
 export default function Rules({ data }) {
   const { t, i18n } = useTranslation();
-  const language = i18n.language;
+  let language = i18n.language;
 
   return (
     <Card marginBottom={10}>

@@ -10,14 +10,11 @@ import Heading from 'components/heading';
 import Categories from './categories';
 import TopSection from './topSection';
 import TopCenters from './topCenters';
-import Button from 'components/button';
-import Row from 'components/row';
 import { GET_HOME } from 'graphql/queries';
 import MembershipBox from './membershipBox';
-import { GIFTS, MY_VOUCHERS, REFER, VOUCHERS } from 'navigation/routes';
 import styles from './styles';
 
-export default function Home({ navigation }) {
+export default function Home() {
   const { data, loading, refetch } = useQuery(GET_HOME);
   const [reloading, setReloading] = useState(false);
   const { t } = useTranslation();

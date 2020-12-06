@@ -27,7 +27,7 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
           amount: promocodeData?.discountedPrice,
           multiplier: 100,
           voucher_id: voucher?.id,
-          promocode: promocodeData?.promoCodeApplied
+          promocode: promocodeData?.codeApplied
         })}>
           {t('continue_to_pay')} {promocodeData?.discountedPrice} {t('aed')}
         </Button>

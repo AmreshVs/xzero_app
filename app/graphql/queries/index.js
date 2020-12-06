@@ -469,6 +469,11 @@ export const GET_REFER_HISTORY = gql`
       totalEarned
       totalReferred
       balance
+      referProgram{
+				discount
+        allowed_maximum_discount
+        minimum_withdrawal_amount
+      }
     }
   }
 `;
@@ -486,6 +491,40 @@ export const REFER_HISTORY = gql`
       }
       referrer_credit
       created_at
+    }
+  }
+`;
+
+export const APPLY_CODE = gql`
+  query ApplyCode($receiver: Int!, $price: Int!, $code: String!){
+    ApplyCode(receiver: $receiver, price: $price, code: $code){
+      discount
+      applied
+      codeApplied
+      discountYouGet
+      discountedPrice
+    }
+  }
+`;
+
+export const WITHDRAW_HISTORY = gql`
+  query TranscationInfo($user_id: Int!){
+    TransactionInfo(user: $user_id){
+      userBankDetails{
+        id
+        holder_name
+        bank_name
+        account_number
+        iban
+      }
+      withdrawalHistory{
+        id
+        withdraw_amount
+        remaining_amount
+        total_amount
+        withdrawal_status
+        created_at
+      }
     }
   }
 `;

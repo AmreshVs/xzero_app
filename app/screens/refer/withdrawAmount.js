@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Text } from 'react-native';
 import { useApolloClient } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
 import Box from 'components/box';
 import Card from 'components/card';
@@ -11,34 +12,53 @@ import Button from 'components/button';
 import { ToastMsg } from 'components/toastMsg';
 import { UserDataContext } from 'context';
 import styles from './styles';
+import { WITHDRAW_AMOUNT } from 'graphql/mutations';
 
-const WithdrawAmount = () => {
+const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
   const [amount, setAmount] = useState('');
+  const [loading, setLoading] = useState(false);
   const { userData } = useContext(UserDataContext);
   const client = useApolloClient();
+  const { t } = useTranslation();
 
   const handleWithdraw = async () => {
-    if (amount < 30) {
-      ToastMsg('Amount cannot be less than 30 AED');
+    setLoading(true);
+    if (amount < min_withdraw) {
+      ToastMsg(`Amount cannot be less than ${min_withdraw} AED`);
     }
-    else if (amount >= 200) {
+    else if (amount >= balance) {
       ToastMsg('Amount cannot be more than your wallet balance');
     }
     else {
-      // const data = 
+      const { data } = await client.mutate({
+        mutation: WITHDRAW_AMOUNT,
+        variables: {
+          user_id: Number(userData?.id),
+          withdraw_amount: Number(amount)
+        }
+      });
+      if (data?.WithdrawMoney?.msg === 'success') {
+        setAmount('');
+        ToastMsg('Your request is submitted, Please wait for the transaction to complete!');
+        reload();
+      }
     }
+    setLoading(false);
   };
 
   return (
-    <Card>
+    <Card marginBottom={10}>
       <Column marginBottom={10}>
-        <Text style={styles.referTitle}>Withdraw</Text>
-        <Text style={styles.caption}>Total Earnings 200 AED</Text>
+        <Text style={styles.referTitle}>{t('withdraw')}</Text>
+        <Row>
+          <Text style={styles.caption}>{t('total_earnings')}</Text>
+          <Text style={styles.caption}> {balance} {t('aed')}</Text>
+        </Row>
       </Column>
       <Row justifyContent="space-between">
         <Box width="58%">
           <Textbox
-            placeholder="Enter amount in AED"
+            placeholder={t('enter_amount')}
             icon="money-bill"
             value={String(amount)}
             onChangeText={(text) => setAmount(text)}
@@ -47,12 +67,13 @@ const WithdrawAmount = () => {
           />
         </Box>
         <Box width="40%">
-          <Button icon="coins" onPress={() => handleWithdraw()} disabled={amount === ''}>Withdraw</Button>
+          <Button icon="coins" onPress={() => handleWithdraw()} disabled={amount === ''} loading={loading}>{t('withdraw')}</Button>
         </Box>
       </Row>
-      <Box paddingTop={10}>
-        <Text style={styles.caption}>Note: Mininum wallet balance to withdraw is 30 AED</Text>
-      </Box>
+      <Row paddingTop={10}>
+        <Text style={styles.caption}>{t('minimun_wallet_balance')}</Text>
+        <Text style={styles.caption}>{min_withdraw} {t('aed')}</Text>
+      </Row>
     </Card>
   );
 };

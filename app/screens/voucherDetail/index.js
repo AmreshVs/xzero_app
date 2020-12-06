@@ -49,7 +49,7 @@ export default function VoucherDetail() {
   return (
     <>
       <SafeView loading={loading} topNav>
-        <TopNavigator gradient title="Voucher Detail" />
+        <TopNavigator gradient title={t('voucher_detail')} />
         {!data?.voucher ? (
           <NoData topNav />
         ) : (
@@ -72,7 +72,7 @@ export default function VoucherDetail() {
                 <Help />
               </ScrollView>
               <View style={styles.buyNowButton}>
-                <Button onPress={() => handleOpenModal()}>{voucher?.cost} {t('aed')} - {t('buy_now')}</Button>
+                <Button onPress={() => handleOpenModal()}>{voucher?.cost} {t('buy_now')} - {t('aed')}</Button>
               </View>
             </>
           )}

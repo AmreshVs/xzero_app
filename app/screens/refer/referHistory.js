@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
 import Box from 'components/box';
 import Card from 'components/card';
@@ -9,12 +10,12 @@ import Divider from 'components/divider';
 import { REFER_HISTORY } from 'graphql/queries';
 import styles from './styles';
 import { UserDataContext } from 'context';
-import { SCREEN_HEIGHT } from 'constants/common';
 import { getFormattedDateTime } from 'constants/commonFunctions';
 
 export default function ReferHistory() {
   const { userData } = useContext(UserDataContext);
-  const { data, loading, error } = useQuery(REFER_HISTORY, {
+  const { t } = useTranslation();
+  const { data, loading } = useQuery(REFER_HISTORY, {
     variables: {
       referrer: Number(userData?.id)
     }
@@ -24,7 +25,7 @@ export default function ReferHistory() {
     <View style={styles.historyContainer}>
       <Card overflow="hidden">
         <Box marginBottom={10}>
-          <Text style={styles.referTitle}>Refer History</Text>
+          <Text style={styles.referTitle}>{t('refer_history')}</Text>
         </Box>
         <Box loading={loading}>
           {data?.referralCodeTransactions.length > 0 ?
@@ -37,13 +38,13 @@ export default function ReferHistory() {
                     <Text style={styles.caption}>{getFormattedDateTime(new Date(item?.created_at))}</Text>
                   </Column>
                   <Box width="30%" alignItems="flex-end">
-                    <Text style={styles.earned}>AED {item.referrer_credit} +</Text>
+                    <Text style={styles.earned}>{t('aed')} {item.referrer_credit} +</Text>
                   </Box>
                 </View>
               </View>
             ))
             :
-            <Text>No Referral history! Please refer</Text>
+            <Text>{t('no_referral_history')}</Text>
           }
         </Box>
       </Card>

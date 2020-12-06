@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { getShadowStyle } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT } from 'constants/common';
-import { colorWhite, h100, marginTop10, textBoldDark, textLite, marginTop5, margin10, w100, marginBottom5, textAlignLeft, wh100, padding15, borderRadius10, font18, positionAbsolute, flexSpaceBetween, colorDanger, marginBottom0, paddingHorizontal10, marginHorizontal10, justifyContentCenter, alignItemsCenter, resizeModeContain, w200, h200 } from 'constants/commonStyles';
+import { colorWhite, h100, marginTop10, textBoldDark, textLite, marginTop5, margin10, w100, marginBottom5, textAlignLeft, wh100, padding15, borderRadius10, font18, positionAbsolute, flexSpaceBetween, colorDanger, marginTop0, paddingHorizontal10, marginHorizontal10, justifyContentCenter, alignItemsCenter, resizeModeContain, w200, h200 } from 'constants/commonStyles';
 import colors from 'constants/colors';
 
 const styles = StyleSheet.create({
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     ...h100,
   },
   benefitsContainer: {
-    ...marginTop10,
+    marginVertical: 10,
     ...marginHorizontal10,
   },
   benefitsTitle: {
@@ -21,13 +21,14 @@ const styles = StyleSheet.create({
     ...marginTop5,
   },
   buyMembershipContainer: {
+    ...marginTop0,
     ...margin10,
-    ...marginBottom0,
   },
   buyMembershipText: {
     ...textLite,
   },
   helpContainer: {
+    ...marginTop0,
     ...margin10,
   },
   infoContainer: {
@@ -97,9 +98,8 @@ const styles = StyleSheet.create({
     ...textLite,
   },
   renewContainer: {
-    ...marginHorizontal10,
-    ...marginBottom0,
-    ...marginTop10,
+    ...marginTop0,
+    ...margin10,
   },
   nenewText: {
     ...colorDanger,

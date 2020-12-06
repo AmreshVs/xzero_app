@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import Box from 'components/box';
 import Card from 'components/card';
@@ -10,27 +11,36 @@ import ViewBankInfo from './viewBankInfo';
 import styles from './styles';
 import EditBankInfo from './editBankInfo';
 
-const BankInfo = () => {
+const BankInfo = ({ data, loading, reload }) => {
   const [edit, setEdit] = useState(false);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    if (data === null) {
+      setEdit(true);
+    }
+  }, [data]);
 
   return (
-    <Card marginTop={10}>
+    <Card>
       <Row>
         <Box width="70%">
           <Column marginBottom={10}>
-            <Text style={styles.referTitle}>Bank Details</Text>
-            <Text style={styles.caption}>Please check your bank information before withdraw</Text>
+            <Text style={styles.referTitle}>{t('bank_details')}</Text>
+            <Text style={styles.caption}>{t('before_withdraw')}</Text>
           </Column>
         </Box>
         <Box width="30%" paddingLeft={10}>
-          {!edit && <Button size="small" icon="pen" onPress={() => setEdit(true)}>Edit</Button>}
+          {!edit && <Button size="small" icon="pen" onPress={() => setEdit(true)}>{t('edit')}</Button>}
         </Box>
       </Row>
-      {!edit ?
-        <ViewBankInfo />
-        :
-        <EditBankInfo setEdit={setEdit} />
-      }
+      <Box loading={loading}>
+        {!edit ?
+          <ViewBankInfo data={data} />
+          :
+          <EditBankInfo data={data} setEdit={setEdit} reload={reload} />
+        }
+      </Box>
     </Card>
   );
 };

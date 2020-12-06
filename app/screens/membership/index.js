@@ -3,6 +3,7 @@ import { ScrollView, RefreshControl, Text, View } from 'react-native';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { Modalize } from 'react-native-modalize';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 import SafeView from 'components/safeView';
 import Note from './note';
@@ -43,6 +44,9 @@ const Membership = () => {
   const { data: membershipPlansData } = useQuery(MEMBERSHIP_PLANS);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: firstPlanPrice || 0 });
   const { push } = useNavigation();
+  const { t, i18n } = useTranslation();
+  let language = i18n.language;
+
   let firstPlanPrice = membershipPlansData?.membershipPlans[0].price;
 
   if (firstPlanPrice !== undefined && render === 0) {
@@ -142,12 +146,12 @@ const Membership = () => {
         scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
         FooterComponent={
           <View style={styles.footer}>
-            <Button onPress={confirmBuy}>Buy Membership - {promocodeData?.discountedPrice || firstPlanPrice} AED</Button>
+            <Button onPress={confirmBuy}>{t('buy_membership')} - {promocodeData?.discountedPrice || firstPlanPrice} {t('aed')}</Button>
           </View>
         }
       >
         <Box padding={10} paddingBottom={0}>
-          <Text style={styles.planTitle}>Membership Plans</Text>
+          <Text style={styles.planTitle}>{t('membership_plans')}</Text>
         </Box>
         {membershipPlansData?.membershipPlans && membershipPlansData?.membershipPlans.map((plan, index) => {
           return (
@@ -162,8 +166,8 @@ const Membership = () => {
           )
         })}
         <Card margin={10} marginBottom={0}>
-          <Text style={styles.planTitle}>{`${planData?.data?.name_en || membershipPlansData?.membershipPlans[0]?.name_en} Benefits`}</Text>
-          <Text style={styles.caption}>{planData?.data?.desc_en || membershipPlansData?.membershipPlans[0]?.desc_en}</Text>
+          <Text style={styles.planTitle}>{`${planData?.data?.[`name_${language}`] || membershipPlansData?.membershipPlans[0]?.[`name_${language}`]} ${t('benefits')}`}</Text>
+          <Text style={styles.caption}>{planData?.data?.[`desc_${language}`] || membershipPlansData?.membershipPlans[0]?.[`desc_${language}`]}</Text>
         </Card>
         <Card margin={10}>
           <ApplyPromocode

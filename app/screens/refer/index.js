@@ -1,9 +1,10 @@
 import React, { useContext, useRef, useState } from 'react';
-import { ScrollView, Text, View, Share } from 'react-native';
+import { ScrollView, Text, View, Share, RefreshControl } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import LottieView from 'lottie-react-native';
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
+import LottieView from 'lottie-react-native';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
@@ -22,10 +23,13 @@ import { GET_REFER_HISTORY } from 'graphql/queries';
 export default function Refer() {
   const [modalComp, setModalComp] = useState(false);
   const [playAnim, setPlayAnim] = useState(true);
+  const [reloading, setReloading] = useState(false);
   const shareRef = useRef(null);
   const modalizeRef = useRef(null);
   const { userData } = useContext(UserDataContext);
-  const { data, loading } = useQuery(GET_REFER_HISTORY, {
+  const { t } = useTranslation();
+
+  const { data, loading, refetch: _refetch } = useQuery(GET_REFER_HISTORY, {
     variables: {
       user_id: Number(userData?.id)
     }
@@ -46,6 +50,12 @@ export default function Refer() {
       shareRef.current.play();
       setPlayAnim(!playAnim);
     }
+  }
+
+  const reload = () => {
+    setReloading(true);
+    _refetch();
+    setReloading(false);
   }
 
   const handleShare = async () => {
@@ -73,10 +83,15 @@ export default function Refer() {
     }
   }
 
+  let min_withdraw = data?.GetReferHistory?.referProgram?.minimum_withdrawal_amount;
+
   return (
     <SafeView style={styles.container} loading={loading} topNav>
       <TopNavigator title="Refer and Earn" gradient />
-      <ScrollView contentContainerStyle={styles.shareContainer}>
+      <ScrollView
+        contentContainerStyle={styles.shareContainer}
+        refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
+      >
         <Box alignItems="center">
           <RippleFX onPress={handlePlayAnim}>
             <LottieView
@@ -86,11 +101,11 @@ export default function Refer() {
               autoPlay
             />
           </RippleFX>
-          <Text style={styles.referTitle}>Your Referral Code is</Text>
+          <Text style={styles.referTitle}>{t('your_referral_code')}</Text>
           <View style={styles.gradient}>
             <Text style={styles.code}>{data?.GetReferHistory?.referralCode}</Text>
           </View>
-          <Text style={styles.caption}>{`Refer the app to your friends and family members. While buying membership or paying for voucher ask them to use this code to get discount. And you will receive the discounted amount to your xzero account.\nRefer and start Earning now!`}</Text>
+          <Text style={styles.caption}>{t('refer_desc')}</Text>
         </Box>
         <Row justifyContent="space-between" marginTop={10}>
           <Column style={styles.countsContainer}>
@@ -99,7 +114,7 @@ export default function Refer() {
             </Box>
             <Box width="100%">
               <Text style={styles.count}>{data?.GetReferHistory?.totalReferred || 0}</Text>
-              <Text style={styles.referCaption}>Total Referred</Text>
+              <Text style={styles.referCaption}>{t('total_referred')}</Text>
             </Box>
           </Column>
           <Column style={styles.countsContainer}>
@@ -108,7 +123,7 @@ export default function Refer() {
             </Box>
             <Box width="100%">
               <Text style={styles.count}>{data?.GetReferHistory?.totalEarned} AED</Text>
-              <Text style={styles.referCaption}>Total Earned</Text>
+              <Text style={styles.referCaption}>{t('total_earned')}</Text>
             </Box>
           </Column>
           <Column style={styles.countsContainer}>
@@ -117,7 +132,7 @@ export default function Refer() {
             </Box>
             <Box width="100%">
               <Text style={styles.count}>{data?.GetReferHistory?.balance || 0} AED</Text>
-              <Text style={styles.referCaption}>Wallet Balance</Text>
+              <Text style={styles.referCaption}>{t('wallet_balance')}</Text>
             </Box>
           </Column>
         </Row>
@@ -129,11 +144,11 @@ export default function Refer() {
           <Button icon="share-alt" onPress={() => handleShare()}>Refer & Earn Now</Button>
         </Box>
       </ScrollView>
-      <Modalize ref={modalizeRef} childrenStyle={styles.modal} snapPoint={400} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}>
+      <Modalize ref={modalizeRef} childrenStyle={styles.modal} snapPoint={400} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }} onClosed={() => _refetch()}>
         {modalComp ?
           <ReferHistory />
           :
-          <Withdraw />
+          <Withdraw balance={data?.GetReferHistory?.balance || 0} min_withdraw={min_withdraw} />
         }
       </Modalize>
     </SafeView>

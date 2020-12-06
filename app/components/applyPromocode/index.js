@@ -10,7 +10,7 @@ import Box from 'components/box';
 import Row from 'components/row';
 import { font16, font17, fontWeight700, marginTop10, paddingTop10, textBoldDark, textLite } from 'constants/commonStyles';
 import { UserDataContext } from 'context';
-import { APPLY_CODE } from 'graphql/mutations';
+import { APPLY_CODE } from 'graphql/queries';
 
 let promoApplied = 0;
 
@@ -31,8 +31,8 @@ export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, 
 
   const handleApply = async () => {
     setLoading(true);
-    const { data } = await client.mutate({
-      mutation: APPLY_CODE,
+    const { data } = await client.query({
+      query: APPLY_CODE,
       variables: {
         receiver: Number(userData?.id),
         price: Number(price),

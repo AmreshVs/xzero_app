@@ -129,8 +129,8 @@ export const UPDATE_NOTIFICATION_TOKEN = gql`
 `;
 
 export const GENERATE_MEMBESHIP = gql`
-  mutation generateMembership($user_id: ID!, $plan: Int!, $promocode: String){
-    generateMembership(user_id: $user_id, plan: $plan, promocode: $promocode){
+  mutation generateMembership($user_id: ID!, $plan: Int!, $code: String){
+    generateMembership(user_id: $user_id, plan: $plan, code: $code){
       expiry
       membership{
         id
@@ -166,30 +166,10 @@ export const GENERATE_GIFT = gql`
 `;
 
 export const BUY_VOUCHER = gql`
-  mutation BuyVoucher($user_id: Int!, $voucher_id: Int!, $promocode: String){
+  mutation BuyVoucher($user_id: ID!, $voucher_id: Int!, $promocode: String){
     BuyVoucher(user_id: $user_id, voucher_id: $voucher_id, promocode: $promocode){
       disabled
       bought
-      VoucherAvailed{
-        id
-        user{
-          username
-          email
-        }
-        is_won
-      }
-    }
-  }
-`;
-
-export const APPLY_CODE = gql`
-  mutation ApplyCode($receiver: Int!, $price: Int!, $code: String!){
-    ApplyCode(receiver: $receiver, price: $price, code: $code){
-      discount
-      applied
-      codeApplied
-      discountYouGet
-      discountedPrice
     }
   }
 `;
@@ -216,6 +196,61 @@ export const EDIT_ADDRESS = gql`
   }
 `;
 
-// export const WITHDRAW_AMOUNT = gql`
+export const WITHDRAW_AMOUNT = gql`
+  mutation WithdrawMoney($user_id: Int!, $withdraw_amount: Int!){
+    WithdrawMoney(user: $user_id, withdrawAmount: $withdraw_amount){
+      msg
+      withdrawal{
+        id
+        withdraw_amount
+        remaining_amount
+      }
+    }
+  }
+`;
 
-// `;
+export const CREATE_BANK_INFO = gql`
+  mutation CreateBankDetail($user_id: ID!, $bank_name: String!, $account_number: String!, $iban: String!, $holder_name: String!){
+    createBankDetail(input: {
+      data: {
+        user: $user_id,
+        bank_name: $bank_name,
+        account_number: $account_number,
+        iban: $iban,
+        holder_name: $holder_name
+      }
+    }){
+      bankDetail{
+        id
+        holder_name
+        bank_name
+        account_number
+        iban
+      }
+    }
+  }
+`;
+
+export const UPDATE_BANK_INFO = gql`
+  mutation UpdateBankDetail($id: ID!, $bank_name: String!, $account_number: String!, $iban: String!, $holder_name: String!){
+    updateBankDetail(input: {
+      where: {
+        id: $id
+      },
+      data: {
+        bank_name: $bank_name,
+        account_number: $account_number,
+        iban: $iban,
+        holder_name: $holder_name
+      }
+    }){
+      bankDetail{
+        id
+        holder_name
+        bank_name
+        account_number
+        iban
+      }
+    }
+  }
+`;

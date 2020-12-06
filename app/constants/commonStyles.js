@@ -179,6 +179,10 @@ export const margin10 = {
   margin: 10
 }
 
+export const marginTop0 = {
+  marginTop: 0
+}
+
 export const marginTop10 = {
   marginTop: 10
 }

@@ -3,7 +3,7 @@ import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
 
 export default function Loader({ spinner = false }) {
   return (
-    <View style={styles.container}>
+    <View style={!spinner ? styles.container : styles.spinnerContainer}>
       {!spinner ?
         <Image source={require('../../../assets/loader.gif')} style={styles.image} />
         :
@@ -20,6 +20,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFF',
+  },
+  spinnerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 30,
   },
   image: {
     width: 150,

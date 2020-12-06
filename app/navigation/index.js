@@ -61,6 +61,7 @@ import {
   REFER,
 } from './routes';
 import { UserDataContext } from 'context';
+import Loader from 'components/loader';
 
 const Tab = createBottomTabNavigator();
 
@@ -106,13 +107,30 @@ function StackNavigation() {
 }
 
 const Drawer = createDrawerNavigator();
+const prefix = ['xzero://'];
+const config = {
+  screens: {
+    Home: {
+      path: 'home',
+      screens: {
+        Login: {
+          path: 'lo'
+        }
+      }
+    },
+  },
+};
 
 function Navigation() {
   const [userData, setUserData] = useState();
+  const linking = {
+    prefixes: prefix,
+    // config,
+  };
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer linking={linking} fallback={<Loader />}>
         <UserDataContext.Provider value={{ userData, setUserData }}>
           <Drawer.Navigator initialRouteName={DRAWER_HOME} drawerType="slide">
             <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />

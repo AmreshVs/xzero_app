@@ -7,6 +7,7 @@ import Button from 'components/button';
 import Box from 'components/box';
 import Card from 'components/card';
 import { PAYMENT } from 'navigation/routes';
+import styles from './styles';
 
 export default function Renew({ membershipData, expired }) {
   const { push } = useNavigation();

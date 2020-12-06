@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
@@ -8,63 +8,61 @@ import Textbox from 'components/textbox';
 import FormError from 'components/formError';
 import Row from 'components/row';
 import Button from 'components/button';
-import {
-  inputsValidationSchema,
-  inputs,
-} from './helpers';
-import { UPDATE_USER } from 'graphql/mutations';
-import {
-  getJWT,
-  getUserData,
-  handleDOB,
-  handleServerDOB,
-} from 'constants/commonFunctions';
-import { ToastMsg } from 'components/toastMsg';
 import Box from 'components/box';
-import styles from './styles';
+import { ToastMsg } from 'components/toastMsg';
+import { inputsValidationSchema, inputs } from './helpers';
+import { CREATE_BANK_INFO, UPDATE_BANK_INFO } from 'graphql/mutations';
+import { getJWT } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
 
-export default function EditBankInfo({ setEdit, data }) {
+export default function EditBankInfo({ setEdit, data, reload }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const { userData } = useContext(UserDataContext);
   const client = useApolloClient();
 
   const handleSave = async (values) => {
     setLoading(true);
-    let jwt = await getJWT();
-    let { id } = await getUserData();
-    let dob = handleServerDOB(values.dob);
-
-    let data = null;
-
+    // let jwt = await getJWT();
+    let mutationData = null;
     try {
-      let { data: userData } = await client.mutate({
-        mutation: UPDATE_USER,
+      let { data: bankData } = await client.mutate({
+        mutation: data === null ? CREATE_BANK_INFO : UPDATE_BANK_INFO,
         variables: {
-          user_id: Number(id),
-          email: values.email,
-          mobile_number: Number(values.phone),
-          dob: new Date(dob),
+          id: Number(data?.id) || 0,
+          user_id: Number(userData?.id),
+          bank_name: values?.bank_name,
+          account_number: values?.account_number,
+          iban: values?.IBAN_number,
+          holder_name: values?.holder_name,
         },
-        context: {
-          headers: {
-            Authorization: 'Bearer ' + jwt,
-          },
-        },
+        // context: {
+        //   headers: {
+        //     Authorization: 'Bearer ' + jwt,
+        //   },
+        // },
       });
-      data = userData;
-      setLoading(false);
-      let user = data?.updateUser?.user || [];
-      if (Object.keys(user).length) {
-        setEdit(false);
+
+      if (data === null) {
+        mutationData = bankData?.createBankDetail?.bankDetail;
       }
+      else {
+        mutationData = bankData?.updateBankDetail?.bankDetail;
+      }
+
+      if (mutationData?.account_number !== '') {
+        setLoading(false);
+        setEdit(false);
+        reload();
+      }
+      else {
+        ToastMsg(t('error_occured'));
+      }
+
     } catch (error) {
       setLoading(false);
-      ToastMsg('Error Occured, Please Try later!');
+      ToastMsg(t('error_occured'));
     }
-  };
-
-  const handleMobileNumber = (mobile_number) => {
-    return String('+' + mobile_number);
   };
 
   return (
@@ -73,12 +71,10 @@ export default function EditBankInfo({ setEdit, data }) {
         onSubmit={(values) => handleSave(values)}
         validationSchema={inputsValidationSchema}
         initialValues={{
-          email: data?.email,
-          phone:
-            data?.mobile_number === 0 ? '+971' : String(handleMobileNumber(data?.mobile_number)),
-          password: '',
-          repassword: '',
-          dob: data?.birthday ? handleDOB(data?.birthday) : '',
+          bank_name: data?.bank_name || '',
+          holder_name: data?.holder_name || '',
+          account_number: data?.account_number || '',
+          IBAN_number: data?.iban || '',
         }}
       >
         {({
@@ -87,7 +83,6 @@ export default function EditBankInfo({ setEdit, data }) {
           errors,
           touched,
           setFieldTouched,
-          setFieldValue,
           handleSubmit,
         }) => (
             <>
@@ -97,16 +92,15 @@ export default function EditBankInfo({ setEdit, data }) {
                   return (
                     <View key={index}>
                       <Textbox
-                        name={name}
                         placeholder={newName.charAt(0).toUpperCase() + newName.slice(1)}
-                        value={values[newName]}
-                        onChangeText={handleChange(newName)}
+                        value={values[name]}
+                        onChangeText={handleChange(name)}
                         icon={icon}
                         marginTop={marginTop}
-                        onBlur={() => setFieldTouched(newName)}
+                        onBlur={() => setFieldTouched(name)}
                         autoCapitalize="none"
                       />
-                      <FormError touched={touched[newName]} errorText={errors[newName]} />
+                      <FormError touched={touched[name]} errorText={errors[name]} />
                     </View>
                   )
                 }
