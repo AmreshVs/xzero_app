@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { ScrollView, RefreshControl, InteractionManager } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
+import * as Linking from 'expo-linking';
 
 import SafeView from 'components/safeView';
 import Slider from './slider';
@@ -13,6 +14,9 @@ import TopCenters from './topCenters';
 import { GET_HOME } from 'graphql/queries';
 import MembershipBox from './membershipBox';
 import styles from './styles';
+
+let openLink = 0;
+let backupLink = "";
 
 export default function Home() {
   const { data, loading, refetch } = useQuery(GET_HOME);
@@ -26,6 +30,34 @@ export default function Home() {
   let banners = data?.banners || [];
   let categories = data?.categoriesWithCenterCount || [];
   let topCenters = data?.topCenters || [];
+
+  useEffect(() => {
+    openLink = 0;
+    Linking.addEventListener('url', deepLinkCallback);
+
+    return () => {
+      Linking.removeEventListener('url', console.log('removed'));
+    }
+  }, []);
+
+  const deepLinkCallback = async (e) => {
+    let url = e?.url;
+    console.log('deepLink', url);
+
+    if (openLink === 1 && url !== backupLink) {
+      openLink = 0;
+    }
+
+    if (openLink === 0) {
+      backupLink = url;
+      if (url.includes('Home/')) {
+        url = (url).replace("Home/", "");
+      }
+      console.log('url', url);
+      await Linking.openURL(url);
+    }
+    openLink = 1;
+  }
 
   const _refetch = useCallback(() => {
     const task = InteractionManager.runAfterInteractions(async () => {

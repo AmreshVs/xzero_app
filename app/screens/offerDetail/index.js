@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
@@ -12,7 +12,6 @@ import { firstLetterUpper } from 'constants/commonFunctions';
 import RippleFX from 'components/rippleFx';
 import { OFFERS_DETAIL } from 'graphql/queries';
 import addFavourite from 'screens/offers/addFavourite';
-import useUserData from 'hooks/useUserData';
 import OfferCard from './offerCard';
 import CenterInfo from './centerInfo';
 import PriceDetails from './priceDetails';
@@ -20,18 +19,23 @@ import OfferDescription from './offerDescription';
 import AvailDiscount from './availDiscount';
 import ContactCenter from './contactCenter';
 import styles from './styles';
+import { UserDataContext } from 'context';
+import Row from 'components/row';
+import ShareOffer from './shareOffer';
 
 export default function OfferDetail() {
-  const {
-    params: { id, offer_id, user_id, center },
-  } = useRoute();
+  const { userData } = useContext(UserDataContext);
+  const { params: { offer_id, user_id, center } } = useRoute();
   const { data, loading } = useQuery(OFFERS_DETAIL, {
-    variables: { offer_id, id, user_id },
+    variables: {
+      offer_id: Number(offer_id),
+      id: Number(offer_id) || 0,
+      user_id: Number(user_id) || Number(userData?.id)
+    },
   });
 
   const [favourite, setFavourite] = useState(data?.offerIsFavourite || false);
   const client = useApolloClient();
-  const userData = useUserData();
 
   const handleFavourite = async (offer_id) => {
     setFavourite(!favourite);
@@ -67,7 +71,10 @@ export default function OfferDetail() {
           <PriceDetails offer={offer} center={center} />
           <OfferDescription offer={offer} />
           <AvailDiscount loading={loading} data={data} />
-          <ContactCenter username={userData?.username} mobile_number={offer?.mobile_number} />
+          <Row justifyContent="space-between">
+            <ContactCenter username={userData?.username} mobile_number={offer?.mobile_number} />
+            <ShareOffer data={offer} />
+          </Row>
         </ScrollView>
       </SafeView>
     </>

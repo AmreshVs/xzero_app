@@ -16,9 +16,11 @@ export default function Offers() {
   const {
     params: { center, user_id },
   } = useRoute();
+
   let { data, loading, refetch } = useQuery(OFFERS_LIST, {
-    variables: { center, user_id },
+    variables: { center: Number(center), user_id: Number(user_id) || 0 },
   });
+
   let { t } = useTranslation();
 
   const reload = async () => {

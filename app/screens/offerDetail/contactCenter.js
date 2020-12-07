@@ -13,7 +13,7 @@ const ContactCenter = ({ username, mobile_number }) => {
   const { t } = useTranslation();
 
   return (
-    <Row marginTop={10}>
+    <Row marginTop={10} width="48.7%">
       <Card style={styles.descContainer} marginBottom={10}>
         <Text style={styles.title} numberOfLines={1}>
           {t('contact')}

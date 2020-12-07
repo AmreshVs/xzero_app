@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Share, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
@@ -14,6 +14,20 @@ import styles from './styles';
 export default function VoucherInfo({ data }) {
   const { t, i18n } = useTranslation();
   let language = i18n.language;
+
+  const handleShare = async () => {
+    try {
+      const message = `${t('buy')} - ${data?.[`buy_title_${language}`]}\n${t('win')} - ${data?.[`win_title_${language}`]}\n\nBuy this voucher at ${data?.cost} ${t('aed')}\n\nCheck the Voucher on Xzero App\nhttps://xzero.app/open?q=xzero://Home/VoucherDetail?id=1`;
+      await Share.share({
+        message: message,
+        title: message,
+        subject: message,
+        dialogTitle: 'Join this amazing voucher and win exciting prize'
+      });
+    } catch (error) {
+      // alert(error.message);
+    }
+  }
 
   return (
     <Card style={styles.voucherContainer}>
@@ -32,7 +46,7 @@ export default function VoucherInfo({ data }) {
           </Text>
         </Box>
         <Box width="30%" marginTop={2}>
-          <Button status="chip_1" size="small" icon="share-alt">{t('share')}</Button>
+          <Button status="chip_1" size="small" icon="share-alt" onPress={() => handleShare()}>{t('share')}</Button>
         </Box>
       </Row>
       <Box padding={10} paddingTop={5}>

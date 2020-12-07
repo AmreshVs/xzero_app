@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { createRef, useEffect, useState } from 'react';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import * as Linking from 'expo-linking';
 
 import BottomTab from 'components/bottomTab';
 import Login from 'screens/login';
@@ -108,29 +109,18 @@ function StackNavigation() {
 
 const Drawer = createDrawerNavigator();
 const prefix = ['xzero://'];
-const config = {
-  screens: {
-    Home: {
-      path: 'home',
-      screens: {
-        Login: {
-          path: 'lo'
-        }
-      }
-    },
-  },
-};
 
 function Navigation() {
+  const navigationRef = createRef();
   const [userData, setUserData] = useState();
   const linking = {
     prefixes: prefix,
-    // config,
   };
+
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer linking={linking} fallback={<Loader />}>
+      <NavigationContainer ref={navigationRef} linking={linking} fallback={<Loader />}>
         <UserDataContext.Provider value={{ userData, setUserData }}>
           <Drawer.Navigator initialRouteName={DRAWER_HOME} drawerType="slide">
             <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />

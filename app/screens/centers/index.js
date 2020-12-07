@@ -33,12 +33,12 @@ export default function Centers() {
   return (
     <SafeView loading={loading} topNav>
       <TopNavigator title={params?.title} gradient />
-      {!data?.topCenters.length ? (
+      {(data?.topCenters !== undefined && !data?.topCenters.length) || data === {} ? (
         <NoData topNav />
       ) : (
           <FlatList
             keyExtractor={(item) => String(item.id)}
-            data={data.topCenters}
+            data={data?.topCenters}
             renderItem={({ item }) => <Center data={item} />}
             numColumns={2}
             initialNumToRender={6}
