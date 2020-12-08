@@ -40,7 +40,8 @@
       "icon": "./assets/icon.png",
       "googleServicesFile": "./google-services.json",
       "permissions": [],
-      "versionCode": 22114
+      "versionCode": 22114,
+      "useNextNotificationsApi": true
     },
     "web": {
       "favicon": "./assets/favicon.png"

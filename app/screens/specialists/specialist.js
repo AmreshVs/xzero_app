@@ -44,14 +44,14 @@ export default function Specialist({ data }) {
             <Text style={styles.caption} numberOfLines={2}>
               {data?.[`desc_${language}`]}
             </Text>
-            <Row>
+            <Row flexWrap="nowrap">
               <FontAwesomeIcon
                 icon="map-marker-alt"
                 color={colors.text_lite}
                 size={17}
                 style={styles.icon}
               />
-              <Text style={styles.caption} numberOfLines={1}>
+              <Text style={styles.locationCaption} numberOfLines={1}>
                 {data?.center?.place}, {data?.center?.city}
               </Text>
             </Row>

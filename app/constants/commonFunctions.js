@@ -9,7 +9,7 @@ export const getShadowStyle = () => {
         width: 0,
         height: 2,
       },
-      shadowOpacity: 0.1,
+      shadowOpacity: 0.15,
       shadowRadius: 9.84,
       elevation: 5,
     }

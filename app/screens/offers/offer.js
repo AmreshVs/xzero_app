@@ -52,7 +52,7 @@ function Offer({ data, favourites }) {
           <Image source={{ uri: IMAGE_URL + data?.featured_img?.url }} style={styles.image} />
         </RippleFX>
       </Box>
-      <Column flex={3} style={styles.nameContainer}>
+      <Column flex={6} style={styles.nameContainer}>
         <RippleFX onPress={() => handlePress()}>
           <Text style={styles.title} numberOfLines={2}>
             {data?.[`title_${language}`]}

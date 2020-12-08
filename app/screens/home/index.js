@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { ScrollView, RefreshControl, InteractionManager } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
@@ -36,26 +36,27 @@ export default function Home() {
     Linking.addEventListener('url', deepLinkCallback);
 
     return () => {
-      Linking.removeEventListener('url', console.log('removed'));
+      Linking.removeEventListener('url');
+      openLink = 1;
     }
   }, []);
 
   const deepLinkCallback = async (e) => {
     let url = e?.url;
-    console.log('deepLink', url);
 
     if (openLink === 1 && url !== backupLink) {
       openLink = 0;
     }
 
     if (openLink === 0) {
+      console.log('Opening URL', url);
       backupLink = url;
       if (url.includes('Home/')) {
         url = (url).replace("Home/", "");
       }
-      console.log('url', url);
       await Linking.openURL(url);
     }
+
     openLink = 1;
   }
 

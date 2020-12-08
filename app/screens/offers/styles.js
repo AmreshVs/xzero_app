@@ -1,19 +1,23 @@
 import { StyleSheet } from 'react-native';
 
 import { getShadowStyle } from 'constants/commonFunctions';
-import { padding10, borderRadius10, borderRadius20, marginBottom5, w100, h100, overflowHidden, whiteBg, marginBottom10, textLite, textBoldDark, h100px } from 'constants/commonStyles';
+import { padding10, borderRadius10, borderRadius20, marginBottom5, w100, h100, overflowHidden, whiteBg, marginBottom10, textLite, textBoldDark, h100px, paddingBottom10, marginBottom0, w100px, resizeModeContain, resizeModeCover } from 'constants/commonStyles';
 
 const styles = StyleSheet.create({
   flatlist: {
-    ...padding10,
+    minHeight: '100%',
+    paddingHorizontal: 10,
+    ...paddingBottom10,
   },
   offerContainer: {
+    paddingVertical: 10,
+    marginTop: 10,
     ...w100,
     ...whiteBg,
     ...borderRadius10,
     ...padding10,
     ...getShadowStyle(),
-    ...marginBottom10,
+    ...marginBottom0,
   },
   title: {
     ...textBoldDark,
@@ -21,16 +25,18 @@ const styles = StyleSheet.create({
   },
   image: {
     ...w100,
-    ...h100px,
+    ...h100,
+    resizeMode: 'contain'
   },
   imgContainer: {
-    ...h100,
+    width: 80,
+    height: 80,
     ...borderRadius10,
     ...overflowHidden,
   },
   nameContainer: {
     ...h100,
-    marginLeft: 15,
+    marginLeft: 5,
   },
   iconContainer: {
     ...padding10,

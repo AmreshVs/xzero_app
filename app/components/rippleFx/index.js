@@ -5,7 +5,7 @@ import colors from 'constants/colors';
 
 export default function RippleFX({ children, ...args }) {
   return (
-    <Ripple {...args} rippleColor={colors.primary}>
+    <Ripple {...args}>
       {children}
     </Ripple>
   );

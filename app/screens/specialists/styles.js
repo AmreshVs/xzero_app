@@ -2,14 +2,16 @@ import { StyleSheet } from 'react-native';
 
 import colors from 'constants/colors';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from 'constants/common';
-import { padding10, marginBottom10, textBoldDark, font17, marginBottom5, fontWeight700, textLite, w70p, paddingHorizontal10, w30p } from 'constants/commonStyles';
+import { padding10, textBoldDark, font17, marginBottom5, fontWeight700, textLite, w70p, paddingHorizontal10, w30p, marginTop10 } from 'constants/commonStyles';
 
 const styles = StyleSheet.create({
   flatlist: {
+    minHeight: '100%',
+    paddingTop: 0,
     ...padding10,
   },
   container: {
-    ...marginBottom10,
+    ...marginTop10,
   },
   imageContainer: {
     ...w30p,
@@ -31,6 +33,11 @@ const styles = StyleSheet.create({
   caption: {
     ...textLite,
     ...marginBottom5,
+  },
+  locationCaption: {
+    ...textLite,
+    ...marginBottom5,
+    marginRight: 10
   },
   specialization: {
     color: colors.violet,

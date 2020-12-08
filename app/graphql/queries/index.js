@@ -61,18 +61,14 @@ export const GET_HOME = gql`
 `;
 
 export const GET_CENTERS = gql`
-  query TopCenters($category: Int!){
-    topCenters(where:{
-      category: $category
-    })
+  query TopCenters($where: JSON){
+    topCenters(where: $where)
   }
 `;
 
 export const OFFERS_LIST = gql`
-  query offersList($center: Int!, $user_id: Int!){
-    offerListWithFavourites(where:{
-      center: $center
-    }, user_id: $user_id)
+  query offersList($where: JSON!, $user_id: Int!){
+    offerListWithFavourites(where: $where, user_id: $user_id)
   }
 `;
 
@@ -158,10 +154,8 @@ export const GET_MEMBERSHIP_BY_USER = gql`
 `;
 
 export const SPECIALISTS_BY_CENTER = gql`
-  query specialistByCenter($center: Int!){
-    specialists(where:{
-      category: $center
-    }){
+  query specialistByCenter($where: JSON){
+    specialists(where: $where){
       id
       featured_img{
         url

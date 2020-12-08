@@ -13,12 +13,13 @@ import { getUserData, getFormatedDate } from 'constants/commonFunctions';
 import colors from 'constants/colors';
 import { getJWT } from 'constants/commonFunctions';
 import { GET_MEMBERSHIP_BY_USER } from 'graphql/queries';
-import { MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
+import { CENTERS_SCREEN, MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
 import styles from './styles';
+import RippleFX from 'components/rippleFx';
 
 export default function MembershipBox({ data }) {
   const [expiry, setExpiry] = useState(null);
-  const { navigate } = useNavigation();
+  const { navigate, push } = useNavigation();
   const { t } = useTranslation();
   const client = useApolloClient();
 
@@ -70,9 +71,12 @@ export default function MembershipBox({ data }) {
         <Divider margin={10} />
         <Row spaceAround>
           <Column vcenter style={styles.countContainer}>
-            <View style={[styles.iconContainer, styles.icon1]}>
+            <RippleFX
+              style={[styles.iconContainer, styles.icon1]}
+              onPress={() => push(CENTERS_SCREEN, { title: t('centers') })}
+            >
               <FontAwesomeIcon icon="store" color="#b81fff" size={25} />
-            </View>
+            </RippleFX>
             <Text style={styles.count}>{data.centersCount || 0}+</Text>
             <Text style={styles.secondaryText}>{t('centers')}</Text>
           </Column>

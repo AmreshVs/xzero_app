@@ -38,8 +38,18 @@ const styles = StyleSheet.create({
     ...padding10,
   },
   flatlist: {
+    minHeight: '100%',
     ...paddingBottom10,
   },
+  searchCaption: {
+    margin: 5,
+    marginBottom: 0,
+    color: colors.text_dark
+  },
+  searchedText: {
+    fontWeight: '700',
+    color: colors.text_dark
+  }
 });
 
 export default styles;

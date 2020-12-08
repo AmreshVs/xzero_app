@@ -139,5 +139,14 @@
   "won": "Won",
   "my_vouchers": "My Vouchers",
   "voucher_detail": "Voucher Detail",
-  "share_offer": "Share Offer"
+  "share_offer": "Share Offer",
+  "search": "Search",
+  "clear": "Clear",
+  "searched_for": "Searched for",
+  "search_center": "Search Center",
+  "search_center_textbox": "Medical, clinic,... etc",
+  "search_offer": "Search Offer",
+  "search_offer_textbox": "Laser, cleaning,... etc",
+  "search_specialist": "Search Specialist",
+  "search_specialist_textbox": "Cosmetic, dentist,... etc"
 }
