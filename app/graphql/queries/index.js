@@ -37,12 +37,27 @@ export const GET_USER_BY_EMAIL = gql`
 
 export const GET_HOME = gql`
   query{
-    centersCount: centersConnection{
-      aggregate{
+    centersCount: centersConnection {
+      aggregate {
         totalCount
       }
     }
-    offersCount: offersConnection{
+    offersCount: offersConnection {
+      aggregate {
+        totalCount
+      }
+    }
+    specialistsCount: specialistsConnection {
+      aggregate {
+        totalCount
+      }
+    }
+    vouchersCount: vouchersConnection {
+      aggregate {
+        totalCount
+      }
+    }
+    giftsCount: giftsConnection {
       aggregate{
         totalCount
       }
@@ -519,6 +534,26 @@ export const WITHDRAW_HISTORY = gql`
         withdrawal_status
         created_at
       }
+    }
+  }
+`;
+
+export const HOME_SEARCH = gql`
+  query HomeSearch($where: JSON, $swhere: JSON){
+    specialists(where: $swhere){
+      id
+      title_en: name_en
+      title_ar: name_ar
+    }
+    centers(where: $where){
+      id
+      title_en
+      title_ar
+    }
+    offers(where: $where){
+      id
+      title_en
+      title_ar
     }
   }
 `;

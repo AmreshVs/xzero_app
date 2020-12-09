@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { object, string } from 'yup';
@@ -13,6 +13,7 @@ import Button from 'components/button';
 import colors from 'constants/colors';
 import FormError from 'components/formError';
 import { SCREEN_HEIGHT } from 'constants/common';
+import Card from 'components/card';
 
 const inputsValidationSchema = () =>
   object().shape({
@@ -28,16 +29,16 @@ const SearchModal = ({ heading, placeholder, searched, modalizeRef, handleSearch
     <Modalize
       ref={modalizeRef}
       childrenStyle={styles.modal}
-      modalHeight={(SCREEN_HEIGHT / 7.5) + insets.bottom}
+      modalHeight={(SCREEN_HEIGHT / 6.4) + insets.bottom}
       scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
     >
-      <Box margin={10}>
+      <Card margin={10} paddingBottom={15}>
         <Text style={styles.heading}>{heading}</Text>
         <Formik
           onSubmit={(values) => handleSearch(values.search)}
           validationSchema={inputsValidationSchema}
           initialValues={{
-            search: searched || '',
+            search: String(searched) || '',
           }}
         >
           {({
@@ -55,7 +56,7 @@ const SearchModal = ({ heading, placeholder, searched, modalizeRef, handleSearch
                       placeholder={placeholder}
                       value={values[name]}
                       onChangeText={handleChange(name)}
-                      icon="th-list"
+                      icon="search"
                       marginTop={0}
                       onBlur={() => setFieldTouched(name)}
                       autoCapitalize="none"
@@ -63,7 +64,7 @@ const SearchModal = ({ heading, placeholder, searched, modalizeRef, handleSearch
                   </Box>
                   <Box width="30%">
                     <Button
-                      icon="search"
+                      icon="check"
                       onPress={() => handleSubmit()}
                       disabled={Object.keys(errors).length}
                     >
@@ -75,12 +76,12 @@ const SearchModal = ({ heading, placeholder, searched, modalizeRef, handleSearch
               </>
             )}
         </Formik>
-      </Box>
+      </Card>
     </Modalize>
   );
 };
 
-export default SearchModal;
+export default memo(SearchModal);
 
 const styles = StyleSheet.create({
   modal: {

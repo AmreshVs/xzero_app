@@ -14,12 +14,20 @@ import { ModalSearchHeader } from 'components/modalSearchHeader';
 import Specialist from './specialist';
 import styles from './styles';
 
+let initialWhereCondition = {};
+let headerCondition = 0;
+
 export default function SpecialistHelp() {
   const [reloading, setReloading] = useState(false);
   const { params } = useRoute();
-  const initialWhereCondition = {
-    category: Number(params?.id),
-  };
+
+  if (params?.id) {
+    initialWhereCondition = {
+      category: Number(params?.id),
+    };
+    headerCondition = 1;
+  }
+
   const [whereCondition, setWhereCondition] = useState(initialWhereCondition);
   const { t, i18n } = useTranslation();
   let language = i18n.language;
@@ -73,7 +81,7 @@ export default function SpecialistHelp() {
               onRefresh={reload}
               removeClippedSubviews={true}
               ListHeaderComponent={
-                Object.values(whereCondition)[1] && <ModalSearchHeader handleClear={handleClear} searched={Object.values(whereCondition)[1]} marginTop={10} />
+                Object.values(whereCondition)[headerCondition] && <ModalSearchHeader handleClear={handleClear} searched={Object.values(whereCondition)[headerCondition]} marginTop={10} />
               }
             />
           )}
@@ -82,7 +90,7 @@ export default function SpecialistHelp() {
       <SearchModal
         heading={t('search_specialist')}
         placeholder={t('search_specialist_textbox')}
-        searched={Object.values(whereCondition)[1]}
+        searched={Object.values(whereCondition)[headerCondition]}
         modalizeRef={modalizeRef}
         handleSearch={handleSearch}
       />

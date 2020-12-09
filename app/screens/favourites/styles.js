@@ -6,7 +6,8 @@ import { w100, padding10, positionAbsolute, padding15, paddingBottom10, zIndex1 
 const styles = StyleSheet.create({
   flatlist: {
     paddingBottom: SCREEN_HEIGHT / 13,
-    ...padding10
+    ...padding10,
+    minHeight: '100%'
   },
   clearButton: {
     bottom: 0,

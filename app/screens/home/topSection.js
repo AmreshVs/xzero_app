@@ -16,7 +16,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { GIFTS, NOTIFICATIONS } from 'navigation/routes';
 import styles from './styles';
 
-const TopSection = () => {
+const TopSection = ({ handleModalOpen }) => {
   const { push, toggleDrawer } = useNavigation();
   const userData = useUserData();
 
@@ -50,6 +50,11 @@ const TopSection = () => {
             </Box>
           </Row>
           <Row marginRight={10}>
+            <Box marginRight={-15}>
+              <RippleFX style={styles.iconContainer} onPress={() => handleModalOpen()}>
+                <FontAwesomeIcon icon="search" color={colors.white} size={20} />
+              </RippleFX>
+            </Box>
             <RippleFX style={styles.iconContainer} onPress={() => push(NOTIFICATIONS)}>
               <FontAwesomeIcon icon="bell" color={colors.white} size={20} />
             </RippleFX>

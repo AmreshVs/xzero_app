@@ -6,7 +6,7 @@ import Button from 'components/button';
 import Row from 'components/row';
 import styles from '../../screens/centers/styles';
 
-export const ModalSearchHeader = ({ handleClear, searched, ...otherStyles }) => {
+const ModalSearchHeader = ({ handleClear, searched, ...otherStyles }) => {
   const { t } = useTranslation();
 
   return (
@@ -27,3 +27,5 @@ export const ModalSearchHeader = ({ handleClear, searched, ...otherStyles }) => 
     </Row>
   );
 };
+
+export default ModalSearchHeader;

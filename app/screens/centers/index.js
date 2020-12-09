@@ -2,19 +2,21 @@ import React, { useState, useCallback, createRef } from 'react';
 import { FlatList, InteractionManager } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/client';
 
 import SafeView from 'components/safeView';
 import NoData from 'components/noData';
 import TopNavigator from 'components/topNavigator';
-import Center from './center';
-import { useQuery } from '@apollo/client';
-import { GET_CENTERS } from 'graphql/queries';
 import FloatingButton from 'components/floatingButton';
 import SearchModal from 'components/searchModal';
 import ModalSearchHeader from 'components/modalSearchHeader';
+import Center from './center';
+import { GET_CENTERS } from 'graphql/queries';
 import styles from './styles';
 
 let initialWhereCondition = {};
+let headerCondition = 0;
+
 export default function Centers() {
   const { params } = useRoute();
 
@@ -22,6 +24,7 @@ export default function Centers() {
     initialWhereCondition = {
       category: Number(params?.id) || 0,
     };
+    headerCondition = 1;
   }
 
   const [reloading, setReloading] = useState(false);
@@ -58,14 +61,13 @@ export default function Centers() {
     setWhereCondition({
       ...whereCondition,
       [`title_${language}_contains`]: value,
-      title: value
     });
   }
 
   const handleClear = () => {
     setWhereCondition(initialWhereCondition);
   }
-  console.log(Object.values(whereCondition)[1]);
+
   return (
     <>
       <SafeView loading={loading} topNav>
@@ -87,7 +89,7 @@ export default function Centers() {
               onRefresh={() => reload()}
               removeClippedSubviews={true}
               ListHeaderComponent={
-                Object.values(whereCondition)[1] !== undefined ? <ModalSearchHeader handleClear={handleClear} searched={Object.values(whereCondition)[1] || ""} marginTop={10} /> : null
+                Object.values(whereCondition)[headerCondition] && <ModalSearchHeader handleClear={handleClear} searched={Object.values(whereCondition)[headerCondition] || ""} marginTop={10} />
               }
             />
           )}
@@ -96,7 +98,7 @@ export default function Centers() {
       <SearchModal
         heading={t('search_center')}
         placeholder={t('search_center_textbox')}
-        searched={Object.values(whereCondition)[1]}
+        searched={Object.values(whereCondition)[headerCondition] || ""}
         modalizeRef={modalizeRef}
         handleSearch={handleSearch}
       />

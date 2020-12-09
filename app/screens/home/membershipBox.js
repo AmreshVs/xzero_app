@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { useApolloClient } from '@apollo/client';
@@ -13,7 +13,7 @@ import { getUserData, getFormatedDate } from 'constants/commonFunctions';
 import colors from 'constants/colors';
 import { getJWT } from 'constants/commonFunctions';
 import { GET_MEMBERSHIP_BY_USER } from 'graphql/queries';
-import { CENTERS_SCREEN, MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
+import { CENTERS_SCREEN, GIFTS, MEMBERSHIP_TAB_SCREEN, OFFERS_SCREEN, SPECIALISTS, VOUCHERS } from 'navigation/routes';
 import styles from './styles';
 import RippleFX from 'components/rippleFx';
 
@@ -56,7 +56,7 @@ export default function MembershipBox({ data }) {
   return (
     <Box style={styles.membership} padding={10}>
       <View style={styles.membershipContainer}>
-        <Row spaceBetween>
+        <Row spaceBetween padding={10} paddingBottom={0}>
           <Text style={styles.title}>{t('my_membership')}</Text>
           {expiry ? (
             <Text style={styles.secondaryText}>
@@ -69,32 +69,60 @@ export default function MembershipBox({ data }) {
             )}
         </Row>
         <Divider margin={10} />
-        <Row spaceAround>
-          <Column vcenter style={styles.countContainer}>
-            <RippleFX
-              style={[styles.iconContainer, styles.icon1]}
-              onPress={() => push(CENTERS_SCREEN, { title: t('centers') })}
-            >
-              <FontAwesomeIcon icon="store" color="#b81fff" size={25} />
-            </RippleFX>
-            <Text style={styles.count}>{data.centersCount || 0}+</Text>
-            <Text style={styles.secondaryText}>{t('centers')}</Text>
-          </Column>
-          <Column vcenter style={styles.countContainer}>
-            <View style={[styles.iconContainer, styles.icon2]}>
-              <FontAwesomeIcon icon="percentage" color={colors.primary} size={25} />
-            </View>
-            <Text style={styles.count}>{data.offersCount || 0}+</Text>
-            <Text style={styles.secondaryText}>{t('offers')}</Text>
-          </Column>
-          <Column vcenter style={styles.countContainer}>
-            <View style={[styles.iconContainer, styles.icon3]}>
-              <FontAwesomeIcon icon="gifts" color={colors.danger} size={25} />
-            </View>
-            <Text style={styles.count}>100+</Text>
-            <Text style={styles.secondaryText}>{t('gifts')}</Text>
-          </Column>
-        </Row>
+        <ScrollView horizontal={true}>
+          <Row paddingBottom={10} spaceAround>
+            <Column vcenter style={styles.countContainer}>
+              <RippleFX
+                style={[styles.iconContainer, styles.icon1]}
+                onPress={() => push(CENTERS_SCREEN, { title: t('centers') })}
+              >
+                <FontAwesomeIcon icon="store" color="#b81fff" size={25} />
+              </RippleFX>
+              <Text style={styles.count}>{data.centersCount || 0}+</Text>
+              <Text style={styles.secondaryText}>{t('centers')}</Text>
+            </Column>
+            <Column vcenter style={styles.countContainer}>
+              <RippleFX
+                style={[styles.iconContainer, styles.icon2]}
+                onPress={() => push(OFFERS_SCREEN, { title: t('centers') })}
+              >
+                <FontAwesomeIcon icon="percentage" color={colors.primary} size={25} />
+              </RippleFX>
+              <Text style={styles.count}>{data.offersCount || 0}+</Text>
+              <Text style={styles.secondaryText}>{t('offers')}</Text>
+            </Column>
+            <Column vcenter style={styles.countContainer}>
+              <RippleFX
+                style={[styles.iconContainer, styles.icon4]}
+                onPress={() => push(SPECIALISTS, { title: t('specialist') })}
+              >
+                <FontAwesomeIcon icon="user-md" color={colors.chip_2} size={25} />
+              </RippleFX>
+              <Text style={styles.count}>{data.specialistsCount || 0}+</Text>
+              <Text style={styles.secondaryText}>{t('specialist')}</Text>
+            </Column>
+            <Column vcenter style={styles.countContainer}>
+              <RippleFX
+                style={[styles.iconContainer, styles.icon5]}
+                onPress={() => push(VOUCHERS)}
+              >
+                <FontAwesomeIcon icon="ticket-alt" color={styles.icon5Color.color} size={25} />
+              </RippleFX>
+              <Text style={styles.count}>{data.vouchersCount || 0}+</Text>
+              <Text style={styles.secondaryText}>{t('vouchers')}</Text>
+            </Column>
+            <Column vcenter style={styles.countContainer}>
+              <RippleFX
+                style={[styles.iconContainer, styles.icon3]}
+                onPress={() => push(GIFTS)}
+              >
+                <FontAwesomeIcon icon="gifts" color={colors.danger} size={25} />
+              </RippleFX>
+              <Text style={styles.count}>{data.giftsCount || 0}+</Text>
+              <Text style={styles.secondaryText}>{t('gifts')}</Text>
+            </Column>
+          </Row>
+        </ScrollView>
       </View>
     </Box>
   );

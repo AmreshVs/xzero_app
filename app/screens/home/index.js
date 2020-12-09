@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, createRef } from 'react';
 import { ScrollView, RefreshControl, InteractionManager } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
@@ -13,18 +13,24 @@ import TopSection from './topSection';
 import TopCenters from './topCenters';
 import { GET_HOME } from 'graphql/queries';
 import MembershipBox from './membershipBox';
+import SearchModal from './searchModal';
 import styles from './styles';
 
 let openLink = 0;
 let backupLink = "";
+let counts = {};
 
 export default function Home() {
   const { data, loading, refetch } = useQuery(GET_HOME);
   const [reloading, setReloading] = useState(false);
+  const modalizeRef = createRef();
   const { t } = useTranslation();
-  let counts = {
+  counts = {
     centersCount: data?.centersCount?.aggregate?.totalCount,
     offersCount: data?.offersCount?.aggregate?.totalCount,
+    specialistsCount: data?.specialistsCount?.aggregate?.totalCount,
+    vouchersCount: data?.vouchersCount?.aggregate?.totalCount,
+    giftsCount: data?.giftsCount?.aggregate?.totalCount,
   };
 
   let banners = data?.banners || [];
@@ -40,6 +46,12 @@ export default function Home() {
       openLink = 1;
     }
   }, []);
+
+  const handleModalOpen = () => {
+    if (modalizeRef.current) {
+      modalizeRef.current.open();
+    }
+  }
 
   const deepLinkCallback = async (e) => {
     let url = e?.url;
@@ -76,7 +88,7 @@ export default function Home() {
   const Header = () => {
     return (
       <>
-        <TopSection data={counts} />
+        <TopSection handleModalOpen={handleModalOpen} data={counts} />
         <MembershipBox data={counts} />
         <Slider data={banners} />
         <Box padding={10}>
@@ -92,15 +104,24 @@ export default function Home() {
   };
 
   return (
-    <SafeView loading={loading} noTop noBottom>
-      <ScrollView
-        style={styles.scrollContainer}
-        refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
-        showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
-      >
-        <Header />
-      </ScrollView>
-    </SafeView>
+    <>
+      <SafeView loading={loading} noTop noBottom>
+        <ScrollView
+          style={styles.scrollContainer}
+          refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
+          showsVerticalScrollIndicator={false}
+          removeClippedSubviews={true}
+        >
+          <Header />
+        </ScrollView>
+      </SafeView>
+      <SearchModal
+        heading={t('search_specialist')}
+        placeholder={t('search_specialist_textbox')}
+        searched={""}
+        modalizeRef={modalizeRef}
+        handleSearch={() => console.log('search')}
+      />
+    </>
   );
 }

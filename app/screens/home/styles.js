@@ -74,14 +74,13 @@ const styles = StyleSheet.create({
     ...h50,
     ...overflowHidden,
     ...borderRadius30,
-    ...alignJustifyCenter
+    ...alignJustifyCenter,
   },
   membership: {
     marginTop: -50,
     ...paddingBottom5,
   },
   membershipContainer: {
-    ...padding15,
     ...whiteBg,
     ...borderRadius10,
     ...getShadowStyle(),
@@ -100,6 +99,15 @@ const styles = StyleSheet.create({
   },
   icon3: {
     backgroundColor: '#ffb8c6',
+  },
+  icon4: {
+    backgroundColor: '#ffe8d4',
+  },
+  icon5: {
+    backgroundColor: '#bcf5f5',
+  },
+  icon5Color: {
+    color: '#32d6c6'
   },
   count: {
     ...marginTop5,
@@ -158,6 +166,27 @@ const styles = StyleSheet.create({
     ...font15,
     ...colorWhite,
   },
+  countContainer: {
+    minWidth: 95,
+  },
+  modal: {
+    backgroundColor: colors.lite_gray,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  heading: {
+    fontWeight: '700',
+    color: colors.text_dark,
+    fontSize: 17,
+    marginBottom: 5
+  },
+  searchResultHeading: {
+    color: colors.chip_1,
+    fontWeight: '700',
+  },
+  resultText: {
+    color: colors.text_dark,
+  }
 });
 
 export default styles;

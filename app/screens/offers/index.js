@@ -9,16 +9,24 @@ import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import Offer from './offer';
 import { OFFERS_LIST } from 'graphql/queries';
-import styles from './styles';
 import FloatingButton from 'components/floatingButton';
 import SearchModal from 'components/searchModal';
-import { ModalSearchHeader } from 'components/modalSearchHeader';
+import ModalSearchHeader from 'components/modalSearchHeader';
+import styles from './styles';
+
+let initialWhereCondition = {};
+let headerCondition = 0;
 
 export default function Offers() {
-  const { params: { center, user_id } } = useRoute();
-  const initialWhereCondition = {
-    center: Number(center),
-  };
+  const { params } = useRoute();
+
+  if (params?.id) {
+    initialWhereCondition = {
+      center: Number(params?.center),
+    };
+    headerCondition = 1;
+  }
+
   const [reloading, setReloading] = useState(false);
   const [whereCondition, setWhereCondition] = useState(initialWhereCondition);
   const { t, i18n } = useTranslation();
@@ -28,7 +36,7 @@ export default function Offers() {
   let { data, loading, refetch: _refetch } = useQuery(OFFERS_LIST, {
     variables: {
       where: whereCondition,
-      user_id: Number(user_id) || 0
+      user_id: Number(params?.user_id) || 0
     },
   });
 
@@ -74,7 +82,7 @@ export default function Offers() {
               onRefresh={reload}
               removeClippedSubviews={true}
               ListHeaderComponent={
-                Object.values(whereCondition)[1] && <ModalSearchHeader handleClear={handleClear} searched={Object.values(whereCondition)[1]} marginTop={10} />
+                Object.values(whereCondition)[headerCondition] && <ModalSearchHeader handleClear={handleClear} searched={Object.values(whereCondition)[headerCondition] || ""} marginTop={10} />
               }
             />
           )}
@@ -83,7 +91,7 @@ export default function Offers() {
       <SearchModal
         heading={t('search_offer')}
         placeholder={t('search_offer_textbox')}
-        searched={Object.values(whereCondition)[1]}
+        searched={Object.values(whereCondition)[headerCondition] || ""}
         modalizeRef={modalizeRef}
         handleSearch={handleSearch}
       />

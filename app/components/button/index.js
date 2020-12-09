@@ -100,6 +100,6 @@ const getStyles = (colors, status, width, color, size) => {
       position: 'absolute',
       zIndex: 99999999,
       opacity: 0.2,
-    },
+    }
   });
 };

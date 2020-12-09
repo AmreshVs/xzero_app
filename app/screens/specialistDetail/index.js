@@ -24,7 +24,8 @@ export default function SpecialistDetail() {
     variables: { id: Number(id) },
   });
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  let language = i18n.language;
   const userData = useUserData();
 
   let specialist = data?.specialist;
@@ -33,7 +34,7 @@ export default function SpecialistDetail() {
     <>
       <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={styles.gradient} />
       <SafeView style={styles.container} topNav loading={loading}>
-        <TopNavigator title={t('specialist_detail')} color={colors.white} />
+        <TopNavigator title={specialist?.[`name_${language}`]} color={colors.white} />
         <ScrollView showsVerticalScrollIndicator={false} removeClippedSubviews={true}>
           <SpecialistInfo specialist={specialist} />
           <AboutSpecialist specialist={specialist} />
