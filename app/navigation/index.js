@@ -1,10 +1,9 @@
-import React, { createRef, useEffect, useState } from 'react';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import React, { createRef, useEffect, useRef, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import * as Linking from 'expo-linking';
 
 import BottomTab from 'components/bottomTab';
 import Login from 'screens/login';
@@ -60,9 +59,11 @@ import {
   VOUCHER_DETAIL,
   MY_VOUCHERS,
   REFER,
+  OFFLINE,
 } from './routes';
 import { UserDataContext } from 'context';
 import Loader from 'components/loader';
+import Offline from 'screens/offline';
 
 const Tab = createBottomTabNavigator();
 
@@ -103,6 +104,7 @@ function StackNavigation() {
       <Stack.Screen name={VOUCHER_DETAIL} component={VoucherDetail} />
       <Stack.Screen name={MY_VOUCHERS} component={MyVouchers} />
       <Stack.Screen name={REFER} component={Refer} />
+      <Stack.Screen name={OFFLINE} component={Offline} />
     </Stack.Navigator>
   );
 }
@@ -110,13 +112,20 @@ function StackNavigation() {
 const Drawer = createDrawerNavigator();
 const prefix = ['xzero://'];
 
-function Navigation() {
-  const navigationRef = createRef();
+function Navigation({ connection }) {
+  const navigationRef = useRef();
   const [userData, setUserData] = useState();
   const linking = {
     prefixes: prefix,
   };
 
+  useEffect(() => {
+    if (navigationRef.current) {
+      if (connection === false) {
+        navigationRef.current.navigate(OFFLINE);
+      }
+    }
+  }, [connection])
 
   return (
     <SafeAreaProvider>

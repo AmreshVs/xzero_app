@@ -15,16 +15,19 @@ import { GET_HOME } from 'graphql/queries';
 import MembershipBox from './membershipBox';
 import SearchModal from './searchModal';
 import styles from './styles';
+import Popup from './popup';
 
 let openLink = 0;
 let backupLink = "";
 let counts = {};
 
-export default function Home() {
+const Home = () => {
+
   const { data, loading, refetch } = useQuery(GET_HOME);
   const [reloading, setReloading] = useState(false);
   const modalizeRef = createRef();
   const { t } = useTranslation();
+
   counts = {
     centersCount: data?.centersCount?.aggregate?.totalCount,
     offersCount: data?.offersCount?.aggregate?.totalCount,
@@ -122,6 +125,9 @@ export default function Home() {
         modalizeRef={modalizeRef}
         handleSearch={() => console.log('search')}
       />
+      <Popup />
     </>
   );
 }
+
+export default (Home);

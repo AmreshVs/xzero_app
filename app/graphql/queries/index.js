@@ -557,3 +557,15 @@ export const HOME_SEARCH = gql`
     }
   }
 `;
+
+export const POPUP = gql`
+  query{
+    popUp{
+      id
+      featured_imgs{
+        url
+      }
+      status
+    }
+  }
+`;

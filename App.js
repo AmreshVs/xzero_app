@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LogBox } from 'react-native';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ApolloProvider } from '@apollo/client';
 import * as Notifications from 'expo-notifications';
 import * as Linking from 'expo-linking';
+import NetInfo from "@react-native-community/netinfo";
 
 import i18nLang from './app/i18n';
 import { ToastComponent } from 'components/toastMsg';
@@ -24,14 +25,26 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function App() {
+const App = () => {
+  const [connection, setConnection] = useState(true);
 
   // Initialize Language
   useEffect(() => {
     i18nLang();
 
+    const unsubscribe = NetInfo.addEventListener(state => {
+      console.log("Connection type", state.type);
+      console.log("Is connected?", state.isConnected);
+
+      setConnection(state.isConnected);
+    });
+
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
+
+    return () => {
+      unsubscribe();
+    }
   }, []);
 
   const handleNotification = (notification) => {
@@ -51,11 +64,13 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <StatusBar style="light" />
-      <Navigation />
+      <Navigation connection={connection} />
       <ToastComponent />
     </ApolloProvider>
   );
 }
+
+export default App;
 
 // Registering Icon to use throughout the app
 library.add(fas);

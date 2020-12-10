@@ -18,6 +18,7 @@ export const NEW_UPDATE = 'NewUpdate';
 export const VOUCHER_DETAIL = 'VoucherDetail';
 export const MY_VOUCHERS = 'MyVouchers';
 export const REFER = 'Refer';
+export const OFFLINE = 'Offline';
 
 // Tab Routes
 export const HOME_TAB_SCREEN = 'Home';

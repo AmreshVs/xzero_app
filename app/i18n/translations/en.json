@@ -150,5 +150,6 @@
   "search_specialist": "Search Specialist",
   "search_specialist_textbox": "Cosmetic, dentist,... etc",
   "search_home": "Search for Centers, Offers, Specialists",
-  "search_home_textbox": "Medical, laser, Dr,... etc"
+  "search_home_textbox": "Medical, laser, Dr,... etc",
+  "show_popup": "Show popup?"
 }

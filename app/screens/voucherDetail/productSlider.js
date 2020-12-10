@@ -1,11 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel';
 
 import { IMAGE_URL, SCREEN_WIDTH } from 'constants/common';
 
-export default function ProductSlider({ data }) {
-  const [slide, setSlide] = useState(1);
+export default function ProductSlider({ data, height, popup = false }) {
+  const [slide, setSlide] = useState(0);
+
+  const styles = StyleSheet.create({
+    item: {
+      width: popup === false ? SCREEN_WIDTH - 60 : '100%',
+      height: popup === false ? SCREEN_WIDTH - 60 : '100%',
+    },
+    imageContainer: {
+      marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+      backgroundColor: 'white',
+      borderRadius: 8,
+      width: popup === false ? '80%' : '100%',
+      height: popup === false ? 250 : height,
+    },
+    sliderImage: {
+      resizeMode: popup === false ? 'contain' : 'cover',
+    },
+    slider: {
+      width: '100%',
+      height: popup === false ? 250 : height,
+      marginTop: popup === false ? 5 : 0
+    },
+    pagination: {
+      position: 'absolute',
+      bottom: 0
+    }
+  });
 
   const renderItem = ({ item, index }, parallaxProps) => {
     return (
@@ -30,7 +56,7 @@ export default function ProductSlider({ data }) {
           width: 10,
           height: 10,
           borderRadius: 5,
-          backgroundColor: '#000'
+          backgroundColor: popup === false ? '#000' : '#FFF'
         }}
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
@@ -42,8 +68,9 @@ export default function ProductSlider({ data }) {
     <>
       <View style={styles.slider}>
         <Carousel
+          autoplay={true}
           sliderWidth={SCREEN_WIDTH - 45}
-          itemWidth={SCREEN_WIDTH - 130}
+          itemWidth={popup === false ? SCREEN_WIDTH - 130 : SCREEN_WIDTH}
           data={data}
           renderItem={renderItem}
           hasParallaxImages={true}
@@ -51,29 +78,9 @@ export default function ProductSlider({ data }) {
           removeClippedSubviews={true}
         />
       </View>
-      <SliderPagination />
+      <View style={popup ? styles.pagination : {}}>
+        <SliderPagination />
+      </View>
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  item: {
-    width: SCREEN_WIDTH - 60,
-    height: SCREEN_WIDTH - 60,
-  },
-  imageContainer: {
-    marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
-    backgroundColor: 'white',
-    borderRadius: 8,
-    width: '80%',
-    height: 250,
-  },
-  sliderImage: {
-    resizeMode: 'contain',
-  },
-  slider: {
-    width: '100%',
-    height: 250,
-    marginTop: 5
-  }
-});

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { Text, ScrollView, KeyboardAvoidingView, Switch } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useQuery } from '@apollo/client';
@@ -17,10 +17,12 @@ import IsLoggedIn from 'hoc/isLoggedIn';
 import UserCard from './userCard';
 import RippleFX from 'components/rippleFx';
 import styles from './styles';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const User = () => {
   const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(true);
   const userData = useUserData();
   const { data, loading, refetch: _refetch } = useQuery(GET_USER, {
     variables: {
@@ -28,11 +30,33 @@ const User = () => {
     },
   });
 
+  const toggleSwitch = async () => {
+    const popupData = await AsyncStorage.getItem('@xzero_popup');
+    if (popupData !== null) {
+      await AsyncStorage.setItem('@xzero_popup', JSON.stringify({ status: !isEnabled }));
+    }
+    setIsEnabled(previousState => !previousState);
+  }
+
   useEffect(() => {
+    checkPopUp();
     if (!edit) {
       _refetch();
     }
   }, [edit]);
+
+  const checkPopUp = async () => {
+    const popupData = await AsyncStorage.getItem('@xzero_popup');
+    if (popupData !== null) {
+      let data = JSON.parse(popupData);
+      if (data?.status !== '') {
+        setIsEnabled(data?.status);
+      }
+    }
+    else {
+      await AsyncStorage.setItem('@xzero_popup', JSON.stringify({ status: true }));
+    }
+  }
 
   return (
     <SafeView style={styles.safeView} loading={loading} noTop noBottom>
@@ -66,6 +90,18 @@ const User = () => {
                 <ProfileEdit data={data?.user} setEdit={setEdit} />
               )}
           </Box>
+          <Row vcenter>
+            <Box paddingLeft={20} marginRight={5}>
+              <Text style={styles.caption}>{t('show_popup')}</Text>
+            </Box>
+            <Switch
+              trackColor={{ false: colors.text_lite, true: colors.primary }}
+              thumbColor={colors.white}
+              ios_backgroundColor={colors.text_lite}
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+          </Row>
         </KeyboardAvoidingView>
       </ScrollView>
     </SafeView>

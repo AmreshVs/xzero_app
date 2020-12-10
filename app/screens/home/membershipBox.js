@@ -17,11 +17,12 @@ import { CENTERS_SCREEN, GIFTS, MEMBERSHIP_TAB_SCREEN, OFFERS_SCREEN, SPECIALIST
 import styles from './styles';
 import RippleFX from 'components/rippleFx';
 
-export default function MembershipBox({ data }) {
+const MembershipBox = ({ data }) => {
   const [expiry, setExpiry] = useState(null);
   const { navigate, push } = useNavigation();
   const { t } = useTranslation();
   const client = useApolloClient();
+
 
   useEffect(() => {
     checkMembership();
@@ -127,3 +128,5 @@ export default function MembershipBox({ data }) {
     </Box>
   );
 }
+
+export default MembershipBox;

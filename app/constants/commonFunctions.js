@@ -16,10 +16,9 @@ export const getShadowStyle = () => {
   }
 
   return {
-    borderWidth: 1,
-    borderColor: '#EEE',
-    borderRadius: 10,
-    overflow: 'hidden'
+    borderColor: "transparent",
+    elevation: 2,
+    borderWidth: 0
   }
 }
 

@@ -39,6 +39,7 @@ const style = (insets, history = 1) => StyleSheet.create({
     position: 'absolute',
     bottom: history === 1 ? 5 : -12,
     fontWeight: '700',
+    marginHorizontal: -10
   }
 });
 

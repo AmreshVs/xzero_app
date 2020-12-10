@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { GIFTS, NOTIFICATIONS } from 'navigation/routes';
 import styles from './styles';
 
+
 const TopSection = ({ handleModalOpen }) => {
   const { push, toggleDrawer } = useNavigation();
   const userData = useUserData();
