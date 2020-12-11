@@ -13,6 +13,7 @@ import ModalSearchHeader from 'components/modalSearchHeader';
 import Center from './center';
 import { GET_CENTERS } from 'graphql/queries';
 import styles from './styles';
+import { isTab } from 'constants/commonFunctions';
 
 let initialWhereCondition = {};
 let headerCondition = 0;
@@ -79,7 +80,7 @@ export default function Centers() {
               keyExtractor={(item) => String(item.id)}
               data={data?.topCenters}
               renderItem={({ item }) => <Center data={item} />}
-              numColumns={2}
+              numColumns={isTab() ? 4 : 2}
               initialNumToRender={6}
               maxToRenderPerBatch={10}
               windowSize={10}

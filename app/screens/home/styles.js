@@ -1,11 +1,11 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-import { getShadowStyle } from 'constants/commonFunctions';
-import { SCREEN_WIDTH } from 'constants/common';
+import { getShadowStyle, isTab } from 'constants/commonFunctions';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from 'constants/common';
 import colors from 'constants/colors';
 import { flex, flexSpaceBetween, flexRow, borderRadius10, w100, textBoldDark, textLite, whiteBg, alignJustifyCenter, font16, positionAbsolute, colorWhite, font15, fontWeight700, marginBottom10, marginBottom5, marginTop5, borderRadius30, overflowHidden, marginLeft10, marginBottom0, colorDanger, font20, w50, h50, h200, padding15, textAlignLeft, resizeModeCover, flex1, h100px, w100px, paddingBottom5, colorPrimary } from 'constants/commonStyles';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   topContainer: {
     top: -65,
     marginBottom: -65,
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     ...w100px,
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
-    flex: 2,
     resizeMode: 'contain'
   },
   textContainer: {
@@ -167,7 +166,7 @@ const styles = StyleSheet.create({
     ...colorWhite,
   },
   countContainer: {
-    minWidth: 95,
+    minWidth: SCREEN_WIDTH / 3.7,
   },
   modal: {
     backgroundColor: colors.lite_gray,
@@ -188,5 +187,36 @@ const styles = StyleSheet.create({
     color: colors.text_dark,
   }
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  countContainer: {
+    minWidth: SCREEN_WIDTH / 5,
+  },
+  sliderImage: {
+    ...mobileStyles.sliderImage,
+    height: 400
+  },
+  categoryContainer: {
+    ...mobileStyles.categoryContainer,
+    width: '24%',
+  },
+  image: {
+    ...mobileStyles.image,
+    height: SCREEN_HEIGHT / 7
+  },
+  centerContainer: {
+    ...mobileStyles.centerContainer,
+    width: SCREEN_WIDTH / 2.08,
+  },
+  topCenters: {
+    ...flex,
+    ...flexSpaceBetween,
+    ...flexRow,
+    flexWrap: 'wrap',
+  }
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

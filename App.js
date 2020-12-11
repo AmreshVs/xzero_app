@@ -33,9 +33,6 @@ const App = () => {
     i18nLang();
 
     const unsubscribe = NetInfo.addEventListener(state => {
-      console.log("Connection type", state.type);
-      console.log("Is connected?", state.isConnected);
-
       setConnection(state.isConnected);
     });
 

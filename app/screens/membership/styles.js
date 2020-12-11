@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { getShadowStyle } from 'constants/commonFunctions';
+import { getShadowStyle, isTab } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT } from 'constants/common';
 import { colorWhite, h100, marginTop10, textBoldDark, textLite, marginTop5, margin10, w100, marginBottom5, textAlignLeft, wh100, padding15, borderRadius10, font18, positionAbsolute, flexSpaceBetween, colorDanger, marginTop0, paddingHorizontal10, marginHorizontal10, justifyContentCenter, alignItemsCenter, resizeModeContain, w200, h200 } from 'constants/commonStyles';
 import colors from 'constants/colors';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   safeContainer: {
     ...h100,
   },
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     ...w100
   },
   memberContainer: {
-    height: 230,
+    height: SCREEN_HEIGHT / 3.5,
     ...getShadowStyle(),
     ...paddingHorizontal10,
     ...marginTop10,
@@ -159,7 +159,56 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderColor: '#EEE',
     padding: 10
+  },
+  tabWrapper: {
+    flexDirection: 'column'
   }
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  buyMembershipContainer: {
+    ...mobileStyles.buyMembershipContainer,
+    width: '48%',
+    marginLeft: 0
+  },
+  helpContainer: {
+    ...mobileStyles.helpContainer,
+    width: '48%'
+  },
+  qrContainer: {
+    width: '48%',
+    marginBottom: 10,
+    marginLeft: 0
+  },
+  benefitsContainer: {
+    ...mobileStyles.benefitsContainer,
+    width: '48%'
+  },
+  membershipBenefits: {
+    width: isTab() ? '48%' : '100%',
+    marginRight: 0
+  },
+  promocode: {
+    width: isTab() ? '48%' : '100%'
+  },
+  tabWrapper: {
+    flexDirection: 'row',
+  },
+  planCard: {
+    ...mobileStyles.planCard,
+    width: '48%',
+    marginRight: 0,
+    flexWrap: 'wrap'
+  },
+  plansContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  }
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

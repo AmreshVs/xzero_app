@@ -125,7 +125,7 @@ function Navigation({ connection }) {
         navigationRef.current.navigate(OFFLINE);
       }
     }
-  }, [connection])
+  }, [connection]);
 
   return (
     <SafeAreaProvider>

@@ -1,13 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import LottieView from 'lottie-react-native';
+import { useNetInfo } from "@react-native-community/netinfo";
 
 import styles from './styles';
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
+import Button from 'components/button';
+import { HOME_SCREEN } from 'navigation/routes';
+import { ToastMsg } from 'components/toastMsg';
 
-export default function Offline() {
+export default function Offline({ navigation }) {
   const offlineRef = useRef(null);
+  const netInfo = useNetInfo();
 
   useEffect(() => {
     if (offlineRef.current) {
@@ -15,9 +20,19 @@ export default function Offline() {
     }
   }, []);
 
+  const handleRetry = () => {
+    console.log(netInfo.isConnected);
+    if (netInfo.isConnected) {
+      navigation.navigate(HOME_SCREEN);
+    }
+    else {
+      ToastMsg('Device Offline, Please check your internet connectivity and try again!');
+    }
+  }
+
   return (
-    <SafeView>
-      <TopNavigator title="Device Offline" gradient />
+    <SafeView topNav>
+      <TopNavigator title="Device Offline" leftIcon={false} gradient />
       <View style={styles.container}>
         <LottieView
           ref={offlineRef}
@@ -25,6 +40,14 @@ export default function Offline() {
           source={require("../../../assets/offline.json")}
           loop={true}
         />
+        <Button
+          width="32%"
+          icon="sync-alt"
+          status="chip_1"
+          onPress={() => handleRetry()}
+        >
+          Retry now
+        </Button>
       </View>
     </SafeView>
   )

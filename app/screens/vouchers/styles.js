@@ -2,8 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { colorWhite, textBoldDark, font16, textLite, marginBottom10, padding0, w100, h200, overflowHidden, padding10, wh100, resizeModeCover, positionAbsolute, paddingHorizontal10, fontWeight700 } from 'constants/commonStyles';
 import colors from 'constants/colors';
+import { isTab } from 'constants/commonFunctions';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   vouchersScrollView: {
     ...padding10,
   },
@@ -50,5 +51,18 @@ const styles = StyleSheet.create({
     ...colorWhite
   },
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  vouchers: {
+    justifyContent: 'space-between'
+  },
+  voucherContainer: {
+    ...mobileStyles.voucherContainer,
+    width: '49.3%'
+  }
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

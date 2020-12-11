@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
   },
   container: {
     height: 180,
-    width: '49%',
-    marginBottom: '4%',
+    width: '48.7%',
+    marginBottom: 10,
     ...whiteBg,
     ...borderRadius10,
     ...getShadowStyle(),

@@ -19,6 +19,8 @@ import Help from './help';
 import { VOUCHER_DETAIL } from 'graphql/queries';
 import BuyVoucherModal from './buyVoucherModal';
 import styles from './styles';
+import { isTab } from 'constants/commonFunctions';
+import Box from 'components/box';
 
 export default function VoucherDetail() {
   const { t } = useTranslation();
@@ -68,11 +70,18 @@ export default function VoucherDetail() {
                 <AssuredGift data={voucher?.assured_gift[0]} />
                 <CenterSymbol icon="plus" />
                 <Win data={voucher?.draw_gift} />
-                <Rules data={data?.voucherRule} />
-                <Help />
+                <Box justifyContent="space-between" flexDirection={isTab() ? "row" : "column"}>
+                  <Rules data={data?.voucherRule} />
+                  <Help />
+                </Box>
               </ScrollView>
               <View style={styles.buyNowButton}>
-                <Button onPress={() => handleOpenModal()}>{voucher?.cost} {t('buy_now')} - {t('aed')}</Button>
+                <Button
+                  width={isTab() ? "40%" : "100%"}
+                  onPress={() => handleOpenModal()}
+                >
+                  {voucher?.cost} {t('buy_now')} - {t('aed')}
+                </Button>
               </View>
             </>
           )}

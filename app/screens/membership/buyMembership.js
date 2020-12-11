@@ -12,8 +12,11 @@ export default function BuyMembership({ handleBuy }) {
 
   return (
     <Card style={styles.buyMembershipContainer}>
-      <Text style={styles.buyMembershipText}>{t('no_membership')}</Text>
-      <Box marginTop={10}>
+      <Text style={styles.about}>
+        {t('buy_now')}
+      </Text>
+      <Text style={styles.helpCaption}>{t('no_membership')}</Text>
+      <Box>
         <Button icon="money-check" onPress={() => handleBuy()}>
           {t('buy_membership')}
         </Button>

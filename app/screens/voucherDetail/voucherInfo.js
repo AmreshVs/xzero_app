@@ -8,7 +8,7 @@ import Button from 'components/button';
 import Row from 'components/row';
 import Progress from 'components/progress';
 import { IMAGE_URL } from 'constants/common';
-import { calculatePercentage } from 'constants/commonFunctions';
+import { calculatePercentage, isTab } from 'constants/commonFunctions';
 import styles from './styles';
 
 export default function VoucherInfo({ data }) {
@@ -35,7 +35,7 @@ export default function VoucherInfo({ data }) {
         <Image source={{ uri: IMAGE_URL + data?.featured_img?.url }} style={styles.voucherImg} />
       </View>
       <Row padding={10} paddingBottom={5}>
-        <Box width="70%">
+        <Box width={isTab() ? "80%" : "70%"}>
           <Text numberOfLines={1}>
             <Text style={styles.title}>{t('buy')} </Text>
             <Text style={styles.caption}>{data?.[`buy_title_${language}`]}</Text>
@@ -45,7 +45,7 @@ export default function VoucherInfo({ data }) {
             <Text style={styles.caption} numberOfLines={1}>{data?.[`win_title_${language}`]}</Text>
           </Text>
         </Box>
-        <Box width="30%" marginTop={2}>
+        <Box width={isTab() ? "20%" : "30%"} marginTop={2}>
           <Button status="chip_1" size="small" icon="share-alt" onPress={() => handleShare()}>{t('share')}</Button>
         </Box>
       </Row>

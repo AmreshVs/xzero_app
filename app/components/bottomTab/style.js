@@ -1,13 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 import colors from 'constants/colors';
-import isIphoneX from './isIphoneX';
 
 const style = (insets, history = 1) => StyleSheet.create({
   tabContainer: {
     backgroundColor: colors.white,
     flexDirection: 'row',
-    paddingBottom: isIphoneX() ? insets.bottom : 0,
+    paddingBottom: insets.bottom,
     borderWidth: 2,
     borderColor: colors.gray,
   },

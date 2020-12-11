@@ -13,7 +13,7 @@ const Help = () => {
   const { t } = useTranslation();
 
   return (
-    <Card marginBottom={70}>
+    <Card style={styles.helpContainer} marginBottom={70}>
       <Text style={styles.title} numberOfLines={1}>
         {t('need_help')}
       </Text>

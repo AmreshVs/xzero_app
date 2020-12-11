@@ -10,7 +10,7 @@ export default function Rules({ data }) {
   let language = i18n.language;
 
   return (
-    <Card marginBottom={10}>
+    <Card style={styles.rulesContainer} marginBottom={10}>
       <Text style={styles.title}>{t('rules')}</Text>
       {data?.[`title_${language}`].split('\n').map((rule, index) => {
         if (rule !== '') {

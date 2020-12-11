@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-import { getShadowStyle } from 'constants/commonFunctions';
+import { getShadowStyle, isTab } from 'constants/commonFunctions';
 import { padding10, borderRadius10, borderRadius20, marginBottom5, w100, h100, overflowHidden, whiteBg, marginBottom10, textLite, textBoldDark, h100px, paddingBottom10, marginBottom0, w100px, resizeModeContain, resizeModeCover } from 'constants/commonStyles';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   flatlist: {
     minHeight: '100%',
     paddingHorizontal: 10,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   image: {
     ...w100,
     ...h100,
-    resizeMode: 'contain'
+    ...resizeModeContain
   },
   imgContainer: {
     width: 80,
@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   iconContainer: {
+    marginTop: -10,
+    marginRight: -10,
     ...padding10,
     ...borderRadius20,
     ...overflowHidden,
@@ -51,5 +53,20 @@ const styles = StyleSheet.create({
     ...marginBottom5,
   },
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  offerContainer: {
+    ...mobileStyles.offerContainer,
+    width: '49.2%',
+    marginRight: 10
+  },
+  flatlist: {
+    ...mobileStyles.flatlist,
+    justifyContent: 'flex-start',
+  }
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

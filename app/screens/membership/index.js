@@ -12,7 +12,7 @@ import Renew from './renew';
 import Benefits from './benefits';
 import BuyMembership from './buyMembership';
 import QRCode from './qrcode';
-import { getJWT, getUserData, dateDiffInDays } from 'constants/commonFunctions';
+import { getJWT, getUserData, dateDiffInDays, isTab } from 'constants/commonFunctions';
 import { GET_MEMBERSHIP_BY_USER, MEMBERSHIP_PLANS } from 'graphql/queries';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import TopStatusBar from 'components/topStatusBar';
@@ -24,6 +24,7 @@ import ApplyPromocode from 'components/applyPromocode';
 import Button from 'components/button';
 import Plan from './plan';
 import { PAYMENT } from 'navigation/routes';
+import { SCREEN_HEIGHT } from 'constants/common';
 
 let expiryMonth = null;
 let currentMonth = null;
@@ -127,22 +128,27 @@ const Membership = () => {
           data={memberData}
           expired={member && numOfDays !== null && numOfDays <= 0}
         />
-        {member && <QRCode data={memberData} />}
         <Note data={note?.info} />
-        <Benefits data={note?.benefits} />
-        {member && numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? (
-          <Renew membershipData={note.membershipData} />
-        ) : null}
-        {member && numOfDays !== null && numOfDays <= 0 ? (
-          <Renew membershipData={note.membershipData} expired />
-        ) : null}
-        {!member && <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />}
-        {!member || numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? <GetHelp /> : null}
+        <Box flexDirection={isTab() ? "row-reverse" : "column"} >
+          {member && <QRCode data={memberData} />}
+          <Benefits data={note?.benefits} />
+        </Box>
+        <Box flexDirection={isTab() ? "row-reverse" : "column"} >
+          {member && numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? (
+            <Renew membershipData={note.membershipData} />
+          ) : null}
+          {member && numOfDays !== null && numOfDays <= 0 ? (
+            <Renew membershipData={note.membershipData} expired />
+          ) : null}
+          {!member && <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />}
+          {!member || numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? <GetHelp /> : null}
+        </Box>
       </ScrollView>
       <Modalize
         ref={modalizeRef}
         childrenStyle={styles.modal}
-        modalTopOffset={250}
+        modalTopOffset={isTab() ? SCREEN_HEIGHT / 2 : SCREEN_HEIGHT / 3}
+        snapPoint={SCREEN_HEIGHT / 2}
         scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
         FooterComponent={
           <View style={styles.footer}>
@@ -153,30 +159,34 @@ const Membership = () => {
         <Box padding={10} paddingBottom={0}>
           <Text style={styles.planTitle}>{t('membership_plans')}</Text>
         </Box>
-        {membershipPlansData?.membershipPlans && membershipPlansData?.membershipPlans.map((plan, index) => {
-          return (
-            <Plan
-              data={plan}
-              index={index}
-              planIndex={planData?.index}
-              setPlanData={setPlanData}
+        <Box style={styles.plansContainer}>
+          {membershipPlansData?.membershipPlans && membershipPlansData?.membershipPlans.map((plan, index) => {
+            return (
+              <Plan
+                data={plan}
+                index={index}
+                planIndex={planData?.index}
+                setPlanData={setPlanData}
+                setPromocodeData={setPromocodeData}
+                key={index}
+              />
+            )
+          })}
+        </Box>
+        <Box style={styles.tabWrapper}>
+          <Card style={styles.membershipBenefits} margin={10} marginBottom={0}>
+            <Text style={styles.planTitle}>{`${planData?.data?.[`name_${language}`] || membershipPlansData?.membershipPlans[0]?.[`name_${language}`]} ${t('benefits')}`}</Text>
+            <Text style={styles.caption}>{planData?.data?.[`desc_${language}`] || membershipPlansData?.membershipPlans[0]?.[`desc_${language}`]}</Text>
+          </Card>
+          <Card style={styles.promocode} margin={10}>
+            <ApplyPromocode
+              voucherPrice={Number(promocodeData?.discountedPrice || firstPlanPrice)}
+              price={promocodeData?.discountedPrice}
+              promocodeData={promocodeData}
               setPromocodeData={setPromocodeData}
-              key={index}
             />
-          )
-        })}
-        <Card margin={10} marginBottom={0}>
-          <Text style={styles.planTitle}>{`${planData?.data?.[`name_${language}`] || membershipPlansData?.membershipPlans[0]?.[`name_${language}`]} ${t('benefits')}`}</Text>
-          <Text style={styles.caption}>{planData?.data?.[`desc_${language}`] || membershipPlansData?.membershipPlans[0]?.[`desc_${language}`]}</Text>
-        </Card>
-        <Card margin={10}>
-          <ApplyPromocode
-            voucherPrice={Number(promocodeData?.discountedPrice || firstPlanPrice)}
-            price={promocodeData?.discountedPrice}
-            promocodeData={promocodeData}
-            setPromocodeData={setPromocodeData}
-          />
-        </Card>
+          </Card>
+        </Box>
       </Modalize>
     </SafeView>
   );

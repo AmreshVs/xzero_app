@@ -10,7 +10,7 @@ export default function QRCode({ data }) {
   const { t } = useTranslation();
 
   return (
-    <Card margin={10} marginBottom={0}>
+    <Card style={styles.qrContainer} margin={10} marginBottom={0}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: IMAGE_URL + data?.qrcode_url }} style={styles.qrcode} />
         <Text style={styles.helpCaption}>{t('center_scan')}</Text>

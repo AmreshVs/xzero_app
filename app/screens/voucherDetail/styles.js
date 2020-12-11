@@ -2,9 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { font16, textAlignCenter, textBoldDark, textLite } from 'constants/commonStyles';
 import { SCREEN_HEIGHT } from 'constants/common';
-import { getShadowStyle } from 'constants/commonFunctions';
+import { getShadowStyle, isTab } from 'constants/commonFunctions';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   container: {
     padding: 10,
   },
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
   },
   buyNowButton: {
     bottom: 60,
-    padding: 10
+    padding: 10,
+    alignItems: 'center'
   },
   continueButton: {
     width: '100%',
@@ -80,8 +81,41 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderColor: '#EEE',
     padding: 10,
-    paddingBottom: 30
+    paddingBottom: 30,
+    alignItems: 'center'
   }
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  voucherImageContainer: {
+    ...mobileStyles.voucherContainer,
+    height: SCREEN_HEIGHT / 3.5,
+  },
+  membershipImg: {
+    ...mobileStyles.membershipImg,
+    height: SCREEN_HEIGHT / 4,
+    resizeMode: 'contain',
+    marginBottom: 10
+  },
+  rulesContainer: {
+    width: '50%',
+    marginRight: 0,
+    marginBottom: 70
+  },
+  helpContainer: {
+    width: '48.5%'
+  },
+  addressContainer: {
+    width: '48%',
+    marginRight: 0
+  },
+  promocodeContainer: {
+    width: '48%',
+    marginTop: 10
+  }
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

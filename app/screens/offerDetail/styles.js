@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     ...font16
   },
   location: {
+    marginRight: 5,
     ...textLite,
     ...marginLeft5,
   },

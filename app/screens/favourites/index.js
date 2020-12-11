@@ -13,6 +13,7 @@ import { CLEAR_FAVOURITES } from 'graphql/mutations';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import TopStatusBar from 'components/topStatusBar';
 import styles from './styles';
+import { isTab } from 'constants/commonFunctions';
 
 const Favourites = () => {
   const { t } = useTranslation();
@@ -63,7 +64,9 @@ const Favourites = () => {
               renderItem={({ item }) => (
                 <Offer data={{ ...item, is_favourite: true }} favourites={() => reload()} />
               )}
+              numColumns={isTab() ? 2 : 1}
               initialNumToRender={6}
+              columnWrapperStyle={isTab() ? styles.columnWrapper : null}
               contentContainerStyle={styles.flatlist}
               refreshing={reloading}
               onRefresh={() => reload()}
@@ -73,6 +76,7 @@ const Favourites = () => {
               <Button
                 icon="broom"
                 status="danger"
+                width={isTab() ? '30%' : '100%'}
                 onPress={() => handleClearAll()}
                 loading={reloading}
               >

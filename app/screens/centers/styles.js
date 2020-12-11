@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 import colors from 'constants/colors';
-import { getShadowStyle } from 'constants/commonFunctions';
-import { w100, whiteBg, flexSpaceBetween, borderRadius10, font15, fontWeight700, textAlignCenter, overflowHidden, w100px, h100px, padding10, paddingBottom10, justifyContentSpaceBetween } from 'constants/commonStyles';
+import { getShadowStyle, isTab } from 'constants/commonFunctions';
+import { w100, whiteBg, flexSpaceBetween, borderRadius10, font15, fontWeight700, textAlignCenter, overflowHidden, w100px, h100px, padding10, paddingBottom10, justifyContentSpaceBetween, resizeModeCover, resizeModeContain } from 'constants/commonStyles';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   container: {
-    width: '48%',
-    marginBottom: -5,
+    width: '48.6%',
+    marginBottom: -10,
     ...getShadowStyle(),
     ...flexSpaceBetween,
     ...borderRadius10,
@@ -28,10 +28,10 @@ const styles = StyleSheet.create({
     ...overflowHidden,
   },
   image: {
-    resizeMode: 'contain',
+    height: 80,
+    ...resizeModeContain,
     ...borderRadius10,
     ...w100px,
-    ...h100px,
   },
   centers: {
     ...justifyContentSpaceBetween,
@@ -51,5 +51,20 @@ const styles = StyleSheet.create({
     color: colors.text_dark
   }
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  container: {
+    ...mobileStyles.container,
+    width: '24%',
+    marginRight: 10
+  },
+  centers: {
+    ...mobileStyles.centers,
+    justifyContent: 'flex-start'
+  }
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

@@ -10,6 +10,7 @@ import BuyVoucherModal from 'screens/voucherDetail/buyVoucherModal';
 import { VOUCHERS } from 'graphql/queries';
 import Voucher from './voucher';
 import styles from './styles';
+import { isTab } from 'constants/commonFunctions';
 
 export default function Vouchers() {
   const [reloading, setReloading] = useState(false);
@@ -46,11 +47,11 @@ export default function Vouchers() {
               keyExtractor={(item) => String(item.id)}
               data={data.vouchers}
               renderItem={({ item }) => <Voucher handleOpenModal={handleOpenModal} data={item} />}
-              numColumns={2}
+              numColumns={isTab() ? 2 : 1}
               initialNumToRender={6}
               maxToRenderPerBatch={10}
               windowSize={10}
-              columnWrapperStyle={styles.centers}
+              columnWrapperStyle={styles.vouchers}
               contentContainerStyle={styles.vouchersScrollView}
               refreshing={reloading}
               onRefresh={() => reload()}

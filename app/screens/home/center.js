@@ -26,35 +26,37 @@ function Center({ data }) {
   };
 
   return (
-    <RippleFX style={styles.centerContainer} onPress={() => handlePress(data?.id)}>
-      <Row>
-        <VHCenter width="35%">
-          <Image source={{ uri: IMAGE_URL + data.featured_img }} style={styles.centerImage} />
-        </VHCenter>
-        <Box padding={10} style={styles.textContainer}>
-          <Text style={styles.title} numberOfLines={1}>
-            {data?.[`title_${language}`]}
-          </Text>
-          <Text style={styles.caption} numberOfLines={1}>
-            {data.place}, {data.city}
-          </Text>
-          <View style={styles.chipContainer}>
-            <Column>
-              <Chip
-                title={`${data.offersCount}+ ${t('offers')}`}
-                color={colors.chip_1}
-                marginBottom={5}
-              />
-              {data?.discount === 100 ? (
-                <Chip title={t('free')} color={colors.danger} />
-              ) : (
-                  <Chip title={`${data?.discount}% ${t('discount')}`} color={colors.chip_2} />
-                )}
-            </Column>
-          </View>
-        </Box>
-      </Row>
-    </RippleFX>
+    <Box>
+      <RippleFX style={styles.centerContainer} onPress={() => handlePress(data?.id)}>
+        <Row>
+          <VHCenter paddingLeft={10}>
+            <Image source={{ uri: IMAGE_URL + data.featured_img }} style={styles.centerImage} />
+          </VHCenter>
+          <Box padding={10} style={styles.textContainer}>
+            <Text style={styles.title} numberOfLines={1}>
+              {data?.[`title_${language}`]}
+            </Text>
+            <Text style={styles.caption} numberOfLines={1}>
+              {data.place}, {data.city}
+            </Text>
+            <View style={styles.chipContainer}>
+              <Column>
+                <Chip
+                  title={`${data.offersCount}+ ${t('offers')}`}
+                  color={colors.chip_1}
+                  marginBottom={5}
+                />
+                {data?.discount === 100 ? (
+                  <Chip title={t('free')} color={colors.danger} />
+                ) : (
+                    <Chip title={`${data?.discount}% ${t('discount')}`} color={colors.chip_2} />
+                  )}
+              </Column>
+            </View>
+          </Box>
+        </Row>
+      </RippleFX>
+    </Box>
   );
 }
 

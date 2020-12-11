@@ -21,7 +21,7 @@ const CenterInfo = ({ offer, username }) => {
         <Text style={styles.title} numberOfLines={1}>
           {offer?.center?.[`title_${language}`]}
         </Text>
-        <Row marginTop={5}>
+        <Row marginTop={5} flexWrap="nowrap">
           <FontAwesomeIcon icon="map-marker-alt" color={colors.text_lite} />
           <Text style={styles.location}>
             {offer?.place}, {offer?.city}
