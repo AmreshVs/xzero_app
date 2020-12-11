@@ -65,8 +65,8 @@ const Favourites = () => {
                 <Offer data={{ ...item, is_favourite: true }} favourites={() => reload()} />
               )}
               numColumns={isTab() ? 2 : 1}
-              initialNumToRender={6}
               columnWrapperStyle={isTab() ? styles.columnWrapper : null}
+              initialNumToRender={6}
               contentContainerStyle={styles.flatlist}
               refreshing={reloading}
               onRefresh={() => reload()}
