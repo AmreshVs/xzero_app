@@ -7,10 +7,15 @@ import { faApple, faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icon
 
 import { ToastMsg } from 'components/toastMsg';
 import RippleFX from 'components/rippleFx';
-import { ERROR_OCCURED } from 'constants/common';
 import styles from './styles';
+import { useTranslation } from 'react-i18next';
+import useErrorLog from 'hooks/useErrorLog';
+import { LOGIN_SCREEN } from 'navigation/routes';
 
 const AppleLoginButton = ({ handleSocialLogin }) => {
+  const { t } = useTranslation();
+  const { logError } = useErrorLog();
+  let input = null;
 
   const handleAppleLogin = async () => {
     try {
@@ -21,6 +26,7 @@ const AppleLoginButton = ({ handleSocialLogin }) => {
         ],
       });
 
+      let input = credential;
       let email = credential?.email;
       if (email !== null) {
         let username = credential?.fullName?.givenName + ' ' + credential?.fullName?.familyName;
@@ -31,14 +37,21 @@ const AppleLoginButton = ({ handleSocialLogin }) => {
         handleSocialLogin('apple', { email: decodeJwt?.email });
       }
       else {
-        ToastMsg(ERROR_OCCURED);
+        ToastMsg(t('error_occured'));
       }
-    } catch (e) {
-      // console.log('Apple Login Error', e);
-      if (e.code === 'ERR_CANCELED') {
-        ToastMsg('You Cancelled Apple Sign In');
+    } catch (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: LOGIN_SCREEN,
+        module: 'Apple Login',
+        input: JSON.stringify(input),
+        error: JSON.stringify(error)
+      });
+
+      if (error.code === 'ERR_CANCELED') {
+        ToastMsg(t('apple_cancelled'));
       } else {
-        ToastMsg(ERROR_OCCURED);
+        ToastMsg(t('error_occured'));
       }
     }
   }

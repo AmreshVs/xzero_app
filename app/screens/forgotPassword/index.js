@@ -15,6 +15,8 @@ import { ToastMsg } from 'components/toastMsg';
 import { FORGOT_PASSWORD } from 'graphql/mutations';
 import TopNavigator from 'components/topNavigator';
 import { BASE_URL } from 'constants/common';
+import useErrorLog from 'hooks/useErrorLog';
+import { FORGOT_PASSWORD as FORGET } from 'navigation/routes';
 
 const inputsValidationSchema = () =>
   object().shape({
@@ -25,6 +27,7 @@ export default function ForgotPassword({ navigation }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
+  const { logError } = useErrorLog();
 
   const handleForgetPassword = async (values) => {
     setLoading(true);
@@ -37,6 +40,16 @@ export default function ForgotPassword({ navigation }) {
     if (data && data?.forgotPassword?.ok) {
       ToastMsg(t('check_reset_email'));
       navigation.pop();
+    }
+
+    if (errors) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: FORGET,
+        module: 'Forgot Password',
+        input: JSON.stringify({ email: values.email }),
+        error: JSON.stringify(errors)
+      });
     }
 
     if (errors && errors[0]?.extensions?.exception?.code === 400) {

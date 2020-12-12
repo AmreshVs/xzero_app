@@ -17,6 +17,8 @@ import { HOME_SEARCH } from 'graphql/queries';
 import styles from './styles';
 import ListItem from './listItem';
 import ModalSearchHeader from 'components/modalSearchHeader';
+import useErrorLog from 'hooks/useErrorLog';
+import { HOME_SCREEN } from 'navigation/routes';
 
 const inputsValidationSchema = () =>
   object().shape({
@@ -25,6 +27,7 @@ const inputsValidationSchema = () =>
 
 const SearchModal = ({ modalizeRef }) => {
   const [searched, setSearched] = useState('');
+  const { logError } = useErrorLog();
   const { t, i18n } = useTranslation();
   let language = i18n.language;
   const initialWhereCondition = {
@@ -36,9 +39,19 @@ const SearchModal = ({ modalizeRef }) => {
     }
   };
   const [whereCondition, setWhereCondition] = useState(initialWhereCondition);
-  const { data, loading } = useQuery(HOME_SEARCH, {
+  const { data, loading, error } = useQuery(HOME_SEARCH, {
     variables: whereCondition
   });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: HOME_SCREEN,
+      module: 'Home Common Search',
+      input: JSON.stringify(whereCondition),
+      error: JSON.stringify(error)
+    });
+  }
 
   let name = 'search';
 
@@ -85,32 +98,32 @@ const SearchModal = ({ modalizeRef }) => {
             setFieldTouched,
             handleSubmit,
           }) => (
-              <>
-                <Row justifyContent="space-between">
-                  <Box width="68%">
-                    <Textbox
-                      placeholder={t('search_home_textbox')}
-                      value={values[name]}
-                      onChangeText={handleChange(name)}
-                      icon="search"
-                      marginTop={0}
-                      onBlur={() => setFieldTouched(name)}
-                      autoCapitalize="none"
-                    />
-                  </Box>
-                  <Box width="30%">
-                    <Button
-                      icon="check"
-                      onPress={() => handleSubmit()}
-                      disabled={Object.keys(errors).length}
-                    >
-                      {t('search')}
-                    </Button>
-                  </Box>
-                </Row>
-                <FormError touched={touched[name]} errorText={errors[name]} />
-              </>
-            )}
+            <>
+              <Row justifyContent="space-between">
+                <Box width="68%">
+                  <Textbox
+                    placeholder={t('search_home_textbox')}
+                    value={values[name]}
+                    onChangeText={handleChange(name)}
+                    icon="search"
+                    marginTop={0}
+                    onBlur={() => setFieldTouched(name)}
+                    autoCapitalize="none"
+                  />
+                </Box>
+                <Box width="30%">
+                  <Button
+                    icon="check"
+                    onPress={() => handleSubmit()}
+                    disabled={Object.keys(errors).length}
+                  >
+                    {t('search')}
+                  </Button>
+                </Box>
+              </Row>
+              <FormError touched={touched[name]} errorText={errors[name]} />
+            </>
+          )}
         </Formik>
       </Card>
       <Card margin={10} marginTop={0}>

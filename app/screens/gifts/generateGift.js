@@ -9,7 +9,9 @@ import Button from 'components/button';
 import { GENERATE_GIFT } from 'graphql/mutations';
 import { UserDataContext } from 'context';
 import { IMAGE_URL } from 'constants/common';
+import useErrorLog from 'hooks/useErrorLog';
 import styles from './styles';
+import { GIFTS } from 'navigation/routes';
 
 export default function GenerateGift() {
   const [loading, setLoading] = useState(false);
@@ -21,20 +23,34 @@ export default function GenerateGift() {
   const confettiRef = useRef(null);
   const client = useApolloClient();
   const { userData } = useContext(UserDataContext);
+  const { logError } = useErrorLog();
   const { t } = useTranslation();
 
   const handleGenerate = async () => {
     setLoading(true);
-    const { data } = await client.mutate({
-      mutation: GENERATE_GIFT,
-      variables: {
-        user_id: Number(userData?.id)
-      }
-    });
-
-    setLoading(false);
-    setData(data?.GenerateGift);
-    Won(data?.GenerateGift?.won);
+    try {
+      const { data } = await client.mutate({
+        mutation: GENERATE_GIFT,
+        variables: {
+          user_id: Number(userData?.id)
+        }
+      });
+      setLoading(false);
+      setData(data?.GenerateGift);
+      Won(data?.GenerateGift?.won);
+    }
+    catch (error) {
+      setLoading(false);
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: GIFTS,
+        module: 'Generate Gift',
+        input: JSON.stringify({
+          user_id: Number(userData?.id)
+        }),
+        error: JSON.stringify(error)
+      });
+    }
   }
 
   const Won = () => {

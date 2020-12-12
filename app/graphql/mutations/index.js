@@ -254,3 +254,15 @@ export const UPDATE_BANK_INFO = gql`
     }
   }
 `;
+
+export const LOG_ERROR = gql`
+  mutation CreateErrorLog($data: ErrorLogInput){
+    createErrorLog(input: {
+      data: $data
+    }){
+      errorLog{
+        id
+      }
+    }
+  }
+`;

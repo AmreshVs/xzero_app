@@ -11,16 +11,17 @@ import Chip from 'components/chip';
 import { IMAGE_URL } from 'constants/common';
 import RippleFX from 'components/rippleFx';
 import { OFFERS_SCREEN } from 'navigation/routes';
-import { getUserData } from 'constants/commonFunctions';
 import styles from './styles';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
 
 const Center = ({ data }) => {
   const { push } = useNavigation();
   const { t, i18n } = useTranslation();
+  const { userData } = useContext(UserDataContext);
   const language = i18n.language;
 
   const handlePress = async () => {
-    const userData = await getUserData();
 
     push(OFFERS_SCREEN, { center: data?.id, user_id: Number(userData?.id) || 0 });
   };

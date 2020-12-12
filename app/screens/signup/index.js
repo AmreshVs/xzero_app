@@ -138,7 +138,7 @@ export default function Signup({ navigation }) {
     >
       <SafeView style={styles.container}>
         <TopNavigator style={styles.topNav} />
-        <ScrollView contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps={true}>
+        <ScrollView contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps="always">
           <Image source={require('../../../assets/logo.png')} style={styles.logo} />
           <HeadingCaption heading={t('get_started')} caption={t('signup_note')} />
           <View style={styles.inputsContainer}>

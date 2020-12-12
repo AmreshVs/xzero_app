@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect, createRef } from 'react';
-import { ScrollView, RefreshControl, InteractionManager } from 'react-native';
+import React, { useState, useEffect, createRef } from 'react';
+import { ScrollView, RefreshControl } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import * as Linking from 'expo-linking';
@@ -16,17 +16,28 @@ import MembershipBox from './membershipBox';
 import SearchModal from './searchModal';
 import styles from './styles';
 import Popup from './popup';
+import useErrorLog from 'hooks/useErrorLog';
+import { HOME_SCREEN } from 'navigation/routes';
 
 let openLink = 0;
 let backupLink = "";
 let counts = {};
 
 const Home = () => {
-
-  const { data, loading, refetch } = useQuery(GET_HOME);
+  const { data, loading, refetch: _refetch, error } = useQuery(GET_HOME);
   const [reloading, setReloading] = useState(false);
   const modalizeRef = createRef();
   const { t } = useTranslation();
+  const { logError } = useErrorLog();
+
+  if (error) {
+    logError({
+      screen: HOME_SCREEN,
+      module: 'Home Query',
+      input: '',
+      error: JSON.stringify(error)
+    });
+  }
 
   counts = {
     centersCount: data?.centersCount?.aggregate?.totalCount,
@@ -64,7 +75,6 @@ const Home = () => {
     }
 
     if (openLink === 0) {
-      console.log('Opening URL', url);
       backupLink = url;
       if (url.includes('Home/')) {
         url = (url).replace("Home/", "");
@@ -75,16 +85,9 @@ const Home = () => {
     openLink = 1;
   }
 
-  const _refetch = useCallback(() => {
-    const task = InteractionManager.runAfterInteractions(async () => {
-      if (refetch) await refetch();
-    });
-    return () => task.cancel();
-  }, [refetch]);
-
   const reload = async () => {
     setReloading(true);
-    _refetch();
+    await _refetch();
     setReloading(false);
   };
 

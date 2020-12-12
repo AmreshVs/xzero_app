@@ -1,5 +1,5 @@
-import React, { useState, useCallback, createRef } from 'react';
-import { FlatList, InteractionManager } from 'react-native';
+import React, { useState, createRef } from 'react';
+import { FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
@@ -14,12 +14,15 @@ import Center from './center';
 import { GET_CENTERS } from 'graphql/queries';
 import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
+import useErrorLog from 'hooks/useErrorLog';
+import { CENTERS_SCREEN } from 'navigation/routes';
 
 let initialWhereCondition = {};
 let headerCondition = 0;
 
 export default function Centers() {
   const { params } = useRoute();
+  const { logError } = useErrorLog();
 
   if (params?.id) {
     initialWhereCondition = {
@@ -33,18 +36,21 @@ export default function Centers() {
   const { t, i18n } = useTranslation();
   let language = i18n.language;
   const modalizeRef = createRef();
-  let { data, loading, refetch } = useQuery(GET_CENTERS, {
+  let { data, loading, refetch: _refetch, error } = useQuery(GET_CENTERS, {
     variables: {
       where: whereCondition
     },
   });
 
-  const _refetch = useCallback(() => {
-    const task = InteractionManager.runAfterInteractions(async () => {
-      if (refetch) await refetch();
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: CENTERS_SCREEN,
+      module: 'Centers Query',
+      input: JSON.stringify(whereConditionwhereCondition),
+      error: JSON.stringify(error)
     });
-    return () => task.cancel();
-  }, [reloading]);
+  }
 
   const reload = async () => {
     setReloading(true);

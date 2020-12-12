@@ -136,7 +136,7 @@ export const GET_MEMBERSHIP_BY_USER = gql`
       user: $user_id
     }){
       id
-      serial
+      seria
       expiry
       qrcode_url
       package{
@@ -261,7 +261,8 @@ export const BASIC_INFORMATION = gql`
   query{
     appBasicInformation{
       app_version,
-      version_check
+      version_check,
+      error_logging
     }
   }
 `;

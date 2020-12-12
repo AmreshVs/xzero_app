@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { View, FlatList, InteractionManager } from 'react-native';
+import React, { useState } from 'react';
+import { View, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useApolloClient } from '@apollo/client';
 
@@ -14,22 +14,29 @@ import IsLoggedIn from 'hoc/isLoggedIn';
 import TopStatusBar from 'components/topStatusBar';
 import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
+import useErrorLog from 'hooks/useErrorLog';
+import { FAVOURITES_TAB_SCREEN } from 'navigation/routes';
 
 const Favourites = () => {
   const { t } = useTranslation();
   const [reloading, setReloading] = useState(false);
   const userData = useUserData();
   const client = useApolloClient();
-  const { data, loading, refetch } = useQuery(FAVOURITES_BY_USER, {
+  const { logError } = useErrorLog();
+
+  const { data, loading, refetch: _refetch, error } = useQuery(FAVOURITES_BY_USER, {
     variables: { user_id: Number(userData?.id) || 0 },
   });
 
-  const _refetch = useCallback(() => {
-    const task = InteractionManager.runAfterInteractions(async () => {
-      if (refetch) await refetch();
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: FAVOURITES_TAB_SCREEN,
+      module: 'Favorites Query',
+      input: JSON.stringify({ user_id: Number(userData?.id) || 0 }),
+      error: JSON.stringify(error)
     });
-    return () => task.cancel();
-  }, [refetch]);
+  }
 
   const reload = async () => {
     setReloading(true);
@@ -38,16 +45,29 @@ const Favourites = () => {
   };
 
   const handleClearAll = async () => {
-    setReloading(true);
-    const { data } = await client.mutate({
-      mutation: CLEAR_FAVOURITES,
-      variables: {
-        user_id: Number(userData.id),
-      },
-    });
-    setReloading(false);
-    if (Object.keys(data?.updateUser?.user).length) {
-      reload();
+    try {
+      setReloading(true);
+      const { data } = await client.mutate({
+        mutation: CLEAR_FAVOURITES,
+        variables: {
+          user_id: Number(userData.id),
+        },
+      });
+      setReloading(false);
+      if (Object.keys(data?.updateUser?.user).length) {
+        reload();
+      }
+    }
+    catch (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: FAVOURITES_TAB_SCREEN,
+        module: 'Clear Favorites',
+        input: JSON.stringify({
+          user_id: Number(userData.id),
+        }),
+        error: JSON.stringify(error)
+      });
     }
   };
 

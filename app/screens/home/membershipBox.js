@@ -9,44 +9,59 @@ import Box from 'components/box';
 import Row from 'components/row';
 import Divider from 'components/divider';
 import Column from 'components/column';
-import { getUserData, getFormatedDate } from 'constants/commonFunctions';
+import { getFormatedDate } from 'constants/commonFunctions';
 import colors from 'constants/colors';
-import { getJWT } from 'constants/commonFunctions';
 import { GET_MEMBERSHIP_BY_USER } from 'graphql/queries';
-import { CENTERS_SCREEN, GIFTS, MEMBERSHIP_TAB_SCREEN, OFFERS_SCREEN, SPECIALISTS, VOUCHERS } from 'navigation/routes';
+import { CENTERS_SCREEN, GIFTS, HOME_SCREEN, MEMBERSHIP_TAB_SCREEN, OFFERS_SCREEN, SPECIALISTS, VOUCHERS } from 'navigation/routes';
 import styles from './styles';
 import RippleFX from 'components/rippleFx';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
+import { ToastMsg } from 'components/toastMsg';
+import useErrorLog from 'hooks/useErrorLog';
 
 const MembershipBox = ({ data }) => {
   const [expiry, setExpiry] = useState(null);
   const { navigate, push } = useNavigation();
+  const { userData } = useContext(UserDataContext);
   const { t } = useTranslation();
+  const { logError } = useErrorLog();
   const client = useApolloClient();
-
 
   useEffect(() => {
     checkMembership();
   }, []);
 
   const checkMembership = async () => {
-    const jwt = await getJWT();
-    if (jwt) {
-      let { id } = await getUserData();
-      let { data } = await client.query({
-        query: GET_MEMBERSHIP_BY_USER,
-        variables: {
-          user_id: Number(id),
-        },
-        context: {
-          headers: {
-            Authorization: 'Bearer ' + jwt,
+    try {
+      if (userData?.jwt) {
+        let { data } = await client.query({
+          query: GET_MEMBERSHIP_BY_USER,
+          variables: {
+            user_id: Number(userData?.id),
           },
-        },
-      });
+          context: {
+            headers: {
+              Authorization: 'Bearer ' + userData?.jwt,
+            },
+          },
+        });
 
-      if (data?.memberships !== null && data?.memberships.length > 0) {
-        setExpiry(data?.memberships[0]?.expiry);
+        if (data?.memberships !== null && data?.memberships.length > 0) {
+          setExpiry(data?.memberships[0]?.expiry);
+        }
       }
+    }
+    catch (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: HOME_SCREEN,
+        module: 'Membership Box - Check Membership Function',
+        input: JSON.stringify({
+          user_id: Number(userData?.id),
+        }),
+        error: JSON.stringify(error)
+      });
     }
   };
 

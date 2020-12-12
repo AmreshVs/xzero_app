@@ -9,21 +9,36 @@ import { POPUP } from 'graphql/queries';
 import { useTranslation } from 'react-i18next';
 import { SCREEN_HEIGHT } from 'constants/common';
 import AsyncStorage from '@react-native-community/async-storage';
+import { HOME_SCREEN } from 'navigation/routes';
+import { ToastMsg } from 'components/toastMsg';
+import useErrorLog from 'hooks/useErrorLog';
 
 export default function Popup() {
   const [modalVisible, setModalVisible] = useState(true);
   const { data, loading } = useQuery(POPUP);
   const { t } = useTranslation();
+  const { logError } = useErrorLog();
 
   useEffect(() => {
     checkPopup();
   }, []);
 
   const checkPopup = async () => {
-    const popupData = await AsyncStorage.getItem('@xzero_popup');
-    if (popupData !== null) {
-      let data = JSON.parse(popupData);
-      setModalVisible(data?.status);
+    try {
+      const popupData = await AsyncStorage.getItem('@xzero_popup');
+      if (popupData !== null) {
+        let data = JSON.parse(popupData);
+        setModalVisible(data?.status);
+      }
+    }
+    catch (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: HOME_SCREEN,
+        module: 'Getting popup data from Async Storage',
+        input: '',
+        error: JSON.stringify(error)
+      });
     }
   }
 

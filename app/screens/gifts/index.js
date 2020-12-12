@@ -9,10 +9,24 @@ import AvailableGifts from './availableGifts';
 import AvailedGifts from './availedGifts';
 import GenerateGift from './generateGift';
 import { GET_GIFTS } from 'graphql/queries';
+import useErrorLog from 'hooks/useErrorLog';
+import { GIFTS } from 'navigation/routes';
 
 export default function Gifts() {
   const { t } = useTranslation();
-  const { data, loading, refetch: _refetch } = useQuery(GET_GIFTS);
+  const { logError } = useErrorLog();
+
+  const { data, loading, refetch: _refetch, error } = useQuery(GET_GIFTS);
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: GIFTS,
+      module: 'Gifts Query',
+      input: '',
+      error: JSON.stringify(error)
+    });
+  }
 
   return (
     <SafeView loading={loading} topNav>

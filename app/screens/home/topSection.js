@@ -13,26 +13,37 @@ import Row from 'components/row';
 import useUserData from 'hooks/useUserData';
 import { firstLetterUpper, getUserData } from 'constants/commonFunctions';
 import AsyncStorage from '@react-native-community/async-storage';
-import { GIFTS, NOTIFICATIONS } from 'navigation/routes';
+import { GIFTS, HOME_SCREEN, NOTIFICATIONS } from 'navigation/routes';
 import styles from './styles';
-
+import useErrorLog from 'hooks/useErrorLog';
 
 const TopSection = ({ handleModalOpen }) => {
   const { push, toggleDrawer } = useNavigation();
   const userData = useUserData();
-
-  const { i18n } = useTranslation();
+  const { logError } = useErrorLog();
+  const { t, i18n } = useTranslation();
 
   let name = userData?.username ?? '';
   let email = userData?.email ?? '';
 
   const handleLangSelect = async () => {
-    let originalLanguage = i18n.language;
-    let language = originalLanguage === 'ar' ? 'en' : 'ar';
-    await i18n.changeLanguage(language);
-    let userData = await getUserData();
-    let userDataWithLanguage = { ...userData, language: language };
-    await AsyncStorage.setItem('@xzero_user', JSON.stringify(userDataWithLanguage));
+    try {
+      let originalLanguage = i18n.language;
+      let language = originalLanguage === 'ar' ? 'en' : 'ar';
+      await i18n.changeLanguage(language);
+      let userData = await getUserData();
+      let userDataWithLanguage = { ...userData, language: language };
+      await AsyncStorage.setItem('@xzero_user', JSON.stringify(userDataWithLanguage));
+    }
+    catch (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: HOME_SCREEN,
+        module: 'Saving Change language data',
+        input: '',
+        error: JSON.stringify(error)
+      });
+    }
   };
 
   return (

@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
 
 import SafeView from 'components/safeView';
-import VHCenter from 'components/vhCenter';
 import Textbox from 'components/textbox';
 import Button from 'components/button';
 import HeadingCaption from 'components/headingCaption';
@@ -17,7 +16,7 @@ import facebookLogin from './facebookLogin';
 import googleSignin from './googleLogin';
 import { inputsValidationSchema, saveUserDataLocally } from './helpers';
 import { ToastMsg } from 'components/toastMsg';
-import { SIGNUP_SCREEN, HOME_SCREEN, FORGOT_PASSWORD, DRAWER_TERMS } from 'navigation/routes';
+import { SIGNUP_SCREEN, HOME_SCREEN, FORGOT_PASSWORD, DRAWER_TERMS, LOGIN_SCREEN } from 'navigation/routes';
 import { GET_USER_BY_EMAIL } from 'graphql/queries';
 import { USER_LOGIN, CREATE_USER, UPDATE_NOTIFICATION_TOKEN } from 'graphql/mutations';
 import { getNotificationToken } from '../../../helpers';
@@ -25,12 +24,14 @@ import { SOCIAL_TOKEN, ERROR_OCCURED } from 'constants/common';
 import Row from 'components/row';
 import AppleLoginButton from './appleLogin';
 import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
 
 export default function Login({ navigation }) {
   const { t, i18n } = useTranslation();
   let language = i18n.language;
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
+  const { logError } = useErrorLog();
   const { setUserData } = useContext(UserDataContext);
 
   const handleSubmit = async (values) => {
@@ -56,6 +57,16 @@ export default function Login({ navigation }) {
 
     setLoading(false);
 
+    if (errors) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: LOGIN_SCREEN,
+        module: 'Login Index file',
+        input: JSON.stringify(response),
+        error: JSON.stringify(errors)
+      });
+    }
+
     if (errors && errors[0]?.extensions?.exception?.code === 400) {
       ToastMsg(errors[0]?.extensions?.exception?.data?.data[0].messages[0].message);
       return;
@@ -74,16 +85,33 @@ export default function Login({ navigation }) {
     const platform = Platform.OS;
     const app_version = Constants.nativeAppVersion;
     if (token) {
-      await client.mutate({
-        mutation: UPDATE_NOTIFICATION_TOKEN,
-        variables: {
-          user_id: Number(id),
-          notification_token: token,
-          app_version,
-          platform,
-          provider,
-        },
-      });
+      try {
+        await client.mutate({
+          mutation: UPDATE_NOTIFICATION_TOKEN,
+          variables: {
+            user_id: Number(id),
+            notification_token: token,
+            app_version,
+            platform,
+            provider,
+          },
+        });
+      }
+      catch (error) {
+        ToastMsg(t('error_occured'));
+        logError({
+          screen: LOGIN_SCREEN,
+          module: 'Update Notification Token',
+          input: JSON.stringify({
+            user_id: Number(id),
+            notification_token: token,
+            app_version,
+            platform,
+            provider,
+          }),
+          error: JSON.stringify(error)
+        });
+      }
     }
   };
 
@@ -96,17 +124,29 @@ export default function Login({ navigation }) {
     }
 
     if (socialData !== null && socialData !== 'error') {
-      setLoading(true);
-      const { data } = await client.query({
-        query: GET_USER_BY_EMAIL,
-        variables: { email: socialData.email },
-      });
-      setLoading(false);
-      if (data?.users.length === 0) {
-        await handleCreateUser(socialData, type);
-      } else {
-        // Login user, if already signed in
-        handleSubmit({ ...socialData, password: socialData.email + SOCIAL_TOKEN });
+      try {
+        setLoading(true);
+        const { data } = await client.query({
+          query: GET_USER_BY_EMAIL,
+          variables: { email: socialData.email },
+        });
+        setLoading(false);
+        if (data?.users.length === 0) {
+          await handleCreateUser(socialData, type);
+        } else {
+          // Login user, if already signed in
+          handleSubmit({ ...socialData, password: socialData.email + SOCIAL_TOKEN });
+        }
+      }
+      catch (error) {
+        setLoading(false);
+        ToastMsg(t('error_occured'));
+        logError({
+          screen: LOGIN_SCREEN,
+          module: 'Get User By Email',
+          input: JSON.stringify({ email: socialData.email }),
+          error: JSON.stringify(error)
+        });
       }
     } else {
       setLoading(false);
@@ -130,6 +170,19 @@ export default function Login({ navigation }) {
         },
       });
       setLoading(false);
+
+      logError({
+        screen: LOGIN_SCREEN,
+        module: 'Create User',
+        input: JSON.stringify({
+          username: values?.username,
+          email: values?.email,
+          password: values?.email + SOCIAL_TOKEN,
+          mobile_number: Number(0),
+          notification_token: String(token) || '',
+        }),
+        error: JSON.stringify(errors)
+      });
 
       if (errors && errors[0]?.extensions?.exception?.code === 400) {
         ToastMsg(errors[0].message);
@@ -189,7 +242,7 @@ export default function Login({ navigation }) {
   return (
     <KeyboardAvoidingView keyboardVerticalOffset={-250} behavior={'position'}>
       <SafeView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollview} keyboardShouldPersistTaps={true}>
+        <ScrollView contentContainerStyle={styles.scrollview} keyboardShouldPersistTaps="always">
           <Image source={require('../../../assets/logo.png')} style={styles.logo} />
           <HeadingCaption heading={t('welcome')} caption={t('login_note')} />
           <View style={styles.inputsContainer}>
