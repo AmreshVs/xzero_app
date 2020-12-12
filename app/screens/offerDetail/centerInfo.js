@@ -16,7 +16,7 @@ const CenterInfo = ({ offer, username }) => {
   const language = i18n.language;
 
   return (
-    <Row marginTop={10} justifyContent="space-between">
+    <Row flexWrap="wrap" marginTop={10} justifyContent="space-between">
       <Card style={styles.infoContainer}>
         <Text style={styles.title} numberOfLines={1}>
           {offer?.center?.[`title_${language}`]}
@@ -28,7 +28,7 @@ const CenterInfo = ({ offer, username }) => {
           </Text>
         </Row>
       </Card>
-      <DisabledContainer status={username} borderRadius={10}>
+      <Card style={styles.mapContainer}>
         <RippleFX
           onPress={() => openMaps(
             Number(offer?.latitude),
@@ -36,12 +36,12 @@ const CenterInfo = ({ offer, username }) => {
             offer?.center?.[`title_${language}`]
           )}
         >
-          <Card style={styles.mapContainer}>
+          <DisabledContainer status={username} borderRadius={10}>
             <FontAwesomeIcon icon="map-marked-alt" color={colors.primary} size={35} />
             <Text style={styles.mapText}>{t('open_map')}</Text>
-          </Card>
+          </DisabledContainer>
         </RippleFX>
-      </DisabledContainer>
+      </Card>
     </Row>
   );
 };

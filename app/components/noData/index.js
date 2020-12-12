@@ -5,6 +5,7 @@ import colors from 'constants/colors';
 import { SCREEN_HEIGHT } from 'constants/common';
 import Button from 'components/button';
 import TopStatusBar from 'components/topStatusBar';
+import { isTab } from 'constants/commonFunctions';
 
 export default function NoData({ topNav, reload, reloading }) {
   const styles = StyleSheet.create({
@@ -18,7 +19,7 @@ export default function NoData({ topNav, reload, reloading }) {
     image: {
       width: 300,
       height: 300,
-      marginBottom: topNav ? SCREEN_HEIGHT / 6.5 : 0,
+      marginBottom: topNav ? SCREEN_HEIGHT / 6.5 : SCREEN_HEIGHT / 4.5,
     },
   });
 
@@ -28,7 +29,7 @@ export default function NoData({ topNav, reload, reloading }) {
       <View style={styles.container}>
         <Image source={require('../../../assets/no_data.jpg')} style={styles.image} />
         {reload && (
-          <Button width="50%" icon="redo" onPress={() => reload()} loading={reloading}>
+          <Button width={isTab() ? "30%" : "50%"} icon="redo" onPress={() => reload()} loading={reloading}>
             Reload
           </Button>
         )}

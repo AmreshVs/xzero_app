@@ -1,11 +1,11 @@
 import { StyleSheet, Platform } from 'react-native';
 
 import colors from 'constants/colors';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from 'constants/common';
-import { getShadowStyle } from 'constants/commonFunctions';
+import { SCREEN_HEIGHT } from 'constants/common';
+import { getShadowStyle, isTab } from 'constants/commonFunctions';
 import { padding10, positionAbsolute, wh100, marginTop10, w100, justifyContentCenter, alignItemsCenter, fontWeight700, colorWhite, font20, whiteBg, borderRadius10, textBoldDark, font16, textLite, marginLeft5, marginTop5, textDark, overflowHidden, w50, marginRight5, colorDanger, padding0, flex1 } from 'constants/commonStyles';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   container: {
     ...padding10,
   },
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     ...getShadowStyle(),
   },
   infoContainer: {
-    width: SCREEN_WIDTH / 1.5,
-    height: SCREEN_HEIGHT / 10,
+    width: '75%',
+    paddingRight: 15
   },
   title: {
     ...textBoldDark,
@@ -61,8 +61,7 @@ const styles = StyleSheet.create({
     ...marginLeft5,
   },
   mapContainer: {
-    width: SCREEN_WIDTH / 4,
-    height: SCREEN_HEIGHT / 10,
+    width: '22%',
     ...justifyContentCenter,
     ...alignItemsCenter,
   },
@@ -103,5 +102,19 @@ const styles = StyleSheet.create({
     ...colorDanger,
   },
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  mapContainer: {
+    ...mobileStyles.mapContainer,
+    width: '23.5%'
+  },
+  infoContainer: {
+    ...mobileStyles.infoContainer,
+    minHeight: 80
+  }
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

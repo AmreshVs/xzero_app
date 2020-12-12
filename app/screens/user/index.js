@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Row from 'components/row';
 import SafeView from 'components/safeView';
@@ -17,7 +18,6 @@ import IsLoggedIn from 'hoc/isLoggedIn';
 import UserCard from './userCard';
 import RippleFX from 'components/rippleFx';
 import styles from './styles';
-import AsyncStorage from '@react-native-community/async-storage';
 
 const User = () => {
   const { t } = useTranslation();
@@ -82,26 +82,28 @@ const User = () => {
             <Row padding={10} hcenter>
               <UserCard data={data?.user} />
             </Row>
-          </Box>
-          <Box>
-            {!edit ? (
-              <ProfileView data={data?.user} setEdit={setEdit} />
-            ) : (
-                <ProfileEdit data={data?.user} setEdit={setEdit} />
-              )}
-          </Box>
-          <Row vcenter>
-            <Box paddingLeft={20} marginRight={5}>
-              <Text style={styles.caption}>{t('show_popup')}</Text>
+            <Box style={styles.profileViewContainer}>
+              <Box style={styles.profileView}>
+                {!edit ? (
+                  <ProfileView data={data?.user} setEdit={setEdit} />
+                ) : (
+                    <ProfileEdit data={data?.user} setEdit={setEdit} />
+                  )}
+                <Row style={styles.switch} vcenter>
+                  <Box paddingLeft={20} marginRight={5}>
+                    <Text style={styles.caption}>{t('show_popup')}</Text>
+                  </Box>
+                  <Switch
+                    trackColor={{ false: colors.text_lite, true: colors.primary }}
+                    thumbColor={colors.white}
+                    ios_backgroundColor={colors.text_lite}
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+                  />
+                </Row>
+              </Box>
             </Box>
-            <Switch
-              trackColor={{ false: colors.text_lite, true: colors.primary }}
-              thumbColor={colors.white}
-              ios_backgroundColor={colors.text_lite}
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-            />
-          </Row>
+          </Box>
         </KeyboardAvoidingView>
       </ScrollView>
     </SafeView>

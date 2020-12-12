@@ -3,8 +3,9 @@ import { StyleSheet } from 'react-native';
 import colors from 'constants/colors';
 import { SCREEN_HEIGHT } from 'constants/common';
 import { padding10, positionAbsolute, wh100, marginTop10, w100, justifyContentCenter, alignItemsCenter, h150, w150, marginBottom10, h100, borderRadius10, textLite, fontWeight700, font18, textDark, textAlignCenter, marginLeft5, textAlignLeft, marginBottom5, overflowHidden, marginRight5, borderRadius20, colorWhite, w70p, w30p, marginTop5 } from 'constants/commonStyles';
+import { isTab } from 'constants/commonFunctions';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   container: {
     ...padding10,
   },
@@ -110,5 +111,14 @@ const styles = StyleSheet.create({
     width: '90%',
   },
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  infoContainer: {
+    width: '49.3%',
+  }
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

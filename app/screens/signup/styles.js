@@ -2,14 +2,15 @@ import { StyleSheet, StatusBar } from 'react-native';
 
 import isIphoneX from 'components/bottomTab/isIphoneX';
 import { w100, wh100, whiteBg, padding20, w150, h150, justifyContentCenter, alignItemsCenter, flexRow, colorPrimary, marginLeft5, fontWeight700, marginTop20, marginBottom20, positionAbsolute, colorDanger, textLite, paddingTop10 } from 'constants/commonStyles';
+import { isTab } from 'constants/commonFunctions';
 
 const styles = StyleSheet.create({
   container: {
     ...wh100,
-    ...whiteBg
+    ...whiteBg,
   },
   inputsContainer: {
-    ...w100,
+    width: isTab() ? '50%' : '100%',
     ...padding20,
   },
   logo: {
@@ -17,7 +18,6 @@ const styles = StyleSheet.create({
     ...h150,
   },
   topContainer: {
-    ...justifyContentCenter,
     ...alignItemsCenter,
     ...w100
   },
@@ -59,6 +59,12 @@ const styles = StyleSheet.create({
     top: 10,
     paddingTop: isIphoneX() ? StatusBar.currentHeight + 30 : 0,
     ...positionAbsolute,
+  },
+  scrollView: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 

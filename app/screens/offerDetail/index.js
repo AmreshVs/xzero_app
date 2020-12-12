@@ -67,7 +67,7 @@ export default function OfferDetail() {
         />
         <ScrollView showsVerticalScrollIndicator={false} removeClippedSubviews={true}>
           <OfferCard discount={offer?.discount} />
-          <CenterInfo offer={offer} username={userData?.username} />
+          <CenterInfo offer={offer} username={userData?.id} />
           <PriceDetails offer={offer} center={center} />
           <OfferDescription offer={offer} />
           <AvailDiscount loading={loading} data={data} />

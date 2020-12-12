@@ -15,6 +15,7 @@ import { MY_VOUCHER_BOUGHT, MY_VOUCHER_WON } from 'graphql/queries';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import NoData from 'components/noData';
+import { isTab } from 'constants/commonFunctions';
 
 export default function MyVouchers() {
   const [reloading, setReloading] = useState(false);
@@ -83,7 +84,8 @@ export default function MyVouchers() {
             initialNumToRender={6}
             maxToRenderPerBatch={10}
             windowSize={10}
-            columnWrapperStyle={styles.centers}
+            numColumns={isTab() ? 2 : 1}
+            columnWrapperStyle={isTab() ? styles.vouchers : null}
             contentContainerStyle={styles.flatlist}
             refreshing={reloading}
             onRefresh={() => reload()}

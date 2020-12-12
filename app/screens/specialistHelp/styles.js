@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-import { getShadowStyle } from 'constants/commonFunctions';
+import { getShadowStyle, isTab } from 'constants/commonFunctions';
 import { justifyContentSpaceBetween, padding10, borderRadius10, whiteBg, w100, resizeModeCover, textBoldDark, textLite, h100 } from 'constants/commonStyles';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   centers: {
     ...justifyContentSpaceBetween,
   },
@@ -34,5 +34,19 @@ const styles = StyleSheet.create({
     ...textLite,
   },
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  centers: {
+    justifyContent: 'flex-start'
+  },
+  container: {
+    ...mobileStyles.container,
+    width: '24%',
+    marginRight: 10
+  }
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

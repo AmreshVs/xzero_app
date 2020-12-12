@@ -13,13 +13,13 @@ import styles from './styles';
 
 export default function VoucherList({ data }) {
   const { t, i18n } = useTranslation();
-  const { push } = useNavigation();
+  const { navigate } = useNavigation();
   const language = i18n.language;
   const voucher = data?.voucher;
 
   return (
     <Card style={styles.voucherList}>
-      <RippleFX onPress={() => push(VOUCHER_DETAIL, { id: voucher?.id })}>
+      <RippleFX onPress={() => navigate(VOUCHER_DETAIL, { id: voucher?.id })}>
         <Row>
           <Box width="30%">
             <Image source={{ uri: IMAGE_URL + voucher?.featured_img?.url }} style={styles.voucherImage} />

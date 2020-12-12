@@ -2,14 +2,18 @@ import { StyleSheet } from 'react-native';
 
 import { font15, fontWeight700, textLite } from 'constants/commonStyles';
 import colors from 'constants/colors';
+import { isTab } from 'constants/commonFunctions';
 
 const styles = StyleSheet.create({
   flatlist: {
     padding: 10,
-    paddingBottom: 50
+    paddingBottom: 50,
+  },
+  vouchers: {
+    justifyContent: 'space-between'
   },
   voucherList: {
-    width: '100%',
+    width: isTab() ? '49.4%' : '100%',
     marginBottom: 10
   },
   voucherImage: {

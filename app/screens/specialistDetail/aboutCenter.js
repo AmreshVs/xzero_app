@@ -25,8 +25,8 @@ const AboutCenter = ({ specialist, userData }) => {
   };
 
   return (
-    <Row marginTop={10}>
-      <Card style={styles.infoContainer}>
+    <Card marginTop={10} style={styles.infoContainer}>
+      <Row>
         <Text style={styles.about} numberOfLines={1}>
           {t(`about_center`)}
         </Text>
@@ -57,8 +57,8 @@ const AboutCenter = ({ specialist, userData }) => {
             </RippleFX>
           </View>
         </Row>
-      </Card>
-    </Row>
+      </Row>
+    </Card>
   );
 };
 

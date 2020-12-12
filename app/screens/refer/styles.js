@@ -1,4 +1,5 @@
 import colors from 'constants/colors';
+import { isTab } from 'constants/commonFunctions';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -7,13 +8,15 @@ const styles = StyleSheet.create({
   },
   share: {
     width: '100%',
-    height: 400,
+    height: isTab() ? 550 : 400,
     marginBottom: -40,
     marginTop: -5
   },
   shareContainer: {
     padding: 10,
-    paddingTop: 0
+    paddingTop: 0,
+    minHeight: '100%',
+    justifyContent: 'center'
   },
   referTitle: {
     fontSize: 16,

@@ -27,7 +27,8 @@ export default function ProfileView({ data }) {
     try {
       let removeJWTData = await AsyncStorage.removeItem('@xzero_jwt');
       let removeUserData = await AsyncStorage.removeItem('@xzero_user');
-      if (removeJWTData === null && removeUserData === null) {
+      let removePopup = await AsyncStorage.removeItem('@xzero_popup');
+      if (removeJWTData === null && removeUserData === null && removePopup === null) {
         dispatch(resetAction);
       }
     } catch (e) {

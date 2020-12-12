@@ -189,105 +189,104 @@ export default function Login({ navigation }) {
   return (
     <KeyboardAvoidingView keyboardVerticalOffset={-250} behavior={'position'}>
       <SafeView style={styles.container}>
-        <ScrollView removeClippedSubviews={true}>
-          <VHCenter>
-            <Image source={require('../../../assets/logo.png')} style={styles.logo} />
-            <HeadingCaption heading={t('welcome')} caption={t('login_note')} />
-            <View style={styles.inputsContainer}>
-              <Formik
-                onSubmit={(values) => handleSubmit(values)}
-                validationSchema={inputsValidationSchema}
-                initialValues={{
-                  email: '',
-                  password: '',
-                }}
-              >
-                {({
-                  values,
-                  handleChange,
-                  errors,
-                  touched,
-                  setFieldTouched,
-                  isValid,
-                  handleSubmit,
-                }) => (
-                    <>
-                      <Textbox
-                        placeholder="Email"
-                        icon="at"
-                        value={values.email}
-                        onChangeText={handleChange('email')}
-                        onBlur={() => setFieldTouched('email')}
-                        autoCapitalize="none"
-                      />
-                      <FormError touched={touched.email} errorText={errors.email} />
-                      <Textbox
-                        placeholder="Password"
-                        icon="key"
-                        value={values.password}
-                        onChangeText={handleChange('password')}
-                        onBlur={() => setFieldTouched('password')}
-                        autoCapitalize="none"
-                        secureTextEntry
-                      />
-                      <FormError touched={touched.password} errorText={errors.password} />
-                      <Text
-                        style={styles.forgotPassword}
-                        onPress={() => navigation.push(FORGOT_PASSWORD)}
-                      >
-                        {t('forgot_password')}
-                      </Text>
-                      <Button
-                        icon="sign-in-alt"
-                        onPress={() => handleSubmit()}
-                        disabled={!isValid}
-                        loading={loading}
-                      >
-                        {t('login')}
-                      </Button>
-                    </>
-                  )}
-              </Formik>
-              <View style={styles.noAccount}>
-                <RenderNoAccount />
+        <ScrollView contentContainerStyle={styles.scrollview} keyboardShouldPersistTaps={true}>
+          <Image source={require('../../../assets/logo.png')} style={styles.logo} />
+          <HeadingCaption heading={t('welcome')} caption={t('login_note')} />
+          <View style={styles.inputsContainer}>
+            <Formik
+              onSubmit={(values) => handleSubmit(values)}
+              validationSchema={inputsValidationSchema}
+              initialValues={{
+                email: '',
+                password: '',
+              }}
+            >
+              {({
+                values,
+                handleChange,
+                errors,
+                touched,
+                setFieldTouched,
+                isValid,
+                handleSubmit,
+              }) => (
+                <>
+                  <Textbox
+                    placeholder="Email"
+                    icon="at"
+                    value={values.email}
+                    onChangeText={handleChange('email')}
+                    onBlur={() => setFieldTouched('email')}
+                    autoCapitalize="none"
+                  />
+                  <FormError touched={touched.email} errorText={errors.email} />
+                  <Textbox
+                    placeholder="Password"
+                    icon="key"
+                    value={values.password}
+                    onChangeText={handleChange('password')}
+                    onBlur={() => setFieldTouched('password')}
+                    autoCapitalize="none"
+                    secureTextEntry
+                  />
+                  <FormError touched={touched.password} errorText={errors.password} />
+                  <Text
+                    style={styles.forgotPassword}
+                    onPress={() => navigation.push(FORGOT_PASSWORD)}
+                  >
+                    {t('forgot_password')}
+                  </Text>
+                  <Button
+                    icon="sign-in-alt"
+                    onPress={() => handleSubmit()}
+                    disabled={!isValid}
+                    loading={loading}
+                    style={styles.loginButton}
+                  >
+                    {t('login')}
+                  </Button>
+                </>
+              )}
+            </Formik>
+            <View style={styles.noAccount}>
+              <RenderNoAccount />
+            </View>
+          </View>
+          <View style={styles.socialLoginContainer}>
+            <Text style={styles.loginOptionText}>{t('login_using')}</Text>
+            {Platform.OS !== 'ios' && (
+              <View style={styles.btnContainer}>
+                <Button
+                  width="48%"
+                  icon={faFacebookF}
+                  color="#3b5998"
+                  iconColor="#3b5998"
+                  onPress={() => handleSocialLogin('fb')}
+                  outline
+                >
+                  {t('facebook')}
+                </Button>
+                <Button
+                  width="48%"
+                  icon={faGoogle}
+                  color="#db3236"
+                  iconColor="#db3236"
+                  onPress={() => handleSocialLogin('g')}
+                  outline
+                >
+                  {t('google')}
+                </Button>
               </View>
-            </View>
-            <View style={styles.socialLoginContainer}>
-              <Text style={styles.loginOptionText}>{t('login_using')}</Text>
-              {Platform.OS !== 'ios' && (
-                <View style={styles.btnContainer}>
-                  <Button
-                    width="48%"
-                    icon={faFacebookF}
-                    color="#3b5998"
-                    iconColor="#3b5998"
-                    onPress={() => handleSocialLogin('fb')}
-                    outline
-                  >
-                    {t('facebook')}
-                  </Button>
-                  <Button
-                    width="48%"
-                    icon={faGoogle}
-                    color="#db3236"
-                    iconColor="#db3236"
-                    onPress={() => handleSocialLogin('g')}
-                    outline
-                  >
-                    {t('google')}
-                  </Button>
-                </View>
-              )}
-              {Platform.OS === 'ios' && (
-                <Row>
-                  <AppleLoginButton handleSocialLogin={handleSocialLogin} />
-                </Row>
-              )}
-            </View>
-            <Row style={styles.termsContainer}>
-              <RenderTerms />
-            </Row>
-          </VHCenter>
+            )}
+            {Platform.OS === 'ios' && (
+              <Row>
+                <AppleLoginButton handleSocialLogin={handleSocialLogin} />
+              </Row>
+            )}
+          </View>
+          <Row style={styles.termsContainer}>
+            <RenderTerms />
+          </Row>
           <Text style={styles.skip} onPress={() => navigation.replace(HOME_SCREEN)}>
             {t('skip')}
           </Text>

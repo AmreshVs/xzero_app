@@ -132,102 +132,98 @@ export default function Signup({ navigation }) {
   };
 
   return (
-    <SafeView style={styles.container}>
-      <TopNavigator style={styles.topNav} />
-      <ScrollView removeClippedSubviews={true}>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={Platform.OS === 'ios' ? -100 : -150}
-          behavior={'position'}
-        >
-          <Column>
-            <View style={styles.topContainer}>
-              <Image source={require('../../../assets/logo.png')} style={styles.logo} />
-              <HeadingCaption heading={t('get_started')} caption={t('signup_note')} />
-            </View>
-            <View style={styles.inputsContainer}>
-              <Formik
-                onSubmit={(values) => handleSubmit(values)}
-                validationSchema={inputsValidationSchema}
-                initialValues={{
-                  fullname: '',
-                  email: '',
-                  phone: '+971',
-                  password: '',
-                  repassword: '',
-                  dob: '',
-                }}
-              >
-                {({
-                  values,
-                  handleChange,
-                  errors,
-                  touched,
-                  setFieldTouched,
-                  isValid,
-                  handleSubmit,
-                  setFieldValue,
-                }) => (
-                    <>
-                      {inputs.map(({ name, placeholder, icon, marginTop }, index) => (
-                        <View key={index}>
-                          <Textbox
-                            placeholder={placeholder ? placeholder : firstLetterUpper(name)}
-                            value={values[name]}
-                            onChangeText={handleChange(name)}
-                            icon={icon}
-                            marginTop={marginTop}
-                            onBlur={() => setFieldTouched(name)}
-                            autoCapitalize="none"
-                            secureTextEntry={name.includes('password', 'repassword') ? true : false}
-                            style={styles.textbox}
-                            keyboardType={
-                              name === 'phone'
-                                ? 'number-pad'
-                                : name === 'email'
-                                  ? 'email-address'
-                                  : 'default'
-                            }
-                            onTouchStart={() => name === 'dob' && setDatePickerVisibility(true)}
-                          />
-                          <FormError touched={touched[name]} errorText={errors[name]} />
-                        </View>
-                      ))}
-                      <View style={styles.btnContainer}>
-                        <Button
-                          icon="sign-in-alt"
-                          width="100%"
-                          onPress={() => handleSubmit()}
-                          disabled={!isValid}
-                          loading={loading}
-                        >
-                          {t('signup')}
-                        </Button>
-                      </View>
-                      <DateTimePickerModal
-                        isVisible={isDatePickerVisible}
-                        mode="date"
-                        date={date}
-                        onConfirm={(date) => {
-                          setDatePickerVisibility(false);
-                          setDate(date);
-                          setFieldValue('dob', getFormatedDate(date));
-                        }}
-                        onCancel={() => setDatePickerVisibility(false)}
-                        isDarkModeEnabled={false}
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={Platform.OS === 'ios' ? -100 : -150}
+      behavior={'position'}
+    >
+      <SafeView style={styles.container}>
+        <TopNavigator style={styles.topNav} />
+        <ScrollView contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps={true}>
+          <Image source={require('../../../assets/logo.png')} style={styles.logo} />
+          <HeadingCaption heading={t('get_started')} caption={t('signup_note')} />
+          <View style={styles.inputsContainer}>
+            <Formik
+              onSubmit={(values) => handleSubmit(values)}
+              validationSchema={inputsValidationSchema}
+              initialValues={{
+                fullname: '',
+                email: '',
+                phone: '+971',
+                password: '',
+                repassword: '',
+                dob: '',
+              }}
+            >
+              {({
+                values,
+                handleChange,
+                errors,
+                touched,
+                setFieldTouched,
+                isValid,
+                handleSubmit,
+                setFieldValue,
+              }) => (
+                <>
+                  {inputs.map(({ name, placeholder, icon, marginTop }, index) => (
+                    <View key={index}>
+                      <Textbox
+                        placeholder={placeholder ? placeholder : firstLetterUpper(name)}
+                        value={values[name]}
+                        onChangeText={handleChange(name)}
+                        icon={icon}
+                        marginTop={marginTop}
+                        onBlur={() => setFieldTouched(name)}
+                        autoCapitalize="none"
+                        secureTextEntry={name.includes('password', 'repassword') ? true : false}
+                        style={styles.textbox}
+                        keyboardType={
+                          name === 'phone'
+                            ? 'number-pad'
+                            : name === 'email'
+                              ? 'email-address'
+                              : 'default'
+                        }
+                        onTouchStart={() => name === 'dob' && setDatePickerVisibility(true)}
                       />
-                    </>
-                  )}
-              </Formik>
-            </View>
-            <View style={styles.haveAccount}>
-              <RenderHaveAccount />
-            </View>
-            <View style={styles.termsContainer}>
-              <RenderTerms />
-            </View>
-          </Column>
-        </KeyboardAvoidingView>
-      </ScrollView>
-    </SafeView>
+                      <FormError touched={touched[name]} errorText={errors[name]} />
+                    </View>
+                  ))}
+                  <View style={styles.btnContainer}>
+                    <Button
+                      icon="sign-in-alt"
+                      width="100%"
+                      onPress={() => handleSubmit()}
+                      disabled={!isValid}
+                      loading={loading}
+                    >
+                      {t('signup')}
+                    </Button>
+                  </View>
+                  <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    date={date}
+                    onConfirm={(date) => {
+                      setDatePickerVisibility(false);
+                      setDate(date);
+                      setFieldValue('dob', getFormatedDate(date));
+                    }}
+                    onCancel={() => setDatePickerVisibility(false)}
+                    isDarkModeEnabled={false}
+                  />
+                </>
+              )}
+            </Formik>
+          </View>
+          <View style={styles.haveAccount}>
+            <RenderHaveAccount />
+          </View>
+          <View style={styles.termsContainer}>
+            <RenderTerms />
+          </View>
+        </ScrollView>
+      </SafeView>
+    </KeyboardAvoidingView>
   );
 }

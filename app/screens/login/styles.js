@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { wh100, whiteBg, w150, h150, padding20, w100, textLite, textAlignRight, flex, flexRow, justifyContentCenter, alignItemsCenter, flexSpaceBetween, marginLeft5, fontWeight700, positionAbsolute, marginTop20, colorPrimary, padding15, borderRadius10, marginTop10, marginBottom20, marginBottom15 } from 'constants/commonStyles';
+import { isTab } from 'constants/commonFunctions';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,10 +11,9 @@ const styles = StyleSheet.create({
   logo: {
     ...w150,
     ...h150,
-    marginTop: 50
   },
   inputsContainer: {
-    ...w100,
+    width: isTab() ? '50%' : '100%',
     ...padding20,
   },
   forgotPassword: {
@@ -29,11 +29,7 @@ const styles = StyleSheet.create({
     ...flexSpaceBetween,
   },
   socialLoginContainer: {
-    ...w100,
-    ...justifyContentCenter,
     ...alignItemsCenter,
-    ...padding20,
-    paddingVertical: 0,
   },
   loginOptionText: {
     ...marginBottom15,
@@ -56,7 +52,6 @@ const styles = StyleSheet.create({
     ...textLite,
   },
   termsContainer: {
-    marginBottom: 30,
     ...marginTop20,
   },
   terms: {
@@ -75,7 +70,12 @@ const styles = StyleSheet.create({
   },
   appleBtnContainer: {
     ...flexRow
-  }
+  },
+  scrollview: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%'
+  },
 });
 
 export default styles;

@@ -19,6 +19,7 @@ import Withdraw from './withdraw';
 import Column from 'components/column';
 import { UserDataContext } from 'context';
 import { GET_REFER_HISTORY } from 'graphql/queries';
+import { isTab } from 'constants/commonFunctions';
 
 export default function Refer() {
   const [modalComp, setModalComp] = useState(false);
@@ -105,9 +106,11 @@ export default function Refer() {
           <View style={styles.gradient}>
             <Text style={styles.code}>{data?.GetReferHistory?.referralCode}</Text>
           </View>
-          <Text style={styles.caption}>{t('refer_desc')}</Text>
+          <Box paddingHorizontal={isTab() ? 100 : 0}>
+            <Text style={styles.caption}>{t('refer_desc')}</Text>
+          </Box>
         </Box>
-        <Row justifyContent="space-between" marginTop={10}>
+        <Row paddingHorizontal={isTab() ? 100 : 0} justifyContent="space-between" marginTop={10}>
           <Column style={styles.countsContainer}>
             <Box style={styles.iconContainer} backgroundColor="#d8ddfe">
               <FontAwesomeIcon icon="bullhorn" size={25} color={colors.chip_1} />
@@ -136,12 +139,14 @@ export default function Refer() {
             </Box>
           </Column>
         </Row>
-        <Row style={styles.check} justifyContent="space-between">
-          <Button width="49%" status="chip_1" icon="history" onPress={() => handleOpenModal(true)}>Refer History</Button>
-          <Button width="49%" status="chip_2" icon="coins" onPress={() => handleOpenModal(false)}>Withdraw</Button>
-        </Row>
-        <Box marginTop={10} width="100%">
-          <Button icon="share-alt" onPress={() => handleShare()}>Refer & Earn Now</Button>
+        <Box paddingHorizontal={isTab() ? 100 : 0}>
+          <Row style={styles.check} justifyContent="space-between">
+            <Button width="49%" status="chip_1" icon="history" onPress={() => handleOpenModal(true)}>Refer History</Button>
+            <Button width="49%" status="chip_2" icon="coins" onPress={() => handleOpenModal(false)}>Withdraw</Button>
+          </Row>
+          <Box marginTop={10} width="100%">
+            <Button icon="share-alt" onPress={() => handleShare()}>Refer & Earn Now</Button>
+          </Box>
         </Box>
       </ScrollView>
       <Modalize ref={modalizeRef} childrenStyle={styles.modal} snapPoint={400} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }} onClosed={() => _refetch()}>

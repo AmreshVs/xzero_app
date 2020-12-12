@@ -11,16 +11,16 @@ const AboutSpecialist = ({ specialist }) => {
   const language = i18n.language;
 
   return (
-    <Row marginTop={10}>
-      <Card style={styles.infoContainer}>
+    <Card marginTop={10} style={styles.aboutSpecialist}>
+      <Row>
         <Text style={styles.about} numberOfLines={1}>
           {t(`about_specialist`)}
         </Text>
         <Text style={[styles.caption, styles.noTopMargin]}>
           {specialist?.[`desc_${language}`]}
         </Text>
-      </Card>
-    </Row>
+      </Row>
+    </Card>
   );
 };
 

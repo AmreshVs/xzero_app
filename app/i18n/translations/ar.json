@@ -137,5 +137,18 @@
   "bought": "",
   "won": "",
   "my_vouchers": "",
-  "voucher_detail": ""
+  "voucher_detail": "",
+  "share_offer": "",
+  "search": "",
+  "clear": "",
+  "searched_for": "",
+  "search_center": "",
+  "search_center_textbox": "",
+  "search_offer": "",
+  "search_offer_textbox": "",
+  "search_specialist": "",
+  "search_specialist_textbox": "",
+  "search_home": "",
+  "search_home_textbox": "",
+  "show_popup": ""
 }

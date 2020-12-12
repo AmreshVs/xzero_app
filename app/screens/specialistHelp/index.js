@@ -9,15 +9,16 @@ import NoData from 'components/noData';
 import SafeView from 'components/safeView';
 import Categories from './categories';
 import styles from './styles';
+import { isTab } from 'constants/commonFunctions';
 
 export default function SpecialistHelp() {
   const [reloading, setReloading] = useState(false);
   const { params } = useRoute();
-  let { data, loading, refetch } = useQuery(CATEGORIES);
+  let { data, loading, refetch: _refetch } = useQuery(CATEGORIES);
 
   const reload = async () => {
     setReloading(true);
-    await refetch();
+    await _refetch();
     setReloading(false);
   };
 
@@ -31,7 +32,7 @@ export default function SpecialistHelp() {
             keyExtractor={(item) => String(item.id)}
             data={data?.categoriesWithCenterCount}
             renderItem={({ item }) => <Categories data={item} />}
-            numColumns={2}
+            numColumns={isTab() ? 4 : 2}
             initialNumToRender={6}
             columnWrapperStyle={styles.centers}
             contentContainerStyle={styles.flatlist}

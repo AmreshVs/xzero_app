@@ -13,6 +13,7 @@ import FloatingButton from 'components/floatingButton';
 import { ModalSearchHeader } from 'components/modalSearchHeader';
 import Specialist from './specialist';
 import styles from './styles';
+import { isTab } from 'constants/commonFunctions';
 
 let initialWhereCondition = {};
 let headerCondition = 0;
@@ -76,6 +77,8 @@ export default function SpecialistHelp() {
               initialNumToRender={6}
               maxToRenderPerBatch={10}
               windowSize={10}
+              numColumns={isTab() ? 2 : 1}
+              columnWrapperStyle={isTab() ? styles.specialists : null}
               contentContainerStyle={styles.flatlist}
               refreshing={reloading}
               onRefresh={reload}

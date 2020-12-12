@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-import { getShadowStyle } from 'constants/commonFunctions';
+import { getShadowStyle, isTab } from 'constants/commonFunctions';
 import { whiteBg, h100, w100, positionAbsolute, borderRadius10, borderRadius50, justifyContentCenter, alignItemsCenter, font18, fontWeight700, colorWhite, padding10, overflowHidden, marginTop20, font16, textDark, colorDanger, textAlignLeft, textLite, font20, marginTop10, marginTop5, textAlignCenter, padding20, paddingVertical18, marginTop30, colorGray, padding0 } from 'constants/commonStyles';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   container: {
     ...whiteBg,
   },
@@ -93,5 +93,17 @@ const styles = StyleSheet.create({
     ...marginTop5,
   },
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  profileView: {
+    width: '60%',
+  },
+  profileViewContainer: {
+    alignItems: 'center',
+  },
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

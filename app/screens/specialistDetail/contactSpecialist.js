@@ -17,8 +17,8 @@ const ContactSpecialist = ({ specialist, userData }) => {
   };
 
   return (
-    <Row marginVertical={10}>
-      <Card style={styles.infoContainer}>
+    <Card marginVertical={10} style={styles.infoContainer}>
+      <Row>
         <Text style={styles.about} numberOfLines={1}>
           {t(`contact`)}
         </Text>
@@ -34,8 +34,8 @@ const ContactSpecialist = ({ specialist, userData }) => {
         >
           {t('connect_whatsapp')}
         </Button>
-      </Card>
-    </Row>
+      </Row>
+    </Card>
   );
 };
 

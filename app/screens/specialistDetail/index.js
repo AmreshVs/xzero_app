@@ -15,6 +15,9 @@ import AboutSpecialist from './aboutSpecialist';
 import AboutCenter from './aboutCenter';
 import ContactSpecialist from './contactSpecialist';
 import styles from './styles';
+import Row from 'components/row';
+import Box from 'components/box';
+import { isTab } from 'constants/commonFunctions';
 
 export default function SpecialistDetail() {
   const {
@@ -38,10 +41,12 @@ export default function SpecialistDetail() {
         <ScrollView showsVerticalScrollIndicator={false} removeClippedSubviews={true}>
           <SpecialistInfo specialist={specialist} />
           <AboutSpecialist specialist={specialist} />
-          {specialist?.center && (
-            <AboutCenter specialist={specialist} userData={userData} />
-          )}
-          <ContactSpecialist specialist={specialist} userData={userData} />
+          <Box justifyContent="space-between" flexDirection={isTab() ? 'row' : 'column'}>
+            {specialist?.center && (
+              <AboutCenter specialist={specialist} userData={userData} />
+            )}
+            <ContactSpecialist specialist={specialist} userData={userData} />
+          </Box>
         </ScrollView>
       </SafeView>
     </>
