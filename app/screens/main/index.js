@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
 
 import { BASIC_INFORMATION } from 'graphql/queries';
-import { MAIN_SCREEN, NEW_UPDATE } from 'navigation/routes';
+import { HOME_SCREEN, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE } from 'navigation/routes';
 import Loader from 'components/loader';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
@@ -69,10 +69,10 @@ export default function Main({ navigation }) {
           email: loginData?.email,
           mobile_number: loginData?.mobile_number
         });
-        navigation.replace('Home');
+        navigation.replace(HOME_SCREEN);
         return;
       }
-      navigation.replace('Login');
+      navigation.replace(LOGIN_SCREEN);
     } catch (error) {
       ToastMsg(t('error_occured'));
       logError({

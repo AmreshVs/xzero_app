@@ -1,3 +1,4 @@
+import { SCREEN_HEIGHT } from 'constants/common';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -8,8 +9,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   offline: {
-    width: 250,
-    height: 250
+    height: SCREEN_HEIGHT / 2,
+    transform: [{ scale: 1.4 }],
+    top: -20
   }
 });
 
