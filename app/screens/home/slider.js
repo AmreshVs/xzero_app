@@ -1,19 +1,21 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
 import Carousel from 'react-native-banner-carousel';
 
 import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
+import useScreenDimensions from 'hooks/useScreenDimensions';
 
 export default function Slider({ data }) {
+  const screenData = useScreenDimensions();
+
   return (
     <Carousel
       autoplay
       autoplayTimeout={5000}
       activePageIndicatorStyle={styles.indicator}
       loop
-      pageSize={Dimensions.get('window').width}
+      pageSize={screenData?.width}
       style={styles.slider}
     >
       {data &&

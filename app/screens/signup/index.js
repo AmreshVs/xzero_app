@@ -18,17 +18,17 @@ import SafeView from 'components/safeView';
 import Textbox from 'components/textbox';
 import Button from 'components/button';
 import HeadingCaption from 'components/headingCaption';
-import Column from 'components/column';
 import FormError from 'components/formError';
 import { inputsValidationSchema, inputs } from './helpers';
 import styles from './styles';
-import { LOGIN_SCREEN } from 'navigation/routes';
+import { LOGIN_SCREEN, SIGNUP_SCREEN } from 'navigation/routes';
 import { CREATE_USER, UPDATE_NOTIFICATION_TOKEN } from 'graphql/mutations';
 import { saveUserDataLocally } from 'screens/login/helpers';
 import { getNotificationToken } from '../../../helpers';
 import { ToastMsg } from 'components/toastMsg';
 import { firstLetterUpper, handleServerDOB, getFormatedDate } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
 
 export default function Signup({ navigation }) {
   const { t, i18n } = useTranslation();
@@ -36,6 +36,7 @@ export default function Signup({ navigation }) {
   let language = i18n.language;
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(new Date());
+  const { logError } = useErrorLog();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const client = useApolloClient();
 
@@ -43,17 +44,31 @@ export default function Signup({ navigation }) {
     const token = await getNotificationToken();
     const platform = Platform.OS;
     const app_version = Constants.nativeAppVersion;
+
+    let mutationInput = {
+      user_id: Number(id),
+      notification_token: token,
+      app_version,
+      platform,
+      provider: 'local',
+    };
+
     if (token) {
-      await client.mutate({
-        mutation: UPDATE_NOTIFICATION_TOKEN,
-        variables: {
-          user_id: Number(id),
-          notification_token: token,
-          app_version,
-          platform,
-          provider: 'local',
-        },
-      });
+      try {
+        await client.mutate({
+          mutation: UPDATE_NOTIFICATION_TOKEN,
+          variables: mutationInput,
+        });
+      }
+      catch (error) {
+        ToastMsg(t('error_occured'));
+        logError({
+          screen: SIGNUP_SCREEN,
+          module: 'Update Notification Token',
+          input: JSON.stringify(mutationInput),
+          error: JSON.stringify(error)
+        });
+      }
     }
   };
 
@@ -63,16 +78,18 @@ export default function Signup({ navigation }) {
     const token = await getNotificationToken();
     let dob = handleServerDOB(values.dob);
 
+    let mutationInput = {
+      username: values.fullname,
+      email: values.email,
+      password: values.repassword,
+      mobile_number: Number(phone),
+      notification_token: token || '',
+      dob: new Date(dob),
+    };
+
     let { data, errors } = await client.mutate({
       mutation: CREATE_USER,
-      variables: {
-        username: values.fullname,
-        email: values.email,
-        password: values.repassword,
-        mobile_number: Number(phone),
-        notification_token: token || '',
-        dob: new Date(dob),
-      },
+      variables: mutationInput,
     });
 
     let userData = data?.createNewUser;
@@ -85,6 +102,15 @@ export default function Signup({ navigation }) {
     });
 
     setLoading(false);
+
+    if (errors) {
+      logError({
+        screen: SIGNUP_SCREEN,
+        module: 'Create User',
+        input: JSON.stringify(mutationInput),
+        error: JSON.stringify(errors)
+      });
+    }
 
     if (errors && errors[0]?.extensions?.exception?.code === 400) {
       ToastMsg(errors[0].message);

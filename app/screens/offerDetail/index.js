@@ -22,17 +22,36 @@ import styles from './styles';
 import { UserDataContext } from 'context';
 import Row from 'components/row';
 import ShareOffer from './shareOffer';
+import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
+import { OFFER_DETAIL } from 'navigation/routes';
 
 export default function OfferDetail() {
   const { userData } = useContext(UserDataContext);
   const { params: { offer_id, user_id, center } } = useRoute();
-  const { data, loading } = useQuery(OFFERS_DETAIL, {
+  const { logError } = useErrorLog();
+
+  const { data, loading, error } = useQuery(OFFERS_DETAIL, {
     variables: {
       offer_id: Number(offer_id),
       id: Number(offer_id) || 0,
       user_id: Number(user_id) || Number(userData?.id)
     },
   });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: OFFER_DETAIL,
+      module: 'Get Offer detail',
+      input: JSON.stringify({
+        offer_id: Number(offer_id),
+        id: Number(offer_id) || 0,
+        user_id: Number(user_id) || Number(userData?.id)
+      }),
+      error: JSON.stringify(error)
+    });
+  }
 
   const [favourite, setFavourite] = useState(data?.offerIsFavourite || false);
   const client = useApolloClient();

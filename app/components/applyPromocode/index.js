@@ -11,6 +11,8 @@ import Row from 'components/row';
 import { font16, font17, fontWeight700, marginTop10, paddingTop10, textBoldDark, textLite } from 'constants/commonStyles';
 import { UserDataContext } from 'context';
 import { APPLY_CODE } from 'graphql/queries';
+import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
 
 let promoApplied = 0;
 
@@ -19,6 +21,7 @@ export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, 
   const client = useApolloClient();
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const { logError } = useErrorLog();
   const [promocode, setPromocode] = useState('');
   const [appliedPromocode, setAppliedPromocode] = useState({});
 
@@ -31,14 +34,26 @@ export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, 
 
   const handleApply = async () => {
     setLoading(true);
-    const { data } = await client.query({
+    const queryInput = {
+      receiver: Number(userData?.id),
+      price: Number(price),
+      code: promocode
+    };
+
+    const { data, error } = await client.query({
       query: APPLY_CODE,
-      variables: {
-        receiver: Number(userData?.id),
-        price: Number(price),
-        code: promocode
-      }
+      variables: queryInput
     });
+    console.log(data);
+    if (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: 'Apply Promocode',
+        module: 'Apply Promocode',
+        input: JSON.stringify(queryInput),
+        error: JSON.stringify(error)
+      });
+    }
 
     if (data?.ApplyCode?.applied) {
       promoApplied = 1;

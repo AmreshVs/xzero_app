@@ -10,11 +10,28 @@ import SafeView from 'components/safeView';
 import Categories from './categories';
 import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
+import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
+import { SPECIALIST_HELP } from 'navigation/routes';
+import { useTranslation } from 'react-i18next';
 
 export default function SpecialistHelp() {
   const [reloading, setReloading] = useState(false);
   const { params } = useRoute();
-  let { data, loading, refetch: _refetch } = useQuery(CATEGORIES);
+  const { t } = useTranslation();
+  const { logError } = useErrorLog();
+
+  let { data, loading, refetch: _refetch, error } = useQuery(CATEGORIES);
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: SPECIALIST_HELP,
+      module: 'Specialist Help',
+      input: '',
+      error: JSON.stringify(error)
+    });
+  }
 
   const reload = async () => {
     setReloading(true);

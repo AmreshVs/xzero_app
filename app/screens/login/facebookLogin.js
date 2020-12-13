@@ -1,11 +1,9 @@
 import * as Facebook from 'expo-facebook';
 
 import { FB_APP_ID, APP_NAME } from 'constants/common';
-import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN } from 'navigation/routes';
 
-const facebookLogin = async () => {
-  const { logError } = useErrorLog();
+const facebookLogin = async (logError) => {
   let input = null;
   try {
     await Facebook.initializeAsync({ appId: FB_APP_ID, appName: APP_NAME });
@@ -32,19 +30,17 @@ const facebookLogin = async () => {
 
           return { username: fname + ' ' + lname, email, password: token };
         })
-      // .catch((err) => console.log(err));
     } else {
       return null;
     }
   } catch (error) {
-    ToastMsg(t('error_occured'));
     logError({
       screen: LOGIN_SCREEN,
       module: 'Facebook Login',
       input: JSON.stringify(input),
       error: JSON.stringify(error)
     });
-    return 'error';
+    return { error };
   }
 }
 

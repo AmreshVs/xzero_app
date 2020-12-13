@@ -1,13 +1,10 @@
 import * as GoogleSignIn from 'expo-google-sign-in';
 
 import { GOOGLE_CLIENT_ID } from 'constants/common';
-import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN } from 'navigation/routes';
 
-const googleSignin = async () => {
-  const { logError } = useErrorLog();
+const googleSignin = async (logError) => {
   let input = null;
-
   try {
     await GoogleSignIn.initAsync({
       clientId: GOOGLE_CLIENT_ID,
@@ -15,10 +12,11 @@ const googleSignin = async () => {
     });
     const { type, user, accessToken } = await GoogleSignIn.signInAsync();
     input = { type, user, accessToken };
+
     if (user) {
       let { displayName, email } = user;
       if (!email) {
-        return 'error';
+        return { error: 'error' };
       }
       if (type === "success") {
         return { username: displayName || '', email, password: accessToken };
@@ -32,7 +30,7 @@ const googleSignin = async () => {
       input: JSON.stringify(input),
       error: JSON.stringify(error)
     });
-    return 'error';
+    return { error };
   }
 }
 

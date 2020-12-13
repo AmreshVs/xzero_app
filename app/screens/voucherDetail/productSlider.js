@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel';
 

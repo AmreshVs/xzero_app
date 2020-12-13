@@ -7,15 +7,31 @@ import Transactions from './transactions';
 import BankInfo from './bankInfo';
 import { UserDataContext } from 'context';
 import { WITHDRAW_HISTORY } from 'graphql/queries';
+import useErrorLog from 'hooks/useErrorLog';
 import styles from './styles';
+import { ToastMsg } from 'components/toastMsg';
+import { REFER } from 'navigation/routes';
 
 export default function Withdraw({ balance, min_withdraw }) {
   const { userData } = useContext(UserDataContext);
-  const { data, loading, refetch: _refetch } = useQuery(WITHDRAW_HISTORY, {
+  const { logError } = useErrorLog();
+  const { data, loading, refetch: _refetch, error } = useQuery(WITHDRAW_HISTORY, {
     variables: {
       user_id: Number(userData?.id)
     }
   });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: REFER,
+      module: 'Withdraw History',
+      input: JSON.stringify({
+        user_id: Number(userData?.id)
+      }),
+      error: JSON.stringify(error)
+    });
+  }
 
   return (
     <View style={styles.historyContainer}>

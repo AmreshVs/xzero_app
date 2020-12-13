@@ -13,11 +13,13 @@ import { ToastMsg } from 'components/toastMsg';
 import { UserDataContext } from 'context';
 import styles from './styles';
 import { WITHDRAW_AMOUNT } from 'graphql/mutations';
+import useErrorLog from 'hooks/useErrorLog';
 
 const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const { userData } = useContext(UserDataContext);
+  const { logError } = useErrorLog();
   const client = useApolloClient();
   const { t } = useTranslation();
 
@@ -30,17 +32,31 @@ const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
       ToastMsg('Amount cannot be more than your wallet balance');
     }
     else {
-      const { data } = await client.mutate({
-        mutation: WITHDRAW_AMOUNT,
-        variables: {
-          user_id: Number(userData?.id),
-          withdraw_amount: Number(amount)
+      try {
+        const { data } = await client.mutate({
+          mutation: WITHDRAW_AMOUNT,
+          variables: {
+            user_id: Number(userData?.id),
+            withdraw_amount: Number(amount)
+          }
+        });
+        if (data?.WithdrawMoney?.msg === 'success') {
+          setAmount('');
+          ToastMsg('Your request is submitted, Please wait for the transaction to complete!');
+          reload();
         }
-      });
-      if (data?.WithdrawMoney?.msg === 'success') {
-        setAmount('');
-        ToastMsg('Your request is submitted, Please wait for the transaction to complete!');
-        reload();
+      }
+      catch (error) {
+        ToastMsg(t('error_occured'));
+        logError({
+          screen: HOME_SCREEN,
+          module: '',
+          input: JSON.stringify({
+            user_id: Number(userData?.id),
+            withdraw_amount: Number(amount)
+          }),
+          error: JSON.stringify(error)
+        });
       }
     }
     setLoading(false);

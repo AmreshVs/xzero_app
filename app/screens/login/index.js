@@ -117,13 +117,13 @@ export default function Login({ navigation }) {
 
   const handleSocialLogin = async (type, data) => {
     let socialData =
-      type === 'fb' ? await facebookLogin() : type === 'g' ? await googleSignin() : null;
+      type === 'fb' ? await facebookLogin(logError) : type === 'g' ? await googleSignin(logError) : null;
 
     if (type === 'apple') {
       socialData = data;
     }
 
-    if (socialData !== null && socialData !== 'error') {
+    if (socialData !== null && socialData.error !== null) {
       try {
         setLoading(true);
         const { data } = await client.query({

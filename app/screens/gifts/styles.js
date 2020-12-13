@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { whiteBg, textBoldDark, font16, w300, h300, textAlignCenter, marginTop5, textLite, borderRadius10, w100, resizeModeContain, marginBottom0, justifyContentCenter, alignItemsCenter, positionAbsolute, borderRadius50, zIndex1, flexRow, justifyContentSpaceBetween, padding5 } from 'constants/commonStyles';
-import { getShadowStyle } from 'constants/commonFunctions';
+import { getShadowStyle, isTab } from 'constants/commonFunctions';
 import colors from 'constants/colors';
 
 const styles = StyleSheet.create({
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     ...whiteBg,
   },
   giftContainer: {
-    width: '50%',
+    width: isTab() ? '33.2%' : '50%',
     ...padding5,
   },
   availedGiftContainer: {
@@ -102,10 +102,11 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    opacity: 1
   },
   giftRevealText: {
-    ...textBoldDark
+    ...textBoldDark,
   },
   sadIcon: {
     width: '100%',
@@ -135,8 +136,9 @@ const styles = StyleSheet.create({
   },
   closeContainer: {
     position: 'absolute',
-    right: 10,
-    top: 10
+    right: 0,
+    top: 0,
+    padding: 10
   },
 });
 

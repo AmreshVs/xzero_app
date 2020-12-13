@@ -2,25 +2,40 @@ import React, { useContext, useEffect } from 'react';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useApolloClient } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
 
 import { BASIC_INFORMATION } from 'graphql/queries';
-import { NEW_UPDATE } from 'navigation/routes';
+import { MAIN_SCREEN, NEW_UPDATE } from 'navigation/routes';
 import Loader from 'components/loader';
 import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
 
 export default function Main({ navigation }) {
   const client = useApolloClient();
   const { setUserData } = useContext(UserDataContext);
+  const { t } = useTranslation();
+  const { logError } = useErrorLog();
 
   useEffect(() => {
     checkNewVersion();
   }, []);
 
   const checkNewVersion = async () => {
-    const { data } = await client.query({
+    const { data, error } = await client.query({
       query: BASIC_INFORMATION,
     });
+
+    if (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: MAIN_SCREEN,
+        module: 'Basic Information',
+        input: '',
+        error: JSON.stringify(error)
+      });
+    }
+
     let appInfo = data?.appBasicInformation;
 
     if (Platform.OS === 'ios' && appInfo?.ios_version_check) {
@@ -41,9 +56,11 @@ export default function Main({ navigation }) {
   };
 
   const checkUser = async () => {
+    let jwt = null;
+    let userData = null;
     try {
-      const jwt = await AsyncStorage.getItem('@xzero_jwt');
-      const userData = await AsyncStorage.getItem('@xzero_user');
+      jwt = await AsyncStorage.getItem('@xzero_jwt');
+      userData = await AsyncStorage.getItem('@xzero_user');
       if (userData !== null && userData !== '') {
         let loginData = JSON.parse(userData);
         setUserData({
@@ -57,7 +74,13 @@ export default function Main({ navigation }) {
       }
       navigation.replace('Login');
     } catch (error) {
-      // console.log(error);
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: MAIN_SCREEN,
+        module: 'Getting Userdata and JWT from Asyncstorage',
+        input: JSON.stringify({ userData, jwt }),
+        error: JSON.stringify(error)
+      });
     }
   };
 

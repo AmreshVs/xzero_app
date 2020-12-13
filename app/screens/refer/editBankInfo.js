@@ -12,30 +12,34 @@ import Box from 'components/box';
 import { ToastMsg } from 'components/toastMsg';
 import { inputsValidationSchema, inputs } from './helpers';
 import { CREATE_BANK_INFO, UPDATE_BANK_INFO } from 'graphql/mutations';
-import { getJWT } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
+import { REFER } from 'navigation/routes';
 
 export default function EditBankInfo({ setEdit, data, reload }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const { userData } = useContext(UserDataContext);
+  const { logError } = useErrorLog();
   const client = useApolloClient();
 
   const handleSave = async (values) => {
     setLoading(true);
-    // let jwt = await getJWT();
+
     let mutationData = null;
+    let mutationInput = {
+      id: Number(data?.id) || 0,
+      user_id: Number(userData?.id),
+      bank_name: values?.bank_name,
+      account_number: values?.account_number,
+      iban: values?.IBAN_number,
+      holder_name: values?.holder_name,
+    };
+
     try {
       let { data: bankData } = await client.mutate({
         mutation: data === null ? CREATE_BANK_INFO : UPDATE_BANK_INFO,
-        variables: {
-          id: Number(data?.id) || 0,
-          user_id: Number(userData?.id),
-          bank_name: values?.bank_name,
-          account_number: values?.account_number,
-          iban: values?.IBAN_number,
-          holder_name: values?.holder_name,
-        },
+        variables: mutationInput,
         // context: {
         //   headers: {
         //     Authorization: 'Bearer ' + jwt,
@@ -61,6 +65,12 @@ export default function EditBankInfo({ setEdit, data, reload }) {
 
     } catch (error) {
       setLoading(false);
+      logError({
+        screen: REFER,
+        module: 'Create or Update Bank Info',
+        input: JSON.stringify(mutationInput),
+        error: JSON.stringify(error)
+      });
       ToastMsg(t('error_occured'));
     }
   };
@@ -85,52 +95,52 @@ export default function EditBankInfo({ setEdit, data, reload }) {
           setFieldTouched,
           handleSubmit,
         }) => (
-            <>
-              {(inputs).map(
-                ({ name, icon, marginTop }, index) => {
-                  let newName = name.replace('_', ' ');
-                  return (
-                    <View key={index}>
-                      <Textbox
-                        placeholder={newName.charAt(0).toUpperCase() + newName.slice(1)}
-                        value={values[name]}
-                        onChangeText={handleChange(name)}
-                        icon={icon}
-                        marginTop={marginTop}
-                        onBlur={() => setFieldTouched(name)}
-                        autoCapitalize="none"
-                      />
-                      <FormError touched={touched[name]} errorText={errors[name]} />
-                    </View>
-                  )
-                }
-              )}
-              <Row marginTop={20} justifyContent="flex-end">
-                <Button
-                  width="30%"
-                  size="small"
-                  icon="times"
-                  status="text_lite"
-                  onPress={() => setEdit(false)}
-                  outline
-                >
-                  {t('cancel')}
-                </Button>
-                <Box marginHorizontal={5} />
-                <Button
-                  width="30%"
-                  size="small"
-                  icon="save"
-                  status="success"
-                  loading={loading}
-                  onPress={() => handleSubmit()}
-                  outline
-                >
-                  {t('save')}
-                </Button>
-              </Row>
-            </>
-          )}
+          <>
+            {(inputs).map(
+              ({ name, icon, marginTop }, index) => {
+                let newName = name.replace('_', ' ');
+                return (
+                  <View key={index}>
+                    <Textbox
+                      placeholder={newName.charAt(0).toUpperCase() + newName.slice(1)}
+                      value={values[name]}
+                      onChangeText={handleChange(name)}
+                      icon={icon}
+                      marginTop={marginTop}
+                      onBlur={() => setFieldTouched(name)}
+                      autoCapitalize="none"
+                    />
+                    <FormError touched={touched[name]} errorText={errors[name]} />
+                  </View>
+                )
+              }
+            )}
+            <Row marginTop={20} justifyContent="flex-end">
+              <Button
+                width="30%"
+                size="small"
+                icon="times"
+                status="text_lite"
+                onPress={() => setEdit(false)}
+                outline
+              >
+                {t('cancel')}
+              </Button>
+              <Box marginHorizontal={5} />
+              <Button
+                width="30%"
+                size="small"
+                icon="save"
+                status="success"
+                loading={loading}
+                onPress={() => handleSubmit()}
+                outline
+              >
+                {t('save')}
+              </Button>
+            </Row>
+          </>
+        )}
       </Formik>
     </Box>
   );

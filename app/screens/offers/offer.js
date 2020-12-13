@@ -12,23 +12,25 @@ import Chip from 'components/chip';
 import { IMAGE_URL } from 'constants/common';
 import Column from 'components/column';
 import RippleFX from 'components/rippleFx';
-import { OFFER_DETAIL } from 'navigation/routes';
-import { getUserData } from 'constants/commonFunctions';
+import { OFFERS_SCREEN, OFFER_DETAIL } from 'navigation/routes';
 import addFavourite from './addFavourite';
-import useUserData from 'hooks/useUserData';
+import useErrorLog from 'hooks/useErrorLog';
 import styles from './styles';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
+import { ToastMsg } from 'components/toastMsg';
 
 function Offer({ data, favourites }) {
   const client = useApolloClient();
   const { push } = useNavigation();
+  const { userData } = useContext(UserDataContext);
+  const { logError } = useErrorLog();
   const { t, i18n } = useTranslation();
   const language = i18n.language;
-  const userData = useUserData();
 
   const [favourite, setFavourite] = useState(data.is_favourite);
 
   const handlePress = async () => {
-    const userData = await getUserData();
     push(OFFER_DETAIL, {
       offer_id: Number(data.id),
       id: Number(data.id),
@@ -39,7 +41,21 @@ function Offer({ data, favourites }) {
 
   const handleFavourite = async (id) => {
     setFavourite(!favourite);
-    await addFavourite(client, id);
+    try {
+      await addFavourite(client, id);
+    }
+    catch (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: OFFERS_SCREEN,
+        module: 'Add Favorite',
+        input: JSON.stringify({
+          user_id: userData?.id,
+          offer_id: id
+        }),
+        error: JSON.stringify(error)
+      });
+    }
     if (favourites) {
       favourites();
     }

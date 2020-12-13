@@ -166,8 +166,8 @@ export const GENERATE_GIFT = gql`
 `;
 
 export const BUY_VOUCHER = gql`
-  mutation BuyVoucher($user_id: ID!, $voucher_id: Int!, $promocode: String){
-    BuyVoucher(user_id: $user_id, voucher_id: $voucher_id, promocode: $promocode){
+  mutation BuyVoucher($user_id: ID!, $voucher_id: Int!, $code: String){
+    BuyVoucher(user_id: $user_id, voucher_id: $voucher_id, code: $code){
       disabled
       bought
     }
@@ -261,6 +261,18 @@ export const LOG_ERROR = gql`
       data: $data
     }){
       errorLog{
+        id
+      }
+    }
+  }
+`;
+
+export const LOG_PAYMENT = gql`
+  mutation CreatePaymentResponse($data: PaymentResponseInput){
+    createPaymentResponse(input: {
+      data: $data
+    }){
+      paymentResponse{
         id
       }
     }

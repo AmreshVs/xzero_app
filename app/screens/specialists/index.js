@@ -14,12 +14,16 @@ import { ModalSearchHeader } from 'components/modalSearchHeader';
 import Specialist from './specialist';
 import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
+import { ToastMsg } from 'components/toastMsg';
+import { SPECIALISTS } from 'navigation/routes';
+import useErrorLog from 'hooks/useErrorLog';
 
 let initialWhereCondition = {};
 let headerCondition = 0;
 
 export default function SpecialistHelp() {
   const [reloading, setReloading] = useState(false);
+  const { logError } = useErrorLog();
   const { params } = useRoute();
 
   if (params?.id) {
@@ -34,11 +38,21 @@ export default function SpecialistHelp() {
   let language = i18n.language;
   const modalizeRef = createRef();
 
-  let { data, loading, refetch: _refetch } = useQuery(SPECIALISTS_BY_CENTER, {
+  let { data, loading, refetch: _refetch, error } = useQuery(SPECIALISTS_BY_CENTER, {
     variables: {
       where: whereCondition,
     },
   });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: SPECIALISTS,
+      module: 'Get All Specialists',
+      input: JSON.stringify(whereCondition),
+      error: JSON.stringify(error)
+    });
+  }
 
   const reload = async () => {
     setReloading(true);

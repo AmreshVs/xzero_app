@@ -8,10 +8,11 @@ import Card from 'components/card';
 import Button from 'components/button';
 import { GENERATE_GIFT } from 'graphql/mutations';
 import { UserDataContext } from 'context';
-import { IMAGE_URL } from 'constants/common';
+import { IMAGE_URL, SCREEN_HEIGHT } from 'constants/common';
 import useErrorLog from 'hooks/useErrorLog';
 import styles from './styles';
 import { GIFTS } from 'navigation/routes';
+import { isTab } from 'constants/commonFunctions';
 
 export default function GenerateGift() {
   const [loading, setLoading] = useState(false);
@@ -75,7 +76,7 @@ export default function GenerateGift() {
         Animated.timing(
           giftTextAnim,
           {
-            toValue: 70,
+            toValue: isTab() ? 180 : SCREEN_HEIGHT / 14,
             duration: 650,
           }
         ).start();

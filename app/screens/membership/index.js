@@ -12,7 +12,7 @@ import Renew from './renew';
 import Benefits from './benefits';
 import BuyMembership from './buyMembership';
 import QRCode from './qrcode';
-import { getJWT, getUserData, dateDiffInDays, isTab } from 'constants/commonFunctions';
+import { dateDiffInDays, isTab } from 'constants/commonFunctions';
 import { GET_MEMBERSHIP_BY_USER, MEMBERSHIP_PLANS } from 'graphql/queries';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import TopStatusBar from 'components/topStatusBar';
@@ -23,8 +23,12 @@ import Box from 'components/box';
 import ApplyPromocode from 'components/applyPromocode';
 import Button from 'components/button';
 import Plan from './plan';
-import { PAYMENT } from 'navigation/routes';
+import { MEMBERSHIP_TAB_SCREEN, PAYMENT } from 'navigation/routes';
 import { SCREEN_HEIGHT } from 'constants/common';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
 
 let expiryMonth = null;
 let currentMonth = null;
@@ -45,7 +49,9 @@ const Membership = () => {
   const { data: membershipPlansData } = useQuery(MEMBERSHIP_PLANS);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: firstPlanPrice || 0 });
   const { push } = useNavigation();
+  const { userData } = useContext(UserDataContext);
   const { t, i18n } = useTranslation();
+  const { logError } = useErrorLog();
   let language = i18n.language;
 
   let firstPlanPrice = membershipPlansData?.membershipPlans[0].price;
@@ -61,19 +67,28 @@ const Membership = () => {
   }, []);
 
   const getMemberData = async () => {
-    let jwt = await getJWT();
-    let { id } = await getUserData();
-    let { data } = await client.query({
+    let { data, error } = await client.query({
       query: GET_MEMBERSHIP_BY_USER,
       variables: {
-        user_id: Number(id),
+        user_id: Number(userData?.id),
       },
       context: {
         headers: {
-          authorization: 'Bearer ' + jwt,
+          authorization: 'Bearer ' + userData?.jwt,
         },
       },
     });
+
+    if (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: MEMBERSHIP_TAB_SCREEN,
+        module: 'Get membership by user',
+        input: JSON.stringify({ user_id: Number(userData?.id), authorization: 'Bearer ' + userData?.jwt }),
+        error: JSON.stringify(error)
+      });
+    }
+
     setNote({
       info: data?.membershipCardInfo,
       benefits: data?.membershipBenefit,
@@ -87,8 +102,7 @@ const Membership = () => {
   };
 
   const reload = async () => {
-    let jwt = await getJWT();
-    if (jwt !== '' && jwt !== null) {
+    if (userData?.jwt !== '' && userData?.jwt !== null) {
       setReloading(true);
       setLoading(true);
       setMember(false);
@@ -99,7 +113,9 @@ const Membership = () => {
   };
 
   const handleBuy = () => {
-    modalizeRef.current?.open();
+    if (modalizeRef?.current) {
+      modalizeRef.current?.open();
+    }
   };
 
   const confirmBuy = () => {

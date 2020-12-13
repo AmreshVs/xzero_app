@@ -13,7 +13,7 @@ import styles from './styles';
 import { useTranslation } from 'react-i18next';
 import RippleFX from 'components/rippleFx';
 import { useNavigation } from '@react-navigation/native';
-import { PAYMENT, VOUCHER_DETAIL } from 'navigation/routes';
+import { VOUCHER_DETAIL } from 'navigation/routes';
 
 export default function Voucher({ data, handleOpenModal }) {
   const { t } = useTranslation();

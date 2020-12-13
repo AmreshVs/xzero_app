@@ -1,6 +1,5 @@
 import { getUserData } from "constants/commonFunctions";
-
-const { ADD_FAVOURITE } = require("graphql/mutations");
+import { ADD_FAVOURITE } from 'graphql/mutations';
 
 const addFavourite = async (client, offer_id) => {
 

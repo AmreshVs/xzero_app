@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { getShadowStyle, isTab } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from 'constants/common';
@@ -117,7 +117,7 @@ const mobileStyles = StyleSheet.create({
     ...colorDanger,
   },
   sliderImage: {
-    width: Dimensions.get('window').width - 20,
+    width: SCREEN_WIDTH - 20,
     ...h200,
     ...marginBottom0,
     ...marginLeft10,

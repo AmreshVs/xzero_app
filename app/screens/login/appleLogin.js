@@ -26,7 +26,7 @@ const AppleLoginButton = ({ handleSocialLogin }) => {
         ],
       });
 
-      let input = credential;
+      input = credential;
       let email = credential?.email;
       if (email !== null) {
         let username = credential?.fullName?.givenName + ' ' + credential?.fullName?.familyName;
@@ -44,7 +44,7 @@ const AppleLoginButton = ({ handleSocialLogin }) => {
       logError({
         screen: LOGIN_SCREEN,
         module: 'Apple Login',
-        input: JSON.stringify(input),
+        input: JSON.stringify(input || {}),
         error: JSON.stringify(error)
       });
 

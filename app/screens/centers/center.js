@@ -22,7 +22,6 @@ const Center = ({ data }) => {
   const language = i18n.language;
 
   const handlePress = async () => {
-
     push(OFFERS_SCREEN, { center: data?.id, user_id: Number(userData?.id) || 0 });
   };
 

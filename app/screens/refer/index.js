@@ -20,6 +20,9 @@ import Column from 'components/column';
 import { UserDataContext } from 'context';
 import { GET_REFER_HISTORY } from 'graphql/queries';
 import { isTab } from 'constants/commonFunctions';
+import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
+import { REFER } from 'navigation/routes';
 
 export default function Refer() {
   const [modalComp, setModalComp] = useState(false);
@@ -27,14 +30,27 @@ export default function Refer() {
   const [reloading, setReloading] = useState(false);
   const shareRef = useRef(null);
   const modalizeRef = useRef(null);
+  const { logError } = useErrorLog();
   const { userData } = useContext(UserDataContext);
   const { t } = useTranslation();
 
-  const { data, loading, refetch: _refetch } = useQuery(GET_REFER_HISTORY, {
+  const { data, loading, refetch: _refetch, error } = useQuery(GET_REFER_HISTORY, {
     variables: {
       user_id: Number(userData?.id)
     }
   });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: REFER,
+      module: 'Get Refer',
+      input: JSON.stringify({
+        user_id: Number(userData?.id)
+      }),
+      error: JSON.stringify(error)
+    });
+  }
 
   const handleOpenModal = (status) => {
     setModalComp(status);

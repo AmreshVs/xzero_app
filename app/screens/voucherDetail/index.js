@@ -17,23 +17,39 @@ import CenterSymbol from './centerSymbol';
 import MembershipPlan from './membershipPlan';
 import Help from './help';
 import { VOUCHER_DETAIL } from 'graphql/queries';
+import { VOUCHER_DETAIL as VOUCHERDETAIL } from 'navigation/routes';
 import BuyVoucherModal from './buyVoucherModal';
 import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
 import Box from 'components/box';
+import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
 
 export default function VoucherDetail() {
   const { t } = useTranslation();
   const [reloading, setReloading] = useState(false);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
   const modalizeRef = useRef(null);
+  const { logError } = useErrorLog();
   const { params } = useRoute();
 
-  const { data, loading, refetch: _refetch } = useQuery(VOUCHER_DETAIL, {
-    variables: {
-      id: Number(params?.id)
-    }
+  const queryInput = {
+    id: Number(params?.id)
+  };
+
+  const { data, loading, refetch: _refetch, error } = useQuery(VOUCHER_DETAIL, {
+    variables: queryInput
   });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: VOUCHERDETAIL,
+      module: '',
+      input: JSON.stringify(queryInput),
+      error: JSON.stringify(error)
+    });
+  }
 
   const handleOpenModal = () => {
     setPromocodeData({ discountedPrice: data?.voucher?.cost });

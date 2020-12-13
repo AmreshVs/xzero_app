@@ -10,12 +10,16 @@ import TopNavigator from 'components/topNavigator';
 import { GENERATE_PAYMENT_ACCESS_TOKEN, GENERATE_PAYMENT_URL, CHECK_PAYMENT_STATUS } from 'api';
 import { useAxios } from 'hooks';
 import colors from 'constants/colors';
-import { PAYMENT_STATUS } from 'navigation/routes';
-import { getUserData, getJWT } from 'constants/commonFunctions';
+import { PAYMENT, PAYMENT_STATUS } from 'navigation/routes';
+import { getUserData } from 'constants/commonFunctions';
 import { BUY_VOUCHER, GENERATE_MEMBESHIP } from 'graphql/mutations';
 import Loader from 'components/loader';
 import { UserDataContext } from 'context';
 import styles from './styles';
+import useErrorLog from 'hooks/useErrorLog';
+import usePaymentLog from 'hooks/usePaymentLog';
+import { ToastMsg } from 'components/toastMsg';
+import { useTranslation } from 'react-i18next';
 
 var captured = false;
 var failed = false;
@@ -26,10 +30,13 @@ export default function Payment() {
     url: '',
     access_token: '',
   };
+  const [state, setState] = useState(initialState);
   const { userData } = useContext(UserDataContext);
+  const { logError } = useErrorLog();
+  const { logPayment } = usePaymentLog();
   const { replace } = useNavigation();
   const { params } = useRoute();
-  const [state, setState] = useState(initialState);
+  const { t } = useTranslation();
   const client = useApolloClient();
 
   useEffect(() => {
@@ -42,48 +49,110 @@ export default function Payment() {
   }, []);
 
   const GeneratePaymentUrl = async () => {
-    let { email, username } = await getUserData();
-    const GENERATE_PAYMENT_BODY = {
-      action: 'SALE',
-      emailAddress: email,
-      billingAddress: {
-        firstName: username,
-      },
-      amount: {
-        currencyCode: params?.currency_code,
-        value: params?.amount * params?.multiplier,
-      },
-      merchantAttributes: {
-        skipConfirmationPage: true,
-      },
-    };
+    let access_token = null;
+    let payment_url_response = null;
+    try {
+      let { email, username } = await getUserData();
+      const GENERATE_PAYMENT_BODY = {
+        action: 'SALE',
+        emailAddress: email,
+        billingAddress: {
+          firstName: username,
+        },
+        amount: {
+          currencyCode: params?.currency_code,
+          value: params?.amount * params?.multiplier,
+        },
+        merchantAttributes: {
+          skipConfirmationPage: true,
+        },
+      };
 
-    // Get Access Token
-    const token_response = await useAxios(GENERATE_PAYMENT_ACCESS_TOKEN);
-    const access_token = token_response?.access_token;
+      // Get Access Token
+      const token_response = await useAxios(GENERATE_PAYMENT_ACCESS_TOKEN);
+      access_token = token_response?.access_token;
 
-    const payment_url_response = await useAxios(
-      {
-        ...GENERATE_PAYMENT_URL,
-        headers: {
+      // Logging Response
+      logPayment({
+        for: params?.voucher_id ? 'VOUCHER' : 'MEMBERSHIP',
+        module: 'Generate Payment Url',
+        url: GENERATE_PAYMENT_ACCESS_TOKEN?.url,
+        input: '',
+        response: JSON.stringify(token_response),
+        status: 'PAYMENT_TOKEN_GENERATED',
+        voucher: Number(params?.voucher_id || 0),
+        membership_plan: Number(params?.plan || 0)
+      });
+
+      payment_url_response = await useAxios(
+        {
+          ...GENERATE_PAYMENT_URL,
+          headers: {
+            ...GENERATE_PAYMENT_URL.headers,
+            Authorization: `Bearer ${access_token}`,
+          },
+        },
+        GENERATE_PAYMENT_BODY
+      );
+
+      // Logging Response
+      logPayment({
+        for: params?.voucher_id ? 'VOUCHER' : 'MEMBERSHIP',
+        module: 'Payment Url response',
+        url: GENERATE_PAYMENT_URL?.url,
+        input: JSON.stringify({
           ...GENERATE_PAYMENT_URL.headers,
           Authorization: `Bearer ${access_token}`,
-        },
-      },
-      GENERATE_PAYMENT_BODY
-    );
-    setState({
-      ...state,
-      loading: false,
-      url: payment_url_response?._links?.payment?.href + '&slim=true',
-      access_token: access_token,
-    });
+        }),
+        response: JSON.stringify(payment_url_response),
+        status: 'PAYMENT_INITIATED',
+        voucher: Number(params?.voucher_id || 0),
+        membership_plan: Number(params?.plan || 0)
+      });
+
+      setState({
+        ...state,
+        loading: false,
+        url: payment_url_response?._links?.payment?.href + '&slim=true',
+        access_token: access_token,
+      });
+    }
+    catch (error) {
+      setState({
+        ...state,
+        loading: false,
+      });
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: PAYMENT,
+        module: 'Generate payment url',
+        input: JSON.stringify({
+          access_token,
+          payment_url_response
+        }),
+        error: JSON.stringify(error)
+      });
+    }
   };
 
   const handleMessage = async (e) => {
     let response = JSON.parse(e?.nativeEvent?.data || '{}')?.order;
     let paymentState = response?.state;
     let orderReference = response?.reference;
+
+    if (paymentState) {
+      // Logging Response
+      logPayment({
+        for: params?.voucher_id ? 'VOUCHER' : 'MEMBERSHIP',
+        module: 'Bank Payment Process',
+        url: '',
+        input: '',
+        response: JSON.stringify(response),
+        status: 'BANK_PROCESS',
+        voucher: Number(params?.voucher_id || 0),
+        membership_plan: Number(params?.plan || 0)
+      });
+    }
 
     if (paymentState === 'POST_AUTH_REFER') {
       checkPaymentStatus(orderReference);
@@ -121,9 +190,19 @@ export default function Payment() {
   };
 
   const postPayment = async (status) => {
+    // Logging Response
+    logPayment({
+      for: params?.voucher_id ? 'VOUCHER' : 'MEMBERSHIP',
+      module: 'Post Payment',
+      url: '',
+      input: '',
+      response: '',
+      status: status,
+      voucher: Number(params?.voucher_id || 0),
+      membership_plan: Number(params?.plan || 0)
+    });
     if (status === 'SUCCESS' || status === 'CAPTURED') {
       setState({ ...state, reloading: true });
-      let jwt = await getJWT();
 
       if (params?.voucher_id) {
         await client.mutate({

@@ -16,6 +16,9 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import NoData from 'components/noData';
 import { isTab } from 'constants/commonFunctions';
+import useErrorLog from 'hooks/useErrorLog';
+import { MY_VOUCHERS } from 'navigation/routes';
+import { ToastMsg } from 'components/toastMsg';
 
 export default function MyVouchers() {
   const [reloading, setReloading] = useState(false);
@@ -23,6 +26,7 @@ export default function MyVouchers() {
   const [select, setSelect] = useState(0);
   const [data, setData] = useState([]);
   const { userData } = useContext(UserDataContext);
+  const { logError } = useErrorLog();
   const client = useApolloClient();
   const { t } = useTranslation();
 
@@ -44,12 +48,25 @@ export default function MyVouchers() {
   const handlePress = async (tab) => {
     setSelect(tab);
     setLoading(true);
-    const { data } = await client.query({
+    const { data, error } = await client.query({
       query: !tab ? MY_VOUCHER_BOUGHT : MY_VOUCHER_WON,
       variables: {
         user_id: Number(userData?.id)
       }
     });
+
+    if (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: MY_VOUCHERS,
+        module: 'Get bought or won vouchers list',
+        input: JSON.stringify({
+          user_id: Number(userData?.id)
+        }),
+        error: JSON.stringify(error)
+      });
+    }
+
     setData(data?.voucherAvaileds);
     setLoading(false);
   }

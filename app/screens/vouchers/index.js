@@ -8,21 +8,38 @@ import TopNavigator from 'components/topNavigator';
 import NoData from 'components/noData';
 import BuyVoucherModal from 'screens/voucherDetail/buyVoucherModal';
 import { VOUCHERS } from 'graphql/queries';
+import { VOUCHERS as NAV_VOUCHER } from 'graphql/queries';
 import Voucher from './voucher';
 import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
+import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
 
 export default function Vouchers() {
   const [reloading, setReloading] = useState(false);
   const [voucherData, setVoucherData] = useState([]);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
   const modalizeRef = useRef(null);
+  const { logError } = useErrorLog();
   const { t } = useTranslation();
-  const { data, loading, refetch: _refetch } = useQuery(VOUCHERS, {
-    variables: {
-      membership_plan: 1
-    }
+
+  const queryInput = {
+    membership_plan: 1
+  };
+
+  const { data, loading, refetch: _refetch, error } = useQuery(VOUCHERS, {
+    variables: queryInput
   });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: NAV_VOUCHER,
+      module: 'Get Vouchers',
+      input: JSON.stringify(queryInput),
+      error: JSON.stringify(error)
+    });
+  }
 
   const handleOpenModal = (data) => {
     setVoucherData(data)

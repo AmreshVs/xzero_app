@@ -14,14 +14,18 @@ import SearchModal from 'components/searchModal';
 import ModalSearchHeader from 'components/modalSearchHeader';
 import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
+import { ToastMsg } from 'components/toastMsg';
+import { OFFERS_SCREEN } from 'navigation/routes';
+import useErrorLog from 'hooks/useErrorLog';
 
 let initialWhereCondition = {};
 let headerCondition = 0;
 
 export default function Offers() {
   const { params } = useRoute();
+  const { logError } = useErrorLog();
 
-  if (params?.id) {
+  if (params?.center) {
     initialWhereCondition = {
       center: Number(params?.center),
     };
@@ -34,12 +38,25 @@ export default function Offers() {
   let language = i18n.language;
   const modalizeRef = createRef();
 
-  let { data, loading, refetch: _refetch } = useQuery(OFFERS_LIST, {
+  let { data, loading, refetch: _refetch, error } = useQuery(OFFERS_LIST, {
     variables: {
       where: whereCondition,
       user_id: Number(params?.user_id) || 0
     },
   });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: OFFERS_SCREEN,
+      module: 'Get Offers',
+      input: JSON.stringify({
+        where: whereCondition,
+        user_id: Number(params?.user_id) || 0
+      }),
+      error: JSON.stringify(error)
+    });
+  }
 
   const reload = async () => {
     setReloading(true);

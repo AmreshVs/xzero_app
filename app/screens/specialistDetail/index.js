@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
@@ -9,27 +9,43 @@ import SafeView from 'components/safeView';
 import colors from 'constants/colors';
 import TopNavigator from 'components/topNavigator';
 import { SPECIALIST } from 'graphql/queries';
-import useUserData from 'hooks/useUserData';
 import SpecialistInfo from './specialistInfo';
 import AboutSpecialist from './aboutSpecialist';
 import AboutCenter from './aboutCenter';
 import ContactSpecialist from './contactSpecialist';
 import styles from './styles';
-import Row from 'components/row';
 import Box from 'components/box';
 import { isTab } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
+import { SPECIALIST_DETAIL } from 'navigation/routes';
 
 export default function SpecialistDetail() {
-  const {
-    params: { id },
-  } = useRoute();
-  const { data, loading } = useQuery(SPECIALIST, {
-    variables: { id: Number(id) },
-  });
 
   const { t, i18n } = useTranslation();
   let language = i18n.language;
-  const userData = useUserData();
+  const { logError } = useErrorLog();
+  const { userData } = useContext(UserDataContext);
+  const { params } = useRoute();
+
+  const queryInput = {
+    id: Number(params?.id)
+  };
+
+  const { data, loading, error } = useQuery(SPECIALIST, {
+    variables: queryInput,
+  });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: SPECIALIST_DETAIL,
+      module: 'Get Specialist detail',
+      input: JSON.stringify(queryInput),
+      error: JSON.stringify(error)
+    });
+  }
 
   let specialist = data?.specialist;
 

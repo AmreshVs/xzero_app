@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import LottieView from 'lottie-react-native';
-import { useNetInfo } from "@react-native-community/netinfo";
+import NetInfo from "@react-native-community/netinfo";
 
 import styles from './styles';
 import SafeView from 'components/safeView';
@@ -12,7 +12,6 @@ import { ToastMsg } from 'components/toastMsg';
 
 export default function Offline({ navigation }) {
   const offlineRef = useRef(null);
-  const netInfo = useNetInfo();
 
   useEffect(() => {
     if (offlineRef.current) {
@@ -21,13 +20,14 @@ export default function Offline({ navigation }) {
   }, []);
 
   const handleRetry = () => {
-    console.log(netInfo.isConnected);
-    if (netInfo.isConnected) {
-      navigation.navigate(HOME_SCREEN);
-    }
-    else {
-      ToastMsg('Device Offline, Please check your internet connectivity and try again!');
-    }
+    NetInfo.fetch().then(state => {
+      if (state.isConnected) {
+        navigation.navigate(HOME_SCREEN);
+      }
+      else {
+        ToastMsg('Device Offline, Please check your internet connectivity and try again!');
+      }
+    });
   }
 
   return (
