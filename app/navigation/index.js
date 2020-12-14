@@ -64,6 +64,7 @@ import {
 import { UserDataContext } from 'context';
 import Loader from 'components/loader';
 import Offline from 'screens/offline';
+import CustomDrawer from 'components/drawer';
 
 const Tab = createBottomTabNavigator();
 
@@ -131,7 +132,11 @@ function Navigation({ connection }) {
     <SafeAreaProvider>
       <NavigationContainer ref={navigationRef} linking={linking} fallback={<Loader />}>
         <UserDataContext.Provider value={{ userData, setUserData }}>
-          <Drawer.Navigator initialRouteName={DRAWER_HOME} drawerType="slide">
+          <Drawer.Navigator
+            initialRouteName={DRAWER_HOME}
+            drawerType="slide"
+            drawerContent={props => <CustomDrawer {...props} />}
+          >
             <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
             <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} />
             <Drawer.Screen name={REFER} component={Refer} />
