@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-import { borderRadius10, font17, marginBottom10, marginTop10, textBoldDark, textLite } from 'constants/commonStyles';
+import { borderRadius10, font17, marginTop10, textBoldDark, textLite } from 'constants/commonStyles';
 import Row from 'components/row';
 import Button from 'components/button';
 import Box from 'components/box';
@@ -16,19 +16,38 @@ import { GET_ADDRESS } from 'graphql/queries';
 import { UserDataContext } from 'context';
 import { handleMobileNumber } from 'constants/commonFunctions';
 import { EDIT_ADDRESS } from 'graphql/mutations';
+import { useTranslation } from 'react-i18next';
+import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
 
 let user = null;
 
 export default function DeliveryAddress({ ...otherStyles }) {
   const { userData } = useContext(UserDataContext);
+  const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
-  const { data, loading, refetch: _refetch } = useQuery(GET_ADDRESS, {
-    variables: {
-      user_id: Number(userData?.id)
-    }
-  });
   const client = useApolloClient();
+  const { logError } = useErrorLog();
+
+  const mutationInput = {
+    user_id: Number(userData?.id)
+  };
+
+  const { data, loading, refetch: _refetch, error } = useQuery(GET_ADDRESS, {
+    variables: mutationInput
+  });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: 'Delivery Address',
+      module: 'Save Delivery Address',
+      input: JSON.stringify(mutationInput),
+      error: JSON.stringify(error)
+    });
+  }
+
   user = data?.user;
 
   useEffect(() => {
@@ -62,7 +81,7 @@ export default function DeliveryAddress({ ...otherStyles }) {
           :
           <Row>
             <Box flex={3}>
-              <Text style={styles.title}>Delivery Address</Text>
+              <Text style={styles.title}>{t('delivery_address')}</Text>
               <Text style={styles.caption}>{user?.username}</Text>
               <Text style={styles.caption}>{user?.address}</Text>
               <Text style={styles.caption}>{user?.mobile_number ? handleMobileNumber(user?.mobile_number) : ''}</Text>
@@ -76,7 +95,7 @@ export default function DeliveryAddress({ ...otherStyles }) {
           <Loader spinner />
           :
           <Box>
-            <Text style={styles.title}>Edit Address</Text>
+            <Text style={styles.title}>{t('edit_address')}</Text>
             <Formik
               onSubmit={(values) => handleSave(values)}
               validationSchema={inputsValidationSchema}
@@ -94,38 +113,38 @@ export default function DeliveryAddress({ ...otherStyles }) {
                 setFieldTouched,
                 handleSubmit,
               }) => (
-                  <>
-                    {inputs.map(({ name, icon }, index) => {
-                      return (
-                        <View key={index}>
-                          <Textbox
-                            placeholder={name.charAt(0).toUpperCase() + name.slice(1)}
-                            value={values[name]}
-                            onChangeText={handleChange(name)}
-                            icon={icon}
-                            marginTop={10}
-                            onBlur={() => setFieldTouched(name)}
-                            autoCapitalize="none"
-                            secureTextEntry={name.includes('password', 'repassword') ? true : false}
-                            multiline={name === 'address'}
-                            style={name === 'address' && styles.textbox}
-                          />
-                          <FormError touched={touched[name]} errorText={errors[name]} />
-                        </View>
-                      )
-                    })
+                <>
+                  {inputs.map(({ name, icon }, index) => {
+                    return (
+                      <View key={index}>
+                        <Textbox
+                          placeholder={name.charAt(0).toUpperCase() + name.slice(1)}
+                          value={values[name]}
+                          onChangeText={handleChange(name)}
+                          icon={icon}
+                          marginTop={10}
+                          onBlur={() => setFieldTouched(name)}
+                          autoCapitalize="none"
+                          secureTextEntry={name.includes('password', 'repassword') ? true : false}
+                          multiline={name === 'address'}
+                          style={name === 'address' && styles.textbox}
+                        />
+                        <FormError touched={touched[name]} errorText={errors[name]} />
+                      </View>
+                    )
+                  })
+                  }
+                  <Row justifyContent="flex-end" marginTop={10}>
+                    {(user?.address !== null && user?.address !== '') &&
+                      <>
+                        <Button size="small" status="text_lite" width="32%" icon="times" onPress={() => setEdit(false)} outline>Cancel</Button>
+                        <Box marginHorizontal={5} />
+                      </>
                     }
-                    <Row justifyContent="flex-end" marginTop={10}>
-                      {(user?.address !== null || user?.address !== '') &&
-                        <>
-                          <Button size="small" status="text_lite" width="32%" icon="times" onPress={() => setEdit(false)} outline>Cancel</Button>
-                          <Box marginHorizontal={5} />
-                        </>
-                      }
-                      <Button size="small" status="success" width="30%" icon="check" onPress={() => handleSubmit()} loading={btnLoading} outline>Save</Button>
-                    </Row>
-                  </>
-                )}
+                    <Button size="small" status="success" width="30%" icon="check" onPress={() => handleSubmit()} loading={btnLoading} outline>Save</Button>
+                  </Row>
+                </>
+              )}
             </Formik>
           </Box>
       }

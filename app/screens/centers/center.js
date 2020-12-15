@@ -14,6 +14,7 @@ import { OFFERS_SCREEN } from 'navigation/routes';
 import styles from './styles';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
+import { thumbnailUrl } from 'constants/commonFunctions';
 
 const Center = ({ data }) => {
   const { push } = useNavigation();
@@ -45,7 +46,7 @@ const Center = ({ data }) => {
       </View>
       <Box padding={5}>
         <Row style={styles.imgContainer} vcenter hcenter>
-          <Image source={{ uri: IMAGE_URL + data?.featured_img }} style={styles.image} />
+          <Image source={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img) }} style={styles.image} />
         </Row>
       </Box>
       <View>

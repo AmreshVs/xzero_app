@@ -61,13 +61,12 @@ export default function Main({ navigation }) {
     try {
       jwt = await AsyncStorage.getItem('@xzero_jwt');
       userData = await AsyncStorage.getItem('@xzero_user');
+
       if (userData !== null && userData !== '') {
         let loginData = JSON.parse(userData);
         setUserData({
           jwt: JSON.parse(jwt),
-          id: loginData?.id,
-          email: loginData?.email,
-          mobile_number: loginData?.mobile_number
+          ...loginData
         });
         navigation.replace(HOME_SCREEN);
         return;

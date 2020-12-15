@@ -19,7 +19,7 @@ export default function NoData({ topNav, reload, reloading }) {
     image: {
       width: 300,
       height: 300,
-      marginBottom: topNav ? SCREEN_HEIGHT / 6.5 : SCREEN_HEIGHT / 4.5,
+      marginTop: topNav ? -SCREEN_HEIGHT / 6.5 : -SCREEN_HEIGHT / 4.5,
     },
   });
 

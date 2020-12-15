@@ -30,7 +30,7 @@ export default function Button({
       <RippleFX onPress={onPress || null}>
         <View style={[style, buttonStyle]}>
           {loading ? (
-            <Spinner color={colors[status]} />
+            <Spinner color={status !== undefined ? colors[status] : '#CCC'} />
           ) : (
               <>
                 {icon && (
@@ -45,7 +45,7 @@ export default function Button({
             )}
         </View>
       </RippleFX>
-    </View>
+    </View >
   );
 }
 

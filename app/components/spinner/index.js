@@ -13,5 +13,6 @@ export default function Spinner({ color }) {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
+    margin: -2
   },
 });

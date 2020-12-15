@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './styles';
 import Box from 'components/box';
-import Gift from './Gift';
+import Gift from './gift';
 
 export default function AvailedGifts({ data }) {
   const { t } = useTranslation();

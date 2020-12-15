@@ -9,36 +9,54 @@ import Row from 'components/row';
 import Box from 'components/box';
 import colors from 'constants/colors';
 import Divider from 'components/divider';
-import { MAIN_SCREEN } from 'navigation/routes';
+import { MAIN_SCREEN, PROFILE_TAB_SCREEN } from 'navigation/routes';
 import { getUserData, handleDOB } from 'constants/commonFunctions';
 import RippleFX from 'components/rippleFx';
 import styles from './styles';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
 
-export default function ProfileView({ data }) {
-  const { t, i18n } = useTranslation();
-  let language = i18n.language;
-  const { dispatch } = useNavigation();
+export const handlelogout = async ({ dispatch, setUserData, logError }) => {
   const resetAction = CommonActions.reset({
     index: 0,
     routes: [{ name: MAIN_SCREEN }],
   });
 
-  const handlelogout = async () => {
-    try {
-      let removeJWTData = await AsyncStorage.removeItem('@xzero_jwt');
-      let removeUserData = await AsyncStorage.removeItem('@xzero_user');
-      let removePopup = await AsyncStorage.removeItem('@xzero_popup');
-      if (removeJWTData === null && removeUserData === null && removePopup === null) {
-        dispatch(resetAction);
-      }
-    } catch (e) {
-      // console.log(e);
+  try {
+    let removeJWTData = await AsyncStorage.removeItem('@xzero_jwt');
+    let removeUserData = await AsyncStorage.removeItem('@xzero_user');
+    let removePopup = await AsyncStorage.removeItem('@xzero_popup');
+    if (removeJWTData === null && removeUserData === null && removePopup === null) {
+      setUserData(null);
+      dispatch(resetAction);
     }
-  };
+  } catch (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: PROFILE_TAB_SCREEN,
+      module: 'Logout',
+      input: '',
+      error: JSON.stringify(error)
+    });
+  }
+};
+
+const ProfileView = ({ data }) => {
+  const { t, i18n } = useTranslation();
+  const { dispatch } = useNavigation();
+  const { setUserData } = useContext(UserDataContext);
+  const { logError } = useErrorLog();
+  let language = i18n.language;
 
   const handleMobileNumber = (mobile_number) => {
     return String('+' + mobile_number);
   };
+
+  const handlePress = () => {
+    handlelogout({ dispatch, setUserData, logError });
+  }
 
   const handleLangSelect = async () => {
     let lang = language === 'ar' ? 'en' : 'ar';
@@ -114,7 +132,7 @@ export default function ProfileView({ data }) {
             <FontAwesomeIcon icon="sign-out-alt" color={colors.danger} size={23} />
           </Box>
           <Box flex={8}>
-            <RippleFX onPress={() => handlelogout()}>
+            <RippleFX onPress={() => handlePress()}>
               <Text style={styles.logout}>{t('logout')}</Text>
             </RippleFX>
           </Box>
@@ -124,3 +142,5 @@ export default function ProfileView({ data }) {
     </>
   );
 }
+
+export default ProfileView;

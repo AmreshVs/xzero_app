@@ -38,7 +38,7 @@ export default function TopNavigator({
           )}
         </RippleFX>
         <View style={styles.titleContainer}>
-          <Text style={gradient || color ? styles.gtitle : styles.title}>{title}</Text>
+          <Text style={gradient || color ? styles.gtitle : styles.title} numberOfLines={1}>{title}</Text>
         </View>
         {rightContainer ? rightContainer : <View style={{ flex: 1 }} />}
       </View>

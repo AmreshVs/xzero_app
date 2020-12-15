@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     backgroundColor: colors.gradient2,
-    opacity: 0.9,
+    opacity: 1,
     ...positionAbsolute,
     ...borderRadius50,
     ...zIndex1,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   gift: {
     width: 90,
     height: 90,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     borderRadius: 50,
   },
   overlay: {

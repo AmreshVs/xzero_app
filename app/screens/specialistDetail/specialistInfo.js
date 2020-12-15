@@ -6,6 +6,7 @@ import { IMAGE_URL } from 'constants/common';
 import Card from 'components/card';
 import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
+import { smallUrl, thumbnailUrl } from 'constants/commonFunctions';
 
 const SpecialistInfo = ({ specialist }) => {
   const { i18n } = useTranslation();
@@ -18,7 +19,7 @@ const SpecialistInfo = ({ specialist }) => {
         style={styles.specialistImagebg}
         noBg />
       <ProgressiveImage
-        source={{ uri: IMAGE_URL + specialist?.featured_img?.url }}
+        source={{ uri: IMAGE_URL + smallUrl(specialist?.featured_img?.url) }}
         style={styles.specialistImage}
         noBg />
       <Text style={styles.title}>{specialist?.[`name_${language}`]}</Text>

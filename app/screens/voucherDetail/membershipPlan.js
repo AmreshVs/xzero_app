@@ -11,9 +11,10 @@ export default function MembershipPlan({ data }) {
 
   return (
     <Card paddingBottom={15}>
+      <Text style={styles.title}>{t('buy')}</Text>
       <Image source={{ uri: IMAGE_URL + data?.featured_img?.url }} style={styles.membershipImg} />
-      <Text style={styles.title}>Xzero {data?.name_en} {t('membership')}</Text>
-      <Text style={styles.caption}>{`${t('enjoy_all_benefits')} 1 Year`}</Text>
+      <Text style={styles.title}>Xzero {data?.name_en} {t('membership')} - {data?.duration} {data?.duration > 1 ? t('months') : t('month')}</Text>
+      <Text style={styles.caption}>{data?.desc_en}</Text>
     </Card>
   )
 }

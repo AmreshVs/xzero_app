@@ -19,6 +19,7 @@ import styles from './styles';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { ToastMsg } from 'components/toastMsg';
+import { isTab, thumbnailUrl } from 'constants/commonFunctions';
 
 function Offer({ data, favourites }) {
   const client = useApolloClient();
@@ -65,7 +66,7 @@ function Offer({ data, favourites }) {
     <Row style={styles.offerContainer}>
       <Box flex={2} style={styles.imgContainer}>
         <RippleFX onPress={() => handlePress()}>
-          <Image source={{ uri: IMAGE_URL + data?.featured_img?.url }} style={styles.image} />
+          <Image source={{ uri: IMAGE_URL + (isTab() ? data?.featured_img?.url : thumbnailUrl(data?.featured_img?.url)) }} style={styles.image} />
         </RippleFX>
       </Box>
       <Column flex={6} style={styles.nameContainer}>

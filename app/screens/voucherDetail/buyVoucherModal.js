@@ -26,6 +26,7 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
       FooterComponent={
         <View style={styles.footer}>
           <Button
+            icon="money-bill"
             width={isTab() ? "30%" : "100%"}
             onPress={() => push(PAYMENT, {
               currency_code: 'AED',

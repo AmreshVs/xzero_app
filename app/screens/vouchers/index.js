@@ -14,21 +14,40 @@ import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
+
+let queryInput = {
+  status: 1
+};
 
 export default function Vouchers() {
   const [reloading, setReloading] = useState(false);
   const [voucherData, setVoucherData] = useState([]);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
+  const { userData } = useContext(UserDataContext);
   const modalizeRef = useRef(null);
   const { logError } = useErrorLog();
   const { t } = useTranslation();
 
-  const queryInput = {
-    membership_plan: 1
-  };
+  if (userData.membership !== null) {
+    queryInput = {
+      ...queryInput,
+      membership_plan: Number(userData?.membership?.package?.id)
+    };
+  }
+
+  if (userData.membership === null) {
+    queryInput = {
+      ...queryInput,
+      enable_for_non_members: 1
+    };
+  }
 
   const { data, loading, refetch: _refetch, error } = useQuery(VOUCHERS, {
-    variables: queryInput
+    variables: {
+      where: queryInput
+    }
   });
 
   if (error) {
@@ -43,7 +62,7 @@ export default function Vouchers() {
 
   const handleOpenModal = (data) => {
     setVoucherData(data)
-    setPromocodeData({ discountedPrice: data?.cost });
+    setPromocodeData({ discountedPrice: userData?.membership === null ? data?.cost_for_non_members : data?.cost });
     modalizeRef.current?.open();
   };
 
@@ -58,11 +77,11 @@ export default function Vouchers() {
       <SafeView loading={loading} topNav>
         <TopNavigator title={t('vouchers')} gradient leftIcon={false} />
         {!data?.vouchers.length ? (
-          <NoData topNav />
+          <NoData reload={() => _refetch()} topNav />
         ) : (
             <FlatList
               keyExtractor={(item) => String(item.id)}
-              data={data.vouchers}
+              data={data?.vouchers}
               renderItem={({ item }) => <Voucher handleOpenModal={handleOpenModal} data={item} />}
               numColumns={isTab() ? 2 : 1}
               initialNumToRender={6}

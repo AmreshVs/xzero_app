@@ -12,7 +12,7 @@ import { IMAGE_URL, SCREEN_HEIGHT } from 'constants/common';
 import useErrorLog from 'hooks/useErrorLog';
 import styles from './styles';
 import { GIFTS } from 'navigation/routes';
-import { isTab } from 'constants/commonFunctions';
+import { isTab, thumbnailUrl } from 'constants/commonFunctions';
 
 export default function GenerateGift() {
   const [loading, setLoading] = useState(false);
@@ -95,7 +95,7 @@ export default function GenerateGift() {
           }}
         >
           <View style={styles.giftRevealImage}>
-            <Image source={data?.won ? { uri: IMAGE_URL + data?.gift?.featured_img?.url } : require('../../../assets/sad.png')} style={styles.sadIcon} />
+            <Image source={data?.won ? { uri: IMAGE_URL + thumbnailUrl(data?.gift?.featured_img?.url) } : require('../../../assets/sad.png')} style={styles.sadIcon} />
           </View>
         </Animated.View>
         <LottieView

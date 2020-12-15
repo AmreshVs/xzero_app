@@ -120,7 +120,7 @@
   "refer_history": "Refer History",
   "withdraw": "Withdraw",
   "no_referral_history": "No Referral history! Please refer",
-  "translation": "Transactions",
+  "transactions": "Transactions",
   "no_transactions": "No Transactions Yet!",
   "bank_name": "Bank Name",
   "holder_name": "Holder Name",
@@ -152,5 +152,11 @@
   "search_home": "Search for Centers, Offers, Specialists",
   "search_home_textbox": "Medical, laser, Dr,... etc",
   "show_popup": "Show popup?",
-  "apple_cancelled": "You Cancelled Apple Sign In"
+  "apple_cancelled": "You Cancelled Apple Sign In",
+  "hello": "Hello!",
+  "refer_earn": "Refer and Earn",
+  "edit_address": "Edit Address",
+  "applied_code": "Applied Promocode / Referral code",
+  "discounted_price": "Discounted Price",
+  "refer_and_earn_now": "Refer & Earn Now"
 }

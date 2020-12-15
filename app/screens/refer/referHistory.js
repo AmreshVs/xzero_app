@@ -44,7 +44,7 @@ export default function ReferHistory() {
               </View>
             ))
             :
-            <Text>{t('no_referral_history')}</Text>
+            <Text style={styles.caption}>{t('no_referral_history')}</Text>
           }
         </Box>
       </Card>

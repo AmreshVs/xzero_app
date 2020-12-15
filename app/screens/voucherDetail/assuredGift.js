@@ -6,6 +6,7 @@ import Card from 'components/card';
 import { IMAGE_URL } from 'constants/common';
 import ProductSlider from './productSlider';
 import styles from './styles';
+import { smallUrl } from 'constants/commonFunctions';
 
 export default function AssuredGift({ data }) {
   const { t, i18n } = useTranslation();
@@ -18,7 +19,7 @@ export default function AssuredGift({ data }) {
         ?
         <ProductSlider data={data?.featured_img} />
         :
-        <Image source={{ uri: IMAGE_URL + data?.featured_img[0]?.url }} style={styles.productImg} />
+        <Image source={{ uri: IMAGE_URL + smallUrl(data?.featured_img[0]?.url) }} style={styles.productImg} />
       }
       <Text style={styles.title}>{data?.[`title_${language}`]}</Text>
       <Text style={styles.caption}>{data?.[`desc_${language}`]}</Text>

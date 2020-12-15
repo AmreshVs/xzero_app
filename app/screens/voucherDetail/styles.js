@@ -43,9 +43,9 @@ const mobileStyles = StyleSheet.create({
   },
   membershipImg: {
     width: '100%',
-    height: 220,
-    resizeMode: 'center',
-    marginBottom: 5
+    height: 205,
+    resizeMode: 'stretch',
+    marginVertical: 5
   },
   voucherContainer: {
     marginBottom: 10,

@@ -10,7 +10,7 @@ import NoData from 'components/noData';
 import SafeView from 'components/safeView';
 import SearchModal from 'components/searchModal';
 import FloatingButton from 'components/floatingButton';
-import { ModalSearchHeader } from 'components/modalSearchHeader';
+import ModalSearchHeader from 'components/modalSearchHeader';
 import Specialist from './specialist';
 import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
@@ -107,7 +107,7 @@ export default function SpecialistHelp() {
       <SearchModal
         heading={t('search_specialist')}
         placeholder={t('search_specialist_textbox')}
-        searched={Object.values(whereCondition)[headerCondition]}
+        searched={Object.values(whereCondition)[headerCondition] || ''}
         modalizeRef={modalizeRef}
         handleSearch={handleSearch}
       />

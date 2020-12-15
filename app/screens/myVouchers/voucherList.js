@@ -10,6 +10,7 @@ import Row from 'components/row';
 import RippleFX from 'components/rippleFx';
 import { VOUCHER_DETAIL } from 'navigation/routes';
 import styles from './styles';
+import { thumbnailUrl } from 'constants/commonFunctions';
 
 export default function VoucherList({ data }) {
   const { t, i18n } = useTranslation();
@@ -22,7 +23,7 @@ export default function VoucherList({ data }) {
       <RippleFX onPress={() => navigate(VOUCHER_DETAIL, { id: voucher?.id })}>
         <Row>
           <Box width="30%">
-            <Image source={{ uri: IMAGE_URL + voucher?.featured_img?.url }} style={styles.voucherImage} />
+            <Image source={{ uri: IMAGE_URL + thumbnailUrl(voucher?.featured_img?.url) }} style={styles.voucherImage} />
           </Box>
           <Box width="70%" paddingHorizontal={10}>
             <Text numberOfLines={1}>

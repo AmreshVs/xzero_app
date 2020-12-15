@@ -73,7 +73,7 @@ export default function MyVouchers() {
 
   return (
     <SafeView topNav>
-      <TopNavigator title={t('my_vouchers')} gradient />
+      <TopNavigator title={t('my_vouchers')} gradient leftIcon={null} />
       <Row>
         {tab.map((item, index) => (
           <RippleFX style={[styles.textContainer, select === item?.id ? styles.selectedBorder : {}]} onPress={() => handlePress(item?.id)} key={index}>

@@ -55,7 +55,7 @@ const TopSection = ({ handleModalOpen }) => {
             <RippleFX style={styles.iconContainer} onPress={() => toggleDrawer()}>
               <FontAwesomeIcon icon="bars" color={colors.white} size={20} />
             </RippleFX>
-            <Box marginLeft={-15}>
+            <Box marginLeft={-13}>
               <RippleFX style={styles.iconContainer} onPress={() => push(GIFTS)}>
                 <FontAwesomeIcon icon="gift" color={colors.white} size={20} />
               </RippleFX>

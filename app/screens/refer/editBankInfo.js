@@ -116,17 +116,21 @@ export default function EditBankInfo({ setEdit, data, reload }) {
               }
             )}
             <Row marginTop={20} justifyContent="flex-end">
-              <Button
-                width="30%"
-                size="small"
-                icon="times"
-                status="text_lite"
-                onPress={() => setEdit(false)}
-                outline
-              >
-                {t('cancel')}
-              </Button>
-              <Box marginHorizontal={5} />
+              {data !== null && (
+                <>
+                  <Button
+                    width="30%"
+                    size="small"
+                    icon="times"
+                    status="text_lite"
+                    onPress={() => setEdit(false)}
+                    outline
+                  >
+                    {t('cancel')}
+                  </Button>
+                  <Box marginHorizontal={5} />
+                </>
+              )}
               <Button
                 width="30%"
                 size="small"

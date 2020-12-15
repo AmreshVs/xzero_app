@@ -15,10 +15,10 @@ const Transactions = ({ data, loading }) => {
   return (
     <Card marginTop={10}>
       <Box marginBottom={5}>
-        <Text style={styles.referTitle}>{t('translation')}</Text>
+        <Text style={styles.referTitle}>{t('transactions')}</Text>
       </Box>
       <Box loading={loading}>
-        {data && Object.keys(data).length <= 0 ? <Text style={styles.caption}>{t('no_translation')}</Text> : null}
+        {data && Object.keys(data).length <= 0 ? <Text style={styles.caption}>{t('no_transactions')}</Text> : null}
         {data && data.map((item, index) => (
           <View key={index}>
             {index !== 0 && <Divider />}

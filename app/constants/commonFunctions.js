@@ -1,6 +1,6 @@
 import { Platform, Linking } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { SCREEN_WIDTH } from './common';
+import { SCREEN_WIDTH, THUMBNAIL_SLUG } from './common';
 
 export const getShadowStyle = () => {
   if (Platform.OS === 'ios') {
@@ -113,4 +113,12 @@ export const isTab = () => {
     return true;
   }
   return false;
+}
+
+export const thumbnailUrl = (url) => {
+  return url && url.replace('/uploads/', '/uploads/' + THUMBNAIL_SLUG)
+}
+
+export const smallUrl = (url) => {
+  return url && url.replace('/uploads/', '/uploads/' + 'small_')
 }

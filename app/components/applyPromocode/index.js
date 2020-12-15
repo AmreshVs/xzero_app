@@ -44,7 +44,7 @@ export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, 
       query: APPLY_CODE,
       variables: queryInput
     });
-    console.log(data);
+
     if (error) {
       ToastMsg(t('error_occured'));
       logError({
@@ -75,22 +75,22 @@ export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, 
       {appliedPromocode?.applied ?
         <Row>
           <Box width="100%">
-            <Text style={styles.title}>Applied Promocode / Referal code</Text>
+            <Text style={styles.title}>{t('applied_code')}</Text>
             <Row justifyContent="space-between" marginTop={5}>
               <Box width="35%">
                 <Text style={styles.code}>{appliedPromocode?.codeApplied}</Text>
               </Box>
               <Box>
-                <Text style={styles.promoText}>Discount</Text>
+                <Text style={styles.promoText}>{t('discount')}</Text>
                 <Text style={styles.caption}>{appliedPromocode?.discount}%</Text>
               </Box>
               <Box>
-                <Text style={styles.promoText}>Discounted Price</Text>
+                <Text style={styles.promoText}>{t('discounted_price')}</Text>
                 <Text style={styles.caption}>{appliedPromocode?.discountedPrice} {t('aed')}</Text>
               </Box>
             </Row>
             <Row marginTop={10} justifyContent="flex-end">
-              <Button width="30%" size="small" icon="times" status="danger" onPress={() => clearPromocode()}>Clear</Button>
+              <Button width="30%" size="small" icon="times" status="danger" onPress={() => clearPromocode()}>{t('clear')}</Button>
             </Row>
           </Box>
         </Row>

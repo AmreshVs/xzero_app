@@ -24,12 +24,15 @@ import { isTab } from 'constants/commonFunctions';
 import Box from 'components/box';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
 
 export default function VoucherDetail() {
   const { t } = useTranslation();
   const [reloading, setReloading] = useState(false);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
   const modalizeRef = useRef(null);
+  const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
   const { params } = useRoute();
 
@@ -52,7 +55,7 @@ export default function VoucherDetail() {
   }
 
   const handleOpenModal = () => {
-    setPromocodeData({ discountedPrice: data?.voucher?.cost });
+    setPromocodeData({ discountedPrice: userData?.membership === null ? data?.voucher?.cost_for_non_members : data?.voucher?.cost });
     modalizeRef.current?.open();
   };
 
@@ -62,12 +65,33 @@ export default function VoucherDetail() {
     setReloading(false);
   }
 
+  const GetProduct = () => {
+    if (userData?.membership !== null) {
+      return (
+        <>
+          <Buy data={voucher?.product} />
+          <CenterSymbol text={t('you_will_get')} />
+        </>
+      )
+    }
+    else {
+      return (
+        <>
+          <MembershipPlan data={voucher?.membership_plans[0]} />
+          <CenterSymbol text={t('you_will_get')} />
+          <Buy member={userData?.membership === null} data={voucher?.product} />
+          <CenterSymbol icon="plus" />
+        </>
+      )
+    }
+  }
+
   let voucher = data?.voucher;
 
   return (
     <>
       <SafeView loading={loading} topNav>
-        <TopNavigator gradient title={t('voucher_detail')} />
+        <TopNavigator gradient title={data?.voucher?.buy_title_en || t('voucher_detail')} />
         {!data?.voucher ? (
           <NoData topNav />
         ) : (
@@ -79,10 +103,7 @@ export default function VoucherDetail() {
                 onRefresh={() => reload()}
               >
                 <VoucherInfo data={voucher} />
-                <MembershipPlan data={voucher?.membership_plans[0]} />
-                <CenterSymbol text={t('you_will_get')} />
-                <Buy data={voucher?.product} />
-                <CenterSymbol icon="plus" />
+                <GetProduct />
                 <AssuredGift data={voucher?.assured_gift[0]} />
                 <CenterSymbol icon="plus" />
                 <Win data={voucher?.draw_gift} />
@@ -93,10 +114,11 @@ export default function VoucherDetail() {
               </ScrollView>
               <View style={styles.buyNowButton}>
                 <Button
+                  icon="money-bill"
                   width={isTab() ? "40%" : "100%"}
                   onPress={() => handleOpenModal()}
                 >
-                  {voucher?.cost} {t('buy_now')} - {t('aed')}
+                  {t('buy_now')} - {t('aed')} {userData?.membership === null ? voucher?.cost_for_non_members : voucher?.cost}
                 </Button>
               </View>
             </>

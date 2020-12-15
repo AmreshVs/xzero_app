@@ -122,11 +122,7 @@ const Home = () => {
         </ScrollView>
       </SafeView>
       <SearchModal
-        heading={t('search_specialist')}
-        placeholder={t('search_specialist_textbox')}
-        searched={""}
         modalizeRef={modalizeRef}
-        handleSearch={() => console.log('search')}
       />
       <Popup />
     </>

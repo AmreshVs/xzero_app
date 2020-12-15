@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import Box from 'components/box';
-import Gift from './Gift';
+import Gift from './gift';
 import styles from './styles';
 
 export default function AvailableGifts({ data }) {

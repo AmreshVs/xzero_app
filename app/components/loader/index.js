@@ -7,7 +7,7 @@ export default function Loader({ spinner = false }) {
       {!spinner ?
         <Image source={require('../../../assets/loader.gif')} style={styles.image} />
         :
-        <ActivityIndicator />
+        <ActivityIndicator color='#999999' />
       }
     </View>
   );

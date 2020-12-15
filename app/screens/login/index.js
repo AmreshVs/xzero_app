@@ -50,9 +50,7 @@ export default function Login({ navigation }) {
 
     setUserData({
       jwt: loginData?.jwt,
-      id: loginData?.user?.id,
-      email: loginData?.user?.email,
-      mobile_number: loginData?.user?.mobile_number
+      ...loginData.user
     });
 
     setLoading(false);

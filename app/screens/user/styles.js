@@ -53,7 +53,7 @@ const mobileStyles = StyleSheet.create({
     ...marginTop20,
   },
   text: {
-    ...paddingVertical18,
+    paddingVertical: 15,
     ...font16,
     ...textDark,
   },

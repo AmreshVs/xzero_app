@@ -11,6 +11,7 @@ import Card from 'components/card';
 import RippleFX from 'components/rippleFx';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import styles from './styles';
+import { thumbnailUrl } from 'constants/commonFunctions';
 
 const AboutCenter = ({ specialist, userData }) => {
   const { t, i18n } = useTranslation();
@@ -34,7 +35,7 @@ const AboutCenter = ({ specialist, userData }) => {
           <View style={styles.imageContainer}>
             <Image
               source={{
-                uri: IMAGE_URL + specialist?.center?.featured_img.url,
+                uri: IMAGE_URL + thumbnailUrl(specialist?.center?.featured_img.url),
               }}
               style={styles.image} />
           </View>

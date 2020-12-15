@@ -12,6 +12,7 @@ import RippleFX from 'components/rippleFx';
 import { SPECIALIST_DETAIL } from 'navigation/routes';
 import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
+import { thumbnailUrl } from 'constants/commonFunctions';
 
 export default function Specialist({ data }) {
   const { push } = useNavigation();
@@ -30,7 +31,7 @@ export default function Specialist({ data }) {
         <Row>
           <View style={styles.imageContainer}>
             <ProgressiveImage
-              source={{ uri: IMAGE_URL + data?.featured_img?.url }}
+              source={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
               style={styles.image}
             />
           </View>

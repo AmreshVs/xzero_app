@@ -104,7 +104,7 @@ export default function Refer() {
 
   return (
     <SafeView style={styles.container} loading={loading} topNav>
-      <TopNavigator title="Refer and Earn" gradient />
+      <TopNavigator title={t('refer_earn')} leftIcon={null} gradient />
       <ScrollView
         contentContainerStyle={styles.shareContainer}
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
@@ -141,7 +141,7 @@ export default function Refer() {
               <FontAwesomeIcon icon="money-bill-wave" size={25} color={colors.chip_2} />
             </Box>
             <Box width="100%">
-              <Text style={styles.count}>{data?.GetReferHistory?.totalEarned} AED</Text>
+              <Text style={styles.count}>{data?.GetReferHistory?.totalEarned} {t('aed')}</Text>
               <Text style={styles.referCaption}>{t('total_earned')}</Text>
             </Box>
           </Column>
@@ -150,18 +150,18 @@ export default function Refer() {
               <FontAwesomeIcon icon="coins" size={25} color={colors.danger} />
             </Box>
             <Box width="100%">
-              <Text style={styles.count}>{data?.GetReferHistory?.balance || 0} AED</Text>
+              <Text style={styles.count}>{data?.GetReferHistory?.balance || 0} {t('aed')}</Text>
               <Text style={styles.referCaption}>{t('wallet_balance')}</Text>
             </Box>
           </Column>
         </Row>
         <Box paddingHorizontal={isTab() ? 100 : 0}>
           <Row style={styles.check} justifyContent="space-between">
-            <Button width="49%" status="chip_1" icon="history" onPress={() => handleOpenModal(true)}>Refer History</Button>
-            <Button width="49%" status="chip_2" icon="coins" onPress={() => handleOpenModal(false)}>Withdraw</Button>
+            <Button width="49%" status="chip_1" icon="history" onPress={() => handleOpenModal(true)}>{t('refer_history')}</Button>
+            <Button width="49%" status="chip_2" icon="coins" onPress={() => handleOpenModal(false)}>{t('withdraw')}</Button>
           </Row>
           <Box marginTop={10} width="100%">
-            <Button icon="share-alt" onPress={() => handleShare()}>Refer & Earn Now</Button>
+            <Button icon="share-alt" onPress={() => handleShare()}>{t('refer_and_earn_now')}</Button>
           </Box>
         </Box>
       </ScrollView>

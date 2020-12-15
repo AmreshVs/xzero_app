@@ -6,13 +6,13 @@ import Card from 'components/card';
 import ProductSlider from './productSlider';
 import styles from './styles';
 
-export default function Buy({ data }) {
+export default function Buy({ member, data }) {
   const { t, i18n } = useTranslation();
   const language = i18n.language;
 
   return (
     <Card paddingBottom={15}>
-      <Text style={styles.title}>{t('buy')}</Text>
+      {!member && <Text style={styles.title}>{t('buy')}</Text>}
       {data.map((product, index) => {
         return (
           <View key={index}>

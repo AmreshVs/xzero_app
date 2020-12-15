@@ -9,6 +9,7 @@ import { SPECIALISTS } from 'navigation/routes';
 import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
+import { smallUrl } from 'constants/commonFunctions';
 
 export default function Categories({ data }) {
   if (data?.centersCount <= 0) {
@@ -28,7 +29,7 @@ export default function Categories({ data }) {
 
   return (
     <RippleFX style={styles.container} onPress={navigateToCenters}>
-      <ProgressiveImage source={{ uri: IMAGE_URL + data?.featured_img }} style={styles.image} />
+      <ProgressiveImage source={{ uri: IMAGE_URL + smallUrl(data?.featured_img) }} style={styles.image} />
       <Box padding={10}>
         <Text style={styles.heading}>{data?.[`title_${language}`]}</Text>
         <Text style={styles.caption}>

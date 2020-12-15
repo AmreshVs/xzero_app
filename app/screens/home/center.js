@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import Column from 'components/column';
 import colors from 'constants/colors';
-import { getUserData } from 'constants/commonFunctions';
+import { getUserData, thumbnailUrl } from 'constants/commonFunctions';
 import Box from 'components/box';
 import Row from 'components/row';
 import Chip from 'components/chip';
@@ -30,7 +30,7 @@ function Center({ data }) {
       <RippleFX style={styles.centerContainer} onPress={() => handlePress(data?.id)}>
         <Row>
           <VHCenter paddingLeft={10}>
-            <Image source={{ uri: IMAGE_URL + data.featured_img }} style={styles.centerImage} />
+            <Image source={{ uri: IMAGE_URL + thumbnailUrl(data.featured_img) }} style={styles.centerImage} />
           </VHCenter>
           <Box padding={10} style={styles.textContainer}>
             <Text style={styles.title} numberOfLines={1}>

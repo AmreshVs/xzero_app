@@ -298,11 +298,8 @@ export const GET_GIFTS = gql`
 `;
 
 export const VOUCHERS = gql`
-  query Vouchers($membership_plan: Int!){
-    vouchers(where: {
-      membership_plans: $membership_plan,
-      status: 1
-    }){
+  query Vouchers($where: JSON!){
+    vouchers(where: $where){
       id
       featured_img{
         url
@@ -314,6 +311,7 @@ export const VOUCHERS = gql`
       desc_en
       desc_ar
       cost
+      cost_for_non_members
       limit
       total_bought
       draw_status
@@ -335,6 +333,7 @@ export const VOUCHER_DETAIL = gql`
       desc_en
       desc_ar
       cost
+      cost_for_non_members
       limit
       total_bought
       product(where:{
@@ -356,7 +355,8 @@ export const VOUCHER_DETAIL = gql`
         id
         featured_img{
           url
-        }      
+        }
+        duration
         name_en
         name_ar
         desc_en

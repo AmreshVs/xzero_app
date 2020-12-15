@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text } from 'react-native';
+import { Image, Linking, StyleSheet, Text } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -9,9 +9,19 @@ import colors from 'constants/colors';
 import Box from 'components/box';
 import Row from 'components/row';
 import Button from 'components/button';
-import { SCREEN_HEIGHT } from 'constants/common';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
+import { handlelogout } from 'screens/user/profileView';
+import useErrorLog from 'hooks/useErrorLog';
+import { LOGIN_SCREEN } from 'navigation/routes';
+import { useTranslation } from 'react-i18next';
+import RippleFX from 'components/rippleFx';
 
 export default function CustomDrawer(props) {
+  const { userData, setUserData } = useContext(UserDataContext);
+  const { logError } = useErrorLog();
+  const { t } = useTranslation();
+
   const insets = useSafeAreaInsets();
 
   const styles = StyleSheet.create({
@@ -21,11 +31,16 @@ export default function CustomDrawer(props) {
     drawerText: {
       marginLeft: -20,
     },
-    logo: {
+    logoContainer: {
       width: 30,
       height: 30,
       borderRadius: 5,
-      marginRight: 15
+      marginRight: 15,
+      overflow: 'hidden'
+    },
+    logo: {
+      width: '100%',
+      height: '100%',
     },
     footer: {
       position: 'absolute',
@@ -36,13 +51,21 @@ export default function CustomDrawer(props) {
     },
     content: {
       height: '100%',
+      paddingTop: 0
     },
     heading: {
       fontWeight: '700',
       color: colors.text_dark
     },
     header: {
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100%',
+      paddingTop: insets.top,
+    },
+    headerContainer: {
+      height: 130,
+      margin: 0,
     },
     headText: {
       fontWeight: '700',
@@ -50,9 +73,9 @@ export default function CustomDrawer(props) {
       marginBottom: 5,
     },
     gradient: {
-      height: (SCREEN_HEIGHT / 7) + insets.top,
+      height: '100%',
       width: '100%',
-      position: 'absolute'
+      position: 'absolute',
     }
   });
 
@@ -73,22 +96,38 @@ export default function CustomDrawer(props) {
     }
   }
 
+  const handlePress = () => {
+    let dispatch = props.navigation.dispatch;
+
+    props.navigation.toggleDrawer();
+    if (userData) {
+      handlelogout({ dispatch, setUserData, logError });
+    }
+    else {
+      props.navigation.navigate(LOGIN_SCREEN);
+    }
+  }
+
   return (
     <DrawerContentScrollView
-      contentContainerStyle={styles.content} {...props}
+      contentContainerStyle={styles.content}
+      {...props}
     >
-      <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={styles.gradient} />
-      <Box style={styles.header} padding={20}>
-        <Text style={styles.headText}>Hello!</Text>
-        <Text style={styles.headText}>Amresh Vs</Text>
-        <Button
-          size="small"
-          status="danger"
-          width="40%"
-          icon="sign-out-alt"
-        >
-          Logout
-        </Button>
+      <Box style={styles.headerContainer}>
+        <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={styles.gradient} />
+        <Box style={styles.header} padding={20}>
+          <Text style={styles.headText}>{t('hello')}</Text>
+          <Text style={styles.headText}>{userData?.username}</Text>
+          <Button
+            size="small"
+            status={userData ? 'danger' : 'chip_1'}
+            width="40%"
+            icon={userData ? 'sign-out-alt' : 'sign-in-alt'}
+            onPress={() => handlePress()}
+          >
+            {userData ? t('logout') : t('login')}
+          </Button>
+        </Box>
       </Box>
       {props.state.routeNames.map((item, index) => {
         return (
@@ -105,9 +144,15 @@ export default function CustomDrawer(props) {
       <Box style={styles.footer} padding={20}>
         <Text style={styles.heading}>Follow us on</Text>
         <Row marginTop={10}>
-          <Image style={styles.logo} source={require('../../../assets/facebook-logo.png')} />
-          <Image style={styles.logo} source={require('../../../assets/instagram-logo.png')} />
-          <Image style={styles.logo} source={require('../../../assets/linkedin-logo.png')} />
+          <RippleFX style={styles.logoContainer} onPress={() => Linking.openURL('https://www.facebook.com/xzeroapp')}>
+            <Image style={styles.logo} source={require('../../../assets/facebook-logo.png')} />
+          </RippleFX>
+          <RippleFX style={styles.logoContainer} onPress={() => Linking.openURL('https://www.instagram.com/xzero.official/')}>
+            <Image style={styles.logo} source={require('../../../assets/instagram-logo.png')} />
+          </RippleFX>
+          <RippleFX style={styles.logoContainer} onPress={() => Linking.openURL('https://www.linkedin.com/company/66666966')}>
+            <Image style={styles.logo} source={require('../../../assets/linkedin-logo.png')} />
+          </RippleFX>
         </Row>
       </Box>
     </DrawerContentScrollView>

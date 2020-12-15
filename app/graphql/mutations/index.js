@@ -13,6 +13,14 @@ export const USER_LOGIN = gql`
         email
         mobile_number
         dob
+        membership{
+          id
+          package{
+            id
+            name_en
+            name_ar
+          }
+        }
       }
     }
   }
@@ -36,6 +44,14 @@ export const CREATE_USER = gql`
         email
         mobile_number
         birthday
+        membership{
+          id
+          package{
+            id
+            name_en
+            name_ar
+          }
+        }
       }
     }
   }
@@ -60,6 +76,14 @@ export const UPDATE_USER = gql`
         email
         mobile_number
         dob
+        membership{
+          id
+          package{
+            id
+            name_en
+            name_ar
+          }
+        }
       }
     }
   }

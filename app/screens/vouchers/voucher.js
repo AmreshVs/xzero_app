@@ -8,16 +8,19 @@ import Row from 'components/row';
 import Progress from 'components/progress';
 import Divider from 'components/divider';
 import { IMAGE_URL } from 'constants/common';
-import { calculatePercentage } from 'constants/commonFunctions';
+import { calculatePercentage, smallUrl } from 'constants/commonFunctions';
 import styles from './styles';
 import { useTranslation } from 'react-i18next';
 import RippleFX from 'components/rippleFx';
 import { useNavigation } from '@react-navigation/native';
 import { VOUCHER_DETAIL } from 'navigation/routes';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
 
 export default function Voucher({ data, handleOpenModal }) {
   const { t } = useTranslation();
   const { push } = useNavigation();
+  const { userData } = useContext(UserDataContext);
 
   const handleVoucherDetailNavigation = () => {
     push(VOUCHER_DETAIL, { id: data?.id });
@@ -27,9 +30,9 @@ export default function Voucher({ data, handleOpenModal }) {
     <Card style={styles.voucherContainer}>
       <View style={styles.voucherImageContainer}>
         <RippleFX onPress={() => handleVoucherDetailNavigation()}>
-          <Image source={{ uri: IMAGE_URL + data?.featured_img?.url }} style={styles.voucherImg} />
+          <Image source={{ uri: IMAGE_URL + smallUrl(data?.featured_img?.url) }} style={styles.voucherImg} />
           <View style={styles.costContainer}>
-            <Text style={styles.cost}>{data?.cost || 0} {t('aed')}</Text>
+            <Text style={styles.cost}>{userData?.membership === null ? data?.cost_for_non_members : data?.cost || 0} {t('aed')}</Text>
           </View>
         </RippleFX>
       </View>
@@ -47,7 +50,7 @@ export default function Voucher({ data, handleOpenModal }) {
           </RippleFX>
         </Box>
         <Box width="30%" marginTop={2}>
-          <Button size="small" onPress={() => {
+          <Button size="small" icon="money-bill" onPress={() => {
             handleOpenModal(data);
           }}>
             {t('buy_now')}

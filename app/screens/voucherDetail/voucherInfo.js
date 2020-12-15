@@ -35,7 +35,7 @@ export default function VoucherInfo({ data }) {
         <Image source={{ uri: IMAGE_URL + data?.featured_img?.url }} style={styles.voucherImg} />
       </View>
       <Row padding={10} paddingBottom={5}>
-        <Box width={isTab() ? "80%" : "70%"}>
+        <Box width="100%">
           <Text numberOfLines={1}>
             <Text style={styles.title}>{t('buy')} </Text>
             <Text style={styles.caption}>{data?.[`buy_title_${language}`]}</Text>
@@ -45,15 +45,15 @@ export default function VoucherInfo({ data }) {
             <Text style={styles.caption} numberOfLines={1}>{data?.[`win_title_${language}`]}</Text>
           </Text>
         </Box>
-        <Box width={isTab() ? "20%" : "30%"} marginTop={2}>
-          <Button status="chip_1" size="small" icon="share-alt" onPress={() => handleShare()}>{t('share')}</Button>
-        </Box>
       </Row>
       <Box padding={10} paddingTop={5}>
         <Progress percent={calculatePercentage(data?.total_bought, data?.limit)} countText={`${data?.total_bought} ${t('out of')} ${data?.limit}`} colorful />
       </Box>
       <Box padding={10} paddingTop={0}>
         <Text style={styles.caption}>{t('check_below_for_more')}</Text>
+      </Box>
+      <Box padding={10} paddingTop={0} alignItems="flex-end">
+        <Button width={isTab() ? "50%" : "100%"} status="chip_1" size="small" icon="share-alt" onPress={() => handleShare()}>{t('share')}</Button>
       </Box>
     </Card>
   )
