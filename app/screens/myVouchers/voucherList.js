@@ -34,7 +34,7 @@ export default function VoucherList({ data }) {
               <Text style={styles.title}>{t('win')} </Text>
               <Text style={styles.caption} numberOfLines={1}>{voucher?.[`win_title_${language}`]}</Text>
             </Text>
-            <Text style={styles.cost}>{voucher?.cost || 0} {t('aed')}</Text>
+            <Text style={styles.cost}>{data?.paid_amount || 0} {t('aed')}</Text>
           </Box>
         </Row>
       </RippleFX>

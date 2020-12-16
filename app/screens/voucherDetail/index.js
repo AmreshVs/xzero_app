@@ -26,6 +26,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
+import Details from './details';
 
 export default function VoucherDetail() {
   const { t } = useTranslation();
@@ -103,24 +104,31 @@ export default function VoucherDetail() {
                 onRefresh={() => reload()}
               >
                 <VoucherInfo data={voucher} />
+                <Details data={voucher} />
                 <GetProduct />
                 <AssuredGift data={voucher?.assured_gift[0]} />
                 <CenterSymbol icon="plus" />
-                <Win data={voucher?.draw_gift} />
-                <Box justifyContent="space-between" flexDirection={isTab() ? "row" : "column"}>
+                <Win voucher_id={voucher?.id} draw_status={voucher?.draw_status} data={voucher?.draw_gift} />
+                <Box
+                  justifyContent="space-between"
+                  flexDirection={isTab() ? "row" : "column"}
+                  marginBottom={['closed', 'publish'].includes(voucher?.draw_status) ? 10 : 0}
+                >
                   <Rules data={data?.voucherRule} />
-                  <Help />
+                  {!['closed', 'publish'].includes(voucher?.draw_status) && <Help />}
                 </Box>
               </ScrollView>
-              <View style={styles.buyNowButton}>
-                <Button
-                  icon="money-bill"
-                  width={isTab() ? "40%" : "100%"}
-                  onPress={() => handleOpenModal()}
-                >
-                  {t('buy_now')} - {t('aed')} {userData?.membership === null ? voucher?.cost_for_non_members : voucher?.cost}
-                </Button>
-              </View>
+              {!['closed', 'publish'].includes(voucher?.draw_status) && (
+                <View style={styles.buyNowButton}>
+                  <Button
+                    icon="money-bill"
+                    width={isTab() ? "40%" : "100%"}
+                    onPress={() => handleOpenModal()}
+                  >
+                    {t('buy_now')} - {t('aed')} {userData?.membership === null ? voucher?.cost_for_non_members : voucher?.cost}
+                  </Button>
+                </View>
+              )}
             </>
           )}
       </SafeView>

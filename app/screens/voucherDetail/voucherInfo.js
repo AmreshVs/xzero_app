@@ -10,6 +10,8 @@ import Progress from 'components/progress';
 import { IMAGE_URL } from 'constants/common';
 import { calculatePercentage, isTab } from 'constants/commonFunctions';
 import styles from './styles';
+import Chip from 'components/chip';
+import colors from 'constants/colors';
 
 export default function VoucherInfo({ data }) {
   const { t, i18n } = useTranslation();
@@ -32,6 +34,17 @@ export default function VoucherInfo({ data }) {
   return (
     <Card style={styles.voucherContainer}>
       <View style={styles.voucherImageContainer}>
+        {['closed', 'publish'].includes(data?.draw_status) && (
+          <>
+            <View style={styles.closedContainer}>
+              <Chip
+                color={data?.draw_status === 'closed' ? colors.danger : colors.success}
+                title={data?.draw_status === 'closed' ? t('draw_closed') : t('draw_publish')}
+              />
+            </View>
+            <View style={styles.closed} />
+          </>
+        )}
         <Image source={{ uri: IMAGE_URL + data?.featured_img?.url }} style={styles.voucherImg} />
       </View>
       <Row padding={10} paddingBottom={5}>

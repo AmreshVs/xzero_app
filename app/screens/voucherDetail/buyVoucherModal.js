@@ -46,7 +46,7 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
           <DeliveryAddress />
         </Card>
         <Card style={styles.promocodeContainer} margin={10} marginTop={0}>
-          <ApplyPromocode voucherPrice={voucher?.cost} price={promocodeData?.discountedPrice} setPromocodeData={setPromocodeData} />
+          <ApplyPromocode voucher_id={voucher?.id} voucherPrice={voucher?.cost} price={promocodeData?.discountedPrice} setPromocodeData={setPromocodeData} />
         </Card>
       </Box>
     </Modalize>

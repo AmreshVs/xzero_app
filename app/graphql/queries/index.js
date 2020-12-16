@@ -332,6 +332,7 @@ export const VOUCHER_DETAIL = gql`
       win_title_ar
       desc_en
       desc_ar
+      draw_status
       cost
       cost_for_non_members
       limit
@@ -385,6 +386,8 @@ export const VOUCHER_DETAIL = gql`
         title_ar
         desc_en
         desc_ar
+        gift_type
+        quantity
       }
     }
     voucherRule{
@@ -413,6 +416,7 @@ export const MY_VOUCHER_BOUGHT = gql`
         win_title_ar
         cost
       }
+      paid_amount
       user{
         id
       }
@@ -438,6 +442,7 @@ export const MY_VOUCHER_WON = gql`
         win_title_ar
         cost
       }
+      paid_amount
       user{
         id
       }
@@ -507,8 +512,8 @@ export const REFER_HISTORY = gql`
 `;
 
 export const APPLY_CODE = gql`
-  query ApplyCode($receiver: Int!, $price: Int!, $code: String!){
-    ApplyCode(receiver: $receiver, price: $price, code: $code){
+  query ApplyCode($receiver: Int!, $code: String!, $plan: Int, $voucher: Int){
+    ApplyCode(receiver: $receiver, code: $code, plan: $plan, voucher: $voucher){
       discount
       applied
       codeApplied
@@ -569,6 +574,17 @@ export const POPUP = gql`
         url
       }
       status
+    }
+  }
+`;
+
+export const GET_GIFT_WINNERS = gql`
+  query GetGiftWinners($where: JSON!){
+    voucherAvaileds(where: $where){
+      id
+      user{
+        username
+      }
     }
   }
 `;

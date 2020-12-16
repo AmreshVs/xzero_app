@@ -16,7 +16,7 @@ import { ToastMsg } from 'components/toastMsg';
 
 let promoApplied = 0;
 
-export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, promocodeData }) {
+export default function ApplyPromocode({ voucher_id, voucherPrice, plan, setPromocodeData, promocodeData }) {
   const { userData } = useContext(UserDataContext);
   const client = useApolloClient();
   const { t } = useTranslation();
@@ -34,24 +34,38 @@ export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, 
 
   const handleApply = async () => {
     setLoading(true);
+    let params = {};
+
+    if (voucher_id) {
+      params = {
+        voucher: Number(voucher_id)
+      }
+    }
+
+    if (plan) {
+      params = {
+        plan: Number(plan)
+      }
+    }
+
     const queryInput = {
       receiver: Number(userData?.id),
-      price: Number(price),
-      code: promocode
+      code: promocode,
+      ...params,
     };
 
-    const { data, error } = await client.query({
+    const { data, errors } = await client.query({
       query: APPLY_CODE,
       variables: queryInput
     });
 
-    if (error) {
-      ToastMsg(t('error_occured'));
+    if (errors) {
+      ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
       logError({
         screen: 'Apply Promocode',
         module: 'Apply Promocode',
         input: JSON.stringify(queryInput),
-        error: JSON.stringify(error)
+        error: JSON.stringify(errors)
       });
     }
 
@@ -82,7 +96,7 @@ export default function ApplyPromocode({ voucherPrice, price, setPromocodeData, 
               </Box>
               <Box>
                 <Text style={styles.promoText}>{t('discount')}</Text>
-                <Text style={styles.caption}>{appliedPromocode?.discount}%</Text>
+                <Text style={styles.caption}>{appliedPromocode?.discountYouGet} {t('aed')}</Text>
               </Box>
               <Box>
                 <Text style={styles.promoText}>{t('discounted_price')}</Text>

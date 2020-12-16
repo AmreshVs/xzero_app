@@ -119,7 +119,7 @@ const Membership = () => {
   };
 
   const confirmBuy = () => {
-    push(PAYMENT, { ...note.membershipData, amount: promocodeData?.discountedPrice, plan: planData?.data?.id, promocode: promocodeData?.promoCodeApplied });
+    push(PAYMENT, { ...note.membershipData, amount: promocodeData?.discountedPrice, plan: planData?.data?.id, promocode: promocodeData?.codeApplied });
   };
 
   expiryMonth = new Date(memberData?.expiry).getMonth() + 1;
@@ -197,7 +197,7 @@ const Membership = () => {
           <Card style={styles.promocode} margin={10}>
             <ApplyPromocode
               voucherPrice={Number(promocodeData?.discountedPrice || firstPlanPrice)}
-              price={promocodeData?.discountedPrice}
+              plan={planData?.data?.id}
               promocodeData={promocodeData}
               setPromocodeData={setPromocodeData}
             />

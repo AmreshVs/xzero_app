@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { font16, textAlignCenter, textBoldDark, textLite } from 'constants/commonStyles';
 import { SCREEN_HEIGHT } from 'constants/common';
 import { getShadowStyle, isTab } from 'constants/commonFunctions';
+import colors from 'constants/colors';
 
 const mobileStyles = StyleSheet.create({
   container: {
@@ -83,6 +84,33 @@ const mobileStyles = StyleSheet.create({
     padding: 10,
     paddingBottom: 30,
     alignItems: 'center'
+  },
+  winners: {
+    fontWeight: '700',
+    color: colors.primary
+  },
+  closed: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: colors.white,
+    opacity: 0.5,
+    position: 'absolute',
+    zIndex: 1,
+  },
+  closedText: {
+    color: colors.white,
+    padding: 10,
+    backgroundColor: colors.chip_2,
+    borderRadius: 10,
+    fontWeight: '700'
+  },
+  closedContainer: {
+    position: 'absolute',
+    zIndex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%'
   }
 });
 

@@ -3,7 +3,6 @@ import { Platform, StyleSheet, View } from 'react-native';
 import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel';
 
 import { IMAGE_URL, SCREEN_WIDTH } from 'constants/common';
-import { smallUrl } from 'constants/commonFunctions';
 
 export default function ProductSlider({ data, height, popup = false }) {
   const [slide, setSlide] = useState(0);

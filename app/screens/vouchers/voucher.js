@@ -16,6 +16,8 @@ import { useNavigation } from '@react-navigation/native';
 import { VOUCHER_DETAIL } from 'navigation/routes';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
+import Chip from 'components/chip';
+import colors from 'constants/colors';
 
 export default function Voucher({ data, handleOpenModal }) {
   const { t } = useTranslation();
@@ -30,6 +32,17 @@ export default function Voucher({ data, handleOpenModal }) {
     <Card style={styles.voucherContainer}>
       <View style={styles.voucherImageContainer}>
         <RippleFX onPress={() => handleVoucherDetailNavigation()}>
+          {['closed', 'publish'].includes(data?.draw_status) && (
+            <>
+              <View style={styles.closedContainer}>
+                <Chip
+                  color={data?.draw_status === 'closed' ? colors.danger : colors.success}
+                  title={data?.draw_status === 'closed' ? t('draw_closed') : t('draw_publish')}
+                />
+              </View>
+              <View style={styles.closed} />
+            </>
+          )}
           <Image source={{ uri: IMAGE_URL + smallUrl(data?.featured_img?.url) }} style={styles.voucherImg} />
           <View style={styles.costContainer}>
             <Text style={styles.cost}>{userData?.membership === null ? data?.cost_for_non_members : data?.cost || 0} {t('aed')}</Text>
@@ -50,9 +63,14 @@ export default function Voucher({ data, handleOpenModal }) {
           </RippleFX>
         </Box>
         <Box width="30%" marginTop={2}>
-          <Button size="small" icon="money-bill" onPress={() => {
-            handleOpenModal(data);
-          }}>
+          <Button
+            size="small"
+            icon="money-bill"
+            onPress={() => {
+              handleOpenModal(data);
+            }}
+            disabled={['closed', 'publish'].includes(data?.draw_status)}
+          >
             {t('buy_now')}
           </Button>
         </Box>

@@ -220,7 +220,7 @@ export default function Payment() {
         });
       }
       else {
-        await client.mutate({
+        const data = await client.mutate({
           mutation: GENERATE_MEMBESHIP,
           variables: {
             user_id: Number(userData?.id),
@@ -233,6 +233,7 @@ export default function Payment() {
           //   },
           // },
         });
+        console.log(data);
       }
       setState({ ...state, reloading: false });
       replace(PAYMENT_STATUS, { status: true });

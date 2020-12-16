@@ -150,5 +150,17 @@
   "search_specialist_textbox": "طبيب تجميلي, طبيب أسنان, الخ... ",
   "search_home": "ابحث عن المراكز , العروض , الاستشاريين",
   "search_home_textbox": "مركز طبي, ليزر, مجاني, دكتور, الخ....",
-  "show_popup": "اظهار النافذة المنبثقة"
+  "show_popup": "اظهار النافذة المنبثقة",
+  "apple_cancelled": "You Cancelled Apple Sign In",
+  "hello": "Hello!",
+  "refer_earn": "Refer and Earn",
+  "edit_address": "Edit Address",
+  "applied_code": "Applied Promocode / Referral code",
+  "discounted_price": "Discounted Price",
+  "refer_and_earn_now": "Refer & Earn Now",
+  "details": "Details",
+  "draw_closed": "Closed! Please try next draw!",
+  "draw_publish": "Winner's declared!, check if you have won!",
+  "winners": "Winners",
+  "winner": "Winner"
 }

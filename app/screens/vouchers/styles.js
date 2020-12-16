@@ -50,6 +50,47 @@ const mobileStyles = StyleSheet.create({
     ...fontWeight700,
     ...colorWhite
   },
+  closed: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: colors.white,
+    opacity: 0.5,
+    position: 'absolute',
+    zIndex: 1,
+  },
+  closedText: {
+    color: colors.white,
+    padding: 10,
+    backgroundColor: colors.chip_2,
+    borderRadius: 10,
+    fontWeight: '700'
+  },
+  closedContainer: {
+    position: 'absolute',
+    zIndex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%'
+  },
+  textContainer: {
+    width: '50%',
+    backgroundColor: colors.white,
+    borderBottomWidth: 5,
+    borderColor: '#CCC'
+  },
+  selectedText: {
+    color: colors.primary,
+    fontWeight: '700'
+  },
+  selectedBorder: {
+    borderColor: colors.primary
+  },
+  text: {
+    textAlign: 'center',
+    padding: 15,
+    color: colors.text_dark
+  },
 });
 
 const tabStyles = StyleSheet.create({
