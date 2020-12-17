@@ -5,7 +5,6 @@ import { padding10, borderRadius10, borderRadius20, marginBottom5, w100, h100, o
 
 const mobileStyles = StyleSheet.create({
   flatlist: {
-    minHeight: '100%',
     paddingHorizontal: 10,
     ...paddingBottom10,
   },

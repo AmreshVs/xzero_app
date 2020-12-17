@@ -110,7 +110,7 @@ export default function Refer() {
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
       >
         <Box alignItems="center">
-          <RippleFX onPress={handlePlayAnim}>
+          <RippleFX onPress={() => handlePlayAnim()}>
             <LottieView
               ref={shareRef}
               style={styles.share}

@@ -13,10 +13,10 @@ export const SPECIALISTS = 'Specialists';
 export const SPECIALIST_DETAIL = 'SpecialistDetail';
 export const FORGOT_PASSWORD = 'ForgotPassword';
 export const GIFTS = 'Gifts';
-export const VOUCHERS = 'Vouchers';
+export const VOUCHERS = 'Draws';
 export const NEW_UPDATE = 'NewUpdate';
-export const VOUCHER_DETAIL = 'VoucherDetail';
-export const MY_VOUCHERS = 'My Vouchers';
+export const VOUCHER_DETAIL = 'Draw Detail';
+export const MY_VOUCHERS = 'My Draws';
 export const REFER = 'Refer';
 export const OFFLINE = 'Offline';
 

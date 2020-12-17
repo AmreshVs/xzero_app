@@ -188,8 +188,8 @@ export default function Login({ navigation }) {
       }
 
       if (data && data?.createNewUser?.jwt) {
-        saveUserDataLocally('xzero_jwt', data?.createNewUser?.jwt);
-        saveUserDataLocally('xzero_user', data?.createNewUser?.user);
+        await saveUserDataLocally('xzero_jwt', data?.createNewUser?.jwt);
+        await saveUserDataLocally('xzero_user', data?.createNewUser?.user);
         navigation.replace(HOME_SCREEN);
         await updateNotificationToken(data?.createNewUser?.user?.id, provider);
       }

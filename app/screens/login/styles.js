@@ -24,9 +24,8 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     ...w100,
-    ...flex,
     ...flexRow,
-    ...flexSpaceBetween,
+    justifyContent: 'space-around'
   },
   socialLoginContainer: {
     ...alignItemsCenter,

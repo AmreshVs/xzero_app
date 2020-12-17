@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, StatusBar, Platform } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   gradient: {
     width: '100%',
-    height: isTab() ? 70 : Platform.OS === 'ios' ? 94 : 50 + StatusBar.currentHeight,
+    height: isTab() ? 70 : Platform.OS === 'ios' ? 94 : 50,
     position: 'absolute',
     top: 0,
     left: 0,

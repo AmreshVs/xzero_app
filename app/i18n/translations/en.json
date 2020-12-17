@@ -20,7 +20,7 @@
   "discover_categories": "Discover Categories",
   "top_offers": "Top Offers",
   "discount": "Discount",
-  "vouchers": "Vouchers",
+  "vouchers": "Draws",
   "offer_detail": "Offer Detail",
   "limited_offer": "Offer is for limited time, Grab Soon!",
   "description": "Description",
@@ -137,8 +137,8 @@
   "months": "Months",
   "bought": "Bought",
   "won": "Won",
-  "my_vouchers": "My Vouchers",
-  "voucher_detail": "Voucher Detail",
+  "my_vouchers": "My Draws",
+  "voucher_detail": "Draw Detail",
   "share_offer": "Share Offer",
   "search": "Search",
   "clear": "Clear",
@@ -163,5 +163,11 @@
   "draw_closed": "Closed! Please try next draw!",
   "draw_publish": "Winner's declared!, check if you have won!",
   "winners": "Winners",
-  "winner": "Winner"
+  "winner": "Winner",
+  "Home": "Home",
+  "My Draws": "My Draws",
+  "Refer": "Refer",
+  "Privacy Policy": "Privacy Policy",
+  "Terms and Conditions": "Terms and Conditions",
+  "follow_us": "Follow us on"
 }

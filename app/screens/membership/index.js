@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ScrollView, RefreshControl, Text, View } from 'react-native';
+import { ScrollView, RefreshControl, Text, View, Platform } from 'react-native';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { Modalize } from 'react-native-modalize';
 import { useNavigation } from '@react-navigation/native';
@@ -49,7 +49,7 @@ const Membership = () => {
   const { data: membershipPlansData } = useQuery(MEMBERSHIP_PLANS);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: firstPlanPrice || 0 });
   const { push } = useNavigation();
-  const { userData } = useContext(UserDataContext);
+  const { userData, setUserData } = useContext(UserDataContext);
   const { t, i18n } = useTranslation();
   const { logError } = useErrorLog();
   let language = i18n.language;
@@ -97,7 +97,22 @@ const Membership = () => {
     if (data?.memberships.length) {
       setMember(true);
       setMemberData(data.memberships[0]);
+
+      if (userData?.membership === null && userData?.membership?.serial !== data.memberships[0].serial) {
+        setUserData({
+          ...userData,
+          membership: data.memberships[0]
+        });
+      }
     }
+
+    if (data?.memberships.length === 0 && userData?.membership !== null) {
+      setUserData({
+        ...userData,
+        membership: null
+      });
+    }
+
     setLoading(false);
   };
 
@@ -133,11 +148,10 @@ const Membership = () => {
 
   return (
     <SafeView style={styles.safeContainer} noBottom loading={loading}>
-      <TopStatusBar />
+      {Platform.OS === 'ios' && <TopStatusBar />}
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
-        removeClippedSubviews={true}
       >
         <MembershipCard
           member={member}

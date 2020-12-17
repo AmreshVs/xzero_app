@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LogBox } from 'react-native';
+import { LogBox, Platform } from 'react-native';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { StatusBar } from 'expo-status-bar';
@@ -60,7 +60,7 @@ const App = () => {
 
   return (
     <ApolloProvider client={client}>
-      <StatusBar style="light" />
+      <StatusBar hidden={Platform.OS === 'android'} style="light" />
       <Navigation connection={connection} />
       <ToastComponent />
     </ApolloProvider>

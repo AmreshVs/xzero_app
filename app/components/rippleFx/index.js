@@ -3,9 +3,9 @@ import Ripple from 'react-native-material-ripple';
 
 import colors from 'constants/colors';
 
-export default function RippleFX({ children, ...args }) {
+export default function RippleFX({ children, rippleSize, ...args }) {
   return (
-    <Ripple {...args}>
+    <Ripple rippleSize={rippleSize || 100} {...args}>
       {children}
     </Ripple>
   );

@@ -6,8 +6,11 @@ import { SCREEN_HEIGHT } from 'constants/common';
 import Button from 'components/button';
 import TopStatusBar from 'components/topStatusBar';
 import { isTab } from 'constants/commonFunctions';
+import { useTranslation } from 'react-i18next';
 
 export default function NoData({ topNav, reload, reloading }) {
+  const { t } = useTranslation();
+
   const styles = StyleSheet.create({
     container: {
       height: '100%',
@@ -25,12 +28,12 @@ export default function NoData({ topNav, reload, reloading }) {
 
   return (
     <>
-      <TopStatusBar />
+      {/* <TopStatusBar /> */}
       <View style={styles.container}>
         <Image source={require('../../../assets/no_data.jpg')} style={styles.image} />
         {reload && (
           <Button width={isTab() ? "30%" : "50%"} icon="redo" onPress={() => reload()} loading={reloading}>
-            Reload
+            {t('reload')}
           </Button>
         )}
       </View>

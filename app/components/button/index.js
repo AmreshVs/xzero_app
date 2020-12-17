@@ -37,7 +37,7 @@ export default function Button({
                   <FontAwesomeIcon
                     style={styles.icon}
                     icon={icon}
-                    color={iconColor || outline ? colors[status] : colors.white}
+                    color={iconColor ? iconColor : outline ? colors[status] : colors.white}
                   />
                 )}
                 <Text style={textStyle}>{children}</Text>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Linking, StyleSheet, Text } from 'react-native';
+import { Image, Linking, Platform, StyleSheet, Text } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -61,10 +61,10 @@ export default function CustomDrawer(props) {
       alignItems: 'center',
       justifyContent: 'center',
       height: '100%',
-      paddingTop: insets.top,
+      paddingTop: Platform.OS === 'ios' ? insets.top : 30,
     },
     headerContainer: {
-      height: 130,
+      height: 160,
       margin: 0,
     },
     headText: {
@@ -88,8 +88,10 @@ export default function CustomDrawer(props) {
       case 2:
         return 'bullhorn';
       case 3:
-        return 'user-shield';
+        return 'gifts';
       case 4:
+        return 'user-shield';
+      case 5:
         return 'check-square';
       default:
         return 'ad';
@@ -132,17 +134,17 @@ export default function CustomDrawer(props) {
       {props.state.routeNames.map((item, index) => {
         return (
           <DrawerItem
-            label={({ focused, color }) => <Text style={[{ color: focused ? colors.primary : color }, styles.drawerText]}>{item}</Text>}
+            label={({ focused, color }) => <Text style={[{ color: focused ? colors.primary : color }, styles.drawerText]}>{t(item)}</Text>}
             icon={({ focused, color, size }) => <FontAwesomeIcon icon={getIcon(index)} color={focused ? colors.primary : color} size={size} />}
             focused={props.state.index === index}
-            onPress={() => props.navigation.navigate(item)}
+            onPress={() => props.navigation.navigate(item, { drawer: 1 })}
             activeBackgroundColor="#FFF"
             key={index}
           />
         )
       })}
       <Box style={styles.footer} padding={20}>
-        <Text style={styles.heading}>Follow us on</Text>
+        <Text style={styles.heading}>{t('follow_us')}</Text>
         <Row marginTop={10}>
           <RippleFX style={styles.logoContainer} onPress={() => Linking.openURL('https://www.facebook.com/xzeroapp')}>
             <Image style={styles.logo} source={require('../../../assets/facebook-logo.png')} />

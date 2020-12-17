@@ -46,10 +46,10 @@ const mobileStyles = StyleSheet.create({
   },
   memberContainer: {
     height: SCREEN_HEIGHT / 3.5,
-    ...getShadowStyle(),
     ...paddingHorizontal10,
     ...marginTop10,
     ...w100,
+    overflow: 'hidden'
   },
   gradient: {
     ...wh100,
@@ -61,11 +61,15 @@ const mobileStyles = StyleSheet.create({
     ...font18,
     ...colorWhite,
   },
+  memberPlanTitleContainer: {
+    backgroundColor: '#FFF',
+    borderRadius: 5,
+    paddingHorizontal: 5,
+  },
   memberPlanTitle: {
     fontWeight: '800',
     textTransform: 'uppercase',
     ...font18,
-    ...colorWhite,
   },
   cardName: {
     ...colorWhite,
@@ -107,11 +111,10 @@ const mobileStyles = StyleSheet.create({
   qrcode: {
     ...w200,
     ...h200,
-    ...resizeModeContain,
     borderWidth: 1,
     borderColor: '#EEE',
     marginBottom: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   imageContainer: {
     ...justifyContentCenter,

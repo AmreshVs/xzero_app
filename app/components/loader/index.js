@@ -1,11 +1,15 @@
+import colors from 'constants/colors';
 import React from 'react';
-import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Image } from 'react-native';
 
 export default function Loader({ spinner = false }) {
   return (
     <View style={!spinner ? styles.container : styles.spinnerContainer}>
       {!spinner ?
-        <Image source={require('../../../assets/loader.gif')} style={styles.image} />
+        <View>
+          <Image source={require('../../../assets/splash_logo.png')} style={styles.image} />
+          <ActivityIndicator color={colors.primary} size={30} />
+        </View>
         :
         <ActivityIndicator color='#999999' />
       }
@@ -27,7 +31,8 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
+    marginBottom: -10
   },
 });

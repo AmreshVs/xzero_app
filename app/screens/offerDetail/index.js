@@ -84,7 +84,7 @@ export default function OfferDetail() {
           color={colors.white}
           rightContainer={userData && <RightIcon />}
         />
-        <ScrollView showsVerticalScrollIndicator={false} removeClippedSubviews={true}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <OfferCard discount={offer?.discount} />
           <CenterInfo offer={offer} username={userData?.id} />
           <PriceDetails offer={offer} center={center} />

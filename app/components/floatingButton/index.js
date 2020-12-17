@@ -23,7 +23,7 @@ export default function FloatingButton({ handlePress }) {
       justifyContent: 'center',
       alignItems: 'center',
       ...getShadowStyle(),
-      overflow: 'hidden'
+      overflow: 'hidden',
     }
   });
   return (

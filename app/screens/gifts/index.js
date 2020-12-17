@@ -11,12 +11,21 @@ import GenerateGift from './generateGift';
 import { GET_GIFTS } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { GIFTS } from 'navigation/routes';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
+import { useRoute } from '@react-navigation/native';
 
 export default function Gifts() {
   const { t } = useTranslation();
   const { logError } = useErrorLog();
+  const { userData } = useContext(UserDataContext);
+  const { params } = useRoute();
 
-  const { data, loading, refetch: _refetch, error } = useQuery(GET_GIFTS);
+  const { data, loading, refetch: _refetch, error } = useQuery(GET_GIFTS, {
+    variables: {
+      membership_plan: Number(userData?.membership?.id) || undefined
+    }
+  });
 
   if (error) {
     ToastMsg(t('error_occured'));
@@ -30,8 +39,8 @@ export default function Gifts() {
 
   return (
     <SafeView loading={loading} topNav>
-      <TopNavigator title={t('gifts')} gradient />
-      <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={_refetch} />} >
+      <TopNavigator title={t('gifts')} gradient leftIcon={params?.drawer ? false : true} />
+      <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={_refetch} />} removeClippedSubviews={true} >
         <GenerateGift />
         <AvailableGifts data={data?.AvailableGifts?.gifts} />
         {data?.AvailableGifts?.AvailedGifts.length > 0 && <AvailedGifts data={data?.AvailableGifts?.AvailedGifts} />}

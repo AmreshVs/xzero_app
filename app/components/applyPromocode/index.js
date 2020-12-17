@@ -116,7 +116,7 @@ export default function ApplyPromocode({ voucher_id, voucherPrice, plan, setProm
             placeholder={t('promocode')}
             icon="percentage"
             value={promocode}
-            onChangeText={(text) => setPromocode(text.toUpperCase())}
+            onChangeText={(text) => setPromocode(text)}
             autoCapitalize="none"
             style={styles.textbox}
           />
@@ -156,7 +156,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'dotted',
     borderColor: '#D8B828',
-    borderRadius: 5,
+    borderRadius: 6,
+    textTransform: 'uppercase',
+    textAlign: 'center'
   },
   promoText: {
     color: colors.text_dark

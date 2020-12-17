@@ -1,7 +1,7 @@
 import { StyleSheet, Platform } from 'react-native';
 
 import colors from 'constants/colors';
-import { SCREEN_HEIGHT } from 'constants/common';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from 'constants/common';
 import { getShadowStyle, isTab } from 'constants/commonFunctions';
 import { padding10, positionAbsolute, wh100, marginTop10, w100, justifyContentCenter, alignItemsCenter, fontWeight700, colorWhite, font20, whiteBg, borderRadius10, textBoldDark, font16, textLite, marginLeft5, marginTop5, textDark, overflowHidden, w50, marginRight5, colorDanger, padding0, flex1 } from 'constants/commonStyles';
 
@@ -24,7 +24,7 @@ const mobileStyles = StyleSheet.create({
   discountCircle: {
     height: SCREEN_HEIGHT / 5,
     width: SCREEN_HEIGHT / 5,
-    borderRadius: Platform.OS === 'ios' ? 90 : 100,
+    borderRadius: Platform.OS === 'ios' ? SCREEN_WIDTH / 4.5 : 100,
     ...justifyContentCenter,
     ...alignItemsCenter,
   },
@@ -48,8 +48,7 @@ const mobileStyles = StyleSheet.create({
     ...getShadowStyle(),
   },
   infoContainer: {
-    width: '75%',
-    paddingRight: 15
+    marginTop: 10,
   },
   title: {
     ...textBoldDark,
@@ -60,8 +59,7 @@ const mobileStyles = StyleSheet.create({
     ...textLite,
     ...marginLeft5,
   },
-  mapContainer: {
-    width: '22%',
+  mapContentContainer: {
     ...justifyContentCenter,
     ...alignItemsCenter,
   },
@@ -101,6 +99,9 @@ const mobileStyles = StyleSheet.create({
     ...font20,
     ...colorDanger,
   },
+  centerInfo: {
+    paddingRight: 10
+  }
 });
 
 const tabStyles = StyleSheet.create({

@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     ...getShadowStyle(),
     ...borderRadius10,
     ...whiteBg,
+    padding: 0
   },
   giftContainer: {
     width: isTab() ? '33.2%' : '50%',
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
   giftImageContainer: {
     ...justifyContentCenter,
     ...alignItemsCenter,
+    padding: 10
   },
   giftImages: {
     width: 90,
@@ -124,21 +126,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     height: '100%',
     width: '100%',
-    zIndex: 1,
+    zIndex: 2,
     borderRadius: 10,
-    margin: 5,
     padding: 10,
     paddingTop: 25,
     opacity: 0.7
   },
   imageDesc: {
-    color: '#FFF'
+    color: '#FFF',
+    zIndex: 999
   },
   closeContainer: {
     position: 'absolute',
     right: 0,
     top: 0,
-    padding: 10
+    padding: 10,
+    zIndex: 9,
   },
 });
 

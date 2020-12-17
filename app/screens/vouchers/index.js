@@ -30,14 +30,14 @@ export default function Vouchers() {
   const { logError } = useErrorLog();
   const { t } = useTranslation();
 
-  if (userData.membership !== null) {
+  if (userData?.membership !== null) {
     queryInput = {
       ...queryInput,
-      membership_plan: Number(userData?.membership?.package?.id)
+      membership_plans: Number(userData?.membership?.package?.id)
     };
   }
 
-  if (userData.membership === null) {
+  if (userData?.membership === null) {
     queryInput = {
       ...queryInput,
       enable_for_non_members: 1
@@ -76,7 +76,7 @@ export default function Vouchers() {
     <>
       <SafeView loading={loading} topNav>
         <TopNavigator title={t('vouchers')} gradient leftIcon={false} />
-        {!data?.vouchers.length ? (
+        {!data?.vouchers?.length ? (
           <NoData reload={() => _refetch()} topNav />
         ) : (
             <FlatList

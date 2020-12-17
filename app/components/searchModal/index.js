@@ -29,7 +29,7 @@ const SearchModal = ({ heading, placeholder, searched, modalizeRef, handleSearch
     <Modalize
       ref={modalizeRef}
       childrenStyle={styles.modal}
-      modalHeight={(SCREEN_HEIGHT / 6.4) + insets.bottom}
+      modalHeight={(SCREEN_HEIGHT / 2) + insets.bottom}
       scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
     >
       <Card margin={10} paddingBottom={15}>
@@ -49,32 +49,32 @@ const SearchModal = ({ heading, placeholder, searched, modalizeRef, handleSearch
             setFieldTouched,
             handleSubmit,
           }) => (
-              <>
-                <Row justifyContent="space-between">
-                  <Box width="68%">
-                    <Textbox
-                      placeholder={placeholder}
-                      value={values[name]}
-                      onChangeText={handleChange(name)}
-                      icon="search"
-                      marginTop={0}
-                      onBlur={() => setFieldTouched(name)}
-                      autoCapitalize="none"
-                    />
-                  </Box>
-                  <Box width="30%">
-                    <Button
-                      icon="check"
-                      onPress={() => handleSubmit()}
-                      disabled={Object.keys(errors).length}
-                    >
-                      {t('search')}
-                    </Button>
-                  </Box>
-                </Row>
-                <FormError touched={touched[name]} errorText={errors[name]} />
-              </>
-            )}
+            <>
+              <Row justifyContent="space-between">
+                <Box width="68%">
+                  <Textbox
+                    placeholder={placeholder}
+                    value={values[name]}
+                    onChangeText={handleChange(name)}
+                    icon="search"
+                    marginTop={0}
+                    onBlur={() => setFieldTouched(name)}
+                    autoCapitalize="none"
+                  />
+                </Box>
+                <Box width="30%">
+                  <Button
+                    icon="check"
+                    onPress={() => handleSubmit()}
+                    disabled={Object.keys(errors).length}
+                  >
+                    {t('search')}
+                  </Button>
+                </Box>
+              </Row>
+              <FormError touched={touched[name]} errorText={errors[name]} />
+            </>
+          )}
         </Formik>
       </Card>
     </Modalize>

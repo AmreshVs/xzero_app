@@ -5,7 +5,7 @@ import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
 
-import { BASIC_INFORMATION } from 'graphql/queries';
+import { BASIC_INFORMATION, GET_MEMBER_DATA } from 'graphql/queries';
 import { HOME_SCREEN, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE } from 'navigation/routes';
 import Loader from 'components/loader';
 import { UserDataContext } from 'context';
@@ -64,10 +64,19 @@ export default function Main({ navigation }) {
 
       if (userData !== null && userData !== '') {
         let loginData = JSON.parse(userData);
+        const { data } = await client.query({
+          query: GET_MEMBER_DATA,
+          variables: {
+            ID: Number(loginData?.id)
+          }
+        });
+
         setUserData({
           jwt: JSON.parse(jwt),
-          ...loginData
+          ...loginData,
+          membership: data?.user?.membership
         });
+
         navigation.replace(HOME_SCREEN);
         return;
       }

@@ -16,15 +16,15 @@ const Gift = ({ data }) => {
 
   return (
     <>
-      {showDesc && (
-        <View style={styles.overlay}>
-          <RippleFX style={styles.closeContainer} onPress={() => setShowDesc(!showDesc)}>
-            <FontAwesomeIcon icon="times" color="#FFF" />
-          </RippleFX>
-          <Text style={styles.imageDesc}>{data?.[`desc_${language}`]}</Text>
-        </View>
-      )}
       <Card style={styles.availableGiftsContainer}>
+        {showDesc && (
+          <View style={styles.overlay}>
+            <RippleFX style={styles.closeContainer} onPress={() => setShowDesc(!showDesc)}>
+              <FontAwesomeIcon icon="times" color="#FFF" />
+            </RippleFX>
+            <Text style={styles.imageDesc}>{data?.[`desc_${language}`]}</Text>
+          </View>
+        )}
         <RippleFX onPress={() => setShowDesc(!showDesc)}>
           <View style={styles.giftImageContainer}>
             <View style={styles.giftImages}>

@@ -105,6 +105,7 @@ export const OFFERS_DETAIL = gql`
       mobile_number
       actual_price
       discounted_price
+      google_map_location
     }
     membershipBenefit{
       text_en
@@ -141,6 +142,7 @@ export const GET_MEMBERSHIP_BY_USER = gql`
       qrcode_url
       package{
         id
+        color
         name_en
         name_ar
         featured_img{
@@ -584,6 +586,25 @@ export const GET_GIFT_WINNERS = gql`
       id
       user{
         username
+      }
+    }
+  }
+`;
+
+export const GET_MEMBER_DATA = gql`
+  query User($ID: ID!){
+    user(id: $ID){
+      id
+      username
+      email
+      mobile_number
+      membership{
+        id
+        package{
+          id
+          name_en
+          name_ar
+        }
       }
     }
   }

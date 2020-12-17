@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -140,6 +140,7 @@ function Navigation({ connection }) {
             <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
             <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} />
             <Drawer.Screen name={REFER} component={Refer} />
+            <Drawer.Screen name={GIFTS} component={Gifts} />
             <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
             <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
           </Drawer.Navigator>
