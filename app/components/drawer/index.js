@@ -123,7 +123,7 @@ export default function CustomDrawer(props) {
           <Button
             size="small"
             status={userData ? 'danger' : 'chip_1'}
-            width="40%"
+            width="50%"
             icon={userData ? 'sign-out-alt' : 'sign-in-alt'}
             onPress={() => handlePress()}
           >

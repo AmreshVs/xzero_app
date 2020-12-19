@@ -25,17 +25,19 @@ import ShareOffer from './shareOffer';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { OFFER_DETAIL } from 'navigation/routes';
+import { useTranslation } from 'react-i18next';
 
 export default function OfferDetail() {
   const { userData } = useContext(UserDataContext);
   const { params: { offer_id, user_id, center } } = useRoute();
   const { logError } = useErrorLog();
+  const { t } = useTranslation();
 
   const { data, loading, error } = useQuery(OFFERS_DETAIL, {
     variables: {
       offer_id: Number(offer_id),
       id: Number(offer_id) || 0,
-      user_id: Number(user_id) || Number(userData?.id)
+      user_id: Number(user_id) || Number(userData?.id) || 0
     },
   });
 
@@ -47,7 +49,7 @@ export default function OfferDetail() {
       input: JSON.stringify({
         offer_id: Number(offer_id),
         id: Number(offer_id) || 0,
-        user_id: Number(user_id) || Number(userData?.id)
+        user_id: Number(user_id) || Number(userData?.id) || 0
       }),
       error: JSON.stringify(error)
     });

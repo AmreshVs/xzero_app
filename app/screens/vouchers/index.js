@@ -16,12 +16,13 @@ import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
+import { LOGIN_SCREEN } from 'navigation/routes';
 
 let queryInput = {
   status: 1
 };
 
-export default function Vouchers() {
+export default function Vouchers({ navigation }) {
   const [reloading, setReloading] = useState(false);
   const [voucherData, setVoucherData] = useState([]);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
@@ -30,14 +31,14 @@ export default function Vouchers() {
   const { logError } = useErrorLog();
   const { t } = useTranslation();
 
-  if (userData?.membership !== null) {
+  if (userData && userData?.membership !== null) {
     queryInput = {
       ...queryInput,
       membership_plans: Number(userData?.membership?.package?.id)
     };
   }
 
-  if (userData?.membership === null) {
+  if (userData?.membership === null || userData === null) {
     queryInput = {
       ...queryInput,
       enable_for_non_members: 1
@@ -61,8 +62,13 @@ export default function Vouchers() {
   }
 
   const handleOpenModal = (data) => {
-    setVoucherData(data)
-    setPromocodeData({ discountedPrice: userData?.membership === null ? data?.cost_for_non_members : data?.cost });
+    if (!userData) {
+      navigation.replace(LOGIN_SCREEN);
+      return;
+    }
+
+    setVoucherData(data);
+    setPromocodeData({ discountedPrice: (userData?.membership === null) ? data?.cost_for_non_members : data?.cost });
     modalizeRef.current?.open();
   };
 

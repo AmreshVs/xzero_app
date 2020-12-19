@@ -127,13 +127,13 @@ const SearchModal = ({ modalizeRef }) => {
         </Formik>
       </Card>
       <Card margin={10} marginTop={0}>
-        <Text style={styles.heading}>Search Results</Text>
+        <Text style={styles.heading}>{t('search_results')}</Text>
         {searched !== '' && <ModalSearchHeader handleClear={handleClear} searched={searched || ""} marginTop={-5} />}
         <Box loading={loading}>
           {data !== undefined && (
             <>
               {((data.centers !== undefined && data?.centers.length === 0) && (data?.offers !== undefined && data?.offers.length === 0) && (data?.specialists !== undefined && data?.specialists.length === 0)) ?
-                <Text style={styles.caption}>No search result found!</Text>
+                <Text style={styles.caption}>{t('data_not_found')}</Text>
                 :
                 <>
                   <ListItem name="Centers" data={data?.centers} />

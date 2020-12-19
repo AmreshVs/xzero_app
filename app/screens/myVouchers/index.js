@@ -19,8 +19,9 @@ import { isTab } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { MY_VOUCHERS } from 'navigation/routes';
 import { ToastMsg } from 'components/toastMsg';
+import IsLoggedIn from 'hoc/isLoggedIn';
 
-export default function MyVouchers() {
+const MyVouchers = () => {
   const [reloading, setReloading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [select, setSelect] = useState(0);
@@ -113,3 +114,4 @@ export default function MyVouchers() {
   )
 }
 
+export default IsLoggedIn(MyVouchers);

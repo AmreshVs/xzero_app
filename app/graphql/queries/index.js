@@ -132,7 +132,8 @@ export const FAVOURITES_BY_USER = gql`
 `;
 
 export const GET_MEMBERSHIP_BY_USER = gql`
-  query membershipByUser($user_id: Int!){
+  query membershipByUser($user_id: Int!, $user: ID!){
+    getMembershipExpiryDays(user_id: $user)
     memberships(where:{
       user: $user_id
     }){

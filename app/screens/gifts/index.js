@@ -14,8 +14,9 @@ import { GIFTS } from 'navigation/routes';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { useRoute } from '@react-navigation/native';
+import IsLoggedIn from 'hoc/isLoggedIn';
 
-export default function Gifts() {
+const Gifts = () => {
   const { t } = useTranslation();
   const { logError } = useErrorLog();
   const { userData } = useContext(UserDataContext);
@@ -48,3 +49,5 @@ export default function Gifts() {
     </SafeView>
   );
 }
+
+export default IsLoggedIn(Gifts);

@@ -10,6 +10,7 @@ import { HOME_SCREEN, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE } from 'navigation/r
 import Loader from 'components/loader';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
+import { ToastMsg } from 'components/toastMsg';
 
 export default function Main({ navigation }) {
   const client = useApolloClient();
@@ -64,21 +65,26 @@ export default function Main({ navigation }) {
 
       if (userData !== null && userData !== '') {
         let loginData = JSON.parse(userData);
-        const { data } = await client.query({
-          query: GET_MEMBER_DATA,
-          variables: {
-            ID: Number(loginData?.id)
-          }
-        });
+        if (loginData?.id) {
+          const { data } = await client.query({
+            query: GET_MEMBER_DATA,
+            variables: {
+              ID: Number(loginData?.id)
+            }
+          });
+          setUserData({
+            jwt: JSON.parse(jwt),
+            ...loginData,
+            membership: data?.user?.membership
+          });
 
-        setUserData({
-          jwt: JSON.parse(jwt),
-          ...loginData,
-          membership: data?.user?.membership
-        });
-
-        navigation.replace(HOME_SCREEN);
-        return;
+          navigation.replace(HOME_SCREEN);
+          return;
+        }
+        else {
+          navigation.replace(LOGIN_SCREEN);
+          return;
+        }
       }
       navigation.replace(LOGIN_SCREEN);
     } catch (error) {

@@ -9,7 +9,7 @@ import styles from './styles';
 
 const PriceDetails = ({ offer, center }) => {
   const { t } = useTranslation();
-
+  console.log(offer);
   return (
     <Row marginTop={10}>
       <Card style={styles.descContainer}>
@@ -21,12 +21,19 @@ const PriceDetails = ({ offer, center }) => {
             <Text style={styles.descText}>{center}</Text>
           </Box>
           <Row paddingLeft={5}>
-            {offer?.discounted_price && (
-              <>
-                <Text style={styles.discountPrice}>AED {offer?.discounted_price}</Text>
-                <Text style={styles.originalPrice}>{offer?.actual_price}</Text>
-              </>
-            )}
+            {offer?.discount === 100 ?
+              <Text style={styles.free}>{t('free')}</Text>
+              :
+              (
+                <>
+                  {offer?.discounted_price > 0 && offer?.discounted_price !== 'null' ?
+                    <Text style={styles.discountPrice}>{t('aed')} {offer?.discounted_price || '0'}</Text>
+                    :
+                    null
+                  }
+                  <Text style={styles.originalPrice}>{offer?.actual_price || ''}</Text>
+                </>
+              )}
           </Row>
         </Row>
       </Card>

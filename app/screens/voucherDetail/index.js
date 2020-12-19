@@ -17,7 +17,7 @@ import CenterSymbol from './centerSymbol';
 import MembershipPlan from './membershipPlan';
 import Help from './help';
 import { VOUCHER_DETAIL } from 'graphql/queries';
-import { VOUCHER_DETAIL as VOUCHERDETAIL } from 'navigation/routes';
+import { LOGIN_SCREEN, VOUCHER_DETAIL as VOUCHERDETAIL } from 'navigation/routes';
 import BuyVoucherModal from './buyVoucherModal';
 import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
@@ -28,7 +28,7 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import Details from './details';
 
-export default function VoucherDetail() {
+export default function VoucherDetail({ navigation }) {
   const { t } = useTranslation();
   const [reloading, setReloading] = useState(false);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
@@ -56,6 +56,11 @@ export default function VoucherDetail() {
   }
 
   const handleOpenModal = () => {
+    if (!userData) {
+      navigation.replace(LOGIN_SCREEN);
+      return;
+    }
+
     setPromocodeData({ discountedPrice: userData?.membership === null ? data?.voucher?.cost_for_non_members : data?.voucher?.cost });
     modalizeRef.current?.open();
   };
@@ -125,7 +130,7 @@ export default function VoucherDetail() {
                     width={isTab() ? "40%" : "100%"}
                     onPress={() => handleOpenModal()}
                   >
-                    {t('buy_now')} - {t('aed')} {userData?.membership === null ? voucher?.cost_for_non_members : voucher?.cost}
+                    {t('buy_now')} - {t('aed')} {(!userData || userData?.membership === null) ? voucher?.cost_for_non_members : voucher?.cost}
                   </Button>
                 </View>
               )}

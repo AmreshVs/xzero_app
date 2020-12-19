@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { ScrollView, Text, View, Share, RefreshControl } from 'react-native';
+import { ScrollView, Text, View, Share, RefreshControl, Image, Platform } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useQuery } from '@apollo/client';
@@ -23,8 +23,9 @@ import { isTab } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { REFER } from 'navigation/routes';
+import IsLoggedIn from 'hoc/isLoggedIn';
 
-export default function Refer() {
+const Refer = () => {
   const [modalComp, setModalComp] = useState(false);
   const [playAnim, setPlayAnim] = useState(true);
   const [reloading, setReloading] = useState(false);
@@ -110,14 +111,18 @@ export default function Refer() {
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
       >
         <Box alignItems="center">
-          <RippleFX onPress={() => handlePlayAnim()}>
-            <LottieView
-              ref={shareRef}
-              style={styles.share}
-              source={require("../../../assets/share.json")}
-              autoPlay
-            />
-          </RippleFX>
+          {Platform.OS === 'ios' ?
+            <RippleFX onPress={() => handlePlayAnim()}>
+              <LottieView
+                ref={shareRef}
+                style={styles.share}
+                source={require("../../../assets/share.json")}
+                autoPlay
+              />
+            </RippleFX>
+            :
+            <Image style={styles.image} source={require('../../../assets/refer.png')} />
+          }
           <Text style={styles.referTitle}>{t('your_referral_code')}</Text>
           <View style={styles.gradient}>
             <Text style={styles.code}>{data?.GetReferHistory?.referralCode}</Text>
@@ -175,3 +180,5 @@ export default function Refer() {
     </SafeView>
   )
 }
+
+export default IsLoggedIn(Refer);

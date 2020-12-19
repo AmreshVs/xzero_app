@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { useNavigation } from '@react-navigation/native';
@@ -12,10 +12,12 @@ import { PAYMENT } from 'navigation/routes';
 import styles from './styles';
 import Box from 'components/box';
 import { isTab } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
 
 const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher }) => {
   const { push } = useNavigation();
   const { t } = useTranslation();
+  const { userData } = useContext(UserDataContext);
 
   return (
     <Modalize
@@ -46,7 +48,7 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
           <DeliveryAddress />
         </Card>
         <Card style={styles.promocodeContainer} margin={10} marginTop={0}>
-          <ApplyPromocode voucher_id={voucher?.id} voucherPrice={voucher?.cost} price={promocodeData?.discountedPrice} setPromocodeData={setPromocodeData} />
+          <ApplyPromocode voucher_id={voucher?.id} voucherPrice={userData?.membership === null ? voucher?.cost_for_non_members : voucher?.cost} price={promocodeData?.discountedPrice} setPromocodeData={setPromocodeData} />
         </Card>
       </Box>
     </Modalize>

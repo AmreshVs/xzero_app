@@ -8,7 +8,7 @@ export default function Loader({ spinner = false }) {
       {!spinner ?
         <View>
           <Image source={require('../../../assets/splash_logo.png')} style={styles.image} />
-          <ActivityIndicator color={colors.primary} size={30} />
+          <ActivityIndicator color={colors.primary} size={30} style={styles.spinner} />
         </View>
         :
         <ActivityIndicator color='#999999' />
@@ -31,8 +31,11 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   image: {
-    width: 120,
-    height: 120,
-    marginBottom: -10
+    width: 150,
+    height: 150,
+    marginBottom: -55
   },
+  spinner: {
+    backgroundColor: '#FFF'
+  }
 });

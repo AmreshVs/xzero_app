@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
@@ -6,11 +6,17 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import Button from 'components/button';
 import Card from 'components/card';
 import Box from 'components/box';
-import { dialNumber } from 'constants/commonFunctions';
+import { sendWhatsappMessage } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
 import styles from './styles';
 
 const Help = () => {
   const { t } = useTranslation();
+  const { userData } = useContext(UserDataContext);
+
+  const getWhatsappMessage = () => {
+    return `${t('whatsapp1')} ${userData?.username} ${t('whatsapp3')}`;
+  };
 
   return (
     <Card style={styles.helpContainer} marginBottom={70}>
@@ -21,7 +27,9 @@ const Help = () => {
         <Button
           status="success"
           icon={faWhatsapp}
-          onPress={() => dialNumber(971565255257)}
+          onPress={() =>
+            sendWhatsappMessage(getWhatsappMessage(), handleMobileNumber(971565255256))
+          }
         >
           {t('whatsapp')}
         </Button>

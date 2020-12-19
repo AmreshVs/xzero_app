@@ -93,6 +93,10 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
     backgroundColor: '#EEE',
     borderRadius: 10
+  },
+  image: {
+    height: 350,
+    width: 400
   }
 });
 

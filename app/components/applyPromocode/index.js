@@ -13,10 +13,11 @@ import { UserDataContext } from 'context';
 import { APPLY_CODE } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
+import { memo } from 'react';
 
 let promoApplied = 0;
 
-export default function ApplyPromocode({ voucher_id, voucherPrice, plan, setPromocodeData, promocodeData }) {
+const ApplyPromocode = ({ voucher_id, plan, voucherPrice, setPromocodeData, promocodeData }) => {
   const { userData } = useContext(UserDataContext);
   const client = useApolloClient();
   const { t } = useTranslation();
@@ -30,7 +31,14 @@ export default function ApplyPromocode({ voucher_id, voucherPrice, plan, setProm
       clearPromocode();
       promoApplied = 0;
     }
-  }, [promocodeData])
+  }, [promocodeData]);
+
+  useEffect(() => {
+    if (promoApplied === 1) {
+      clearPromocode();
+      promoApplied = 0;
+    }
+  }, [plan]);
 
   const handleApply = async () => {
     setLoading(true);
@@ -71,7 +79,7 @@ export default function ApplyPromocode({ voucher_id, voucherPrice, plan, setProm
 
     if (data?.ApplyCode?.applied) {
       promoApplied = 1;
-      setPromocodeData(data?.ApplyCode);
+      setPromocodeData({ ...promocodeData, ...data?.ApplyCode });
       setAppliedPromocode(data?.ApplyCode);
     }
 
@@ -81,7 +89,7 @@ export default function ApplyPromocode({ voucher_id, voucherPrice, plan, setProm
   const clearPromocode = () => {
     setAppliedPromocode({});
     setPromocode('');
-    setPromocodeData({ discountedPrice: voucherPrice });
+    setPromocodeData({ discountedPrice: promocodeData?.backupPrice || voucherPrice, backupPrice: promocodeData?.backupPrice || voucherPrice });
   }
 
   return (
@@ -128,6 +136,8 @@ export default function ApplyPromocode({ voucher_id, voucherPrice, plan, setProm
     </>
   )
 }
+
+export default memo(ApplyPromocode);
 
 const styles = StyleSheet.create({
   title: {

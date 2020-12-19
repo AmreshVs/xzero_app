@@ -8,7 +8,7 @@ export default function IsLoggedIn(Component) {
 
   const HOCIsLoggedIn = () => {
     const [loading, setLoading] = useState(true);
-    const { replace } = useNavigation();
+    const { replace, navigate } = useNavigation();
 
     useEffect(() => {
       checkUser();
@@ -20,7 +20,12 @@ export default function IsLoggedIn(Component) {
         setLoading(false);
       }
       else {
-        replace(LOGIN_SCREEN);
+        if (replace) {
+          replace(LOGIN_SCREEN);
+        }
+        else {
+          navigate(LOGIN_SCREEN);
+        }
       }
     }
 

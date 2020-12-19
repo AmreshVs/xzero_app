@@ -12,7 +12,7 @@ import Renew from './renew';
 import Benefits from './benefits';
 import BuyMembership from './buyMembership';
 import QRCode from './qrcode';
-import { dateDiffInDays, isTab } from 'constants/commonFunctions';
+import { isTab } from 'constants/commonFunctions';
 import { GET_MEMBERSHIP_BY_USER, MEMBERSHIP_PLANS } from 'graphql/queries';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import TopStatusBar from 'components/topStatusBar';
@@ -30,10 +30,6 @@ import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 
-let expiryMonth = null;
-let currentMonth = null;
-let expiryYear = null;
-let currentYear = null;
 let numOfDays = null;
 let render = 0;
 
@@ -46,7 +42,6 @@ const Membership = () => {
   const [planData, setPlanData] = useState({ index: 0 });
   const modalizeRef = useRef(null);
   const client = useApolloClient();
-  const { data: membershipPlansData } = useQuery(MEMBERSHIP_PLANS);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: firstPlanPrice || 0 });
   const { push } = useNavigation();
   const { userData, setUserData } = useContext(UserDataContext);
@@ -54,7 +49,9 @@ const Membership = () => {
   const { logError } = useErrorLog();
   let language = i18n.language;
 
-  let firstPlanPrice = membershipPlansData?.membershipPlans[0].price;
+  const { data: membershipPlansData } = useQuery(MEMBERSHIP_PLANS);
+
+  let firstPlanPrice = membershipPlansData?.membershipPlans[0]?.price;
 
   if (firstPlanPrice !== undefined && render === 0) {
     setPromocodeData({ discountedPrice: firstPlanPrice });
@@ -71,6 +68,7 @@ const Membership = () => {
       query: GET_MEMBERSHIP_BY_USER,
       variables: {
         user_id: Number(userData?.id),
+        user: Number(userData?.id),
       },
       context: {
         headers: {
@@ -84,7 +82,10 @@ const Membership = () => {
       logError({
         screen: MEMBERSHIP_TAB_SCREEN,
         module: 'Get membership by user',
-        input: JSON.stringify({ user_id: Number(userData?.id), authorization: 'Bearer ' + userData?.jwt }),
+        input: JSON.stringify({
+          user_id: Number(userData?.id),
+          authorization: 'Bearer ' + userData?.jwt
+        }),
         error: JSON.stringify(error)
       });
     }
@@ -94,9 +95,10 @@ const Membership = () => {
       benefits: data?.membershipBenefit,
       membershipData: data?.basicMembershipAmount,
     });
+
     if (data?.memberships.length) {
       setMember(true);
-      setMemberData(data.memberships[0]);
+      setMemberData({ ...data.memberships[0], ...data?.getMembershipExpiryDays });
 
       if (userData?.membership === null && userData?.membership?.serial !== data.memberships[0].serial) {
         setUserData({
@@ -134,17 +136,15 @@ const Membership = () => {
   };
 
   const confirmBuy = () => {
-    push(PAYMENT, { ...note.membershipData, amount: promocodeData?.discountedPrice, plan: planData?.data?.id, promocode: promocodeData?.codeApplied });
+    push(PAYMENT, {
+      ...note.membershipData,
+      amount: promocodeData?.discountedPrice,
+      plan: planData?.data?.id,
+      promocode: promocodeData?.codeApplied
+    });
   };
 
-  expiryMonth = new Date(memberData?.expiry).getMonth() + 1;
-  currentMonth = new Date().getMonth() + 1;
-  expiryYear = new Date(memberData?.expiry).getFullYear();
-  currentYear = new Date().getFullYear();
-  numOfDays = null;
-  if (expiryMonth === currentMonth && currentYear === expiryYear) {
-    numOfDays = dateDiffInDays(new Date(), new Date(memberData?.expiry));
-  }
+  numOfDays = memberData?.diffDays || null;
 
   return (
     <SafeView style={styles.safeContainer} noBottom loading={loading}>
@@ -171,13 +171,13 @@ const Membership = () => {
             <Renew membershipData={note.membershipData} expired />
           ) : null}
           {!member && <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />}
-          {!member || numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? <GetHelp /> : null}
+          {!member || numOfDays !== null && numOfDays < 10 ? <GetHelp /> : null}
         </Box>
       </ScrollView>
       <Modalize
         ref={modalizeRef}
         childrenStyle={styles.modal}
-        modalTopOffset={isTab() ? SCREEN_HEIGHT / 2 : SCREEN_HEIGHT / 3}
+        modalTopOffset={isTab() ? SCREEN_HEIGHT / 2 : 100}
         snapPoint={SCREEN_HEIGHT / 2}
         scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
         FooterComponent={

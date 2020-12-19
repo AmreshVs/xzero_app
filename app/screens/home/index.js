@@ -28,6 +28,7 @@ const Home = () => {
   const [reloading, setReloading] = useState(false);
   const modalizeRef = createRef();
   const { t } = useTranslation();
+
   const { logError } = useErrorLog();
 
   if (error) {

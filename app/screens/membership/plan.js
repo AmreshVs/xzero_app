@@ -14,12 +14,17 @@ const Plan = ({ data, index, planIndex, setPlanData, setPromocodeData }) => {
   const { t, i18n } = useTranslation();
   let language = i18n.language;
 
+  const handlePress = () => {
+    setPlanData({ index, data });
+    setPromocodeData({
+      discountedPrice: data?.price,
+      backupPrice: data?.price
+    });
+  }
+
   return (
     <Card style={[styles.planCard, index === planIndex ? styles.selectedPlan : {}]}>
-      <RippleFX style={styles.ripplePlan} rippleSize={200} onPress={() => {
-        setPlanData({ index, data });
-        setPromocodeData({ discountedPrice: data?.price });
-      }}>
+      <RippleFX style={styles.ripplePlan} rippleSize={200} onPress={() => handlePress()}>
         <Row vcenter>
           <Box width="20%" alignItems="center">
             <View style={[styles.planColor, { borderColor: data?.color || '#EEE' }]}>

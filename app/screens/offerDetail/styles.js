@@ -94,6 +94,12 @@ const mobileStyles = StyleSheet.create({
     ...fontWeight700,
     ...font20,
   },
+  free: {
+    color: colors.danger,
+    ...marginRight5,
+    ...fontWeight700,
+    ...font20,
+  },
   originalPrice: {
     textDecorationLine: 'line-through',
     ...font20,

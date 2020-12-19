@@ -50,7 +50,7 @@ const ListItem = ({ name, data }) => {
               {index !== 0 && <Divider />}
               <RippleFX onPress={() => handlePress(item)}>
                 <Box paddingVertical={7}>
-                  <Text style={styles.resultText}>{item?.title_en}</Text>
+                  <Text style={styles.resultText}>{item?.[`title_${language}`]}</Text>
                 </Box>
               </RippleFX>
             </View>

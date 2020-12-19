@@ -26,7 +26,7 @@ export const getDeviceLang = async () => {
     }
   }
 
-  return language || deviceLanguage.substring(0, 2);
+  return language || ['en', 'ar'].includes(deviceLanguage.substring(0, 2)) ? 'en' : deviceLanguage.substring(0, 2);
 }
 
 const i18nLang = async () =>

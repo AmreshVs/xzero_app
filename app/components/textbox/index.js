@@ -90,7 +90,7 @@ const dynamicStyles = ({ multiline }) => StyleSheet.create({
     marginTop: multiline ? 10 : 0
   },
   textInput: {
-    width: '100%',
+    width: '95%',
     height: '100%',
     paddingHorizontal: 15,
     paddingTop: multiline ? 10 : 0,

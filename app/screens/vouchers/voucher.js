@@ -45,7 +45,7 @@ export default function Voucher({ data, handleOpenModal }) {
           )}
           <Image source={{ uri: IMAGE_URL + smallUrl(data?.featured_img?.url) }} style={styles.voucherImg} />
           <View style={styles.costContainer}>
-            <Text style={styles.cost}>{userData?.membership === null ? data?.cost_for_non_members : data?.cost || 0} {t('aed')}</Text>
+            <Text style={styles.cost}>{(!userData || userData?.membership === null) ? data?.cost_for_non_members : data?.cost || 0} {t('aed')}</Text>
           </View>
         </RippleFX>
       </View>

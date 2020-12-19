@@ -22,7 +22,7 @@ const OfferCard = ({ discount }) => {
         colors={[colors.gradient1, colors.gradient2]}
         style={styles.discountCircle}
       >
-        <Text style={styles.discount}>{discount}%</Text>
+        <Text style={styles.discount}>{discount || 0}%</Text>
         <Text style={styles.discountText}>{t('discount')}</Text>
       </LinearGradient>
       <Text style={styles.caption}>{t('limited_offer')}</Text>
