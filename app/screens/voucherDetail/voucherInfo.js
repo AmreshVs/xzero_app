@@ -24,10 +24,10 @@ export default function VoucherInfo({ data }) {
         message: message,
         title: message,
         subject: message,
-        dialogTitle: 'Join this amazing voucher and win exciting prize'
+        dialogTitle: 'Join this amazing draw and win exciting prize'
       });
     } catch (error) {
-      // alert(error.message);
+      console.log('Share draw error', error);
     }
   }
 

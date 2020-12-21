@@ -23,10 +23,16 @@ export const GENERATE_ACCESS_TOKEN_URL = `${PAYMENT_DOMAIN}/identity/auth/access
 export const CREATE_PAYMENT_URL = `${PAYMENT_DOMAIN}/transactions/outlets/${PAYMENT_OUTLET_ID}/orders`;
 export const CHECK_PAYMENT_STATUS_URL = `${PAYMENT_DOMAIN}/transactions/outlets/${PAYMENT_OUTLET_ID}/orders`;
 
-// Social Login
+// Social Login - Live
+// export const FB_APP_ID = '366021757877568';
+// export const APP_NAME = 'Xzero App';
+// export const GOOGLE_CLIENT_ID = '471013991175-4rroh153tfrmh484j6tu7dgbupq3tnpq.apps.googleusercontent.com';
+
+// Social Login - Dev
 export const FB_APP_ID = '366021757877568';
 export const APP_NAME = 'Xzero App';
-export const GOOGLE_CLIENT_ID = '471013991175-4rroh153tfrmh484j6tu7dgbupq3tnpq.apps.googleusercontent.com';
+export const GOOGLE_CLIENT_ID = '471013991175-3m4mtp6hrogfrq87dg5tbqbdsi0tvuv5.apps.googleusercontent.com';
+
 
 // Screen
 export const SCREEN_HEIGHT = Dimensions.get("screen").height;

@@ -25,10 +25,12 @@ const styles = StyleSheet.create({
   btnContainer: {
     ...w100,
     ...flexRow,
-    justifyContent: 'space-around'
+    justifyContent: 'space-between',
+    paddingHorizontal: 25
   },
   socialLoginContainer: {
     ...alignItemsCenter,
+    ...w100
   },
   loginOptionText: {
     ...marginBottom15,

@@ -61,8 +61,6 @@ const styles = StyleSheet.create({
     ...positionAbsolute,
   },
   scrollView: {
-    height: '100%',
-    width: '100%',
     justifyContent: 'center',
     alignItems: 'center'
   },

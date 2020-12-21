@@ -46,6 +46,7 @@ function Offer({ data, favourites }) {
       await addFavourite(client, id);
     }
     catch (error) {
+      console.log('Add Favourite error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: OFFERS_SCREEN,

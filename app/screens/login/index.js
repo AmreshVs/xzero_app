@@ -16,7 +16,7 @@ import facebookLogin from './facebookLogin';
 import googleSignin from './googleLogin';
 import { inputsValidationSchema, saveUserDataLocally } from './helpers';
 import { ToastMsg } from 'components/toastMsg';
-import { SIGNUP_SCREEN, HOME_SCREEN, FORGOT_PASSWORD, DRAWER_TERMS, LOGIN_SCREEN } from 'navigation/routes';
+import { SIGNUP_SCREEN, HOME_SCREEN, FORGOT_PASSWORD, DRAWER_TERMS, LOGIN_SCREEN, MAIN_SCREEN } from 'navigation/routes';
 import { GET_USER_BY_EMAIL } from 'graphql/queries';
 import { USER_LOGIN, CREATE_USER, UPDATE_NOTIFICATION_TOKEN } from 'graphql/mutations';
 import { getNotificationToken } from '../../../helpers';
@@ -50,7 +50,7 @@ export default function Login({ navigation }) {
 
     setUserData({
       jwt: loginData?.jwt,
-      ...loginData.user
+      ...loginData?.user
     });
 
     setLoading(false);
@@ -71,9 +71,14 @@ export default function Login({ navigation }) {
     }
 
     if (loginData && loginData?.user) {
-      await saveUserDataLocally('xzero_user', loginData?.user);
+      await saveUserDataLocally('xzero_user', { ...loginData?.user, profile_pic: values?.profile_pic });
       await saveUserDataLocally('xzero_jwt', loginData?.jwt);
-      navigation.replace(HOME_SCREEN);
+      if (loginData?.user?.confirmed === true) {
+        navigation.replace(HOME_SCREEN);
+      }
+      else {
+        navigation.replace(MAIN_SCREEN);
+      }
       updateNotificationToken(loginData?.user?.id);
     }
   };
@@ -96,6 +101,7 @@ export default function Login({ navigation }) {
         });
       }
       catch (error) {
+        console.log('Update notification error', error);
         ToastMsg(t('error_occured'));
         logError({
           screen: LOGIN_SCREEN,
@@ -137,6 +143,7 @@ export default function Login({ navigation }) {
         }
       }
       catch (error) {
+        console.log('Getting user Data error', error);
         setLoading(false);
         ToastMsg(t('error_occured'));
         logError({
@@ -194,6 +201,7 @@ export default function Login({ navigation }) {
         await updateNotificationToken(data?.createNewUser?.user?.id, provider);
       }
     } catch (error) {
+      console.log('From login error', error);
       if (loading) {
         setLoading(!loading);
       }
@@ -215,7 +223,7 @@ export default function Login({ navigation }) {
       </Text>,
     ];
 
-    return languageOrder(termsArray);
+    return <Text>{languageOrder(termsArray)}</Text>
   };
 
   const RenderNoAccount = () => {

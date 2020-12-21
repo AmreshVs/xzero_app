@@ -82,7 +82,7 @@ export const GET_CENTERS = gql`
 `;
 
 export const OFFERS_LIST = gql`
-  query offersList($where: JSON!, $user_id: Int!){
+  query offersList($where: JSON, $user_id: Int){
     offerListWithFavourites(where: $where, user_id: $user_id)
   }
 `;
@@ -132,7 +132,7 @@ export const FAVOURITES_BY_USER = gql`
 `;
 
 export const GET_MEMBERSHIP_BY_USER = gql`
-  query membershipByUser($user_id: Int!, $user: ID!){
+  query membershipByUser($user_id: ID!, $user: ID!){
     getMembershipExpiryDays(user_id: $user)
     memberships(where:{
       user: $user_id
@@ -607,6 +607,15 @@ export const GET_MEMBER_DATA = gql`
           name_ar
         }
       }
+    }
+  }
+`;
+
+export const VERIFY_OTP = gql`
+  query VerifyOtp($user: ID!, $otp: Int){
+    verifyOtp(user: $user, otp: $otp){
+      msg
+      status
     }
   }
 `;

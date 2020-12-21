@@ -97,6 +97,7 @@ const Refer = () => {
         // dismissed
       }
     } catch (error) {
+      console.log('Share and earn error', error);
       alert(error.message);
     }
   }

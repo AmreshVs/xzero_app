@@ -9,7 +9,7 @@ import styles from './styles';
 
 const PriceDetails = ({ offer, center }) => {
   const { t } = useTranslation();
-  console.log(offer);
+
   return (
     <Row marginTop={10}>
       <Card style={styles.descContainer}>

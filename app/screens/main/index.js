@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
 
 import { BASIC_INFORMATION, GET_MEMBER_DATA } from 'graphql/queries';
-import { HOME_SCREEN, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE } from 'navigation/routes';
+import { HOME_SCREEN, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE, OTP } from 'navigation/routes';
 import Loader from 'components/loader';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
@@ -78,7 +78,12 @@ export default function Main({ navigation }) {
             membership: data?.user?.membership
           });
 
-          navigation.replace(HOME_SCREEN);
+          if (loginData?.confirmed || loginData?.mobile_number === 0) {
+            navigation.replace(HOME_SCREEN);
+          }
+          else {
+            navigation.replace(OTP);
+          }
           return;
         }
         else {
@@ -88,6 +93,7 @@ export default function Main({ navigation }) {
       }
       navigation.replace(LOGIN_SCREEN);
     } catch (error) {
+      console.log('Getting user data from async error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: MAIN_SCREEN,

@@ -56,6 +56,7 @@ const User = () => {
       setIsEnabled(previousState => !previousState);
     }
     catch (error) {
+      console.log('Toggle Popup error', error);
       logError({
         screen: PROFILE_TAB_SCREEN,
         module: 'Saving Popup Status',

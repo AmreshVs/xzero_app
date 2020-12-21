@@ -30,10 +30,6 @@ const mobileStyles = StyleSheet.create({
     ...w100,
     ...resizeModeCover,
   },
-  heading: {
-    ...textBoldDark,
-    ...marginBottom5,
-  },
   caption: {
     ...textLite,
   },
@@ -55,28 +51,12 @@ const mobileStyles = StyleSheet.create({
   textContainer: {
     flex: 3,
   },
-  title: {
-    ...textAlignLeft,
-    ...marginBottom5,
-    ...textBoldDark,
-    ...w100,
-  },
-  caption: {
-    ...textLite,
-  },
   chipContainer: {
     ...marginTop5,
     ...w100,
   },
-  iconContainer: {
-    ...w50,
-    ...h50,
-    ...overflowHidden,
-    ...borderRadius30,
-    ...alignJustifyCenter,
-  },
   membership: {
-    marginTop: -50,
+    marginTop: -65,
     ...paddingBottom5,
   },
   membershipContainer: {
@@ -118,11 +98,11 @@ const mobileStyles = StyleSheet.create({
   },
   sliderImage: {
     width: SCREEN_WIDTH - 20,
+    borderRadius: 5,
     ...h200,
     ...marginBottom0,
     ...marginLeft10,
     ...marginTop5,
-    ...borderRadius10,
   },
   indicator: {
     backgroundColor: colors.primary,
@@ -185,6 +165,16 @@ const mobileStyles = StyleSheet.create({
   },
   resultText: {
     color: colors.text_dark,
+  },
+  profile_pic: {
+    width: 50,
+    height: 50,
+  },
+  imgContainer: {
+    backgroundColor: colors.white,
+    borderRadius: 50,
+    padding: 10,
+    overflow: 'hidden'
   }
 });
 

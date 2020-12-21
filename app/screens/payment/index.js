@@ -118,6 +118,7 @@ export default function Payment() {
       });
     }
     catch (error) {
+      console.log('Generate payment url error', error);
       setState({
         ...state,
         loading: false,
@@ -233,7 +234,6 @@ export default function Payment() {
           //   },
           // },
         });
-        console.log(data);
       }
       setState({ ...state, reloading: false });
       replace(PAYMENT_STATUS, { status: true });

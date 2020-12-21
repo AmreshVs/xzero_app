@@ -3,6 +3,7 @@ import { ScrollView, RefreshControl } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import * as Linking from 'expo-linking';
+import * as Updates from 'expo-updates';
 
 import SafeView from 'components/safeView';
 import Slider from './slider';
@@ -55,12 +56,28 @@ const Home = () => {
   useEffect(() => {
     openLink = 0;
     Linking.addEventListener('url', deepLinkCallback);
+    // checkUpdates();
 
     return () => {
       Linking.removeEventListener('url');
       openLink = 1;
     }
   }, []);
+
+  const checkUpdates = async () => {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      console.log('update');
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        // ... notify user of update ...
+        Updates.reloadAsync();
+      }
+    } catch (error) {
+      console.log('Check Updates error', error);
+      // handle or log error
+    }
+  }
 
   const handleModalOpen = () => {
     if (modalizeRef.current) {

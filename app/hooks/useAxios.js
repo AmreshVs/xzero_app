@@ -18,7 +18,7 @@ const UseAxios = async (params, data, apiUrl = API_URL) => {
       return { status: 200, ...response?.data };
     })
     .catch((error) => {
-      // console.log('Axios error', error);
+      console.log('Axios error', error);
       return { status: 422, ...error?.response?.data };
     })
 }

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
@@ -36,6 +36,7 @@ const TopSection = ({ handleModalOpen }) => {
       await AsyncStorage.setItem('@xzero_user', JSON.stringify(userDataWithLanguage));
     }
     catch (error) {
+      console.log('Change Language error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: HOME_SCREEN,
@@ -80,7 +81,13 @@ const TopSection = ({ handleModalOpen }) => {
         </Box>
         <Box>
           <Row hcenter vcenter>
-            <FontAwesomeIcon icon="user-circle" color={colors.white} size={45} />
+            {userData?.profile_pic ?
+              <View style={styles.imgContainer}>
+                <Image style={styles.profile_pic} source={{ uri: userData?.profile_pic }} />
+              </View>
+              :
+              <FontAwesomeIcon icon="user-circle" color={colors.white} size={45} />
+            }
             <View style={styles.textContiner}>
               <Text style={styles.username}>{firstLetterUpper(name)}</Text>
               <Text style={styles.topCaption}>{email}</Text>

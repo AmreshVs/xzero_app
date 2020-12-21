@@ -64,6 +64,7 @@ export default function EditBankInfo({ setEdit, data, reload }) {
       }
 
     } catch (error) {
+      console.log('Create or update bank info error', error);
       setLoading(false);
       logError({
         screen: REFER,

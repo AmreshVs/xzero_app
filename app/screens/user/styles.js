@@ -78,7 +78,7 @@ const mobileStyles = StyleSheet.create({
     ...alignItemsCenter,
   },
   userIconContainer: {
-    ...padding20,
+    ...padding10,
     ...borderRadius50,
     ...whiteBg,
   },
@@ -92,6 +92,19 @@ const mobileStyles = StyleSheet.create({
     ...colorGray,
     ...marginTop5,
   },
+  profile_pic: {
+    width: 60,
+    height: 60,
+  },
+  tickIcon: {
+    position: 'absolute',
+  },
+  verifyContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    marginLeft: 10
+  }
 });
 
 const tabStyles = StyleSheet.create({

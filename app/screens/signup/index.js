@@ -21,7 +21,7 @@ import HeadingCaption from 'components/headingCaption';
 import FormError from 'components/formError';
 import { inputsValidationSchema, inputs } from './helpers';
 import styles from './styles';
-import { LOGIN_SCREEN, SIGNUP_SCREEN } from 'navigation/routes';
+import { LOGIN_SCREEN, OTP, SIGNUP_SCREEN } from 'navigation/routes';
 import { CREATE_USER, UPDATE_NOTIFICATION_TOKEN } from 'graphql/mutations';
 import { saveUserDataLocally } from 'screens/login/helpers';
 import { getNotificationToken } from '../../../helpers';
@@ -61,6 +61,7 @@ export default function Signup({ navigation }) {
         });
       }
       catch (error) {
+        console.log('Update Notification token error', error);
         ToastMsg(t('error_occured'));
         logError({
           screen: SIGNUP_SCREEN,
@@ -120,7 +121,10 @@ export default function Signup({ navigation }) {
     if (userData && userData?.jwt) {
       saveUserDataLocally('xzero_user', userData?.user);
       saveUserDataLocally('xzero_jwt', userData?.jwt);
-      navigation.replace('Home');
+      navigation.replace(OTP, {
+        user_id: userData?.user?.id,
+        mobile_number: userData?.user?.mobile_number
+      });
       await updateNotificationToken(userData?.user?.id);
     }
   };
@@ -133,7 +137,7 @@ export default function Signup({ navigation }) {
       </Text>,
     ];
 
-    return languageOrder(accArr);
+    return <Text>{languageOrder(accArr)}</Text>
   };
 
   const RenderTerms = () => {
@@ -146,7 +150,7 @@ export default function Signup({ navigation }) {
       </Text>,
     ];
 
-    return languageOrder(termsArr);
+    return <Text>{languageOrder(termsArr)}</Text>
   };
 
   const languageOrder = (langArr) => {

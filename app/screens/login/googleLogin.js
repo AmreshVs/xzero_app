@@ -3,13 +3,15 @@ import * as GoogleSignIn from 'expo-google-sign-in';
 import { GOOGLE_CLIENT_ID } from 'constants/common';
 import { LOGIN_SCREEN } from 'navigation/routes';
 
+let input = null;
 const googleSignin = async (logError) => {
-  let input = null;
   try {
     await GoogleSignIn.initAsync({
       clientId: GOOGLE_CLIENT_ID,
       scopes: ["profile", "email"],
+      isPromptEnabled: true
     });
+
     const { type, user, accessToken } = await GoogleSignIn.signInAsync();
     input = { type, user, accessToken };
 
@@ -19,12 +21,13 @@ const googleSignin = async (logError) => {
         return { error: 'error' };
       }
       if (type === "success") {
-        return { username: displayName || '', email, password: accessToken };
+        return { username: displayName || '', email, password: accessToken, profile_pic: user?.photoURL };
       }
     }
     return null;
   } catch (error) {
-    logError({
+    console.log('Google Login error', error);
+    await logError({
       screen: LOGIN_SCREEN,
       module: 'Google Login',
       input: JSON.stringify(input),

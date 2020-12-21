@@ -172,5 +172,8 @@
   "follow_us": "Follow us on",
   "search_results": "Search Results",
   "data_not_found": "Data not found!",
-  "close": "Close"
+  "close": "Close",
+  "otp_sent": "OTP sent!, Please check your sms or email",
+  "otp_desc": "A 4 digit One time password (OTP) has been sent to your mobile number and email. Please type the same to verify your identity.",
+  "resend_otp": "Resend OTP in"
 }

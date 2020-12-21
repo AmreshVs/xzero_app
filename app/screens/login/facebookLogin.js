@@ -16,7 +16,7 @@ const facebookLogin = async (logError) => {
     if (type === 'success') {
       // Get the user's name using Facebook's Graph API
       return await fetch(
-        `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,about`
+        `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,about,picture.type(large)`
       )
         .then((response) => {
           return response.json();
@@ -28,12 +28,13 @@ const facebookLogin = async (logError) => {
           let lname = name[1] || '';
           let email = facebookData.email;
 
-          return { username: fname + ' ' + lname, email, password: token };
+          return { username: fname + ' ' + lname, email, password: token, profile_pic: facebookData?.picture?.data?.url };
         })
     } else {
       return null;
     }
   } catch (error) {
+    console.log('Facebook login error', error);
     logError({
       screen: LOGIN_SCREEN,
       module: 'Facebook Login',

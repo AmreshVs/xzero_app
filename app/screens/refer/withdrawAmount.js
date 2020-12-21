@@ -47,6 +47,7 @@ const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
         }
       }
       catch (error) {
+        console.log('Withdraw amount error', error);
         ToastMsg(t('error_occured'));
         logError({
           screen: HOME_SCREEN,

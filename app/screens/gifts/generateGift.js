@@ -38,9 +38,10 @@ export default function GenerateGift() {
       });
       setLoading(false);
       setData(data?.GenerateGift);
-      Won(data?.GenerateGift?.won);
+      Won();
     }
     catch (error) {
+      console.log('Generate Gift error', error);
       setLoading(false);
       ToastMsg(t('error_occured'));
       logError({

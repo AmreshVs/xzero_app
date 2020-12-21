@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { TextInput, StyleSheet, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import colors from 'constants/colors';
 
-export default function Textbox({
+const Textbox = forwardRef(({
   style,
   outlined,
   placeholder,
@@ -14,12 +14,14 @@ export default function Textbox({
   marginTop = 20,
   iconColor = '#CCC',
   ...args
-}) {
+}, ref) => {
   const styles = dynamicStyles(args);
   const [focus, setFocus] = useState(false);
 
   const handleBlur = () => {
-    onBlur ? onBlur() : null;
+    if (onBlur) {
+      onBlur();
+    }
     setFocus(false);
   };
 
@@ -42,12 +44,15 @@ export default function Textbox({
           placeholder={placeholder || ''}
           onFocus={() => setFocus(true)}
           onBlur={handleBlur}
+          ref={ref}
           {...args}
         />
       </View>
     </>
   );
-}
+});
+
+export default Textbox;
 
 const textboxStyle = (multiline) => {
   return {

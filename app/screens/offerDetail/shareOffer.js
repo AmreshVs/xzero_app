@@ -24,7 +24,7 @@ const ShareOffer = ({ data }) => {
         dialogTitle: 'Be a member and enjoy this benefit!'
       });
     } catch (error) {
-      // alert(error.message);
+      console.log('Share Offer error', error);
     }
   }
 

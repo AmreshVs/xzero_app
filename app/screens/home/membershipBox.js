@@ -39,6 +39,7 @@ const MembershipBox = ({ data }) => {
           query: GET_MEMBERSHIP_BY_USER,
           variables: {
             user_id: Number(userData?.id),
+            user: Number(userData?.id),
           },
           context: {
             headers: {
@@ -53,6 +54,7 @@ const MembershipBox = ({ data }) => {
       }
     }
     catch (error) {
+      console.log('Check Membership error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: HOME_SCREEN,

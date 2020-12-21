@@ -17,8 +17,8 @@ export default function useUserData() {
       }
       return;
     }
-    catch (e) {
-      // console.log('getUserData', e);
+    catch (error) {
+      console.log('useUserData error', error);
     }
   }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation, CommonActions } from '@react-navigation/native';
@@ -33,6 +33,7 @@ export const handlelogout = async ({ dispatch, setUserData, logError }) => {
       dispatch(resetAction);
     }
   } catch (error) {
+    console.log('Logout error', error);
     ToastMsg(t('error_occured'));
     logError({
       screen: PROFILE_TAB_SCREEN,
@@ -65,8 +66,14 @@ const ProfileView = ({ data }) => {
     let userDataWithLanguage = { ...userData, language: language };
     try {
       await AsyncStorage.setItem('@xzero_user', JSON.stringify(userDataWithLanguage));
-    } catch (e) {
-      // console.error('User Data Save', e);
+    } catch (error) {
+      console.log('Change language error', error);
+      logError({
+        screen: PROFILE_TAB_SCREEN,
+        module: 'Change Language',
+        input: JSON.stringify(userDataWithLanguage),
+        error: JSON.stringify(error)
+      });
     }
   };
 
@@ -79,7 +86,17 @@ const ProfileView = ({ data }) => {
           </Box>
           <Box flex={8}>
             {data?.mobile_number !== 0 ? (
-              <Text style={styles.text}>{handleMobileNumber(data?.mobile_number)}</Text>
+              <Row>
+                <Text style={styles.text}>
+                  {handleMobileNumber(data?.mobile_number)}
+                </Text>
+                <View style={styles.verifyContainer}>
+                  <FontAwesomeIcon icon="certificate" color={colors.text_lite} size={25} />
+                  <View style={styles.tickIcon}>
+                    <FontAwesomeIcon icon="check" color={colors.white} size={10} />
+                  </View>
+                </View>
+              </Row>
             ) : (
                 <Text style={styles.caption}>{t('fill_mobile')}</Text>
               )}

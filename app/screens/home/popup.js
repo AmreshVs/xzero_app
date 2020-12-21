@@ -32,6 +32,7 @@ export default function Popup() {
       }
     }
     catch (error) {
+      console.log('Popup Data error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: HOME_SCREEN,

@@ -19,6 +19,7 @@ export const VOUCHER_DETAIL = 'Draw Detail';
 export const MY_VOUCHERS = 'My Draws';
 export const REFER = 'Refer';
 export const OFFLINE = 'Offline';
+export const OTP = 'Otp';
 
 // Tab Routes
 export const HOME_TAB_SCREEN = 'Home';

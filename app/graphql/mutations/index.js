@@ -13,6 +13,7 @@ export const USER_LOGIN = gql`
         email
         mobile_number
         dob
+        confirmed
         membership{
           id
           package{
@@ -44,6 +45,7 @@ export const CREATE_USER = gql`
         email
         mobile_number
         birthday
+        confirmed
         membership{
           id
           package{
@@ -76,6 +78,7 @@ export const UPDATE_USER = gql`
         email
         mobile_number
         dob
+        confirmed
         membership{
           id
           package{
@@ -104,6 +107,7 @@ export const UPDATE_USER_WITHOUT_PASS = gql`
         id
         username
         email
+        confirmed
         mobile_number
       }
     }
@@ -299,6 +303,16 @@ export const LOG_PAYMENT = gql`
       paymentResponse{
         id
       }
+    }
+  }
+`;
+
+export const SEND_SMS = gql`
+  mutation SendSms($user: Int!, $mobile: Long, $lang: String){
+    SendSms(user: $user, mobile: $mobile, lang: $lang){
+      otp
+      msg
+      balance
     }
   }
 `;

@@ -16,11 +16,13 @@ import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { FAVOURITES_TAB_SCREEN } from 'navigation/routes';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
 
 const Favourites = () => {
   const { t } = useTranslation();
   const [reloading, setReloading] = useState(false);
-  const userData = useUserData();
+  const { userData } = useContext(UserDataContext);
   const client = useApolloClient();
   const { logError } = useErrorLog();
 
@@ -59,6 +61,7 @@ const Favourites = () => {
       }
     }
     catch (error) {
+      console.log('Clear Favourites error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: FAVOURITES_TAB_SCREEN,
