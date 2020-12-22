@@ -12,7 +12,7 @@ import Renew from './renew';
 import Benefits from './benefits';
 import BuyMembership from './buyMembership';
 import QRCode from './qrcode';
-import { isTab } from 'constants/commonFunctions';
+import { isTab, userVerified } from 'constants/commonFunctions';
 import { GET_MEMBERSHIP_BY_USER, MEMBERSHIP_PLANS } from 'graphql/queries';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import TopStatusBar from 'components/topStatusBar';
@@ -70,11 +70,11 @@ const Membership = () => {
         user_id: Number(userData?.id),
         user: Number(userData?.id),
       },
-      context: {
-        headers: {
-          authorization: 'Bearer ' + userData?.jwt,
-        },
-      },
+      // context: {
+      //   headers: {
+      //     authorization: 'Bearer ' + userData?.jwt,
+      //   },
+      // },
     });
 
     if (error) {
@@ -96,7 +96,7 @@ const Membership = () => {
       membershipData: data?.basicMembershipAmount,
     });
 
-    if (data?.memberships.length) {
+    if (data?.memberships?.length) {
       setMember(true);
       setMemberData({ ...data.memberships[0], ...data?.getMembershipExpiryDays });
 
@@ -108,7 +108,7 @@ const Membership = () => {
       }
     }
 
-    if (data?.memberships.length === 0 && userData?.membership !== null) {
+    if ((data?.memberships === null || data?.memberships?.length === 0) && userData?.membership !== null) {
       setUserData({
         ...userData,
         membership: null
@@ -135,13 +135,15 @@ const Membership = () => {
     }
   };
 
-  const confirmBuy = () => {
-    push(PAYMENT, {
-      ...note.membershipData,
-      amount: promocodeData?.discountedPrice,
-      plan: planData?.data?.id,
-      promocode: promocodeData?.codeApplied
-    });
+  const confirmBuy = async () => {
+    if (await userVerified()) {
+      push(PAYMENT, {
+        ...note.membershipData,
+        amount: promocodeData?.discountedPrice,
+        plan: planData?.data?.id,
+        promocode: promocodeData?.codeApplied
+      });
+    }
   };
 
   numOfDays = memberData?.diffDays || null;

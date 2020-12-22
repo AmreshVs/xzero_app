@@ -11,7 +11,7 @@ import Card from 'components/card';
 import { PAYMENT } from 'navigation/routes';
 import styles from './styles';
 import Box from 'components/box';
-import { isTab } from 'constants/commonFunctions';
+import { isTab, userVerified } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 
 const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher }) => {
@@ -19,24 +19,31 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
   const { t } = useTranslation();
   const { userData } = useContext(UserDataContext);
 
+  const handlePayment = async () => {
+    if (await userVerified()) {
+      push(PAYMENT, {
+        currency_code: 'AED',
+        amount: promocodeData?.discountedPrice,
+        multiplier: 100,
+        voucher_id: voucher?.id,
+        promocode: promocodeData?.codeApplied
+      });
+    }
+  }
+
   return (
     <Modalize
       ref={modalizeRef}
       childrenStyle={styles.modal}
-      modalTopOffset={300}
+      modalTopOffset={200}
       scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
       FooterComponent={
         <View style={styles.footer}>
           <Button
             icon="money-bill"
             width={isTab() ? "30%" : "100%"}
-            onPress={() => push(PAYMENT, {
-              currency_code: 'AED',
-              amount: promocodeData?.discountedPrice,
-              multiplier: 100,
-              voucher_id: voucher?.id,
-              promocode: promocodeData?.codeApplied
-            })}
+            onPress={() => handlePayment()}
+            disabled={userData?.address === null}
           >
             {t('continue_to_pay')} {promocodeData?.discountedPrice} {t('aed')}
           </Button>

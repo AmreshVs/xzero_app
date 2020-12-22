@@ -16,13 +16,15 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { GIFTS, HOME_SCREEN, NOTIFICATIONS } from 'navigation/routes';
 import styles from './styles';
 import useErrorLog from 'hooks/useErrorLog';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
 
 const TopSection = ({ handleModalOpen }) => {
   const { push, toggleDrawer } = useNavigation();
-  const userData = useUserData();
+  const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
   const { t, i18n } = useTranslation();
-
+  console.log(userData);
   let name = userData?.username ?? '';
   let email = userData?.email ?? '';
 
@@ -31,7 +33,6 @@ const TopSection = ({ handleModalOpen }) => {
       let originalLanguage = i18n.language;
       let language = originalLanguage === 'ar' ? 'en' : 'ar';
       await i18n.changeLanguage(language);
-      let userData = await getUserData();
       let userDataWithLanguage = { ...userData, language: language };
       await AsyncStorage.setItem('@xzero_user', JSON.stringify(userDataWithLanguage));
     }

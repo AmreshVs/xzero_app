@@ -1,6 +1,7 @@
 import { Platform, Linking } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { SCREEN_WIDTH, THUMBNAIL_SLUG } from './common';
+import { ToastMsg } from 'components/toastMsg';
 
 export const getShadowStyle = () => {
   if (Platform.OS === 'ios') {
@@ -120,4 +121,19 @@ export const thumbnailUrl = (url) => {
 
 export const smallUrl = (url) => {
   return url && url.replace('/uploads/', '/uploads/' + 'small_')
+}
+
+export const userVerified = async () => {
+  var userData = null;
+  let user = await AsyncStorage.getItem('@xzero_user');
+  if (user !== null) {
+    userData = JSON.parse(user);
+  }
+
+  if (userData?.confirmed === false) {
+    ToastMsg('Please Verify your account in profile to continue!');
+    return false;
+  }
+
+  return true;
 }

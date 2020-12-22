@@ -7,9 +7,9 @@ export const inputsValidationSchema = () =>
     password: string().required().label('Password'),
   });
 
-export const saveUserDataLocally = async (value, key = 'xzero_user') => {
+export const saveUserDataLocally = async (key, value) => {
   try {
-    await AsyncStorage.setItem(`@${key}`, JSON.stringify(value));
+    await AsyncStorage.setItem(`@${key || 'xzero_user'}`, JSON.stringify(value));
   } catch (error) {
     console.log('Saving User Data error', error);
   }

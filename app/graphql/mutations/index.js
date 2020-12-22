@@ -14,6 +14,8 @@ export const USER_LOGIN = gql`
         mobile_number
         dob
         confirmed
+        provider
+        address
         membership{
           id
           package{
@@ -28,15 +30,17 @@ export const USER_LOGIN = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation createNewUser($username: String!, $email: String!, $mobile_number: Long!, $password: String!, $notification_token: String!, $dob: DateTime){
+  mutation createNewUser($username: String!, $email: String!, $mobile_number: Long!, $password: String!, $notification_token: String!, $dob: DateTime, $provider: String){
     createNewUser(
-      username: $username,
-      email: $email,
-      mobile_number: $mobile_number
-      password: $password
-      notification_token: $notification_token,
-      dob: "",
-      birthday: $dob
+      input: {
+        username: $username,
+        email: $email,
+        mobile_number: $mobile_number
+        password: $password
+        notification_token: $notification_token,
+        birthday: $dob,
+        provider: $provider
+      }
     ){
       jwt
       user{
@@ -46,6 +50,8 @@ export const CREATE_USER = gql`
         mobile_number
         birthday
         confirmed
+        provider
+        address
         membership{
           id
           package{
@@ -79,6 +85,8 @@ export const UPDATE_USER = gql`
         mobile_number
         dob
         confirmed
+        provider
+        address
         membership{
           id
           package{
@@ -108,6 +116,8 @@ export const UPDATE_USER_WITHOUT_PASS = gql`
         username
         email
         confirmed
+        provider
+        address
         mobile_number
       }
     }
@@ -216,9 +226,8 @@ export const EDIT_ADDRESS = gql`
     }){
       user{
         id
-        username
-        mobile_number
         address
+        mobile_number
       }
     }
   }

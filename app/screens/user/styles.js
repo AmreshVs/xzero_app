@@ -28,7 +28,7 @@ const mobileStyles = StyleSheet.create({
     ...getShadowStyle(),
   },
   name: {
-    top: 50,
+    top: 30,
     ...textAlignCenter,
     ...w100,
     ...font18,
@@ -36,7 +36,7 @@ const mobileStyles = StyleSheet.create({
     ...colorWhite,
   },
   iconContainer: {
-    top: 45,
+    top: 25,
     right: 10,
     zIndex: 9,
     ...positionAbsolute,
@@ -73,7 +73,7 @@ const mobileStyles = StyleSheet.create({
     height: 180,
     ...padding0,
     ...w100,
-    ...marginTop30,
+    ...marginTop20,
     ...justifyContentCenter,
     ...alignItemsCenter,
   },
@@ -81,6 +81,7 @@ const mobileStyles = StyleSheet.create({
     ...padding10,
     ...borderRadius50,
     ...whiteBg,
+    overflow: 'hidden'
   },
   username: {
     ...colorWhite,
@@ -102,7 +103,6 @@ const mobileStyles = StyleSheet.create({
   verifyContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
     marginLeft: 10
   }
 });

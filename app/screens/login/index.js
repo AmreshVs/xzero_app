@@ -73,7 +73,7 @@ export default function Login({ navigation }) {
     if (loginData && loginData?.user) {
       await saveUserDataLocally('xzero_user', { ...loginData?.user, profile_pic: values?.profile_pic });
       await saveUserDataLocally('xzero_jwt', loginData?.jwt);
-      if (loginData?.user?.confirmed === true) {
+      if (loginData?.user?.confirmed === true || loginData?.user?.provider !== 'local' || loginData?.user?.mobile_number === 0) {
         navigation.replace(HOME_SCREEN);
       }
       else {
@@ -172,8 +172,10 @@ export default function Login({ navigation }) {
           password: values?.email + SOCIAL_TOKEN,
           mobile_number: Number(0),
           notification_token: String(token) || '',
+          provider
         },
       });
+
       setLoading(false);
 
       logError({
@@ -195,13 +197,29 @@ export default function Login({ navigation }) {
       }
 
       if (data && data?.createNewUser?.jwt) {
+        setUserData({
+          jwt: data?.createNewUser?.jwt,
+          ...data?.createNewUser.user
+        });
         await saveUserDataLocally('xzero_jwt', data?.createNewUser?.jwt);
         await saveUserDataLocally('xzero_user', data?.createNewUser?.user);
-        navigation.replace(HOME_SCREEN);
         await updateNotificationToken(data?.createNewUser?.user?.id, provider);
+        navigation.replace(HOME_SCREEN);
       }
     } catch (error) {
       console.log('From login error', error);
+      logError({
+        screen: LOGIN_SCREEN,
+        module: 'Create User',
+        input: JSON.stringify({
+          username: values?.username,
+          email: values?.email,
+          password: values?.email + SOCIAL_TOKEN,
+          mobile_number: Number(0),
+          notification_token: String(token) || '',
+        }),
+        error: JSON.stringify(error)
+      });
       if (loading) {
         setLoading(!loading);
       }

@@ -72,17 +72,21 @@ export default function Main({ navigation }) {
               ID: Number(loginData?.id)
             }
           });
+
           setUserData({
             jwt: JSON.parse(jwt),
             ...loginData,
-            membership: data?.user?.membership
+            ...data?.user,
           });
 
-          if (loginData?.confirmed || loginData?.mobile_number === 0) {
+          if (loginData?.confirmed || loginData?.provider !== 'local') {
             navigation.replace(HOME_SCREEN);
           }
           else {
-            navigation.replace(OTP);
+            navigation.replace(OTP, {
+              user_id: loginData?.id,
+              mobile_number: loginData?.mobile_number
+            });
           }
           return;
         }

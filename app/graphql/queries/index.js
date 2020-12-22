@@ -14,6 +14,7 @@ export const GET_USER = gql`
       dob
       birthday
       created_at
+      address
     }
   }
 `;
@@ -31,6 +32,7 @@ export const GET_USER_BY_EMAIL = gql`
       language
       notification_token
       favourites
+      address
     }
   }
 `;
@@ -389,7 +391,6 @@ export const VOUCHER_DETAIL = gql`
         title_ar
         desc_en
         desc_ar
-        gift_type
         quantity
       }
     }
@@ -599,6 +600,10 @@ export const GET_MEMBER_DATA = gql`
       username
       email
       mobile_number
+      blocked
+      language
+      notification_token
+      address
       membership{
         id
         package{

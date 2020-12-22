@@ -9,7 +9,7 @@ import Row from 'components/row';
 import Box from 'components/box';
 import colors from 'constants/colors';
 import Divider from 'components/divider';
-import { MAIN_SCREEN, PROFILE_TAB_SCREEN } from 'navigation/routes';
+import { MAIN_SCREEN, OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
 import { getUserData, handleDOB } from 'constants/commonFunctions';
 import RippleFX from 'components/rippleFx';
 import styles from './styles';
@@ -17,6 +17,7 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
+import Button from 'components/button';
 
 export const handlelogout = async ({ dispatch, setUserData, logError }) => {
   const resetAction = CommonActions.reset({
@@ -46,8 +47,8 @@ export const handlelogout = async ({ dispatch, setUserData, logError }) => {
 
 const ProfileView = ({ data }) => {
   const { t, i18n } = useTranslation();
-  const { dispatch } = useNavigation();
-  const { setUserData } = useContext(UserDataContext);
+  const { dispatch, push } = useNavigation();
+  const { userData, setUserData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
   let language = i18n.language;
 
@@ -62,7 +63,6 @@ const ProfileView = ({ data }) => {
   const handleLangSelect = async () => {
     let lang = language === 'ar' ? 'en' : 'ar';
     i18n.changeLanguage(lang);
-    let userData = await getUserData();
     let userDataWithLanguage = { ...userData, language: language };
     try {
       await AsyncStorage.setItem('@xzero_user', JSON.stringify(userDataWithLanguage));
@@ -77,6 +77,13 @@ const ProfileView = ({ data }) => {
     }
   };
 
+  const handleVerify = () => {
+    push(OTP, {
+      user_id: userData?.id,
+      mobile_number: data?.mobile_number
+    });
+  }
+
   return (
     <>
       <Box>
@@ -86,16 +93,30 @@ const ProfileView = ({ data }) => {
           </Box>
           <Box flex={8}>
             {data?.mobile_number !== 0 ? (
-              <Row>
-                <Text style={styles.text}>
-                  {handleMobileNumber(data?.mobile_number)}
-                </Text>
-                <View style={styles.verifyContainer}>
-                  <FontAwesomeIcon icon="certificate" color={colors.text_lite} size={25} />
-                  <View style={styles.tickIcon}>
-                    <FontAwesomeIcon icon="check" color={colors.white} size={10} />
+              <Row vcenter justifyContent="space-between">
+                <Row vcenter>
+                  <Text style={styles.text}>
+                    {handleMobileNumber(data?.mobile_number)}
+                  </Text>
+                  <View style={styles.verifyContainer}>
+                    <FontAwesomeIcon icon="certificate" color={userData?.confirmed ? colors.primary : colors.text_lite} size={25} />
+                    <View style={styles.tickIcon}>
+                      <FontAwesomeIcon icon="check" color={colors.white} size={10} />
+                    </View>
                   </View>
-                </View>
+                </Row>
+                {!userData?.confirmed &&
+                  <Box marginRight={20}>
+                    <Button
+                      size="small"
+                      icon="check"
+                      status="chip_1"
+                      onPress={() => handleVerify()}
+                    >
+                      Verify Now
+                    </Button>
+                  </Box>
+                }
               </Row>
             ) : (
                 <Text style={styles.caption}>{t('fill_mobile')}</Text>

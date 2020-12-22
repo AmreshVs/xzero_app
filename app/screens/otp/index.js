@@ -15,6 +15,9 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { HOME_SCREEN } from 'navigation/routes';
 import { useInterval } from './helpers';
 import { useEffect } from 'react';
+import { useContext } from 'react';
+import { UserDataContext } from 'context';
+import { saveUserDataLocally } from 'screens/login/helpers';
 
 let otpArray = [];
 
@@ -29,6 +32,7 @@ export default function Otp() {
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState(initialState);
   const [timer, setTimer] = useState(0);
+  const { userData, setUserData } = useContext(UserDataContext);
 
   const client = useApolloClient();
   const { navigate } = useNavigation();
@@ -80,6 +84,8 @@ export default function Otp() {
     });
 
     if (data?.verifyOtp?.status) {
+      setUserData(prevData => ({ ...prevData, confirmed: true }));
+      saveUserDataLocally('xzero_user', userData);
       navigate(HOME_SCREEN);
     }
 
