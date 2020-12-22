@@ -46,7 +46,7 @@ export default function VoucherDetail({ navigation }) {
   });
 
   if (error) {
-    console.log(error);
+    console.log('Voucher Detail error', error);
     ToastMsg(t('error_occured'));
     logError({
       screen: VOUCHERDETAIL,

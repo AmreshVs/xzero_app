@@ -24,7 +24,7 @@ const TopSection = ({ handleModalOpen }) => {
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
   const { t, i18n } = useTranslation();
-  console.log(userData);
+
   let name = userData?.username ?? '';
   let email = userData?.email ?? '';
 

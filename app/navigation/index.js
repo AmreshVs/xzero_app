@@ -61,12 +61,14 @@ import {
   REFER,
   OFFLINE,
   OTP,
+  INTRO,
 } from './routes';
 import { UserDataContext } from 'context';
 import Loader from 'components/loader';
 import Offline from 'screens/offline';
 import CustomDrawer from 'components/drawer';
 import Otp from 'screens/otp';
+import Intro from 'screens/intro';
 
 const Tab = createBottomTabNavigator();
 
@@ -109,6 +111,7 @@ function StackNavigation() {
       <Stack.Screen name={REFER} component={Refer} />
       <Stack.Screen name={OFFLINE} component={Offline} />
       <Stack.Screen name={OTP} component={Otp} />
+      <Stack.Screen name={INTRO} component={Intro} />
     </Stack.Navigator>
   );
 }

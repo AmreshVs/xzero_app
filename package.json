@@ -44,6 +44,7 @@
     "react-dom": "16.13.1",
     "react-i18next": "^11.7.3",
     "react-native": "0.63.3",
+    "react-native-app-intro-slider": "^4.0.4",
     "react-native-banner-carousel": "^1.0.3",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-material-ripple": "^0.9.1",

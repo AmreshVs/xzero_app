@@ -56,7 +56,7 @@ const mobileStyles = StyleSheet.create({
     ...w100,
   },
   membership: {
-    marginTop: -65,
+    marginTop: -85,
     ...paddingBottom5,
   },
   membershipContainer: {

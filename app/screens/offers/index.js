@@ -52,7 +52,7 @@ export default function Offers() {
       module: 'Get Offers',
       input: JSON.stringify({
         where: whereCondition,
-        user_id: Number(params?.user_id) || 0
+        user_id: Number(params?.user_id) || 0,
       }),
       error: JSON.stringify(error)
     });
