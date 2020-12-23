@@ -70,11 +70,11 @@ const Membership = () => {
         user_id: Number(userData?.id),
         user: Number(userData?.id),
       },
-      // context: {
-      //   headers: {
-      //     authorization: 'Bearer ' + userData?.jwt,
-      //   },
-      // },
+      context: {
+        headers: {
+          authorization: 'Bearer ' + userData?.jwt,
+        },
+      },
     });
 
     if (error) {
@@ -141,7 +141,8 @@ const Membership = () => {
         ...note.membershipData,
         amount: promocodeData?.discountedPrice,
         plan: planData?.data?.id,
-        promocode: promocodeData?.codeApplied
+        promocode: promocodeData?.codeApplied,
+        discount: promocodeData?.discount
       });
     }
   };

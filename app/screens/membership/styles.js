@@ -62,9 +62,9 @@ const mobileStyles = StyleSheet.create({
     ...colorWhite,
   },
   memberPlanTitleContainer: {
-    backgroundColor: '#FFF',
+    // backgroundColor: '#FFF',
     borderRadius: 5,
-    paddingHorizontal: 5,
+    // paddingHorizontal: 5,
   },
   memberPlanTitle: {
     fontWeight: '800',

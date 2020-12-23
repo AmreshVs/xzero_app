@@ -40,7 +40,13 @@ export default function Payment() {
   const client = useApolloClient();
 
   useEffect(() => {
-    GeneratePaymentUrl();
+    if (params?.discount === "100") {
+      postPayment('SUCCESS');
+    }
+    else {
+      GeneratePaymentUrl();
+    }
+
     return () => {
       setState(initialState);
       captured = false;
@@ -194,7 +200,7 @@ export default function Payment() {
     // Logging Response
     logPayment({
       for: params?.voucher_id ? 'VOUCHER' : 'MEMBERSHIP',
-      module: 'Post Payment',
+      module: `Post Payment ${params?.discount === "100" ? 'Free' : ''}`,
       url: '',
       input: '',
       response: '',
@@ -202,6 +208,7 @@ export default function Payment() {
       voucher: Number(params?.voucher_id || 0),
       membership_plan: Number(params?.plan || 0)
     });
+
     if (status === 'SUCCESS' || status === 'CAPTURED') {
       setState({ ...state, reloading: true });
 
@@ -221,19 +228,26 @@ export default function Payment() {
         });
       }
       else {
-        const data = await client.mutate({
+        console.log({
+          user_id: Number(userData?.id),
+          plan: Number(params?.plan),
+          code: params?.promocode,
+          jwt: userData?.jwt
+        });
+        await client.mutate({
           mutation: GENERATE_MEMBESHIP,
           variables: {
             user_id: Number(userData?.id),
             plan: Number(params?.plan),
             code: params?.promocode
           },
-          // context: {
-          //   headers: {
-          //     authorization: 'Bearer ' + jwt,
-          //   },
-          // },
+          context: {
+            headers: {
+              authorization: 'Bearer ' + userData?.jwt,
+            },
+          },
         });
+
       }
       setState({ ...state, reloading: false });
       replace(PAYMENT_STATUS, { status: true });
@@ -265,7 +279,7 @@ export default function Payment() {
   return (
     <SafeView style={styles.container} loading={state.loading}>
       <TopNavigator
-        title={`Pay - ${params?.amount} ${params?.currency_code}`}
+        title={`${t('pay')} - ${params?.amount} ${params?.currency_code}`}
         rightContainer={<RightIcon />}
         gradient
       />

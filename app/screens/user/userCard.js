@@ -8,13 +8,21 @@ import { firstLetterUpper, handleDOB } from 'constants/commonFunctions';
 import styles from './styles';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
+import SafeView from 'components/safeView';
+import RippleFX from 'components/rippleFx';
 
-export default function UserCard({ data }) {
+export default function UserCard({ edit, data }) {
   const { t } = useTranslation();
   const { userData } = useContext(UserDataContext);
 
   return (
-    <View style={styles.userCardContainer}>
+    <SafeView style={styles.userCardContainer}>
+      <Text style={styles.name}>{t('profile')}</Text>
+      {!edit && (
+        <RippleFX style={styles.iconContainer} onPress={() => setEdit(!edit)}>
+          <FontAwesomeIcon icon="edit" size={17} color={colors.white} />
+        </RippleFX>
+      )}
       <View style={styles.userIconContainer}>
         {userData?.profile_pic ?
           <Image style={styles.profile_pic} source={{ uri: userData?.profile_pic }} />
@@ -26,6 +34,6 @@ export default function UserCard({ data }) {
       <Text style={styles.userCardCaption}>
         {t('user_since')} {data?.created_at && handleDOB(data?.created_at)}
       </Text>
-    </View>
+    </SafeView>
   );
 }

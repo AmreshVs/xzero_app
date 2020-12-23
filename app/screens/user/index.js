@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Text, ScrollView, KeyboardAvoidingView, Switch } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -69,7 +68,7 @@ const User = () => {
   useEffect(() => {
     checkPopUp();
     if (!edit) {
-      _refetch();
+      // _refetch();
     }
   }, [edit]);
 
@@ -101,14 +100,8 @@ const User = () => {
                 style={styles.gradient}
               />
             </Row>
-            <Text style={styles.name}>{t('profile')}</Text>
-            {!edit && (
-              <RippleFX style={styles.iconContainer} onPress={() => setEdit(!edit)}>
-                <FontAwesomeIcon icon="edit" size={17} color={colors.white} />
-              </RippleFX>
-            )}
             <Row padding={10} hcenter>
-              <UserCard data={data?.user} />
+              <UserCard edit={edit} data={data?.user} />
             </Row>
             <Box style={styles.profileViewContainer}>
               <Box style={styles.profileView}>

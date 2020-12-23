@@ -9,9 +9,11 @@ import TopNavigator from 'components/topNavigator';
 import Button from 'components/button';
 import { HOME_SCREEN } from 'navigation/routes';
 import { ToastMsg } from 'components/toastMsg';
+import { useTranslation } from 'react-i18next';
 
 export default function Offline({ navigation }) {
   const offlineRef = useRef(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (offlineRef.current) {
@@ -25,14 +27,14 @@ export default function Offline({ navigation }) {
         navigation.navigate(HOME_SCREEN);
       }
       else {
-        ToastMsg('Device Offline, Please check your internet connectivity and try again!');
+        ToastMsg(t('device_offline_desc'));
       }
     });
   }
 
   return (
     <SafeView topNav>
-      <TopNavigator title="Device Offline" leftIcon={false} gradient />
+      <TopNavigator title={t('device_offline')} leftIcon={false} gradient />
       <View style={styles.container}>
         <LottieView
           ref={offlineRef}
@@ -46,7 +48,7 @@ export default function Offline({ navigation }) {
           status="chip_1"
           onPress={() => handleRetry()}
         >
-          Retry now
+          {t('retry_now')}
         </Button>
       </View>
     </SafeView>

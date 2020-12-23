@@ -26,7 +26,8 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
         amount: promocodeData?.discountedPrice,
         multiplier: 100,
         voucher_id: voucher?.id,
-        promocode: promocodeData?.codeApplied
+        promocode: promocodeData?.codeApplied,
+        discount: promocodeData?.discount
       });
     }
   }

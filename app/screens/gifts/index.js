@@ -24,7 +24,7 @@ const Gifts = () => {
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_GIFTS, {
     variables: {
-      membership_plan: Number(userData?.membership?.id) || undefined
+      membership_plan: Number(userData?.membership?.package?.id) || undefined
     }
   });
 

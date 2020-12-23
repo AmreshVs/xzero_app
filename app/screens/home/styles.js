@@ -56,7 +56,7 @@ const mobileStyles = StyleSheet.create({
     ...w100,
   },
   membership: {
-    marginTop: -85,
+    marginTop: -50,
     ...paddingBottom5,
   },
   membershipContainer: {
@@ -98,7 +98,7 @@ const mobileStyles = StyleSheet.create({
   },
   sliderImage: {
     width: SCREEN_WIDTH - 20,
-    borderRadius: 5,
+    borderRadius: 10,
     ...h200,
     ...marginBottom0,
     ...marginLeft10,

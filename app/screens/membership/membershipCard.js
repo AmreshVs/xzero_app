@@ -29,7 +29,7 @@ export default function MembershipCard({ member, data, expired }) {
             <Text style={styles.title}>XZERO</Text>
             <Column>
               {data?.package?.name_en && <Box style={styles.memberPlanTitleContainer}>
-                <Text style={[styles.memberPlanTitle, { color: data?.package?.color || '#FFF' }]}>{data?.package?.name_en}</Text>
+                <Text style={[styles.memberPlanTitle, { color: '#FFF' }]}>{data?.package?.name_en}</Text>
               </Box>}
               <Text style={styles.cardName}>{t('membership_card')}</Text>
             </Column>

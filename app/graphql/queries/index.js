@@ -624,3 +624,20 @@ export const VERIFY_OTP = gql`
     }
   }
 `;
+
+export const APP_INTROS = gql`
+  query{
+    appIntros(where: {
+      status: 1
+    }){
+      id
+      title_en
+      title_ar
+      desc_en
+      desc_en
+      featured_img{
+        url
+      }
+    }
+  }
+`;

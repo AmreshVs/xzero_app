@@ -145,20 +145,20 @@ export default function Otp() {
             width="30%"
             onPress={() => handleResend()}
           >
-            Resend OTP
+            {t('resendotp')}
           </Button>
         </Row>
       }
       <Row marginTop={20}>
         <Button
           width="60%"
-          icon={'check'}
+          icon="check"
           status={'primary'}
           onPress={() => handleConfirm()}
           loading={loading}
           disabled={otp[0].value === '' && otp[1].value === '' && otp[2].value === '' && otp[3].value === ''}
         >
-          Confirm
+          {t('confirm')}
         </Button>
       </Row>
     </View>

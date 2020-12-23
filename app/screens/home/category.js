@@ -9,7 +9,7 @@ import { CENTERS_SCREEN, SPECIALIST_HELP } from 'navigation/routes';
 import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
-import { smallUrl, thumbnailUrl } from 'constants/commonFunctions';
+import { smallUrl } from 'constants/commonFunctions';
 
 export default function Category({ data }) {
   if (data?.centersCount <= 0) {

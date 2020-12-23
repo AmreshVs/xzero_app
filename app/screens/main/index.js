@@ -57,54 +57,62 @@ export default function Main({ navigation }) {
   };
 
   const checkUser = async () => {
-    let jwt = null;
-    let userData = null;
-    try {
-      jwt = await AsyncStorage.getItem('@xzero_jwt');
-      userData = await AsyncStorage.getItem('@xzero_user');
 
-      if (userData !== null && userData !== '') {
-        let loginData = JSON.parse(userData);
-        if (loginData?.id) {
-          const { data } = await client.query({
-            query: GET_MEMBER_DATA,
-            variables: {
-              ID: Number(loginData?.id)
+    let appInstall = await AsyncStorage.getItem('@xzero_install');
+
+    if (appInstall == "true") {
+      let jwt = null;
+      let userData = null;
+      try {
+        jwt = await AsyncStorage.getItem('@xzero_jwt');
+        userData = await AsyncStorage.getItem('@xzero_user');
+
+        if (userData !== null && userData !== '') {
+          let loginData = JSON.parse(userData);
+          if (loginData?.id) {
+            const { data } = await client.query({
+              query: GET_MEMBER_DATA,
+              variables: {
+                ID: Number(loginData?.id)
+              }
+            });
+
+            setUserData({
+              jwt: JSON.parse(jwt),
+              ...loginData,
+              ...data?.user,
+            });
+
+            if (loginData?.confirmed || loginData?.provider !== 'local') {
+              navigation.replace(HOME_SCREEN);
             }
-          });
-
-          setUserData({
-            jwt: JSON.parse(jwt),
-            ...loginData,
-            ...data?.user,
-          });
-
-          if (loginData?.confirmed || loginData?.provider !== 'local') {
-            navigation.replace(INTRO);
+            else {
+              navigation.replace(OTP, {
+                user_id: loginData?.id,
+                mobile_number: loginData?.mobile_number
+              });
+            }
+            return;
           }
           else {
-            navigation.replace(OTP, {
-              user_id: loginData?.id,
-              mobile_number: loginData?.mobile_number
-            });
+            navigation.replace(LOGIN_SCREEN);
+            return;
           }
-          return;
         }
-        else {
-          navigation.replace(LOGIN_SCREEN);
-          return;
-        }
+        navigation.replace(LOGIN_SCREEN);
+      } catch (error) {
+        console.log('Getting user data from async error', error);
+        ToastMsg(t('error_occured'));
+        logError({
+          screen: MAIN_SCREEN,
+          module: 'Getting Userdata and JWT from Asyncstorage',
+          input: JSON.stringify({ userData, jwt }),
+          error: JSON.stringify(error)
+        });
       }
-      navigation.replace(LOGIN_SCREEN);
-    } catch (error) {
-      console.log('Getting user data from async error', error);
-      ToastMsg(t('error_occured'));
-      logError({
-        screen: MAIN_SCREEN,
-        module: 'Getting Userdata and JWT from Asyncstorage',
-        input: JSON.stringify({ userData, jwt }),
-        error: JSON.stringify(error)
-      });
+    }
+    else {
+      navigation.replace(INTRO);
     }
   };
 
