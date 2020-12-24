@@ -14,8 +14,9 @@ import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { SPECIALIST_HELP } from 'navigation/routes';
 import { useTranslation } from 'react-i18next';
+import { memo } from 'react';
 
-export default function SpecialistHelp() {
+const SpecialistHelp = () => {
   const [reloading, setReloading] = useState(false);
   const { params } = useRoute();
   const { t } = useTranslation();
@@ -61,3 +62,5 @@ export default function SpecialistHelp() {
     </SafeView>
   );
 }
+
+export default memo(SpecialistHelp);

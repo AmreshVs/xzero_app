@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
@@ -44,4 +44,4 @@ const Plan = ({ data, index, planIndex, setPlanData, setPromocodeData }) => {
   );
 };
 
-export default Plan;
+export default memo(Plan);

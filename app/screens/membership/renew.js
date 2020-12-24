@@ -8,8 +8,9 @@ import Box from 'components/box';
 import Card from 'components/card';
 import { PAYMENT } from 'navigation/routes';
 import styles from './styles';
+import { memo } from 'react';
 
-export default function Renew({ membershipData, expired }) {
+const Renew = ({ membershipData, expired }) => {
   const { push } = useNavigation();
   const { t } = useTranslation();
 
@@ -30,3 +31,5 @@ export default function Renew({ membershipData, expired }) {
     </Card>
   );
 }
+
+export default memo(Renew);

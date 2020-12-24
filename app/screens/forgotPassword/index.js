@@ -17,13 +17,14 @@ import TopNavigator from 'components/topNavigator';
 import { BASE_URL } from 'constants/common';
 import useErrorLog from 'hooks/useErrorLog';
 import { FORGOT_PASSWORD as FORGET } from 'navigation/routes';
+import { memo } from 'react';
 
 const inputsValidationSchema = () =>
   object().shape({
     email: string().email().required().label('Email'),
   });
 
-export default function ForgotPassword({ navigation }) {
+const ForgotPassword = ({ navigation }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
@@ -111,3 +112,5 @@ export default function ForgotPassword({ navigation }) {
     </SafeView>
   );
 }
+
+export default memo(ForgotPassword);

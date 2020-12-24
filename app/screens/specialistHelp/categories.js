@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
 import { smallUrl } from 'constants/commonFunctions';
 
-export default function Categories({ data }) {
+const Categories = ({ data }) => {
   if (data?.centersCount <= 0) {
     return null;
   }
@@ -39,3 +39,5 @@ export default function Categories({ data }) {
     </RippleFX>
   );
 }
+
+export default memo(Categories);

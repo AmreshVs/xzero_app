@@ -11,8 +11,9 @@ import { REFER_HISTORY } from 'graphql/queries';
 import styles from './styles';
 import { UserDataContext } from 'context';
 import { getFormattedDateTime } from 'constants/commonFunctions';
+import { memo } from 'react';
 
-export default function ReferHistory() {
+const ReferHistory = () => {
   const { userData } = useContext(UserDataContext);
   const { t } = useTranslation();
   const { data, loading } = useQuery(REFER_HISTORY, {
@@ -51,3 +52,5 @@ export default function ReferHistory() {
     </View>
   )
 }
+
+export default memo(ReferHistory);

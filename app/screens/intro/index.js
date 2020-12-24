@@ -17,8 +17,9 @@ import Spinner from 'components/spinner';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { useTranslation } from 'react-i18next';
+import { memo } from 'react';
 
-export default function Intro({ navigation }) {
+const Intro = ({ navigation }) => {
   const { logError } = useErrorLog();
   const { t, i18n } = useTranslation();
   let language = i18n.language;
@@ -94,6 +95,8 @@ export default function Intro({ navigation }) {
     </>
   )
 }
+
+export default memo(Intro);
 
 const styles = StyleSheet.create({
   container: {

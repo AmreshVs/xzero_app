@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
 import styles from './styles';
 
-export default function Rules({ data }) {
+const Rules = ({ data }) => {
   const { t, i18n } = useTranslation();
   let language = i18n.language;
 
@@ -25,3 +25,5 @@ export default function Rules({ data }) {
     </Card>
   )
 }
+
+export default memo(Rules);

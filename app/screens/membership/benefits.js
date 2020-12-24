@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
 import styles from './styles';
+import { memo } from 'react';
 
-export default function Benefits({ data }) {
+const Benefits = ({ data }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language;
 
@@ -25,3 +26,5 @@ export default function Benefits({ data }) {
     </Card>
   );
 }
+
+export default memo(Benefits);

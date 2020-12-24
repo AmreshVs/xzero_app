@@ -17,11 +17,12 @@ import { isTab } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { CENTERS_SCREEN } from 'navigation/routes';
 import { ToastMsg } from 'components/toastMsg';
+import { memo } from 'react';
 
 let initialWhereCondition = {};
 let headerCondition = 0;
 
-export default function Centers() {
+const Centers = () => {
   const { params } = useRoute();
   const { logError } = useErrorLog();
 
@@ -113,3 +114,5 @@ export default function Centers() {
     </>
   );
 }
+
+export default memo(Centers);

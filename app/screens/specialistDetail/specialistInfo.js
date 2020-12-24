@@ -6,7 +6,8 @@ import { IMAGE_URL } from 'constants/common';
 import Card from 'components/card';
 import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
-import { smallUrl, thumbnailUrl } from 'constants/commonFunctions';
+import { smallUrl } from 'constants/commonFunctions';
+import { memo } from 'react';
 
 const SpecialistInfo = ({ specialist }) => {
   const { i18n } = useTranslation();
@@ -30,4 +31,4 @@ const SpecialistInfo = ({ specialist }) => {
   );
 };
 
-export default SpecialistInfo;
+export default memo(SpecialistInfo);

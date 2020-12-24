@@ -13,8 +13,9 @@ import NoData from 'components/noData';
 import useErrorLog from 'hooks/useErrorLog';
 import styles from './styles';
 import { ToastMsg } from 'components/toastMsg';
+import { memo } from 'react';
 
-export default function Notifications() {
+const Notifications = () => {
   const [reloading, setReloading] = useState(false);
   const { data, loading, refetch: _refetch, error } = useQuery(NOTIFICATIONS);
   const { logError } = useErrorLog();
@@ -59,3 +60,5 @@ export default function Notifications() {
     </SafeView>
   );
 }
+
+export default memo(Notifications);

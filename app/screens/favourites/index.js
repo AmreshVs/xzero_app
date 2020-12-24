@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { View, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useApolloClient } from '@apollo/client';
@@ -7,7 +7,6 @@ import Offer from 'screens/offers/offer';
 import NoData from 'components/noData';
 import SafeView from 'components/safeView';
 import Button from 'components/button';
-import useUserData from 'hooks/useUserData';
 import { FAVOURITES_BY_USER } from 'graphql/queries';
 import { CLEAR_FAVOURITES } from 'graphql/mutations';
 import IsLoggedIn from 'hoc/isLoggedIn';
@@ -76,7 +75,7 @@ const Favourites = () => {
 
   return (
     <SafeView noBottom loading={loading}>
-      {data?.favouritesByUser === null || !data?.favouritesByUser.length ? (
+      {data?.favouritesByUser === null || !data?.favouritesByUser?.length ? (
         <NoData reload={() => reload()} reloading={reloading} />
       ) : (
           <>
@@ -112,4 +111,4 @@ const Favourites = () => {
   );
 };
 
-export default IsLoggedIn(Favourites);
+export default memo(IsLoggedIn(Favourites));

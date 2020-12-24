@@ -15,6 +15,7 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { useRoute } from '@react-navigation/native';
 import IsLoggedIn from 'hoc/isLoggedIn';
+import { memo } from 'react';
 
 const Gifts = () => {
   const { t } = useTranslation();
@@ -50,4 +51,4 @@ const Gifts = () => {
   );
 }
 
-export default IsLoggedIn(Gifts);
+export default memo(IsLoggedIn(Gifts));

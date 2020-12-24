@@ -8,6 +8,7 @@ import Button from 'components/button';
 import Card from 'components/card';
 import { sendWhatsappMessage, handleMobileNumber } from 'constants/commonFunctions';
 import styles from './styles';
+import { memo } from 'react';
 
 const ContactSpecialist = ({ specialist, userData }) => {
   const { t } = useTranslation();
@@ -39,4 +40,4 @@ const ContactSpecialist = ({ specialist, userData }) => {
   );
 };
 
-export default ContactSpecialist;
+export default memo(ContactSpecialist);

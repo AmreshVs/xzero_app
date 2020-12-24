@@ -13,8 +13,9 @@ import useErrorLog from 'hooks/useErrorLog';
 import styles from './styles';
 import { GIFTS } from 'navigation/routes';
 import { isTab, thumbnailUrl } from 'constants/commonFunctions';
+import { memo } from 'react';
 
-export default function GenerateGift() {
+const GenerateGift = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -128,3 +129,5 @@ export default function GenerateGift() {
     </Card>
   )
 }
+
+export default memo(GenerateGift);

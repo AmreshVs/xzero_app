@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Card from 'components/card';
 import Box from 'components/box';
 import styles from './styles';
+import { memo } from 'react';
 
 const Details = ({ data }) => {
   const { t, i18n } = useTranslation();
@@ -22,4 +23,4 @@ const Details = ({ data }) => {
   );
 };
 
-export default Details;
+export default memo(Details);

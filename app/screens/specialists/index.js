@@ -1,4 +1,4 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef, useState, memo } from 'react';
 import { FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useQuery } from '@apollo/client';
@@ -21,7 +21,7 @@ import useErrorLog from 'hooks/useErrorLog';
 let initialWhereCondition = {};
 let headerCondition = 0;
 
-export default function SpecialistHelp() {
+const Specialists = () => {
   const [reloading, setReloading] = useState(false);
   const { logError } = useErrorLog();
   const { params } = useRoute();
@@ -114,3 +114,5 @@ export default function SpecialistHelp() {
     </>
   );
 }
+
+export default memo(Specialists);

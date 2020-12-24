@@ -33,7 +33,6 @@ export const FB_APP_ID = '366021757877568';
 export const APP_NAME = 'Xzero App';
 export const GOOGLE_CLIENT_ID = '471013991175-3m4mtp6hrogfrq87dg5tbqbdsi0tvuv5.apps.googleusercontent.com';
 
-
 // Screen
 export const SCREEN_HEIGHT = Dimensions.get("screen").height;
 export const SCREEN_WIDTH = Dimensions.get("screen").width;

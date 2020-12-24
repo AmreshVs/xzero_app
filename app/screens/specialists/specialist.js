@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
@@ -14,7 +14,7 @@ import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
 import { thumbnailUrl } from 'constants/commonFunctions';
 
-export default function Specialist({ data }) {
+const Specialist = ({ data }) => {
   const { push } = useNavigation();
   const { i18n } = useTranslation();
   const language = i18n.language;
@@ -62,3 +62,5 @@ export default function Specialist({ data }) {
     </Card>
   );
 }
+
+export default memo(Specialist);

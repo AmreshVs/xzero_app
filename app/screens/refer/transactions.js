@@ -8,6 +8,7 @@ import Card from 'components/card';
 import Column from 'components/column';
 import Divider from 'components/divider';
 import styles from './styles';
+import { memo } from 'react';
 
 const Transactions = ({ data, loading }) => {
   const { t } = useTranslation();
@@ -38,4 +39,4 @@ const Transactions = ({ data, loading }) => {
   );
 };
 
-export default Transactions;
+export default memo(Transactions);

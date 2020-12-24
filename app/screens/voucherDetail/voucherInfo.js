@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, Share, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -13,7 +13,7 @@ import styles from './styles';
 import Chip from 'components/chip';
 import colors from 'constants/colors';
 
-export default function VoucherInfo({ data }) {
+const VoucherInfo = ({ data }) => {
   const { t, i18n } = useTranslation();
   let language = i18n.language;
 
@@ -66,8 +66,10 @@ export default function VoucherInfo({ data }) {
         <Text style={styles.caption}>{t('check_below_for_more')}</Text>
       </Box>
       <Box padding={10} paddingTop={0} alignItems="flex-end">
-        <Button width={isTab() ? "50%" : "100%"} status="chip_1" size="small" icon="share-alt" onPress={() => handleShare()}>{t('share')}</Button>
+        <Button width={isTab() ? "20%" : "100%"} status="chip_1" size="small" icon="share-alt" onPress={() => handleShare()}>{t('share')}</Button>
       </Box>
     </Card>
   )
 }
+
+export default memo(VoucherInfo);

@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, memo } from 'react';
 import { RefreshControl, ScrollView, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
+import { useApolloClient, useQuery } from '@apollo/client';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
@@ -27,8 +27,9 @@ import { ToastMsg } from 'components/toastMsg';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import Details from './details';
+import { VOUCHER_QUEUE } from 'graphql/mutations';
 
-export default function VoucherDetail({ navigation }) {
+const VoucherDetail = ({ navigation }) => {
   const { t } = useTranslation();
   const [reloading, setReloading] = useState(false);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
@@ -36,6 +37,7 @@ export default function VoucherDetail({ navigation }) {
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
   const { params } = useRoute();
+  const client = useApolloClient();
 
   const queryInput = {
     id: Number(params?.id)
@@ -56,7 +58,7 @@ export default function VoucherDetail({ navigation }) {
     });
   }
 
-  const handleOpenModal = () => {
+  const handleOpenModal = async () => {
     if (!userData) {
       navigation.replace(LOGIN_SCREEN);
       return;
@@ -64,6 +66,7 @@ export default function VoucherDetail({ navigation }) {
 
     setPromocodeData({ discountedPrice: userData?.membership === null ? data?.voucher?.cost_for_non_members : data?.voucher?.cost });
     modalizeRef.current?.open();
+
   };
 
   const reload = async () => {
@@ -142,3 +145,5 @@ export default function VoucherDetail({ navigation }) {
     </>
   )
 }
+
+export default memo(VoucherDetail);

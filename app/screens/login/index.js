@@ -25,8 +25,9 @@ import Row from 'components/row';
 import AppleLoginButton from './appleLogin';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
+import { memo } from 'react';
 
-export default function Login({ navigation }) {
+const Login = ({ navigation }) => {
   const { t, i18n } = useTranslation();
   let language = i18n.language;
   const [loading, setLoading] = useState(false);
@@ -372,3 +373,6 @@ export default function Login({ navigation }) {
     </KeyboardAvoidingView>
   );
 }
+
+
+export default memo(Login);

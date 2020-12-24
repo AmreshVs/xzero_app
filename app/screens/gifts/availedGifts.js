@@ -5,8 +5,9 @@ import { useTranslation } from 'react-i18next';
 import styles from './styles';
 import Box from 'components/box';
 import Gift from './gift';
+import { memo } from 'react';
 
-export default function AvailedGifts({ data }) {
+const AvailedGifts = ({ data }) => {
   const { t } = useTranslation();
 
   return (
@@ -21,3 +22,5 @@ export default function AvailedGifts({ data }) {
     </>
   )
 }
+
+export default memo(AvailedGifts);

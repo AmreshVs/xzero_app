@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Box from 'components/box';
 import Row from 'components/row';
 import styles from './styles';
+import { memo } from 'react';
 
 const ViewBankInfo = ({ data }) => {
   const { t } = useTranslation();
@@ -47,4 +48,4 @@ const ViewBankInfo = ({ data }) => {
   );
 };
 
-export default ViewBankInfo;
+export default memo(ViewBankInfo);

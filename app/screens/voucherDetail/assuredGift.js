@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +8,7 @@ import ProductSlider from './productSlider';
 import styles from './styles';
 import { smallUrl } from 'constants/commonFunctions';
 
-export default function AssuredGift({ data }) {
+const AssuredGift = ({ data }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language;
 
@@ -26,3 +26,5 @@ export default function AssuredGift({ data }) {
     </Card>
   )
 }
+
+export default memo(AssuredGift);

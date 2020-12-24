@@ -1,9 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import colors from 'constants/colors';
-import React from 'react';
+import React, { memo } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-export default function CenterSymbol({ icon = "equals", text = "" }) {
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import colors from 'constants/colors';
+
+const CenterSymbol = ({ icon = "equals", text = "" }) => {
   return (
     <View style={styles.symbolContainer}>
       <View style={styles.symbol}>
@@ -16,6 +17,8 @@ export default function CenterSymbol({ icon = "equals", text = "" }) {
     </View>
   )
 }
+
+export default memo(CenterSymbol);
 
 const styles = StyleSheet.create({
   symbolContainer: {

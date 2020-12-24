@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: '100%',
   },
 });
 

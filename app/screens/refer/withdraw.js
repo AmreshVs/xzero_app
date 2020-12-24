@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { useQuery } from '@apollo/client';
 
@@ -12,7 +12,7 @@ import styles from './styles';
 import { ToastMsg } from 'components/toastMsg';
 import { REFER } from 'navigation/routes';
 
-export default function Withdraw({ balance, min_withdraw }) {
+const Withdraw = ({ balance, min_withdraw }) => {
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
   const { data, loading, refetch: _refetch, error } = useQuery(WITHDRAW_HISTORY, {
@@ -41,3 +41,5 @@ export default function Withdraw({ balance, min_withdraw }) {
     </View>
   )
 }
+
+export default memo(Withdraw);

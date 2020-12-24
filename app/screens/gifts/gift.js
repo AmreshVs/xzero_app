@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { View, Image, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -8,7 +8,7 @@ import { IMAGE_URL } from 'constants/common';
 import RippleFX from 'components/rippleFx';
 import styles from './styles';
 import { thumbnailUrl } from 'constants/commonFunctions';
-// console.log('asd');
+
 const Gift = ({ data }) => {
   const { i18n } = useTranslation();
   let language = i18n.language;
@@ -39,4 +39,4 @@ const Gift = ({ data }) => {
   );
 };
 
-export default Gift;
+export default memo(Gift);

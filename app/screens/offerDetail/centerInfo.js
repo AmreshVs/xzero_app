@@ -10,6 +10,7 @@ import RippleFX from 'components/rippleFx';
 import DisabledContainer from 'components/disabledContainer';
 import styles from './styles';
 import Box from 'components/box';
+import { memo } from 'react';
 
 const CenterInfo = ({ offer, username }) => {
   const { t, i18n } = useTranslation();
@@ -45,4 +46,4 @@ const CenterInfo = ({ offer, username }) => {
   );
 };
 
-export default CenterInfo;
+export default memo(CenterInfo);

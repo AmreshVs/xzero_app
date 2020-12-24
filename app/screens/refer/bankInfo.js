@@ -10,6 +10,7 @@ import Button from 'components/button';
 import ViewBankInfo from './viewBankInfo';
 import styles from './styles';
 import EditBankInfo from './editBankInfo';
+import { memo } from 'react';
 
 const BankInfo = ({ data, loading, reload }) => {
   const [edit, setEdit] = useState(false);
@@ -45,4 +46,4 @@ const BankInfo = ({ data, loading, reload }) => {
   );
 };
 
-export default BankInfo;
+export default memo(BankInfo);

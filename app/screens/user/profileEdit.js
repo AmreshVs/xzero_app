@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
@@ -30,7 +30,7 @@ import { useNavigation } from '@react-navigation/native';
 import { OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
 
-export default function ProfileEdit({ setEdit, data }) {
+const ProfileEdit = ({ setEdit, data }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -208,3 +208,5 @@ export default function ProfileEdit({ setEdit, data }) {
     </View>
   );
 }
+
+export default memo(ProfileEdit);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { FlatList, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -114,4 +114,4 @@ const MyVouchers = () => {
   )
 }
 
-export default IsLoggedIn(MyVouchers);
+export default memo(IsLoggedIn(MyVouchers));

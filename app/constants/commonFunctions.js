@@ -1,4 +1,4 @@
-import { Platform, Linking } from 'react-native';
+import { Platform, Linking, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { SCREEN_WIDTH, THUMBNAIL_SLUG } from './common';
 import { ToastMsg } from 'components/toastMsg';
@@ -136,4 +136,16 @@ export const userVerified = async () => {
   }
 
   return true;
+}
+
+const percentageCalculation = (max, val) => max * (val / 100);
+
+export const responsiveHeight = (h) => {
+  const { height } = Dimensions.get("screen");
+  return percentageCalculation(height, h);
+}
+
+export const responsiveWidth = (w) => {
+  const { width } = Dimensions.get("screen");
+  return percentageCalculation(width, w);
 }

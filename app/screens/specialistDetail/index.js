@@ -20,8 +20,9 @@ import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { SPECIALIST_DETAIL } from 'navigation/routes';
+import { memo } from 'react';
 
-export default function SpecialistDetail() {
+const SpecialistDetail = () => {
 
   const { t, i18n } = useTranslation();
   let language = i18n.language;
@@ -68,3 +69,5 @@ export default function SpecialistDetail() {
     </>
   );
 }
+
+export default memo(SpecialistDetail);

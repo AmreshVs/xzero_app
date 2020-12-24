@@ -24,6 +24,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { REFER } from 'navigation/routes';
 import IsLoggedIn from 'hoc/isLoggedIn';
+import { memo } from 'react';
 
 const Refer = () => {
   const [modalComp, setModalComp] = useState(false);
@@ -182,4 +183,4 @@ const Refer = () => {
   )
 }
 
-export default IsLoggedIn(Refer);
+export default memo(IsLoggedIn(Refer));

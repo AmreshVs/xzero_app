@@ -118,7 +118,7 @@ const tabStyles = StyleSheet.create({
   ...mobileStyles,
   voucherImageContainer: {
     ...mobileStyles.voucherContainer,
-    height: SCREEN_HEIGHT / 3.5,
+    height: SCREEN_HEIGHT / 2,
   },
   membershipImg: {
     ...mobileStyles.membershipImg,

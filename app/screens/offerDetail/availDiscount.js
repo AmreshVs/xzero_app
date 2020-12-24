@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Row from 'components/row';
 import Card from 'components/card';
 import styles from './styles';
+import { memo } from 'react';
 
 const AvailDiscount = ({ loading, data }) => {
   const { t, i18n } = useTranslation();
@@ -32,4 +33,4 @@ const AvailDiscount = ({ loading, data }) => {
   );
 };
 
-export default AvailDiscount;
+export default memo(AvailDiscount);

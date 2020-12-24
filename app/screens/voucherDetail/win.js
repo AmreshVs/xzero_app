@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -56,7 +56,7 @@ const ShowWinners = ({ draw_status, voucher_id, gift }) => {
   )
 }
 
-export default function Win({ voucher_id, draw_status, data }) {
+const Win = ({ voucher_id, draw_status, data }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language;
 
@@ -86,3 +86,5 @@ export default function Win({ voucher_id, draw_status, data }) {
     </Card>
   )
 }
+
+export default memo(Win);

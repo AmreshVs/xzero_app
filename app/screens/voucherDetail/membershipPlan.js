@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +6,7 @@ import Card from 'components/card';
 import { IMAGE_URL } from 'constants/common';
 import styles from './styles';
 
-export default function MembershipPlan({ data }) {
+const MembershipPlan = ({ data }) => {
   const { t } = useTranslation();
 
   return (
@@ -18,3 +18,5 @@ export default function MembershipPlan({ data }) {
     </Card>
   )
 }
+
+export default memo(MembershipPlan);

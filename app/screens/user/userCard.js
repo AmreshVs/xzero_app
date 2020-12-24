@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ import { UserDataContext } from 'context';
 import SafeView from 'components/safeView';
 import RippleFX from 'components/rippleFx';
 
-export default function UserCard({ edit, data }) {
+const UserCard = ({ edit, setEdit, data }) => {
   const { t } = useTranslation();
   const { userData } = useContext(UserDataContext);
 
@@ -37,3 +37,5 @@ export default function UserCard({ edit, data }) {
     </SafeView>
   );
 }
+
+export default memo(UserCard);

@@ -26,7 +26,7 @@ const Center = ({ data }) => {
   };
 
   return (
-    <Box>
+    <Box width="49.4%">
       <RippleFX style={styles.centerContainer} onPress={() => handlePress(data?.id)}>
         <Row>
           <VHCenter paddingLeft={10}>

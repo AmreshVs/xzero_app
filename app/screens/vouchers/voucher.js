@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, Text, View } from 'react-native';
 
 import Card from 'components/card';
@@ -19,7 +19,7 @@ import { UserDataContext } from 'context';
 import Chip from 'components/chip';
 import colors from 'constants/colors';
 
-export default function Voucher({ data, handleOpenModal }) {
+const Voucher = ({ data, handleOpenModal }) => {
   const { t } = useTranslation();
   const { push } = useNavigation();
   const { userData } = useContext(UserDataContext);
@@ -82,3 +82,5 @@ export default function Voucher({ data, handleOpenModal }) {
     </Card>
   )
 }
+
+export default memo(Voucher);

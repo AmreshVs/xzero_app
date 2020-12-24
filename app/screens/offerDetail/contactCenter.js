@@ -8,6 +8,7 @@ import Card from 'components/card';
 import Box from 'components/box';
 import { dialNumber } from 'constants/commonFunctions';
 import styles from './styles';
+import { memo } from 'react';
 
 const ContactCenter = ({ username, mobile_number }) => {
   const { t } = useTranslation();
@@ -33,4 +34,4 @@ const ContactCenter = ({ username, mobile_number }) => {
   );
 };
 
-export default ContactCenter;
+export default memo(ContactCenter);

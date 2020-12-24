@@ -9,8 +9,9 @@ import Button from 'components/button';
 import { sendWhatsappMessage, handleMobileNumber } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import styles from './styles';
+import { memo } from 'react';
 
-export default function GetHelp() {
+const GetHelp = () => {
   const { t } = useTranslation();
   const { userData } = useContext(UserDataContext);
 
@@ -39,3 +40,5 @@ export default function GetHelp() {
     </Row>
   );
 }
+
+export default memo(GetHelp);

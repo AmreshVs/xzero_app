@@ -6,8 +6,9 @@ import Button from 'components/button';
 import Box from 'components/box';
 import Card from 'components/card';
 import styles from './styles';
+import { memo } from 'react';
 
-export default function BuyMembership({ handleBuy }) {
+const BuyMembership = ({ handleBuy }) => {
   const { t } = useTranslation();
 
   return (
@@ -24,3 +25,5 @@ export default function BuyMembership({ handleBuy }) {
     </Card>
   );
 }
+
+export default memo(BuyMembership);

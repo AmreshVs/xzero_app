@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
@@ -30,4 +30,4 @@ const OfferCard = ({ discount }) => {
   );
 };
 
-export default OfferCard;
+export default memo(OfferCard);

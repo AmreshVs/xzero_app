@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, memo } from 'react';
 import { FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
@@ -22,7 +22,7 @@ let queryInput = {
   status: 1
 };
 
-export default function Vouchers({ navigation }) {
+const Vouchers = ({ navigation }) => {
   const [reloading, setReloading] = useState(false);
   const [voucherData, setVoucherData] = useState([]);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
@@ -104,3 +104,5 @@ export default function Vouchers({ navigation }) {
     </>
   );
 }
+
+export default memo(Vouchers);

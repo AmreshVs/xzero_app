@@ -14,12 +14,12 @@ import Box from 'components/box';
 import { GET_USER } from 'graphql/queries';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import UserCard from './userCard';
-import RippleFX from 'components/rippleFx';
 import styles from './styles';
 import useErrorLog from 'hooks/useErrorLog';
 import { UserDataContext } from 'context';
 import { ToastMsg } from 'components/toastMsg';
 import { PROFILE_TAB_SCREEN } from 'navigation/routes';
+import { memo } from 'react';
 
 const User = () => {
   const { t } = useTranslation();
@@ -86,23 +86,21 @@ const User = () => {
   }
 
   return (
-    <SafeView style={styles.safeView} loading={loading} noTop noBottom>
-      <ScrollView
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
-      >
-        <KeyboardAvoidingView behavior="position">
-          <Box>
-            <Row hcenter>
-              <LinearGradient
-                colors={[colors.gradient1, colors.gradient2]}
-                style={styles.gradient}
-              />
-            </Row>
-            <Row padding={10} hcenter>
-              <UserCard edit={edit} data={data?.user} />
-            </Row>
+    <>
+      <Row style={styles.topContaier} hcenter>
+        <LinearGradient
+          colors={[colors.gradient1, colors.gradient2]}
+          style={styles.gradient}
+        />
+        <UserCard edit={edit} setEdit={setEdit} data={data?.user} />
+      </Row>
+      <SafeView style={styles.safeView} loading={loading} noTop noBottom>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          showsVerticalScrollIndicator={false}
+          removeClippedSubviews={true}
+        >
+          <KeyboardAvoidingView behavior="position">
             <Box style={styles.profileViewContainer}>
               <Box style={styles.profileView}>
                 {!edit ? (
@@ -124,10 +122,10 @@ const User = () => {
                 </Row>
               </Box>
             </Box>
-          </Box>
-        </KeyboardAvoidingView>
-      </ScrollView>
-    </SafeView>
+          </KeyboardAvoidingView>
+        </ScrollView>
+      </SafeView>
+    </>
   );
 };
 

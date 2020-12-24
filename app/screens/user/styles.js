@@ -12,7 +12,7 @@ const mobileStyles = StyleSheet.create({
     ...whiteBg,
   },
   gradient: {
-    height: 240,
+    height: '100%',
     ...w100,
     ...positionAbsolute,
   },
@@ -28,15 +28,16 @@ const mobileStyles = StyleSheet.create({
     ...getShadowStyle(),
   },
   name: {
-    top: 30,
+    top: 10,
     ...textAlignCenter,
     ...w100,
     ...font18,
     ...fontWeight700,
     ...colorWhite,
+    ...positionAbsolute,
   },
   iconContainer: {
-    top: 25,
+    top: 5,
     right: 10,
     zIndex: 9,
     ...positionAbsolute,
@@ -70,12 +71,13 @@ const mobileStyles = StyleSheet.create({
     ...textAlignLeft,
   },
   userCardContainer: {
-    height: 180,
     ...padding0,
     ...w100,
-    ...marginTop20,
     ...justifyContentCenter,
     ...alignItemsCenter,
+  },
+  topContaier: {
+    height: 220
   },
   userIconContainer: {
     ...padding10,

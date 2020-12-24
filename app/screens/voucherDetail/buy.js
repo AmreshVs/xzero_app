@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +6,7 @@ import Card from 'components/card';
 import ProductSlider from './productSlider';
 import styles from './styles';
 
-export default function Buy({ member, data }) {
+const Buy = ({ member, data }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language;
 
@@ -25,3 +25,5 @@ export default function Buy({ member, data }) {
     </Card>
   )
 }
+
+export default memo(Buy);

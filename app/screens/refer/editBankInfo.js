@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, memo } from 'react';
 import { View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
@@ -16,7 +16,7 @@ import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { REFER } from 'navigation/routes';
 
-export default function EditBankInfo({ setEdit, data, reload }) {
+const EditBankInfo = ({ setEdit, data, reload }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const { userData } = useContext(UserDataContext);
@@ -150,3 +150,5 @@ export default function EditBankInfo({ setEdit, data, reload }) {
     </Box>
   );
 }
+
+export default memo(EditBankInfo);

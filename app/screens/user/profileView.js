@@ -10,7 +10,7 @@ import Box from 'components/box';
 import colors from 'constants/colors';
 import Divider from 'components/divider';
 import { MAIN_SCREEN, OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
-import { getUserData, handleDOB } from 'constants/commonFunctions';
+import { handleDOB } from 'constants/commonFunctions';
 import RippleFX from 'components/rippleFx';
 import styles from './styles';
 import { useContext } from 'react';
@@ -18,6 +18,7 @@ import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import Button from 'components/button';
+import { memo } from 'react';
 
 export const handlelogout = async ({ dispatch, setUserData, logError }) => {
   const resetAction = CommonActions.reset({
@@ -86,7 +87,7 @@ const ProfileView = ({ data }) => {
 
   return (
     <>
-      <Box>
+      <Box marginTop={10}>
         <Row vcenter>
           <Box paddingLeft={20} flex={1}>
             <FontAwesomeIcon icon="mobile-alt" color={colors.primary} size={23} />
@@ -181,4 +182,4 @@ const ProfileView = ({ data }) => {
   );
 }
 
-export default ProfileView;
+export default memo(ProfileView);

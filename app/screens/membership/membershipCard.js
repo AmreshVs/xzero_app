@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ import Column from 'components/column';
 import { firstLetterUpper, getFormatedDate } from 'constants/commonFunctions';
 import styles from './styles';
 
-export default function MembershipCard({ member, data, expired }) {
+const MembershipCard = ({ member, data, expired }) => {
   const { t } = useTranslation();
 
   return (
@@ -61,3 +61,5 @@ export default function MembershipCard({ member, data, expired }) {
     </Box>
   );
 }
+
+export default memo(MembershipCard);

@@ -7,6 +7,7 @@ import Button from 'components/button';
 import Card from 'components/card';
 import Box from 'components/box';
 import styles from './styles';
+import { memo } from 'react';
 
 const ShareOffer = ({ data }) => {
   const { t, i18n } = useTranslation();
@@ -48,4 +49,4 @@ const ShareOffer = ({ data }) => {
   );
 };
 
-export default ShareOffer;
+export default memo(ShareOffer);

@@ -30,7 +30,7 @@ export const USER_LOGIN = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation createNewUser($username: String!, $email: String!, $mobile_number: Long!, $password: String!, $notification_token: String!, $dob: DateTime, $provider: String){
+  mutation createNewUser($username: String!, $email: String!, $mobile_number: Long!, $password: String!, $notification_token: String!, $dob: DateTime, $provider: String, $language: String){
     createNewUser(
       input: {
         username: $username,
@@ -39,7 +39,8 @@ export const CREATE_USER = gql`
         password: $password
         notification_token: $notification_token,
         birthday: $dob,
-        provider: $provider
+        provider: $provider,
+        language: $language
       }
     ){
       jwt
@@ -317,11 +318,21 @@ export const LOG_PAYMENT = gql`
 `;
 
 export const SEND_SMS = gql`
-  mutation SendSms($user: Int!, $mobile: Long, $lang: String){
+  mutation SendSms($user: Int!, $mobile: String, $lang: String){
     SendSms(user: $user, mobile: $mobile, lang: $lang){
       otp
       msg
       balance
+    }
+  }
+`;
+
+export const VOUCHER_QUEUE = gql`
+  mutation VoucherQueue($user: Int!, $voucher: Int!){
+    VoucherQueue(user: $user, voucher: $voucher){
+      queueCount
+      disabled
+      msg
     }
   }
 `;

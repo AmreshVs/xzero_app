@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, View, Text } from 'react-native';
 
 import Card from 'components/card';
@@ -6,7 +6,7 @@ import styles from './styles';
 import { IMAGE_URL } from 'constants/common';
 import { useTranslation } from 'react-i18next';
 
-export default function QRCode({ data }) {
+const QRCode = ({ data }) => {
   const { t } = useTranslation();
 
   return (
@@ -18,3 +18,5 @@ export default function QRCode({ data }) {
     </Card>
   )
 }
+
+export default memo(QRCode);

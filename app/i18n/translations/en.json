@@ -185,5 +185,6 @@
   "retry_now": "Retry Now",
   "resendotp": "Resend OTP",
   "confirm": "Confirm",
-  "pay": "Pay"
+  "pay": "Pay",
+  "queue_full": "Queue full!, Please wait and we will notify you once queue is free"
 }

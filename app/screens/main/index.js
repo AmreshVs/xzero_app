@@ -11,8 +11,9 @@ import Loader from 'components/loader';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
+import { memo } from 'react';
 
-export default function Main({ navigation }) {
+const Main = ({ navigation }) => {
   const client = useApolloClient();
   const { setUserData } = useContext(UserDataContext);
   const { t } = useTranslation();
@@ -77,13 +78,21 @@ export default function Main({ navigation }) {
               }
             });
 
+            if (data?.user === null || data?.user === 'null') {
+              await AsyncStorage.removeItem('@xzero_jwt');
+              await AsyncStorage.removeItem('@xzero_user');
+              await AsyncStorage.removeItem('@xzero_popup');
+              navigation.replace(LOGIN_SCREEN);
+              return;
+            }
+
             setUserData({
               jwt: JSON.parse(jwt),
               ...loginData,
               ...data?.user,
             });
 
-            if (loginData?.confirmed || loginData?.provider !== 'local') {
+            if (data?.user?.confirmed || data?.user?.provider !== 'local') {
               navigation.replace(HOME_SCREEN);
             }
             else {
@@ -118,3 +127,5 @@ export default function Main({ navigation }) {
 
   return <Loader />;
 }
+
+export default memo(Main);

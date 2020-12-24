@@ -13,22 +13,40 @@ import styles from './styles';
 import Box from 'components/box';
 import { isTab, userVerified } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
+import { memo } from 'react';
+import { useApolloClient } from '@apollo/client';
+import { VOUCHER_QUEUE } from 'graphql/mutations';
+import { ToastMsg } from 'components/toastMsg';
 
 const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher }) => {
   const { push } = useNavigation();
   const { t } = useTranslation();
   const { userData } = useContext(UserDataContext);
+  const client = useApolloClient();
 
   const handlePayment = async () => {
-    if (await userVerified()) {
-      push(PAYMENT, {
-        currency_code: 'AED',
-        amount: promocodeData?.discountedPrice,
-        multiplier: 100,
-        voucher_id: voucher?.id,
-        promocode: promocodeData?.codeApplied,
-        discount: promocodeData?.discount
-      });
+    const { data } = await client.mutate({
+      mutation: VOUCHER_QUEUE,
+      variables: {
+        user: Number(userData?.id),
+        voucher: Number(voucher?.id)
+      }
+    });
+
+    if (!data?.VoucherQueue?.disabled) {
+      if (await userVerified()) {
+        push(PAYMENT, {
+          currency_code: 'AED',
+          amount: promocodeData?.discountedPrice,
+          multiplier: 100,
+          voucher_id: voucher?.id,
+          promocode: promocodeData?.codeApplied,
+          discount: promocodeData?.discount
+        });
+      }
+    }
+    else {
+      ToastMsg(t('queue_full'));
     }
   }
 
@@ -63,4 +81,4 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
   );
 };
 
-export default BuyVoucherModal;
+export default memo(BuyVoucherModal);

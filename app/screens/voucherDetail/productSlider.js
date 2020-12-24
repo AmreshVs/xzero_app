@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel';
 
 import { IMAGE_URL, SCREEN_WIDTH } from 'constants/common';
 
-export default function ProductSlider({ data, height, popup = false }) {
+const ProductSlider = ({ data, height, popup = false }) => {
   const [slide, setSlide] = useState(0);
 
   const styles = StyleSheet.create({
@@ -84,3 +84,5 @@ export default function ProductSlider({ data, height, popup = false }) {
     </>
   )
 }
+
+export default memo(ProductSlider);

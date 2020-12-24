@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { getShadowStyle, isTab } from 'constants/commonFunctions';
+import { getShadowStyle, isTab, responsiveHeight, responsiveWidth } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from 'constants/common';
 import colors from 'constants/colors';
 import { flex, flexSpaceBetween, flexRow, borderRadius10, w100, textBoldDark, textLite, whiteBg, alignJustifyCenter, font16, positionAbsolute, colorWhite, font15, fontWeight700, marginBottom10, marginBottom5, marginTop5, borderRadius30, overflowHidden, marginLeft10, marginBottom0, colorDanger, font20, w50, h50, h200, padding15, textAlignLeft, resizeModeCover, flex1, h100px, w100px, paddingBottom5, colorPrimary } from 'constants/commonStyles';
@@ -56,7 +56,7 @@ const mobileStyles = StyleSheet.create({
     ...w100,
   },
   membership: {
-    marginTop: -50,
+    marginTop: -80,
     ...paddingBottom5,
   },
   membershipContainer: {
@@ -185,7 +185,7 @@ const tabStyles = StyleSheet.create({
   },
   sliderImage: {
     ...mobileStyles.sliderImage,
-    height: 400
+    height: responsiveHeight(35)
   },
   categoryContainer: {
     ...mobileStyles.categoryContainer,
@@ -193,11 +193,11 @@ const tabStyles = StyleSheet.create({
   },
   image: {
     ...mobileStyles.image,
-    height: SCREEN_HEIGHT / 7
+    height: responsiveHeight(14)
   },
   centerContainer: {
     ...mobileStyles.centerContainer,
-    width: SCREEN_WIDTH / 2.08,
+    width: '100%',
   },
   topCenters: {
     ...flex,

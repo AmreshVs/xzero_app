@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { ScrollView, RefreshControl, Text, View, Platform } from 'react-native';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { Modalize } from 'react-native-modalize';
@@ -225,4 +225,4 @@ const Membership = () => {
   );
 };
 
-export default IsLoggedIn(Membership);
+export default memo(IsLoggedIn(Membership));

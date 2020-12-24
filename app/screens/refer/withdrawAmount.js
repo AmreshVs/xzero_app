@@ -14,6 +14,7 @@ import { UserDataContext } from 'context';
 import styles from './styles';
 import { WITHDRAW_AMOUNT } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
+import { memo } from 'react';
 
 const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
   const [amount, setAmount] = useState('');
@@ -95,4 +96,4 @@ const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
   );
 };
 
-export default WithdrawAmount;
+export default memo(WithdrawAmount);

@@ -6,6 +6,7 @@ import Row from 'components/row';
 import Card from 'components/card';
 import Box from 'components/box';
 import styles from './styles';
+import { memo } from 'react';
 
 const PriceDetails = ({ offer, center }) => {
   const { t } = useTranslation();
@@ -41,4 +42,4 @@ const PriceDetails = ({ offer, center }) => {
   );
 };
 
-export default PriceDetails;
+export default memo(PriceDetails);

@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
 import styles from './styles';
+import { memo } from 'react';
 
-export default function Notification(data) {
+const Notification = (data) => {
   let {
     i18n: { language },
   } = useTranslation();
@@ -18,3 +19,5 @@ export default function Notification(data) {
     </Card>
   );
 }
+
+export default memo(Notification);

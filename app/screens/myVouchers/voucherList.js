@@ -11,8 +11,9 @@ import RippleFX from 'components/rippleFx';
 import { VOUCHER_DETAIL } from 'navigation/routes';
 import styles from './styles';
 import { thumbnailUrl } from 'constants/commonFunctions';
+import { memo } from 'react';
 
-export default function VoucherList({ data }) {
+const VoucherList = ({ data }) => {
   const { t, i18n } = useTranslation();
   const { navigate } = useNavigation();
   const language = i18n.language;
@@ -41,3 +42,5 @@ export default function VoucherList({ data }) {
     </Card>
   )
 }
+
+export default memo(VoucherList);

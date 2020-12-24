@@ -12,6 +12,7 @@ import RippleFX from 'components/rippleFx';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import styles from './styles';
 import { thumbnailUrl } from 'constants/commonFunctions';
+import { memo } from 'react';
 
 const AboutCenter = ({ specialist, userData }) => {
   const { t, i18n } = useTranslation();
@@ -63,4 +64,4 @@ const AboutCenter = ({ specialist, userData }) => {
   );
 };
 
-export default AboutCenter;
+export default memo(AboutCenter);

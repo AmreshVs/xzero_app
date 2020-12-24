@@ -26,8 +26,9 @@ import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { OFFER_DETAIL } from 'navigation/routes';
 import { useTranslation } from 'react-i18next';
+import { memo } from 'react';
 
-export default function OfferDetail() {
+const OfferDetail = () => {
   const { userData } = useContext(UserDataContext);
   const { params: { offer_id, user_id, center } } = useRoute();
   const { logError } = useErrorLog();
@@ -101,3 +102,5 @@ export default function OfferDetail() {
     </>
   );
 }
+
+export default memo(OfferDetail);

@@ -18,10 +18,11 @@ import { useEffect } from 'react';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { saveUserDataLocally } from 'screens/login/helpers';
+import { memo } from 'react';
 
 let otpArray = [];
 
-export default function Otp() {
+const Otp = () => {
   const initialState = [
     { value: '', ref: useRef() },
     { value: '', ref: useRef() },
@@ -103,7 +104,7 @@ export default function Otp() {
       mutation: SEND_SMS,
       variables: {
         user: Number(params?.user_id),
-        mobile: Number(params?.mobile_number),
+        mobile: String(params?.mobile_number),
       }
     });
 
@@ -164,3 +165,5 @@ export default function Otp() {
     </View>
   )
 }
+
+export default memo(Otp);

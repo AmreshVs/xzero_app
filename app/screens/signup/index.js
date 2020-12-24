@@ -86,6 +86,7 @@ export default function Signup({ navigation }) {
       mobile_number: Number(phone),
       notification_token: token || '',
       dob: new Date(dob),
+      language: language
     };
 
     let { data, errors } = await client.mutate({

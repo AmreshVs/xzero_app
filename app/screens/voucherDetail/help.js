@@ -9,6 +9,7 @@ import Box from 'components/box';
 import { sendWhatsappMessage } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import styles from './styles';
+import { memo } from 'react';
 
 const Help = () => {
   const { t } = useTranslation();
@@ -38,4 +39,4 @@ const Help = () => {
   );
 };
 
-export default Help;
+export default memo(Help);
