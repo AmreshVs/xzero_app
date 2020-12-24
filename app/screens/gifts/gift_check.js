@@ -8,7 +8,7 @@ import { IMAGE_URL } from 'constants/common';
 import RippleFX from 'components/rippleFx';
 import styles from './styles';
 import { thumbnailUrl } from 'constants/commonFunctions';
-
+// console.log('asd');
 const Gift = ({ data }) => {
   const { i18n } = useTranslation();
   let language = i18n.language;
