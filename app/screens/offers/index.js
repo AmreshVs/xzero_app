@@ -44,7 +44,7 @@ export default function Offers() {
       user_id: Number(params?.user_id) || 0
     },
   });
-
+  console.log('here');
   if (error) {
     ToastMsg(t('error_occured'));
     logError({

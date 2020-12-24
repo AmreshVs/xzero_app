@@ -19,6 +19,7 @@ import styles from './styles';
 import Popup from './popup';
 import useErrorLog from 'hooks/useErrorLog';
 import { HOME_SCREEN } from 'navigation/routes';
+import { memo } from 'react';
 
 let openLink = 0;
 let backupLink = "";
@@ -147,4 +148,4 @@ const Home = () => {
   );
 }
 
-export default (Home);
+export default memo(Home);

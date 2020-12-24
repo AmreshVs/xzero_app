@@ -44,7 +44,6 @@ const ListItem = ({ name, data }) => {
       {data.length !== 0 && <Text style={styles.searchResultHeading}>{name}</Text>}
       {data !== undefined ?
         data?.map((item, index) => {
-
           return (
             <View key={index}>
               {index !== 0 && <Divider />}

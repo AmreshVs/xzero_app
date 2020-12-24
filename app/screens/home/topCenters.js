@@ -1,10 +1,11 @@
 import React from 'react';
+import { memo } from 'react';
 import { View } from 'react-native';
 
 import Center from './center';
 import styles from './styles';
 
-export default function TopCenters({ data }) {
+const TopCenters = ({ data }) => {
   return (
     <View style={styles.topCenters}>
       {data.map((item, index) => (
@@ -13,3 +14,5 @@ export default function TopCenters({ data }) {
     </View>
   );
 }
+
+export default memo(TopCenters);

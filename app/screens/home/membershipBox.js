@@ -19,6 +19,7 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { ToastMsg } from 'components/toastMsg';
 import useErrorLog from 'hooks/useErrorLog';
+import { memo } from 'react';
 
 const MembershipBox = ({ data }) => {
   const [expiry, setExpiry] = useState(null);
@@ -146,4 +147,4 @@ const MembershipBox = ({ data }) => {
   );
 }
 
-export default MembershipBox;
+export default memo(MembershipBox);

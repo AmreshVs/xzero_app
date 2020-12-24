@@ -15,7 +15,7 @@ import { OFFERS_SCREEN } from 'navigation/routes';
 import styles from './styles';
 import VHCenter from 'components/vhCenter';
 
-function Center({ data }) {
+const Center = ({ data }) => {
   const { push } = useNavigation();
   const { t, i18n } = useTranslation();
   const language = i18n.language;

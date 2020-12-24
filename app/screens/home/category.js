@@ -10,8 +10,9 @@ import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
 import { smallUrl } from 'constants/commonFunctions';
+import { memo } from 'react';
 
-export default function Category({ data }) {
+const Category = ({ data }) => {
   if (data?.centersCount <= 0) {
     return null;
   }
@@ -47,3 +48,5 @@ export default function Category({ data }) {
     </RippleFX>
   );
 }
+
+export default memo(Category);

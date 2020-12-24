@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Text } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { object, string } from 'yup';
@@ -150,4 +150,4 @@ const SearchModal = ({ modalizeRef }) => {
   );
 };
 
-export default SearchModal;
+export default memo(SearchModal);

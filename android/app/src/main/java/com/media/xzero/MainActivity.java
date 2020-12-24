@@ -38,4 +38,9 @@ public class MainActivity extends ReactActivity {
             }
         };
     }
+
+    @Override
+    public void invokeDefaultOnBackPressed() {
+        moveTaskToBack(true);
+    }
 }

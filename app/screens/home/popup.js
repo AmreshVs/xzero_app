@@ -12,8 +12,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { HOME_SCREEN } from 'navigation/routes';
 import { ToastMsg } from 'components/toastMsg';
 import useErrorLog from 'hooks/useErrorLog';
+import { memo } from 'react';
 
-export default function Popup() {
+const Popup = () => {
   const [modalVisible, setModalVisible] = useState(true);
   const { data, loading } = useQuery(POPUP);
   const { t } = useTranslation();
@@ -77,6 +78,8 @@ export default function Popup() {
     )
   )
 }
+
+export default memo(Popup);
 
 const styles = StyleSheet.create({
   modal: {

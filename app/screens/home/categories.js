@@ -1,10 +1,11 @@
 import React from 'react';
+import { memo } from 'react';
 import { View } from 'react-native';
 
 import Category from './category';
 import styles from './styles';
 
-export default function Categories({ data }) {
+const Categories = ({ data }) => {
   return (
     <View style={styles.container}>
       {data.map((item, index) => (
@@ -13,3 +14,5 @@ export default function Categories({ data }) {
     </View>
   );
 }
+
+export default memo(Categories);

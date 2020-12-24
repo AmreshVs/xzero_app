@@ -6,8 +6,9 @@ import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
 import useScreenDimensions from 'hooks/useScreenDimensions';
 import { isTab, smallUrl } from 'constants/commonFunctions';
+import { memo } from 'react';
 
-export default function Slider({ data }) {
+const Slider = ({ data }) => {
   const screenData = useScreenDimensions();
 
   return (
@@ -35,3 +36,5 @@ export default function Slider({ data }) {
     </Carousel>
   );
 }
+
+export default memo(Slider);
