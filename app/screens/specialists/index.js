@@ -18,8 +18,10 @@ import { ToastMsg } from 'components/toastMsg';
 import { SPECIALISTS } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
 
-let initialWhereCondition = {};
-let headerCondition = 0;
+let initialWhereCondition = {
+  _limit: -1
+};
+let headerCondition = 1;
 
 const Specialists = () => {
   const [reloading, setReloading] = useState(false);
@@ -28,9 +30,10 @@ const Specialists = () => {
 
   if (params?.id) {
     initialWhereCondition = {
+      ...initialWhereCondition,
       category: Number(params?.id),
     };
-    headerCondition = 1;
+    headerCondition = 2;
   }
 
   const [whereCondition, setWhereCondition] = useState(initialWhereCondition);

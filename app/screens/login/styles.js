@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     ...fontWeight700,
   },
   skip: {
-    top: 10,
+    top: 15,
     right: 10,
     ...positionAbsolute,
     ...textLite,

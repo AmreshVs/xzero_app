@@ -126,23 +126,14 @@ export const UPDATE_USER_WITHOUT_PASS = gql`
 `;
 
 export const ADD_FAVOURITE = gql`
-  mutation addFavourite($user_id: Int!, $offer_id: Int!){
-    addFavourite(user_id: $user_id, offer_id: $offer_id)
+  mutation addAsFavourite($user_id: Int!, $offer_id: Int!, $center: Int){
+    AddAsFavourite(user: $user_id, offer: $offer_id, center: $center)
   }
 `;
 
 export const CLEAR_FAVOURITES = gql`
-  mutation clearFavourites($user_id: ID!){
-    updateUser(
-      input: {
-        where: { id: $user_id },
-        data: { favourites: "" }
-      }
-    ){
-      user{
-        favourites
-      }
-    }
+  mutation clearFavourites($user_id: Int!){
+    ClearAllFavourites(user: $user_id)
   }
 `;
 

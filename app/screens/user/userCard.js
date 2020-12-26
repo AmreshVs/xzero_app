@@ -10,13 +10,15 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import SafeView from 'components/safeView';
 import RippleFX from 'components/rippleFx';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const UserCard = ({ edit, setEdit, data }) => {
   const { t } = useTranslation();
   const { userData } = useContext(UserDataContext);
+  const insets = useSafeAreaInsets();
 
   return (
-    <SafeView style={styles.userCardContainer}>
+    <SafeView style={[styles.userCardContainer, { marginTop: insets.top ? insets.top - 10 : 0 }]}>
       <Text style={styles.name}>{t('profile')}</Text>
       {!edit && (
         <RippleFX style={styles.iconContainer} onPress={() => setEdit(!edit)}>

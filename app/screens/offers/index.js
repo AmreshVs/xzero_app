@@ -18,8 +18,10 @@ import { ToastMsg } from 'components/toastMsg';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
 
-let initialWhereCondition = {};
-let headerCondition = 0;
+let initialWhereCondition = {
+  _limit: -1
+};
+let headerCondition = 1;
 
 export default function Offers() {
   const { params } = useRoute();
@@ -27,9 +29,10 @@ export default function Offers() {
 
   if (params?.center) {
     initialWhereCondition = {
+      ...initialWhereCondition,
       center: Number(params?.center),
     };
-    headerCondition = 1;
+    headerCondition = 2;
   }
 
   const [reloading, setReloading] = useState(false);
@@ -91,7 +94,7 @@ export default function Offers() {
             <FlatList
               keyExtractor={(item) => String(item.id)}
               data={data && data?.offerListWithFavourites}
-              renderItem={({ item }) => <Offer data={item} />}
+              renderItem={({ item }) => <Offer data={item} center={Number(params?.center)} />}
               initialNumToRender={6}
               maxToRenderPerBatch={10}
               windowSize={10}

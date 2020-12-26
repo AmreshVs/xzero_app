@@ -19,7 +19,8 @@ import { UserDataContext } from 'context';
 import { LOGIN_SCREEN } from 'navigation/routes';
 
 let queryInput = {
-  status: 1
+  status: 1,
+  _limit: -1
 };
 
 const Vouchers = ({ navigation }) => {

@@ -64,7 +64,7 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
             onPress={() => handlePayment()}
             disabled={userData?.address === null}
           >
-            {t('continue_to_pay')} {promocodeData?.discountedPrice} {t('aed')}
+            {promocodeData?.discountedPrice === 0 ? t('free') : `${t('continue_to_pay')} ${promocodeData?.discountedPrice} ${t('aed')}`}
           </Button>
         </View>
       }

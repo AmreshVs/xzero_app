@@ -85,7 +85,23 @@ export const GET_CENTERS = gql`
 
 export const OFFERS_LIST = gql`
   query offersList($where: JSON, $user_id: Int){
-    offerListWithFavourites(where: $where, user_id: $user_id)
+    offerListWithFavourites(where: $where, user_id: $user_id){
+      id
+      title_en
+      title_ar
+      desc_en
+      desc_ar
+      discount
+      actual_price
+      discounted_price
+      is_favourite
+      featured_img{
+        url
+      }
+      center{
+        id
+      }
+    }
   }
 `;
 
@@ -95,6 +111,7 @@ export const OFFERS_DETAIL = gql`
       id
       discount
       center{
+        id
         title_en
         title_ar
       }
@@ -113,7 +130,7 @@ export const OFFERS_DETAIL = gql`
       text_en
       text_ar
     }
-    offerIsFavourite(id: $id, user_id: $user_id)
+    offerIsFavourite(offer_id: $id, user_id: $user_id)
   }
 `;
 
@@ -129,6 +146,8 @@ export const FAVOURITES_BY_USER = gql`
         url  
       }
       discount
+      actual_price
+      discounted_price
     }
   }
 `;
@@ -276,7 +295,8 @@ export const BASIC_INFORMATION = gql`
 export const GET_GIFTS = gql`
   query GetGifts($membership_plan: Int){
     AvailableGifts(where: {
-      membership_plan: $membership_plan
+      membership_plan: $membership_plan,
+      _limit: -1
     }){
       gifts{
         id

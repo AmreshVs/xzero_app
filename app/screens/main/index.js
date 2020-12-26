@@ -12,6 +12,7 @@ import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { memo } from 'react';
+import { saveUserDataLocally } from 'screens/login/helpers';
 
 const Main = ({ navigation }) => {
   const client = useApolloClient();
@@ -93,6 +94,7 @@ const Main = ({ navigation }) => {
             });
 
             if (data?.user?.confirmed || data?.user?.provider !== 'local') {
+              await saveUserDataLocally('xzero_user', { ...loginData, ...data?.user });
               navigation.replace(HOME_SCREEN);
             }
             else {

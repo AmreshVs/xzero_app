@@ -28,7 +28,7 @@ export default function NoData({ topNav, reload, reloading }) {
 
   return (
     <>
-      {/* <TopStatusBar /> */}
+      <TopStatusBar />
       <View style={styles.container}>
         <Image source={require('../../../assets/no_data.jpg')} style={styles.image} />
         {reload && (

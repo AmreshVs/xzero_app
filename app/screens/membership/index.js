@@ -174,6 +174,7 @@ const Membership = () => {
             <Renew membershipData={note.membershipData} expired />
           ) : null}
           {!member && <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />}
+          <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />
           {!member || numOfDays !== null && numOfDays < 10 ? <GetHelp /> : null}
         </Box>
       </ScrollView>
@@ -185,7 +186,7 @@ const Membership = () => {
         scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
         FooterComponent={
           <View style={styles.footer}>
-            <Button onPress={confirmBuy}>{t('buy_membership')} - {promocodeData?.discountedPrice || firstPlanPrice} {t('aed')}</Button>
+            <Button onPress={confirmBuy}>{promocodeData?.discountedPrice === 0 ? t('free') : `${t('buy_membership')} - ${promocodeData?.discountedPrice || firstPlanPrice} ${t('aed')}`}</Button>
           </View>
         }
       >

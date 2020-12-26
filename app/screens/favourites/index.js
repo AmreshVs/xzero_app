@@ -17,6 +17,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { FAVOURITES_TAB_SCREEN } from 'navigation/routes';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
+import { ToastMsg } from 'components/toastMsg';
 
 const Favourites = () => {
   const { t } = useTranslation();
@@ -55,7 +56,7 @@ const Favourites = () => {
         },
       });
       setReloading(false);
-      if (Object.keys(data?.updateUser?.user).length) {
+      if (data?.ClearAllFavourites) {
         reload();
       }
     }

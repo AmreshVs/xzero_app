@@ -71,14 +71,14 @@ const getStyles = (colors, status, width, color, size) => {
     },
     button: {
       backgroundColor: btnColor,
-      padding: size === 'small' ? 7 : 14,
+      padding: size === 'small' ? 7 : 12,
       borderRadius: 30,
       ...centerStyle,
     },
     outlineButton: {
       borderColor: color || btnColor,
       borderWidth: 1.5,
-      padding: size === 'small' ? 6 : 14,
+      padding: size === 'small' ? 6 : 12,
       borderRadius: 30,
       ...centerStyle,
     },

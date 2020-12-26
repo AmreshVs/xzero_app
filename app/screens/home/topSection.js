@@ -10,20 +10,21 @@ import colors from 'constants/colors';
 import Box from 'components/box';
 import RippleFX from 'components/rippleFx';
 import Row from 'components/row';
-import useUserData from 'hooks/useUserData';
-import { firstLetterUpper, getUserData } from 'constants/commonFunctions';
+import { firstLetterUpper } from 'constants/commonFunctions';
 import AsyncStorage from '@react-native-community/async-storage';
 import { GIFTS, HOME_SCREEN, NOTIFICATIONS } from 'navigation/routes';
 import styles from './styles';
 import useErrorLog from 'hooks/useErrorLog';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const TopSection = ({ handleModalOpen }) => {
   const { push, toggleDrawer } = useNavigation();
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
   const { t, i18n } = useTranslation();
+  const insets = useSafeAreaInsets();
 
   let name = userData?.username ?? '';
   let email = userData?.email ?? '';
@@ -50,7 +51,7 @@ const TopSection = ({ handleModalOpen }) => {
 
   return (
     <>
-      <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={styles.gradient} />
+      <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={[styles.gradient, { height: styles.gradient.height + insets.top }]} />
       <SafeView style={styles.topSectionContainer} noBottom>
         <Box style={styles.navContainer}>
           <Row>

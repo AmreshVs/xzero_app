@@ -21,7 +21,7 @@ import { UserDataContext } from 'context';
 import { ToastMsg } from 'components/toastMsg';
 import { isTab, thumbnailUrl } from 'constants/commonFunctions';
 
-function Offer({ data, favourites }) {
+function Offer({ data, center, favourites }) {
   const client = useApolloClient();
   const { push } = useNavigation();
   const { userData } = useContext(UserDataContext);
@@ -43,7 +43,7 @@ function Offer({ data, favourites }) {
   const handleFavourite = async (id) => {
     setFavourite(!favourite);
     try {
-      await addFavourite(client, id);
+      await addFavourite(client, id, center);
     }
     catch (error) {
       console.log('Add Favourite error', error);

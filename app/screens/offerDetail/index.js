@@ -61,7 +61,7 @@ const OfferDetail = () => {
 
   const handleFavourite = async (offer_id) => {
     setFavourite(!favourite);
-    await addFavourite(client, Number(offer_id));
+    await addFavourite(client, Number(offer_id), Number(data?.offer?.center?.id));
   };
 
   useEffect(() => {

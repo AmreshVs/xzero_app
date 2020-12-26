@@ -19,8 +19,10 @@ import { CENTERS_SCREEN } from 'navigation/routes';
 import { ToastMsg } from 'components/toastMsg';
 import { memo } from 'react';
 
-let initialWhereCondition = {};
-let headerCondition = 0;
+let initialWhereCondition = {
+  _limit: -1
+};
+let headerCondition = 1;
 
 const Centers = () => {
   const { params } = useRoute();
@@ -28,9 +30,10 @@ const Centers = () => {
 
   if (params?.id) {
     initialWhereCondition = {
+      ...initialWhereCondition,
       category: Number(params?.id) || 0,
     };
-    headerCondition = 1;
+    headerCondition = 2;
   }
 
   const [reloading, setReloading] = useState(false);

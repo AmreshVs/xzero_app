@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import Column from 'components/column';
 import colors from 'constants/colors';
-import { getUserData, thumbnailUrl } from 'constants/commonFunctions';
+import { getUserData, isTab, thumbnailUrl } from 'constants/commonFunctions';
 import Box from 'components/box';
 import Row from 'components/row';
 import Chip from 'components/chip';
@@ -26,7 +26,7 @@ const Center = ({ data }) => {
   };
 
   return (
-    <Box width="49.4%">
+    <Box width={isTab() ? '49.4%' : '100%'}>
       <RippleFX style={styles.centerContainer} onPress={() => handlePress(data?.id)}>
         <Row>
           <VHCenter paddingLeft={10}>

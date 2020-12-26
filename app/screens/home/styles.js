@@ -175,6 +175,14 @@ const mobileStyles = StyleSheet.create({
     borderRadius: 50,
     padding: 10,
     overflow: 'hidden'
+  },
+  referContainer: {
+    padding: 10
+  },
+  referGradient: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute'
   }
 });
 

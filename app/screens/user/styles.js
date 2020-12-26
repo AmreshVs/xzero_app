@@ -76,8 +76,8 @@ const mobileStyles = StyleSheet.create({
     ...justifyContentCenter,
     ...alignItemsCenter,
   },
-  topContaier: {
-    height: 220
+  topContainer: {
+    height: 220,
   },
   userIconContainer: {
     ...padding10,

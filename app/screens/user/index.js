@@ -87,14 +87,14 @@ const User = () => {
 
   return (
     <>
-      <Row style={styles.topContaier} hcenter>
+      <Row style={styles.topContainer} hcenter>
         <LinearGradient
           colors={[colors.gradient1, colors.gradient2]}
           style={styles.gradient}
         />
         <UserCard edit={edit} setEdit={setEdit} data={data?.user} />
       </Row>
-      <SafeView style={styles.safeView} loading={loading} noTop noBottom>
+      <Box style={styles.safeView} loading={loading}>
         <ScrollView
           contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
@@ -124,7 +124,7 @@ const User = () => {
             </Box>
           </KeyboardAvoidingView>
         </ScrollView>
-      </SafeView>
+      </Box>
     </>
   );
 };

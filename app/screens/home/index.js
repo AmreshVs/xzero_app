@@ -20,6 +20,7 @@ import Popup from './popup';
 import useErrorLog from 'hooks/useErrorLog';
 import { HOME_SCREEN } from 'navigation/routes';
 import { memo } from 'react';
+import ReferCard from './referCard';
 
 let openLink = 0;
 let backupLink = "";
@@ -124,6 +125,9 @@ const Home = () => {
           <Heading marginBottom={10}>{t('top_offers')}</Heading>
           <TopCenters data={topCenters} />
         </Box>
+        {/* <Box padding={10} paddingVertical={0}>
+          <ReferCard />
+        </Box> */}
       </>
     );
   };
