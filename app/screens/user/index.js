@@ -98,7 +98,6 @@ const User = () => {
         <ScrollView
           contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
         >
           <KeyboardAvoidingView behavior="position">
             <Box style={styles.profileViewContainer}>

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     ...padding10,
   },
   clearButton: {
-    bottom: 0,
+    bottom: 50,
     ...zIndex1,
     ...paddingBottom10,
     ...padding15,

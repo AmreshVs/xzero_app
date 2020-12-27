@@ -177,12 +177,29 @@ const mobileStyles = StyleSheet.create({
     overflow: 'hidden'
   },
   referContainer: {
-    padding: 10
+    padding: 0,
+    overflow: 'hidden'
   },
   referGradient: {
     width: '100%',
     height: '100%',
-    position: 'absolute'
+    position: 'absolute',
+  },
+  gtitle: {
+    fontWeight: '700',
+    color: colors.white
+  },
+  cardImg: {
+    flex: 1,
+    resizeMode: 'contain',
+  },
+  contentContainer: {
+    padding: 10,
+    height: '100%',
+  },
+  gcaption: {
+    color: colors.white,
+    marginVertical: 5
   }
 });
 

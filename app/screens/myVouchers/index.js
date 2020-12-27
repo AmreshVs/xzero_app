@@ -20,8 +20,9 @@ import useErrorLog from 'hooks/useErrorLog';
 import { MY_VOUCHERS } from 'navigation/routes';
 import { ToastMsg } from 'components/toastMsg';
 import IsLoggedIn from 'hoc/isLoggedIn';
+import { useNavigation } from '@react-navigation/native';
 
-const MyVouchers = () => {
+const MyVouchers = (props) => {
   const [reloading, setReloading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [select, setSelect] = useState(0);
@@ -30,6 +31,7 @@ const MyVouchers = () => {
   const { logError } = useErrorLog();
   const client = useApolloClient();
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   const reload = async () => {
     setReloading(true);
@@ -74,7 +76,12 @@ const MyVouchers = () => {
 
   return (
     <SafeView topNav>
-      <TopNavigator title={t('my_vouchers')} gradient leftIcon={null} />
+      <TopNavigator
+        leftIconName="bars"
+        leftClick={() => navigation.toggleDrawer()}
+        title={t('my_vouchers')}
+        gradient
+      />
       <Row>
         {tab.map((item, index) => (
           <RippleFX style={[styles.textContainer, select === item?.id ? styles.selectedBorder : {}]} onPress={() => handlePress(item?.id)} key={index}>

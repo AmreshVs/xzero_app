@@ -94,7 +94,7 @@
   "apply_promocode": "Apply the code to get discount on this purchase",
   "delivery_address": "Delivery Address",
   "apply": "Apply",
-  "promocode": "Promocode",
+  "promocode": "Enter code",
   "address": "Address",
   "aed": "AED",
   "buy": "Buy",
@@ -187,5 +187,6 @@
   "confirm": "Confirm",
   "pay": "Pay",
   "queue_full": "Queue full!, Please wait and we will notify you once queue is free",
-  "full_free": "Free!"
+  "full_free": "Free!",
+  "favourites": "Favorites"
 }

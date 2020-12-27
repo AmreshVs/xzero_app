@@ -21,6 +21,8 @@ import useErrorLog from 'hooks/useErrorLog';
 import { HOME_SCREEN } from 'navigation/routes';
 import { memo } from 'react';
 import ReferCard from './referCard';
+import GiftCard from './giftsCard';
+import DrawCard from './drawCard';
 
 let openLink = 0;
 let backupLink = "";
@@ -117,17 +119,23 @@ const Home = () => {
         <TopSection handleModalOpen={handleModalOpen} data={counts} />
         <MembershipBox data={counts} />
         <Slider data={banners} />
-        <Box padding={10}>
+        <Box padding={10} paddingBottom={0}>
           <Heading marginBottom={10}>{t('discover_categories')}</Heading>
           <Categories data={categories} />
+        </Box>
+        <Box padding={10} paddingTop={0}>
+          <DrawCard />
         </Box>
         <Box padding={10} paddingVertical={0}>
           <Heading marginBottom={10}>{t('top_offers')}</Heading>
           <TopCenters data={topCenters} />
         </Box>
-        {/* <Box padding={10} paddingVertical={0}>
+        <Box padding={10} paddingTop={0}>
           <ReferCard />
-        </Box> */}
+        </Box>
+        <Box padding={10} paddingTop={0}>
+          <GiftCard />
+        </Box>
       </>
     );
   };

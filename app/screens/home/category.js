@@ -9,8 +9,8 @@ import { CENTERS_SCREEN, SPECIALIST_HELP } from 'navigation/routes';
 import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
-import { smallUrl } from 'constants/commonFunctions';
 import { memo } from 'react';
+import { smallUrl } from 'constants/commonFunctions';
 
 const Category = ({ data }) => {
   if (data?.centersCount <= 0) {
@@ -38,7 +38,11 @@ const Category = ({ data }) => {
 
   return (
     <RippleFX style={styles.categoryContainer} onPress={navigateToCenters}>
-      <ProgressiveImage source={{ uri: IMAGE_URL + smallUrl(data?.featured_img) }} style={styles.image} />
+      <ProgressiveImage
+        thumbnailSource={{ uri: IMAGE_URL + data?.featured_img }}
+        source={{ uri: IMAGE_URL + smallUrl(data?.featured_img) }}
+        style={styles.image}
+      />
       <Box padding={10}>
         <Text style={styles.heading}>{data?.[`title_${language}`]}</Text>
         <Text style={styles.caption}>

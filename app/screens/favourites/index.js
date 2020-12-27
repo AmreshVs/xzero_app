@@ -18,6 +18,8 @@ import { FAVOURITES_TAB_SCREEN } from 'navigation/routes';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { ToastMsg } from 'components/toastMsg';
+import { useNavigation } from '@react-navigation/native';
+import TopNavigator from 'components/topNavigator';
 
 const Favourites = () => {
   const { t } = useTranslation();
@@ -25,6 +27,7 @@ const Favourites = () => {
   const { userData } = useContext(UserDataContext);
   const client = useApolloClient();
   const { logError } = useErrorLog();
+  const navigation = useNavigation();
 
   const { data, loading, refetch: _refetch, error } = useQuery(FAVOURITES_BY_USER, {
     variables: { user_id: Number(userData?.id) || 0 },
@@ -76,11 +79,16 @@ const Favourites = () => {
 
   return (
     <SafeView noBottom loading={loading}>
+      <TopNavigator
+        leftIconName="bars"
+        leftClick={() => navigation.toggleDrawer()}
+        title={t('favourites')}
+        gradient
+      />
       {data?.favouritesByUser === null || !data?.favouritesByUser?.length ? (
         <NoData reload={() => reload()} reloading={reloading} />
       ) : (
           <>
-            <TopStatusBar />
             <FlatList
               key={(item) => String(item.id)}
               data={data?.favouritesByUser}

@@ -13,7 +13,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { GIFTS } from 'navigation/routes';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import { memo } from 'react';
 
@@ -22,6 +22,7 @@ const Gifts = () => {
   const { logError } = useErrorLog();
   const { userData } = useContext(UserDataContext);
   const { params } = useRoute();
+  const navigation = useNavigation();
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_GIFTS, {
     variables: {
@@ -41,7 +42,12 @@ const Gifts = () => {
 
   return (
     <SafeView loading={loading} topNav>
-      <TopNavigator title={t('gifts')} gradient leftIcon={params?.drawer ? false : true} />
+      <TopNavigator
+        title={t('gifts')}
+        leftIconName={params?.drawer && 'bars'}
+        leftClick={() => params?.drawer ? navigation.toggleDrawer() : navigation.pop()}
+        gradient
+      />
       <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={_refetch} />} removeClippedSubviews={true} >
         <GenerateGift />
         <AvailableGifts data={data?.AvailableGifts?.gifts} />

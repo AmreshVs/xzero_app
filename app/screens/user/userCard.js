@@ -11,20 +11,32 @@ import { UserDataContext } from 'context';
 import SafeView from 'components/safeView';
 import RippleFX from 'components/rippleFx';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import TopNavigator from 'components/topNavigator';
+import { useNavigation } from '@react-navigation/native';
 
 const UserCard = ({ edit, setEdit, data }) => {
   const { t } = useTranslation();
   const { userData } = useContext(UserDataContext);
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
+
+  const RightIcon = () => {
+    return (
+      <RippleFX style={styles.rightIconContainer} onPress={() => setEdit(!edit)}>
+        <FontAwesomeIcon icon="edit" size={17} color={colors.white} />
+      </RippleFX>
+    );
+  };
 
   return (
-    <SafeView style={[styles.userCardContainer, { marginTop: insets.top ? insets.top - 10 : 0 }]}>
-      <Text style={styles.name}>{t('profile')}</Text>
-      {!edit && (
-        <RippleFX style={styles.iconContainer} onPress={() => setEdit(!edit)}>
-          <FontAwesomeIcon icon="edit" size={17} color={colors.white} />
-        </RippleFX>
-      )}
+    <View style={[styles.userCardContainer, { marginTop: insets.top ? insets.top - 10 : 0 }]}>
+      <TopNavigator
+        title={t('profile')}
+        leftIconName="bars"
+        leftClick={() => navigation.toggleDrawer()}
+        rightContainer={<RightIcon />}
+        color="#FFF"
+      />
       <View style={styles.userIconContainer}>
         {userData?.profile_pic ?
           <Image style={styles.profile_pic} source={{ uri: userData?.profile_pic }} />
@@ -36,7 +48,7 @@ const UserCard = ({ edit, setEdit, data }) => {
       <Text style={styles.userCardCaption}>
         {t('user_since')} {data?.created_at && handleDOB(data?.created_at)}
       </Text>
-    </SafeView>
+    </View>
   );
 }
 

@@ -17,13 +17,14 @@ import { ToastMsg } from 'components/toastMsg';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { LOGIN_SCREEN } from 'navigation/routes';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 let queryInput = {
   status: 1,
   _limit: -1
 };
 
-const Vouchers = ({ navigation }) => {
+const Vouchers = () => {
   const [reloading, setReloading] = useState(false);
   const [voucherData, setVoucherData] = useState([]);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
@@ -31,6 +32,8 @@ const Vouchers = ({ navigation }) => {
   const modalizeRef = useRef(null);
   const { logError } = useErrorLog();
   const { t } = useTranslation();
+  const { params } = useRoute();
+  const navigation = useNavigation();
 
   if (userData && userData?.membership !== null) {
     queryInput = {
@@ -82,7 +85,12 @@ const Vouchers = ({ navigation }) => {
   return (
     <>
       <SafeView loading={loading} topNav>
-        <TopNavigator title={t('vouchers')} gradient leftIcon={false} />
+        <TopNavigator
+          title={t('vouchers')}
+          leftIconName={params?.drawer && 'bars'}
+          leftClick={() => params?.drawer ? navigation.toggleDrawer() : navigation.pop()}
+          gradient
+        />
         {!data?.vouchers?.length ? (
           <NoData reload={() => _refetch()} topNav />
         ) : (

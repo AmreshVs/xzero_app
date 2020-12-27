@@ -37,14 +37,13 @@ class ProgressiveImage extends React.Component {
     }).start();
     this.setState({ imgLoaded: true });
   };
-
   render() {
     const { thumbnailSource, source, style, noBg = false, noCStyle = false, ...props } = this.props;
 
     return (
       <View style={[!noCStyle && style, !noBg && styles.container]}>
         <Animated.Image
-          source={{ uri: source.uri.replace('/uploads/', '/uploads/' + THUMBNAIL_SLUG) }}
+          source={{ uri: (thumbnailSource || source).uri.replace('/uploads/', '/uploads/' + THUMBNAIL_SLUG) }}
           style={[styles.imageOverlay, style, { opacity: this.thumbnailAnimated }]}
           onLoad={this.handleThumbnailLoad}
           blurRadius={1}

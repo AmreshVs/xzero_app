@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
 
 import Button from 'components/button';
 import Row from 'components/row';
@@ -19,6 +19,7 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { saveUserDataLocally } from 'screens/login/helpers';
 import { memo } from 'react';
+import { IMAGE_URL } from 'constants/common';
 
 let otpArray = [];
 
@@ -40,10 +41,6 @@ const Otp = () => {
   const { params } = useRoute();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    handleResend();
-  }, []);
-
   const [toggleTimer, runningStatus] = useInterval(() => {
     if (timer < 100) {
       setTimer(count => count + 1);
@@ -52,6 +49,11 @@ const Otp = () => {
 
     toggleTimer();
   }, 600);
+
+  useEffect(() => {
+    handleResend();
+    toggleTimer();
+  }, []);
 
   const handleType = (text, index) => {
     otpArray = otp;
@@ -86,7 +88,7 @@ const Otp = () => {
 
     if (data?.verifyOtp?.status) {
       setUserData(prevData => ({ ...prevData, confirmed: true }));
-      saveUserDataLocally('xzero_user', userData);
+      saveUserDataLocally('xzero_user', { ...userData, confirmed: true });
       navigate(HOME_SCREEN);
     }
 
@@ -116,53 +118,55 @@ const Otp = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: 'https://image.freepik.com/free-vector/security-otp-one-time-password-smartphone-shield_9904-104.jpg' }} />
-      <Text style={styles.caption}>{t('otp_desc')}</Text>
-      <Row style={styles.inputsContainer}>
-        {otp.map((item, index) => {
-          return (
-            <Textbox
-              ref={item.ref}
-              placeholder=""
-              value={otp[index].value}
-              style={styles.textbox}
-              onChangeText={(text) => handleType(text, index)}
-              key={index}
-            />
-          )
+    <KeyboardAvoidingView behavior="position">
+      <View style={styles.container}>
+        <Image style={styles.image} source={{ uri: IMAGE_URL + '/uploads/otp_security_71bddb259b.webp' }} />
+        <Text style={styles.caption}>{t('otp_desc')}</Text>
+        <Row style={styles.inputsContainer}>
+          {otp.map((item, index) => {
+            return (
+              <Textbox
+                ref={item.ref}
+                placeholder=""
+                value={otp[index].value}
+                style={styles.textbox}
+                onChangeText={(text) => handleType(text, index)}
+                key={index}
+              />
+            )
+          }
+          )}
+        </Row>
+        {runningStatus ?
+          <Box marginTop={20}>
+            <Text style={styles.caption}>{t('resend_otp')} {timer}</Text>
+          </Box>
+          :
+          <Row marginTop={20}>
+            <Button
+              status="chip_1"
+              size="small"
+              width="30%"
+              onPress={() => handleResend()}
+            >
+              {t('resendotp')}
+            </Button>
+          </Row>
         }
-        )}
-      </Row>
-      {runningStatus ?
-        <Box marginTop={20}>
-          <Text style={styles.caption}>{t('resend_otp')} {timer}</Text>
-        </Box>
-        :
         <Row marginTop={20}>
           <Button
-            status="chip_1"
-            size="small"
-            width="30%"
-            onPress={() => handleResend()}
+            width="60%"
+            icon="check"
+            status={'primary'}
+            onPress={() => handleConfirm()}
+            loading={loading}
+            disabled={otp[0].value === '' && otp[1].value === '' && otp[2].value === '' && otp[3].value === ''}
           >
-            {t('resendotp')}
+            {t('confirm')}
           </Button>
         </Row>
-      }
-      <Row marginTop={20}>
-        <Button
-          width="60%"
-          icon="check"
-          status={'primary'}
-          onPress={() => handleConfirm()}
-          loading={loading}
-          disabled={otp[0].value === '' && otp[1].value === '' && otp[2].value === '' && otp[3].value === ''}
-        >
-          {t('confirm')}
-        </Button>
-      </Row>
-    </View>
+      </View>
+    </KeyboardAvoidingView>
   )
 }
 

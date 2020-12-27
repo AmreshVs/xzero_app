@@ -624,6 +624,8 @@ export const GET_MEMBER_DATA = gql`
       language
       notification_token
       address
+      confirmed
+      provider
       membership{
         id
         package{

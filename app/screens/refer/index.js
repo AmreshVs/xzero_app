@@ -25,6 +25,7 @@ import { ToastMsg } from 'components/toastMsg';
 import { REFER } from 'navigation/routes';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import { memo } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const Refer = () => {
   const [modalComp, setModalComp] = useState(false);
@@ -35,6 +36,8 @@ const Refer = () => {
   const { logError } = useErrorLog();
   const { userData } = useContext(UserDataContext);
   const { t } = useTranslation();
+  const navigation = useNavigation();
+  const { params } = useRoute();
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_REFER_HISTORY, {
     variables: {
@@ -99,7 +102,6 @@ const Refer = () => {
       }
     } catch (error) {
       console.log('Share and earn error', error);
-      alert(error.message);
     }
   }
 
@@ -107,7 +109,12 @@ const Refer = () => {
 
   return (
     <SafeView style={styles.container} loading={loading} topNav>
-      <TopNavigator title={t('refer_earn')} leftIcon={null} gradient />
+      <TopNavigator
+        title={t('refer_earn')}
+        leftIconName={params?.drawer && 'bars'}
+        leftClick={() => params?.drawer ? navigation.toggleDrawer() : navigation.pop()}
+        gradient
+      />
       <ScrollView
         contentContainerStyle={styles.shareContainer}
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, Animated } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -7,12 +7,19 @@ import colors from 'constants/colors';
 import RippleFX from 'components/rippleFx';
 import getIconName from './getIconName';
 import style from "./style";
+import { MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
 
 const TabItem = ({ options, route, index, state, navigation }) => {
   const insets = useSafeAreaInsets();
   const styles = style(insets, state?.history.length);
   const isFocused = state.index === index;
   const selectedTabTextAnim = useRef(new Animated.Value(-2)).current;
+
+  useEffect(() => {
+    if (isFocused) {
+      onPress();
+    }
+  }, [isFocused]);
 
   const label = options.tabBarLabel !== undefined
     ? options.tabBarLabel
@@ -33,7 +40,9 @@ const TabItem = ({ options, route, index, state, navigation }) => {
     }).start();
 
     if (!isFocused && !event.defaultPrevented) {
-      navigation.navigate(route.name);
+      navigation.navigate(route.name, {
+        drawer: true
+      });
     }
   };
 
@@ -53,15 +62,15 @@ const TabItem = ({ options, route, index, state, navigation }) => {
         testID={options.tabBarTestID}
         onPress={onPress}
         onLongPress={onLongPress}
-        style={route.name === 'Member' ? styles.memberIconContainer : styles.iconContainer}
+        style={route.name === MEMBERSHIP_TAB_SCREEN ? styles.memberIconContainer : styles.iconContainer}
       >
         <FontAwesomeIcon
           icon={getIconName(route.name)}
-          color={route.name === 'Member' ? colors.white : isFocused ? colors.primary : colors.text_lite}
+          color={route.name === MEMBERSHIP_TAB_SCREEN ? colors.white : isFocused ? colors.primary : colors.text_lite}
           size={22}
         />
       </RippleFX>
-      {route.name !== 'Member' ? isFocused && <Animated.Text style={[styles.itemText, { color: colors?.primary, transform: [{ translateY: selectedTabTextAnim }] }]}>{label}</Animated.Text> : null}
+      {route.name !== MEMBERSHIP_TAB_SCREEN ? isFocused && <Animated.Text style={[styles.itemText, { color: colors?.primary, transform: [{ translateY: selectedTabTextAnim }] }]}>{label}</Animated.Text> : null}
     </View>
   );
 };

@@ -29,9 +29,11 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
+import TopNavigator from 'components/topNavigator';
 
 let numOfDays = null;
 let render = 0;
+let context = {};
 
 const Membership = () => {
   const [member, setMember] = useState(false);
@@ -43,7 +45,7 @@ const Membership = () => {
   const modalizeRef = useRef(null);
   const client = useApolloClient();
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: firstPlanPrice || 0 });
-  const { push } = useNavigation();
+  const { push, toggleDrawer } = useNavigation();
   const { userData, setUserData } = useContext(UserDataContext);
   const { t, i18n } = useTranslation();
   const { logError } = useErrorLog();
@@ -53,10 +55,14 @@ const Membership = () => {
 
   let firstPlanPrice = membershipPlansData?.membershipPlans[0]?.price;
 
-  if (firstPlanPrice !== undefined && render === 0) {
+  const defaultData = () => {
     setPromocodeData({ discountedPrice: firstPlanPrice });
     setPlanData({ ...planData, data: membershipPlansData?.membershipPlans[0] });
     render = 1;
+  }
+
+  if (firstPlanPrice !== undefined && render === 0) {
+    defaultData();
   }
 
   useEffect(() => {
@@ -64,17 +70,22 @@ const Membership = () => {
   }, []);
 
   const getMemberData = async () => {
+
+    if (userData?.membership !== null) {
+      context = {
+        headers: {
+          authorization: 'Bearer ' + userData?.jwt,
+        },
+      }
+    }
+
     let { data, error } = await client.query({
       query: GET_MEMBERSHIP_BY_USER,
       variables: {
         user_id: Number(userData?.id),
         user: Number(userData?.id),
       },
-      context: {
-        headers: {
-          authorization: 'Bearer ' + userData?.jwt,
-        },
-      },
+      context: context,
     });
 
     if (error) {
@@ -151,7 +162,12 @@ const Membership = () => {
 
   return (
     <SafeView style={styles.safeContainer} noBottom loading={loading}>
-      {Platform.OS === 'ios' && <TopStatusBar />}
+      <TopNavigator
+        title={t('my_membership')}
+        leftIconName="bars"
+        leftClick={() => toggleDrawer()}
+        gradient
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
@@ -174,7 +190,6 @@ const Membership = () => {
             <Renew membershipData={note.membershipData} expired />
           ) : null}
           {!member && <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />}
-          <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />
           {!member || numOfDays !== null && numOfDays < 10 ? <GetHelp /> : null}
         </Box>
       </ScrollView>
@@ -182,8 +197,8 @@ const Membership = () => {
         ref={modalizeRef}
         childrenStyle={styles.modal}
         modalTopOffset={isTab() ? SCREEN_HEIGHT / 2 : 100}
-        snapPoint={SCREEN_HEIGHT / 2}
         scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
+        onClose={() => defaultData()}
         FooterComponent={
           <View style={styles.footer}>
             <Button onPress={confirmBuy}>{promocodeData?.discountedPrice === 0 ? t('free') : `${t('buy_membership')} - ${promocodeData?.discountedPrice || firstPlanPrice} ${t('aed')}`}</Button>
