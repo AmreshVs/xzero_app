@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import ProgressiveImage from 'components/progressiveImage';
 
 import Card from 'components/card';
 import styles from './styles';
@@ -8,6 +9,8 @@ import Row from 'components/row';
 import RippleFX from 'components/rippleFx';
 import { useNavigation } from '@react-navigation/native';
 import { VOUCHERS } from 'navigation/routes';
+import { IMAGE_URL } from 'constants/common';
+import { thumbnailUrl } from 'constants/commonFunctions';
 
 const DrawCard = () => {
   const { navigate } = useNavigation();
@@ -18,7 +21,11 @@ const DrawCard = () => {
         <LinearGradient colors={['#FF416C', '#f80759']} style={styles.referGradient} />
         <Row style={styles.cardContent}>
           <View width="40%" paddingLeft={10}>
-            <Image style={styles.cardImg} source={{ uri: 'https://be.xzero.app/v2/uploads/join_draw_61157bc97c.webp' }} />
+            <ProgressiveImage
+              style={styles.cardImg}
+              source={{ uri: IMAGE_URL + '/uploads/join_draw_61157bc97c.webp' }}
+              resizeMode="contain"
+            />
           </View>
           <View style={styles.contentContainer} width="60%">
             <Text style={styles.gtitle}>Participate on Draws, Be a Winner everytime!</Text>

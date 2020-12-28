@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import Row from 'components/row';
-import SafeView from 'components/safeView';
 import colors from 'constants/colors';
 import ProfileView from './profileView';
 import ProfileEdit from './profileEdit';
@@ -19,7 +18,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { UserDataContext } from 'context';
 import { ToastMsg } from 'components/toastMsg';
 import { PROFILE_TAB_SCREEN } from 'navigation/routes';
-import { memo } from 'react';
+import SafeView from 'components/safeView';
 
 const User = () => {
   const { t } = useTranslation();
@@ -86,7 +85,7 @@ const User = () => {
   }
 
   return (
-    <>
+    <SafeView loading={loading}>
       <Row style={styles.topContainer} hcenter>
         <LinearGradient
           colors={[colors.gradient1, colors.gradient2]}
@@ -94,7 +93,7 @@ const User = () => {
         />
         <UserCard edit={edit} setEdit={setEdit} data={data?.user} />
       </Row>
-      <Box style={styles.safeView} loading={loading}>
+      <Box style={styles.safeView}>
         <ScrollView
           contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
@@ -124,7 +123,7 @@ const User = () => {
           </KeyboardAvoidingView>
         </ScrollView>
       </Box>
-    </>
+    </SafeView>
   );
 };
 

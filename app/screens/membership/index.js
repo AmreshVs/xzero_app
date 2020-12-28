@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
-import { ScrollView, RefreshControl, Text, View, Platform } from 'react-native';
+import { ScrollView, RefreshControl, Text, View } from 'react-native';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { Modalize } from 'react-native-modalize';
 import { useNavigation } from '@react-navigation/native';
@@ -15,7 +15,6 @@ import QRCode from './qrcode';
 import { isTab, userVerified } from 'constants/commonFunctions';
 import { GET_MEMBERSHIP_BY_USER, MEMBERSHIP_PLANS } from 'graphql/queries';
 import IsLoggedIn from 'hoc/isLoggedIn';
-import TopStatusBar from 'components/topStatusBar';
 import GetHelp from './getHelp';
 import styles from './styles';
 import Card from 'components/card';

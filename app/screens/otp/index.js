@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Image, KeyboardAvoidingView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Text, View } from 'react-native';
 
 import Button from 'components/button';
 import Row from 'components/row';
@@ -20,6 +20,7 @@ import { UserDataContext } from 'context';
 import { saveUserDataLocally } from 'screens/login/helpers';
 import { memo } from 'react';
 import { IMAGE_URL } from 'constants/common';
+import ProgressiveImage from 'components/progressiveImage';
 
 let otpArray = [];
 
@@ -120,7 +121,10 @@ const Otp = () => {
   return (
     <KeyboardAvoidingView behavior="position">
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: IMAGE_URL + '/uploads/otp_security_71bddb259b.webp' }} />
+        <ProgressiveImage
+          style={styles.image}
+          source={{ uri: IMAGE_URL + '/uploads/otp_security_71bddb259b.webp' }}
+        />
         <Text style={styles.caption}>{t('otp_desc')}</Text>
         <Row style={styles.inputsContainer}>
           {otp.map((item, index) => {

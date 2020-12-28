@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { getShadowStyle, isTab, responsiveHeight, responsiveWidth } from 'constants/commonFunctions';
+import { getShadowStyle, isTab, responsiveHeight } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from 'constants/common';
 import colors from 'constants/colors';
 import { flex, flexSpaceBetween, flexRow, borderRadius10, w100, textBoldDark, textLite, whiteBg, alignJustifyCenter, font16, positionAbsolute, colorWhite, font15, fontWeight700, marginBottom10, marginBottom5, marginTop5, borderRadius30, overflowHidden, marginLeft10, marginBottom0, colorDanger, font20, w50, h50, h200, padding15, textAlignLeft, resizeModeCover, flex1, h100px, w100px, paddingBottom5, colorPrimary } from 'constants/commonStyles';
@@ -98,8 +98,8 @@ const mobileStyles = StyleSheet.create({
   },
   sliderImage: {
     width: SCREEN_WIDTH - 20,
-    borderRadius: 10,
-    ...h200,
+    borderRadius: 5,
+    height: 240,
     ...marginBottom0,
     ...marginLeft10,
     ...marginTop5,
@@ -191,7 +191,6 @@ const mobileStyles = StyleSheet.create({
   },
   cardImg: {
     flex: 1,
-    resizeMode: 'contain',
   },
   contentContainer: {
     padding: 10,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Image, View, Platform, Linking } from 'react-native';
+import { Text, View, Platform, Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import SafeView from 'components/safeView';
@@ -24,7 +24,10 @@ export default function NewUpdate() {
     <SafeView style={styles.container} topNav>
       <TopNavigator title={t('new_update')} gradient leftIcon={false} />
       <VHCenter padding={10}>
-        <Image source={{ uri: BASE_URL + '/uploads/429_01_3a436570ac.png' }} style={styles.image} />
+        <ProgressiveImage
+          style={styles.image}
+          source={{ uri: BASE_URL + '/uploads/429_01_3a436570ac.png' }}
+        />
         <Text style={styles.title}>{t('update_available')}</Text>
         <Text style={styles.caption}>{t('please_update')}</Text>
         <View style={styles.btnContainer}>

@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { getShadowStyle, isTab } from 'constants/commonFunctions';
 import { padding10, borderRadius10, borderRadius20, marginBottom5, w100, h100, overflowHidden, whiteBg, marginBottom10, textLite, textBoldDark, h100px, paddingBottom10, marginBottom0, w100px, resizeModeContain, resizeModeCover } from 'constants/commonStyles';
+import colors from 'constants/colors';
 
 const mobileStyles = StyleSheet.create({
   flatlist: {
@@ -44,13 +45,15 @@ const mobileStyles = StyleSheet.create({
     ...borderRadius20,
     ...overflowHidden,
   },
-  chip: {
-    ...w100,
-  },
   caption: {
     ...textLite,
     ...marginBottom5,
   },
+  strike: {
+    color: colors.danger,
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid'
+  }
 });
 
 const tabStyles = StyleSheet.create({

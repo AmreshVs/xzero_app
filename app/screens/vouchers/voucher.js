@@ -8,7 +8,7 @@ import Row from 'components/row';
 import Progress from 'components/progress';
 import Divider from 'components/divider';
 import { IMAGE_URL } from 'constants/common';
-import { calculatePercentage, smallUrl } from 'constants/commonFunctions';
+import { calculatePercentage, smallUrl, thumbnailUrl } from 'constants/commonFunctions';
 import styles from './styles';
 import { useTranslation } from 'react-i18next';
 import RippleFX from 'components/rippleFx';
@@ -18,6 +18,7 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import Chip from 'components/chip';
 import colors from 'constants/colors';
+import ProgressiveImage from 'components/progressiveImage';
 
 const Voucher = ({ data, handleOpenModal }) => {
   const { t } = useTranslation();
@@ -43,7 +44,11 @@ const Voucher = ({ data, handleOpenModal }) => {
               <View style={styles.closed} />
             </>
           )}
-          <Image source={{ uri: IMAGE_URL + smallUrl(data?.featured_img?.url) }} style={styles.voucherImg} />
+          <ProgressiveImage
+            thumbailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
+            source={{ uri: IMAGE_URL + smallUrl(data?.featured_img?.url) }}
+            style={styles.voucherImg}
+          />
           <View style={styles.costContainer}>
             <Text style={styles.cost}>{(!userData || userData?.membership === null) ? data?.cost_for_non_members : data?.cost || 0} {t('aed')}</Text>
           </View>

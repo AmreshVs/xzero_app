@@ -54,7 +54,6 @@ const Notifications = () => {
             ItemSeparatorComponent={() => <Divider />}
             refreshing={reloading}
             onRefresh={reload}
-            removeClippedSubviews={true}
           />
         )}
     </SafeView>

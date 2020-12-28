@@ -14,6 +14,7 @@ import { IMAGE_URL } from 'constants/common';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import styles from './styles';
 import VHCenter from 'components/vhCenter';
+import ProgressiveImage from 'components/progressiveImage';
 
 const Center = ({ data }) => {
   const { push } = useNavigation();
@@ -30,7 +31,11 @@ const Center = ({ data }) => {
       <RippleFX style={styles.centerContainer} onPress={() => handlePress(data?.id)}>
         <Row>
           <VHCenter paddingLeft={10}>
-            <Image source={{ uri: IMAGE_URL + thumbnailUrl(data.featured_img) }} style={styles.centerImage} />
+            <ProgressiveImage
+              source={{ uri: IMAGE_URL + thumbnailUrl(data.featured_img) }}
+              style={styles.centerImage}
+              resizeMode="contain"
+            />
           </VHCenter>
           <Box padding={10} style={styles.textContainer}>
             <Text style={styles.title} numberOfLines={1}>

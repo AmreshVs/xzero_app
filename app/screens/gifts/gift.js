@@ -8,6 +8,7 @@ import { IMAGE_URL } from 'constants/common';
 import RippleFX from 'components/rippleFx';
 import styles from './styles';
 import { thumbnailUrl } from 'constants/commonFunctions';
+import ProgressiveImage from 'components/progressiveImage';
 
 const Gift = ({ data }) => {
   const { i18n } = useTranslation();
@@ -28,7 +29,10 @@ const Gift = ({ data }) => {
         <RippleFX onPress={() => setShowDesc(!showDesc)}>
           <View style={styles.giftImageContainer}>
             <View style={styles.giftImages}>
-              <Image source={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }} style={styles.gift} />
+              <ProgressiveImage
+                source={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
+                style={styles.gift}
+              />
             </View>
             <Image source={require('../../../assets/gift3.png')} style={styles.giftImage} />
             <Text style={styles.title} numberOfLines={1}>{data?.[`name_${language}`]}</Text>

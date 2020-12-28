@@ -147,7 +147,6 @@ const Home = () => {
           style={styles.scrollContainer}
           refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
           showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
         >
           <Header />
         </ScrollView>

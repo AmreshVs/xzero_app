@@ -12,6 +12,7 @@ import { VOUCHER_DETAIL } from 'navigation/routes';
 import styles from './styles';
 import { thumbnailUrl } from 'constants/commonFunctions';
 import { memo } from 'react';
+import ProgressiveImage from 'components/progressiveImage';
 
 const VoucherList = ({ data }) => {
   const { t, i18n } = useTranslation();
@@ -24,7 +25,10 @@ const VoucherList = ({ data }) => {
       <RippleFX onPress={() => navigate(VOUCHER_DETAIL, { id: voucher?.id })}>
         <Row>
           <Box width="30%">
-            <Image source={{ uri: IMAGE_URL + thumbnailUrl(voucher?.featured_img?.url) }} style={styles.voucherImage} />
+            <ProgressiveImage
+              style={styles.voucherImage}
+              source={{ uri: IMAGE_URL + thumbnailUrl(voucher?.featured_img?.url) }}
+            />
           </Box>
           <Box width="70%" paddingHorizontal={10}>
             <Text numberOfLines={1}>

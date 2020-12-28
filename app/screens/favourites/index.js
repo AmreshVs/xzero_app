@@ -101,7 +101,6 @@ const Favourites = () => {
               contentContainerStyle={styles.flatlist}
               refreshing={reloading}
               onRefresh={() => reload()}
-              removeClippedSubviews={true}
             />
             <View style={styles.clearButton}>
               <Button

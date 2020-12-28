@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,6 +15,7 @@ import styles from './styles';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { thumbnailUrl } from 'constants/commonFunctions';
+import ProgressiveImage from 'components/progressiveImage';
 
 const Center = ({ data }) => {
   const { push } = useNavigation();
@@ -46,7 +47,12 @@ const Center = ({ data }) => {
       </View>
       <Box padding={5}>
         <Row style={styles.imgContainer} vcenter hcenter>
-          <Image source={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img) }} style={styles.image} />
+          <ProgressiveImage
+            style={styles.image}
+            source={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img) }}
+            source={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img) }}
+            resizeMode="contain"
+          />
         </Row>
       </Box>
       <View>

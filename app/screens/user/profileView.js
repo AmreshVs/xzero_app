@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { CacheManager } from "react-native-expo-image-cache";
 
 import Row from 'components/row';
 import Box from 'components/box';
@@ -32,6 +33,7 @@ export const handlelogout = async ({ dispatch, setUserData, logError }) => {
     let removePopup = await AsyncStorage.removeItem('@xzero_popup');
     if (removeJWTData === null && removeUserData === null && removePopup === null) {
       setUserData(null);
+      await CacheManager.clearCache();
       dispatch(resetAction);
     }
   } catch (error) {

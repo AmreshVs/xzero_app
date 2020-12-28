@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -13,6 +13,7 @@ import { OFFERS_SCREEN } from 'navigation/routes';
 import styles from './styles';
 import { thumbnailUrl } from 'constants/commonFunctions';
 import { memo } from 'react';
+import ProgressiveImage from 'components/progressiveImage';
 
 const AboutCenter = ({ specialist, userData }) => {
   const { t, i18n } = useTranslation();
@@ -34,11 +35,11 @@ const AboutCenter = ({ specialist, userData }) => {
         </Text>
         <Row>
           <View style={styles.imageContainer}>
-            <Image
-              source={{
-                uri: IMAGE_URL + thumbnailUrl(specialist?.center?.featured_img.url),
-              }}
-              style={styles.image} />
+            <ProgressiveImage
+              style={styles.image}
+              thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(specialist?.center?.featured_img.url) }}
+              source={{ uri: IMAGE_URL + thumbnailUrl(specialist?.center?.featured_img.url) }}
+            />
           </View>
           <View style={styles.detailContainer}>
             <Text style={styles.name} numberOfLines={1}>

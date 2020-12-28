@@ -1,5 +1,5 @@
 import React, { useState, memo } from 'react';
-import { Text, Image } from 'react-native';
+import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -20,8 +20,10 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { ToastMsg } from 'components/toastMsg';
 import { isTab, thumbnailUrl } from 'constants/commonFunctions';
+import ProgressiveImage from 'components/progressiveImage';
 
 function Offer({ data, center, favourites }) {
+
   const client = useApolloClient();
   const { push } = useNavigation();
   const { userData } = useContext(UserDataContext);
@@ -67,7 +69,12 @@ function Offer({ data, center, favourites }) {
     <Row style={styles.offerContainer}>
       <Box flex={2} style={styles.imgContainer}>
         <RippleFX onPress={() => handlePress()}>
-          <Image source={{ uri: IMAGE_URL + (isTab() ? data?.featured_img?.url : thumbnailUrl(data?.featured_img?.url)) }} style={styles.image} />
+          <ProgressiveImage
+            style={styles.image}
+            thumbnailSource={{ uri: IMAGE_URL + (isTab() ? data?.featured_img?.url : thumbnailUrl(data?.featured_img?.url)) }}
+            source={{ uri: IMAGE_URL + (isTab() ? data?.featured_img?.url : thumbnailUrl(data?.featured_img?.url)) }}
+            resizeMode="contain"
+          />
         </RippleFX>
       </Box>
       <Column flex={6} style={styles.nameContainer}>
@@ -79,17 +86,33 @@ function Offer({ data, center, favourites }) {
             {data?.[`desc_${language}`]}
           </Text>
           {data?.discount === 100 ? (
-            <Chip style={styles.chip} title={t('free')} color={colors.danger} />
+            <Row>
+              <Chip style={styles.chip} title={t('free')} color={colors.danger} />
+            </Row>
           ) : (
-              <Chip
-                style={styles.chip}
-                title={
-                  language === 'en'
-                    ? `${data?.discount || 0}% ${t('discount')}`
-                    : `${t('discount')} ${data?.discount || 0}%`
+              <Row>
+                {data?.discounted_price && data?.actual_price &&
+                  <Chip
+                    color={colors.success}
+                    marginRight={10}
+                    title={
+                      <>
+                        <Text>{t('aed')} </Text>
+                        <Text>{data?.discounted_price} </Text>
+                        <Text style={styles.strike}>{data?.actual_price}</Text>
+                      </>
+                    }
+                  />
                 }
-                color={colors.chip_1}
-              />
+                <Chip
+                  color={colors.chip_1}
+                  title={
+                    language === 'en'
+                      ? `${data?.discount || 0}% ${t('discount')}`
+                      : `${t('discount')} ${data?.discount || 0}%`
+                  }
+                />
+              </Row>
             )}
         </RippleFX>
       </Column>

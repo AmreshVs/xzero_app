@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -14,10 +14,11 @@ import styles from './styles';
 import { ToastMsg } from 'components/toastMsg';
 import { FORGOT_PASSWORD } from 'graphql/mutations';
 import TopNavigator from 'components/topNavigator';
-import { BASE_URL } from 'constants/common';
+import { IMAGE_URL } from 'constants/common';
 import useErrorLog from 'hooks/useErrorLog';
 import { FORGOT_PASSWORD as FORGET } from 'navigation/routes';
 import { memo } from 'react';
+import ProgressiveImage from 'components/progressiveImage';
 
 const inputsValidationSchema = () =>
   object().shape({
@@ -62,8 +63,8 @@ const ForgotPassword = ({ navigation }) => {
     <SafeView style={styles.container}>
       <TopNavigator />
       <View style={styles.contentContainer}>
-        <Image
-          source={{ uri: BASE_URL + '/uploads/reset_password_807004bac2.png' }}
+        <ProgressiveImage
+          source={{ uri: IMAGE_URL + '/uploads/reset_password_807004bac2.png' }}
           style={styles.image}
         />
         <HeadingCaption heading={t('reset_password')} caption={t('receive_email')} />

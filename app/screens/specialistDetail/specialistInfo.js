@@ -18,11 +18,13 @@ const SpecialistInfo = ({ specialist }) => {
       <ProgressiveImage
         source={{ uri: IMAGE_URL + specialist?.featured_img?.url }}
         style={styles.specialistImagebg}
-        noBg />
+        noBg
+      />
       <ProgressiveImage
         source={{ uri: IMAGE_URL + smallUrl(specialist?.featured_img?.url) }}
         style={styles.specialistImage}
-        noBg />
+        noBg
+      />
       <Text style={styles.title}>{specialist?.[`name_${language}`]}</Text>
       <Text style={styles.specializationCaption}>
         {specialist?.[`specialization_${language}`]}

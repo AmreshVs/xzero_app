@@ -22,7 +22,7 @@ import { ToastMsg } from 'components/toastMsg';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import { useNavigation } from '@react-navigation/native';
 
-const MyVouchers = (props) => {
+const MyVouchers = () => {
   const [reloading, setReloading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [select, setSelect] = useState(0);
@@ -114,7 +114,6 @@ const MyVouchers = (props) => {
             contentContainerStyle={styles.flatlist}
             refreshing={reloading}
             onRefresh={() => reload()}
-            removeClippedSubviews={true}
           />
       }
     </SafeView>

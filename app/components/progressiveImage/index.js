@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
-import { THUMBNAIL_SLUG } from 'constants/common';
+import { memo } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Image } from "react-native-expo-image-cache";
 
 const styles = StyleSheet.create({
   imageOverlay: {
@@ -11,53 +12,25 @@ const styles = StyleSheet.create({
     top: 0,
   },
   container: {
-    backgroundColor: '#EEE',
+    // backgroundColor: '#EEE',
   },
 });
 
-class ProgressiveImage extends React.Component {
-  thumbnailAnimated = new Animated.Value(0);
-  imageAnimated = new Animated.Value(0);
-  constructor(props) {
-    super(props);
-    this.state = {
-      imgLoaded: false,
-    };
-  }
+const ProgressiveImage = (props) => {
 
-  handleThumbnailLoad = () => {
-    Animated.timing(this.thumbnailAnimated, {
-      toValue: 1,
-    }).start();
-  };
-
-  onImageLoad = () => {
-    Animated.timing(this.imageAnimated, {
-      toValue: 1,
-    }).start();
-    this.setState({ imgLoaded: true });
-  };
-  render() {
-    const { thumbnailSource, source, style, noBg = false, noCStyle = false, ...props } = this.props;
-
-    return (
-      <View style={[!noCStyle && style, !noBg && styles.container]}>
-        <Animated.Image
-          source={{ uri: (thumbnailSource || source).uri.replace('/uploads/', '/uploads/' + THUMBNAIL_SLUG) }}
-          style={[styles.imageOverlay, style, { opacity: this.thumbnailAnimated }]}
-          onLoad={this.handleThumbnailLoad}
-          blurRadius={1}
-          {...props}
-        />
-        <Animated.Image
-          source={source}
-          style={[{ opacity: this.imageAnimated }, style]}
-          onLoad={this.onImageLoad}
-          {...props}
-        />
-      </View>
-    );
-  }
+  const { thumbnailSource, source, style, resizeMode, noBg = false, noCStyle = false } = props;
+  return (
+    <View style={[!noCStyle && style, !noBg && styles.container]}>
+      <Image
+        preview={thumbnailSource?.uri}
+        uri={source?.uri}
+        style={style}
+        transitionDuration={60}
+        tint="light"
+        resizeMode={resizeMode || "cover"}
+      />
+    </View>
+  );
 }
 
-export default ProgressiveImage;
+export default memo(ProgressiveImage);

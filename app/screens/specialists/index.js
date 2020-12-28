@@ -99,7 +99,6 @@ const Specialists = () => {
               contentContainerStyle={styles.flatlist}
               refreshing={reloading}
               onRefresh={reload}
-              removeClippedSubviews={true}
               ListHeaderComponent={
                 Object.values(whereCondition)[headerCondition] && <ModalSearchHeader handleClear={handleClear} searched={Object.values(whereCondition)[headerCondition]} marginTop={10} />
               }

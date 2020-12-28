@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Text, Image } from 'react-native';
+import { Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 
@@ -7,17 +7,17 @@ import colors from 'constants/colors';
 import { BASE_URL } from 'constants/common';
 import Card from 'components/card';
 import styles from './styles';
+import ProgressiveImage from 'components/progressiveImage';
 
 const OfferCard = ({ discount }) => {
   const { t } = useTranslation();
 
   return (
     <Card style={styles.discountContainer}>
-      <Image
-        source={{
-          uri: BASE_URL + '/uploads/3522051_dc4fe0d199.jpg',
-        }}
-        style={styles.offerBg} />
+      <ProgressiveImage
+        style={styles.offerBg}
+        source={{ uri: BASE_URL + '/uploads/3522051_dc4fe0d199.jpg' }}
+      />
       <LinearGradient
         colors={[colors.gradient1, colors.gradient2]}
         style={styles.discountCircle}

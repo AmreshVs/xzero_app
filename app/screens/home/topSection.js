@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +18,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import ProgressiveImage from 'components/progressiveImage';
 
 const TopSection = ({ handleModalOpen }) => {
   const { push, toggleDrawer } = useNavigation();
@@ -85,7 +86,11 @@ const TopSection = ({ handleModalOpen }) => {
           <Row hcenter vcenter>
             {userData?.profile_pic ?
               <View style={styles.imgContainer}>
-                <Image style={styles.profile_pic} source={{ uri: userData?.profile_pic }} />
+                <ProgressiveImage
+                  style={styles.profile_pic}
+                  thumbnailSource={{ uri: userData?.profile_pic }}
+                  source={{ uri: userData?.profile_pic }}
+                />
               </View>
               :
               <FontAwesomeIcon icon="user-circle" color={colors.white} size={45} />

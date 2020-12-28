@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
 
@@ -8,11 +8,11 @@ import { firstLetterUpper, handleDOB } from 'constants/commonFunctions';
 import styles from './styles';
 import { useContext } from 'react';
 import { UserDataContext } from 'context';
-import SafeView from 'components/safeView';
 import RippleFX from 'components/rippleFx';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopNavigator from 'components/topNavigator';
 import { useNavigation } from '@react-navigation/native';
+import ProgressiveImage from 'components/progressiveImage';
 
 const UserCard = ({ edit, setEdit, data }) => {
   const { t } = useTranslation();
@@ -39,7 +39,10 @@ const UserCard = ({ edit, setEdit, data }) => {
       />
       <View style={styles.userIconContainer}>
         {userData?.profile_pic ?
-          <Image style={styles.profile_pic} source={{ uri: userData?.profile_pic }} />
+          <ProgressiveImage
+            style={styles.profile_pic}
+            source={{ uri: userData?.profile_pic }}
+          />
           :
           <FontAwesomeIcon icon="user-alt" size={25} color={colors.text_lite} />
         }
