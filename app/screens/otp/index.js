@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { KeyboardAvoidingView, Text, View } from 'react-native';
+import Clipboard from 'expo-clipboard';
 
 import Button from 'components/button';
 import Row from 'components/row';
@@ -34,6 +35,7 @@ const Otp = () => {
 
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState(initialState);
+  const [responseOtp, setResponseOtp] = useState('');
   const [timer, setTimer] = useState(0);
   const { userData, setUserData } = useContext(UserDataContext);
 
@@ -41,6 +43,21 @@ const Otp = () => {
   const { navigate } = useNavigation();
   const { params } = useRoute();
   const { t } = useTranslation();
+
+  let [toggleSmsListener] = useInterval(async () => {
+    let clipboardOtp = await Clipboard.getStringAsync();
+
+    if (clipboardOtp === responseOtp) {
+      setOtp([
+        { ...otp[0], value: responseOtp[0] },
+        { ...otp[1], value: responseOtp[1] },
+        { ...otp[2], value: responseOtp[2] },
+        { ...otp[3], value: responseOtp[3] },
+      ]);
+      toggleSmsListener();
+    }
+
+  }, 2000);
 
   const [toggleTimer, runningStatus] = useInterval(() => {
     if (timer < 100) {
@@ -54,7 +71,9 @@ const Otp = () => {
   useEffect(() => {
     handleResend();
     toggleTimer();
+    toggleSmsListener();
   }, []);
+
 
   const handleType = (text, index) => {
     otpArray = otp;
@@ -112,6 +131,8 @@ const Otp = () => {
     });
 
     if (data?.SendSms) {
+      setResponseOtp(data?.SendSms?.otp);
+      toggleSmsListener();
       ToastMsg(t('otp_sent'));
     }
 

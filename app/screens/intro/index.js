@@ -18,6 +18,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { useTranslation } from 'react-i18next';
 import { memo } from 'react';
+import ProgressiveImage from 'components/progressiveImage';
 
 const Intro = ({ navigation }) => {
   const { logError } = useErrorLog();
@@ -61,7 +62,10 @@ const Intro = ({ navigation }) => {
     return (
       <SafeView style={styles.slide}>
         <Text style={styles.introTitleStyle}>{item?.[`title_${language}`]}</Text>
-        <Image style={styles.introImageStyle} source={{ uri: IMAGE_URL + item?.featured_img?.url }} />
+        <ProgressiveImage
+          style={styles.introImageStyle}
+          source={{ uri: IMAGE_URL + item?.featured_img?.url }}
+        />
         <View style={styles.textContainer}>
           <Text style={styles.introTextStyle}>{item?.[`desc_${language}`]}</Text>
         </View>

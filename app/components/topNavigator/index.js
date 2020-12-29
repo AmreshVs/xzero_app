@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     ...centerStyle,
-    flex: 6,
+    flex: isTab() ? 12 : 6,
   },
   title: {
     fontSize: 17,

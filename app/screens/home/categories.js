@@ -9,7 +9,7 @@ const Categories = ({ data }) => {
   return (
     <View style={styles.container}>
       {data.map((item, index) => (
-        <Category data={item} key={index} />
+        <Category data={item} length={data.length} index={index} key={index} />
       ))}
     </View>
   );

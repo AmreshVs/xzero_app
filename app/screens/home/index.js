@@ -3,7 +3,6 @@ import { ScrollView, RefreshControl } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import * as Linking from 'expo-linking';
-import * as Updates from 'expo-updates';
 
 import SafeView from 'components/safeView';
 import Slider from './slider';
@@ -23,6 +22,8 @@ import { memo } from 'react';
 import ReferCard from './referCard';
 import GiftCard from './giftsCard';
 import DrawCard from './drawCard';
+import Row from 'components/row';
+import { isTab } from 'constants/commonFunctions';
 
 let openLink = 0;
 let backupLink = "";
@@ -60,28 +61,12 @@ const Home = () => {
   useEffect(() => {
     openLink = 0;
     Linking.addEventListener('url', deepLinkCallback);
-    // checkUpdates();
 
     return () => {
       Linking.removeEventListener('url');
       openLink = 1;
     }
   }, []);
-
-  const checkUpdates = async () => {
-    try {
-      const update = await Updates.checkForUpdateAsync();
-      console.log('update');
-      if (update.isAvailable) {
-        await Updates.fetchUpdateAsync();
-        // ... notify user of update ...
-        Updates.reloadAsync();
-      }
-    } catch (error) {
-      console.log('Check Updates error', error);
-      // handle or log error
-    }
-  }
 
   const handleModalOpen = () => {
     if (modalizeRef.current) {
@@ -123,19 +108,23 @@ const Home = () => {
           <Heading marginBottom={10}>{t('discover_categories')}</Heading>
           <Categories data={categories} />
         </Box>
-        <Box padding={10} paddingTop={0}>
-          <DrawCard />
+        <Box flexDirection={isTab() ? 'column-reverse' : 'column'}>
+          <Box padding={10} paddingTop={0}>
+            <DrawCard />
+          </Box>
+          <Box padding={10} paddingVertical={0}>
+            <Heading marginBottom={10}>{t('top_offers')}</Heading>
+            <TopCenters data={topCenters} />
+          </Box>
         </Box>
-        <Box padding={10} paddingVertical={0}>
-          <Heading marginBottom={10}>{t('top_offers')}</Heading>
-          <TopCenters data={topCenters} />
-        </Box>
-        <Box padding={10} paddingTop={0}>
-          <ReferCard />
-        </Box>
-        <Box padding={10} paddingTop={0}>
-          <GiftCard />
-        </Box>
+        <Row>
+          <Box width={isTab() ? '50%' : '100%'} padding={10} paddingTop={0} paddingRight={isTab() ? 0 : 10}>
+            <ReferCard />
+          </Box>
+          <Box width={isTab() ? '50%' : '100%'} padding={10} paddingTop={0}>
+            <GiftCard />
+          </Box>
+        </Row>
       </>
     );
   };

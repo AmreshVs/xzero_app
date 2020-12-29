@@ -10,9 +10,9 @@ import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
 import { memo } from 'react';
-import { smallUrl } from 'constants/commonFunctions';
+import { isTab, smallUrl } from 'constants/commonFunctions';
 
-const Category = ({ data }) => {
+const Category = ({ data, length, index }) => {
   if (data?.centersCount <= 0) {
     return null;
   }
@@ -37,11 +37,11 @@ const Category = ({ data }) => {
   };
 
   return (
-    <RippleFX style={styles.categoryContainer} onPress={navigateToCenters}>
+    <RippleFX style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddContainer : styles.categoryContainer} onPress={navigateToCenters}>
       <ProgressiveImage
         thumbnailSource={{ uri: IMAGE_URL + data?.featured_img }}
         source={{ uri: IMAGE_URL + smallUrl(data?.featured_img) }}
-        style={styles.image}
+        style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddImage : styles.image}
       />
       <Box padding={10}>
         <Text style={styles.heading}>{data?.[`title_${language}`]}</Text>

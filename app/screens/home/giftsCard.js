@@ -23,6 +23,7 @@ const GiftCard = () => {
             <ProgressiveImage
               style={styles.cardImg}
               source={{ uri: IMAGE_URL + '/uploads/weekly_gift_319079aeaa.webp' }}
+              resizeMode="contain"
             />
           </View>
           <View style={styles.contentContainer} width="60%">

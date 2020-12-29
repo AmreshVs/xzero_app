@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
+import * as SplashScreen from 'expo-splash-screen';
 
 import { BASIC_INFORMATION, GET_MEMBER_DATA } from 'graphql/queries';
 import { HOME_SCREEN, INTRO, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE, OTP } from 'navigation/routes';
@@ -55,7 +56,8 @@ const Main = ({ navigation }) => {
       }
     }
 
-    checkUser();
+    await checkUser();
+    await SplashScreen.hideAsync();
   };
 
   const checkUser = async () => {

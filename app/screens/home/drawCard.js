@@ -10,7 +10,6 @@ import RippleFX from 'components/rippleFx';
 import { useNavigation } from '@react-navigation/native';
 import { VOUCHERS } from 'navigation/routes';
 import { IMAGE_URL } from 'constants/common';
-import { thumbnailUrl } from 'constants/commonFunctions';
 
 const DrawCard = () => {
   const { navigate } = useNavigation();

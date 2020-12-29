@@ -90,11 +90,11 @@ function Offer({ data, center, favourites }) {
               <Chip style={styles.chip} title={t('free')} color={colors.danger} />
             </Row>
           ) : (
-              <Row>
+              <Row width="120%">
                 {data?.discounted_price && data?.actual_price &&
                   <Chip
                     color={colors.success}
-                    marginRight={10}
+                    marginRight={5}
                     title={
                       <>
                         <Text>{t('aed')} </Text>

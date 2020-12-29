@@ -7,6 +7,7 @@ import { ApolloProvider } from '@apollo/client';
 import * as Notifications from 'expo-notifications';
 import * as Linking from 'expo-linking';
 import NetInfo from "@react-native-community/netinfo";
+import * as SplashScreen from 'expo-splash-screen';
 
 import i18nLang from './app/i18n';
 import { ToastComponent } from 'components/toastMsg';
@@ -24,6 +25,8 @@ Notifications.setNotificationHandler({
     shouldSetBadge: true,
   }),
 });
+
+SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [connection, setConnection] = useState(true);

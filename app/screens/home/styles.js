@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 import { getShadowStyle, isTab, responsiveHeight } from 'constants/commonFunctions';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from 'constants/common';
+import { SCREEN_WIDTH } from 'constants/common';
 import colors from 'constants/colors';
-import { flex, flexSpaceBetween, flexRow, borderRadius10, w100, textBoldDark, textLite, whiteBg, alignJustifyCenter, font16, positionAbsolute, colorWhite, font15, fontWeight700, marginBottom10, marginBottom5, marginTop5, borderRadius30, overflowHidden, marginLeft10, marginBottom0, colorDanger, font20, w50, h50, h200, padding15, textAlignLeft, resizeModeCover, flex1, h100px, w100px, paddingBottom5, colorPrimary } from 'constants/commonStyles';
+import { flex, flexSpaceBetween, flexRow, borderRadius10, w100, textBoldDark, textLite, whiteBg, alignJustifyCenter, font16, positionAbsolute, colorWhite, font15, fontWeight700, marginBottom10, marginTop5, borderRadius30, overflowHidden, marginLeft10, marginBottom0, colorDanger, font20, w50, h50, h200, resizeModeCover, flex1, h100px, w100px, paddingBottom5 } from 'constants/commonStyles';
 
 const mobileStyles = StyleSheet.create({
   topContainer: {
@@ -23,8 +23,22 @@ const mobileStyles = StyleSheet.create({
     ...marginBottom10,
     ...getShadowStyle(),
   },
+  oddContainer: {
+    width: '100%',
+    ...whiteBg,
+    ...borderRadius10,
+    ...marginBottom10,
+    ...getShadowStyle(),
+  },
   image: {
     height: SCREEN_WIDTH / 3,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    ...w100,
+    ...resizeModeCover,
+  },
+  oddImage: {
+    height: SCREEN_WIDTH / 2,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     ...w100,
@@ -228,7 +242,11 @@ const tabStyles = StyleSheet.create({
     ...flexSpaceBetween,
     ...flexRow,
     flexWrap: 'wrap',
-  }
+  },
+  cardImg: {
+    flex: 1,
+    height: 150
+  },
 });
 
 const styles = isTab() ? tabStyles : mobileStyles;
