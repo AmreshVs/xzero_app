@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Text, View, Animated } from 'react-native';
+import { Text, View, Animated, Image } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,6 @@ import styles from './styles';
 import { GIFTS } from 'navigation/routes';
 import { isTab, thumbnailUrl } from 'constants/commonFunctions';
 import { memo } from 'react';
-import ProgressiveImage from 'components/progressiveImage';
 
 const GenerateGift = () => {
   const [loading, setLoading] = useState(false);
@@ -98,7 +97,7 @@ const GenerateGift = () => {
           }}
         >
           <View style={styles.giftRevealImage}>
-            <ProgressiveImage
+            <Image
               source={data?.won ? { uri: IMAGE_URL + thumbnailUrl(data?.gift?.featured_img?.url) } : require('../../../assets/sad.png')} style={styles.sadIcon}
               resizeMode="contain"
             />

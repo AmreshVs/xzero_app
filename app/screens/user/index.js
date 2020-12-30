@@ -67,7 +67,7 @@ const User = () => {
   useEffect(() => {
     checkPopUp();
     if (!edit) {
-      // _refetch();
+      _refetch();
     }
   }, [edit]);
 
@@ -85,7 +85,7 @@ const User = () => {
   }
 
   return (
-    <SafeView loading={loading}>
+    <SafeView loading={loading} noTop>
       <Row style={styles.topContainer} hcenter>
         <LinearGradient
           colors={[colors.gradient1, colors.gradient2]}

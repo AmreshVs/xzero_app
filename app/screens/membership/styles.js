@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { isTab } from 'constants/commonFunctions';
+import { isTab, responsiveHeight } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT } from 'constants/common';
 import { colorWhite, h100, marginTop10, textBoldDark, textLite, marginTop5, margin10, w100, marginBottom5, textAlignLeft, wh100, padding15, borderRadius10, font18, positionAbsolute, flexSpaceBetween, colorDanger, marginTop0, paddingHorizontal10, marginHorizontal10, justifyContentCenter, alignItemsCenter, resizeModeContain, w200, h200 } from 'constants/commonStyles';
 import colors from 'constants/colors';
@@ -45,7 +45,7 @@ const mobileStyles = StyleSheet.create({
     ...w100
   },
   memberContainer: {
-    height: 250,
+    height: responsiveHeight(27),
     ...paddingHorizontal10,
     ...marginTop10,
     ...w100,
@@ -103,7 +103,7 @@ const mobileStyles = StyleSheet.create({
     ...marginTop0,
     ...margin10,
   },
-  nenewText: {
+  renewText: {
     ...colorDanger,
   },
   qrcode: {

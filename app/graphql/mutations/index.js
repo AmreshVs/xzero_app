@@ -1,11 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const USER_LOGIN = gql`
-  mutation userLogin($identifier: String!, $password: String!){
-    userlogin(input:{
-      identifier: $identifier,
-      password: $password
-    }){
+  mutation userLogin($input: UserLoginInput!){
+    userlogin(input: $input){
       jwt
       user{
         id
@@ -30,18 +27,9 @@ export const USER_LOGIN = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation createNewUser($username: String!, $email: String!, $mobile_number: Long!, $password: String!, $notification_token: String!, $dob: DateTime, $provider: String, $language: String){
+  mutation createNewUser($input: UserInput!){
     createNewUser(
-      input: {
-        username: $username,
-        email: $email,
-        mobile_number: $mobile_number
-        password: $password
-        notification_token: $notification_token,
-        birthday: $dob,
-        provider: $provider,
-        language: $language
-      }
+      input: $input
     ){
       jwt
       user{
@@ -323,6 +311,21 @@ export const VOUCHER_QUEUE = gql`
       queueCount
       disabled
       msg
+    }
+  }
+`;
+
+export const CREATE_NON_USER = gql`
+  mutation CreateNonUser($token: String!, $language: String!){
+    createNonUser(input: {
+      data: {
+        notification_token: $token,
+        language: $language
+      }
+    }){
+      nonUser{
+        id
+      }
     }
   }
 `;

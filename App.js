@@ -14,6 +14,8 @@ import { ToastComponent } from 'components/toastMsg';
 import Navigation from 'navigation';
 import { client } from './helpers';
 
+SplashScreen.preventAutoHideAsync();
+
 LogBox.ignoreLogs([
   'Animated: `useNativeDriver` was not specified.',
 ]);
@@ -25,8 +27,6 @@ Notifications.setNotificationHandler({
     shouldSetBadge: true,
   }),
 });
-
-SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [connection, setConnection] = useState(true);

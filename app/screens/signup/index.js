@@ -40,16 +40,16 @@ export default function Signup({ navigation }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const client = useApolloClient();
 
+  const platform = Platform.OS;
+  const app_version = Constants.nativeAppVersion;
+  const device_id = Constants.deviceId;
+
   const updateNotificationToken = async (id) => {
     const token = await getNotificationToken();
-    const platform = Platform.OS;
-    const app_version = Constants.nativeAppVersion;
 
     let mutationInput = {
       user_id: Number(id),
       notification_token: token,
-      app_version,
-      platform,
       provider: 'local',
     };
 
@@ -85,22 +85,26 @@ export default function Signup({ navigation }) {
       password: values.repassword,
       mobile_number: Number(phone),
       notification_token: token || '',
-      dob: new Date(dob),
-      language: language
+      birthday: new Date(dob),
+      language: language,
+      provider: 'local',
+      platform,
+      app_version,
+      device_id
     };
 
     let { data, errors } = await client.mutate({
       mutation: CREATE_USER,
-      variables: mutationInput,
+      variables: {
+        input: mutationInput
+      },
     });
 
     let userData = data?.createNewUser;
 
     setUserData({
       jwt: userData?.jwt,
-      id: userData?.user?.id,
-      email: userData?.user?.email,
-      mobile_number: userData?.user?.mobile_number
+      ...userData?.user
     });
 
     setLoading(false);

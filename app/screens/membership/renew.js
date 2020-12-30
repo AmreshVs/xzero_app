@@ -20,7 +20,7 @@ const Renew = ({ membershipData, expired }) => {
 
   return (
     <Card style={styles.renewContainer}>
-      <Text style={styles.nenewText}>
+      <Text style={styles.renewText}>
         {expired ? t('renew_expired_membership') : t('renew_membership')}
       </Text>
       <Box marginTop={10}>

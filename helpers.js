@@ -49,7 +49,16 @@ export const client = new ApolloClient({
 });
 
 export const getNotificationToken = async () => {
-  let token;
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: colors.gradient2,
+      sound: true,
+    });
+  }
+
   if (Constants.isDevice) {
     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
     let finalStatus = existingStatus;
@@ -61,20 +70,8 @@ export const getNotificationToken = async () => {
       ToastMsg('Failed to get push token for push notification!');
       return;
     }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
+    return (await Notifications.getExpoPushTokenAsync()).data;
   } else {
     ToastMsg('Must use physical device for Push Notifications');
   }
-
-  if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: colors.gradient2,
-      sound: true,
-    });
-  }
-
-  return token;
 }

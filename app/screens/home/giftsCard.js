@@ -10,9 +10,11 @@ import { GIFTS } from 'navigation/routes';
 import { useNavigation } from '@react-navigation/native';
 import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
+import { useTranslation } from 'react-i18next';
 
 const GiftCard = () => {
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
 
   return (
     <Card style={styles.referContainer}>
@@ -27,9 +29,9 @@ const GiftCard = () => {
             />
           </View>
           <View style={styles.contentContainer} width="60%">
-            <Text style={styles.gtitle}>Win amazing gifts every week! Try your luck now! </Text>
-            <Text style={styles.gcaption}>Gifts are open every week! Try your luck and stand a change to win gift each time!. Why wait? Unlock more gifts now!</Text>
-            <Text style={styles.gtitle}>Press to know more!</Text>
+            <Text style={styles.gtitle}>{t('win_gift')}</Text>
+            <Text style={styles.gcaption}>{t('gifts_every_week')}</Text>
+            <Text style={styles.gtitle}>{t('know_more')}</Text>
           </View>
         </Row>
       </RippleFX>

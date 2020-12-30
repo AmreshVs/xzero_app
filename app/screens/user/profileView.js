@@ -32,9 +32,9 @@ export const handlelogout = async ({ dispatch, setUserData, logError }) => {
     let removeUserData = await AsyncStorage.removeItem('@xzero_user');
     let removePopup = await AsyncStorage.removeItem('@xzero_popup');
     if (removeJWTData === null && removeUserData === null && removePopup === null) {
-      setUserData(null);
       await CacheManager.clearCache();
       dispatch(resetAction);
+      setUserData(null);
     }
   } catch (error) {
     console.log('Logout error', error);

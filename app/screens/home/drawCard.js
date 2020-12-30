@@ -10,9 +10,11 @@ import RippleFX from 'components/rippleFx';
 import { useNavigation } from '@react-navigation/native';
 import { VOUCHERS } from 'navigation/routes';
 import { IMAGE_URL } from 'constants/common';
+import { useTranslation } from 'react-i18next';
 
 const DrawCard = () => {
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
 
   return (
     <Card style={styles.referContainer}>
@@ -27,9 +29,9 @@ const DrawCard = () => {
             />
           </View>
           <View style={styles.contentContainer} width="60%">
-            <Text style={styles.gtitle}>Participate on Draws, Be a Winner everytime!</Text>
-            <Text style={styles.gcaption}>Join any draw and stand a chance to win amazing prize. Unlike other draws, You will get a Product + Assured gift + A chance to be among 10+ Prize winners. So you will always win!</Text>
-            <Text style={styles.gtitle}>Press to know more!</Text>
+            <Text style={styles.gtitle}>{t('participate_draws')}</Text>
+            <Text style={styles.gcaption}>{t('join_draw')}</Text>
+            <Text style={styles.gtitle}>{t('know_more')}</Text>
           </View>
         </Row>
       </RippleFX>

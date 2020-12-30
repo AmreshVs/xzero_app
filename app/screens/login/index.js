@@ -17,8 +17,8 @@ import googleSignin from './googleLogin';
 import { inputsValidationSchema, saveUserDataLocally } from './helpers';
 import { ToastMsg } from 'components/toastMsg';
 import { SIGNUP_SCREEN, HOME_SCREEN, FORGOT_PASSWORD, DRAWER_TERMS, LOGIN_SCREEN, MAIN_SCREEN } from 'navigation/routes';
-import { GET_USER_BY_EMAIL } from 'graphql/queries';
-import { USER_LOGIN, CREATE_USER, UPDATE_NOTIFICATION_TOKEN } from 'graphql/mutations';
+import { GET_USER_BY_EMAIL, NON_USER_CHECK } from 'graphql/queries';
+import { USER_LOGIN, CREATE_USER, UPDATE_NOTIFICATION_TOKEN, CREATE_NON_USER } from 'graphql/mutations';
 import { getNotificationToken } from '../../../helpers';
 import { SOCIAL_TOKEN, ERROR_OCCURED } from 'constants/common';
 import Row from 'components/row';
@@ -26,6 +26,8 @@ import AppleLoginButton from './appleLogin';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { memo } from 'react';
+import { useEffect } from 'react';
+import { getDeviceLang } from 'i18n';
 
 const Login = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -35,15 +37,51 @@ const Login = ({ navigation }) => {
   const { logError } = useErrorLog();
   const { setUserData } = useContext(UserDataContext);
 
+  const platform = Platform.OS;
+  const app_version = Constants.nativeAppVersion;
+  const device_id = Constants.deviceId;
+
+  useEffect(() => {
+    collectNonUserToken();
+  }, []);
+
+  const collectNonUserToken = async () => {
+    let token = await getNotificationToken();
+    let language = await getDeviceLang();
+
+    if (token !== undefined) {
+      const { data } = await client.query({
+        query: NON_USER_CHECK,
+        variables: {
+          token
+        }
+      });
+      if (data?.nonUsers?.length === 0) {
+        await client.mutate({
+          mutation: CREATE_NON_USER,
+          variables: {
+            token,
+            language
+          }
+        });
+      }
+    }
+  }
+
   const handleSubmit = async (values) => {
     setLoading(true);
+    const mutationInput = {
+      identifier: values.email,
+      password: values.password,
+      platform,
+      app_version,
+      device_id
+    };
+
     const { data: response, errors } = await client.mutate({
       mutation: USER_LOGIN,
       variables: {
-        identifier: values.email,
-        password: values.password,
-        app_version: '',
-        platform: '',
+        input: mutationInput
       },
     });
 
@@ -57,11 +95,12 @@ const Login = ({ navigation }) => {
     setLoading(false);
 
     if (errors) {
+      console.log('Login Error', errors);
       ToastMsg(t('error_occured'));
       logError({
         screen: LOGIN_SCREEN,
         module: 'Login Index file',
-        input: JSON.stringify(response),
+        input: JSON.stringify(mutationInput),
         error: JSON.stringify(errors)
       });
     }
@@ -86,37 +125,28 @@ const Login = ({ navigation }) => {
 
   const updateNotificationToken = async (id, provider = 'local') => {
     const token = await getNotificationToken();
-    const platform = Platform.OS;
-    const app_version = Constants.nativeAppVersion;
-    if (token) {
-      try {
-        await client.mutate({
-          mutation: UPDATE_NOTIFICATION_TOKEN,
-          variables: {
-            user_id: Number(id),
-            notification_token: token,
-            app_version,
-            platform,
-            provider,
-          },
-        });
-      }
-      catch (error) {
-        console.log('Update notification error', error);
-        ToastMsg(t('error_occured'));
-        logError({
-          screen: LOGIN_SCREEN,
-          module: 'Update Notification Token',
-          input: JSON.stringify({
-            user_id: Number(id),
-            notification_token: token,
-            app_version,
-            platform,
-            provider,
-          }),
-          error: JSON.stringify(error)
-        });
-      }
+
+    const mutationInput = {
+      user_id: Number(id),
+      notification_token: token || "",
+      provider,
+    };
+
+    try {
+      await client.mutate({
+        mutation: UPDATE_NOTIFICATION_TOKEN,
+        variables: mutationInput,
+      });
+    }
+    catch (error) {
+      console.log('Update notification error', error);
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: LOGIN_SCREEN,
+        module: 'Update Notification Token',
+        input: JSON.stringify(mutationInput),
+        error: JSON.stringify(error)
+      });
     }
   };
 

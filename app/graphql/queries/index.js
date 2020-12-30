@@ -663,3 +663,15 @@ export const APP_INTROS = gql`
     }
   }
 `;
+
+export const NON_USER_CHECK = gql`
+  query NonUserCheck($token: String!){
+    nonUsers(where: {
+      notification_token: $token
+    }){
+      id
+      notification_token
+      language
+    }
+  }
+`;

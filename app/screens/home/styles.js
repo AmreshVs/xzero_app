@@ -112,8 +112,8 @@ const mobileStyles = StyleSheet.create({
   },
   sliderImage: {
     width: SCREEN_WIDTH - 20,
-    borderRadius: 5,
-    height: 240,
+    borderRadius: 10,
+    height: responsiveHeight(25),
     ...marginBottom0,
     ...marginLeft10,
     ...marginTop5,

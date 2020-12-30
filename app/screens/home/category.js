@@ -10,7 +10,7 @@ import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
 import styles from './styles';
 import { memo } from 'react';
-import { isTab, smallUrl } from 'constants/commonFunctions';
+import { isTab, smallUrl, thumbnailUrl } from 'constants/commonFunctions';
 
 const Category = ({ data, length, index }) => {
   if (data?.centersCount <= 0) {
@@ -39,8 +39,8 @@ const Category = ({ data, length, index }) => {
   return (
     <RippleFX style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddContainer : styles.categoryContainer} onPress={navigateToCenters}>
       <ProgressiveImage
-        thumbnailSource={{ uri: IMAGE_URL + data?.featured_img }}
-        source={{ uri: IMAGE_URL + smallUrl(data?.featured_img) }}
+        thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img) }}
+        source={{ uri: IMAGE_URL + data?.featured_img }}
         style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddImage : styles.image}
       />
       <Box padding={10}>

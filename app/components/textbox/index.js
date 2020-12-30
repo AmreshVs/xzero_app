@@ -71,6 +71,7 @@ const dynamicStyles = ({ multiline }) => StyleSheet.create({
   textbox: {
     ...textboxStyle(multiline),
     backgroundColor: '#F9F9F9',
+    zIndex: 9999
   },
   textboxFocus: {
     ...textboxStyle(multiline),
@@ -88,11 +89,12 @@ const dynamicStyles = ({ multiline }) => StyleSheet.create({
     fontSize: 19,
     fontWeight: '700',
     marginBottom: 10,
+    zIndex: 9
   },
   icon: {
     marginLeft: 15,
     marginRight: -10,
-    marginTop: multiline ? 10 : 0
+    marginTop: multiline ? 10 : 0,
   },
   textInput: {
     width: '95%',
@@ -100,5 +102,6 @@ const dynamicStyles = ({ multiline }) => StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: multiline ? 10 : 0,
     borderRadius: 50,
+    zIndex: 9
   },
 });
