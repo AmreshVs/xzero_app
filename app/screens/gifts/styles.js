@@ -13,6 +13,11 @@ const styles = StyleSheet.create({
     ...textBoldDark,
     ...font16,
   },
+  imageTitle: {
+    color: colors.white,
+    fontWeight: '700',
+    marginBottom: 5
+  },
   caption: {
     ...textLite,
     ...marginTop5,
@@ -22,9 +27,10 @@ const styles = StyleSheet.create({
     ...textLite,
   },
   giftImage: {
-    height: 160,
+    height: 130,
+    resizeMode: 'cover',
     ...w100,
-    ...resizeModeContain
+    marginBottom: 10
   },
   availableGiftsContainer: {
     ...marginBottom0,
@@ -47,8 +53,8 @@ const styles = StyleSheet.create({
     padding: 10
   },
   giftImages: {
-    width: 90,
-    height: 90,
+    width: 100,
+    height: 100,
     backgroundColor: colors.gradient2,
     opacity: 1,
     ...positionAbsolute,
@@ -116,8 +122,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   gift: {
-    width: 90,
-    height: 90,
+    width: 100,
+    height: 100,
     resizeMode: 'cover',
     borderRadius: 50,
   },
@@ -143,6 +149,46 @@ const styles = StyleSheet.create({
     padding: 10,
     zIndex: 9,
   },
+  modal: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: '#0000008a',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "#FFF",
+    borderRadius: 20,
+    overflow: 'hidden',
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    minWidth: 200,
+    minHeight: 200
+  },
+  image: {
+    width: 350,
+    height: 500,
+    resizeMode: 'cover'
+  },
+  btnContainer: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
+    zIndex: 2
+  },
+  winImage: {
+    width: 350,
+    height: 350,
+    marginBottom: 10,
+    resizeMode: 'contain'
+  }
 });
 
 export default styles;

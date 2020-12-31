@@ -20,6 +20,8 @@ import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import Button from 'components/button';
 import { memo } from 'react';
+import { useApolloClient } from '@apollo/client';
+import { UpdateLanguage } from 'screens/home/topSection';
 
 export const handlelogout = async ({ dispatch, setUserData, logError }) => {
   const resetAction = CommonActions.reset({
@@ -53,6 +55,7 @@ const ProfileView = ({ data }) => {
   const { dispatch, push } = useNavigation();
   const { userData, setUserData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
+  const client = useApolloClient();
   let language = i18n.language;
 
   const handleMobileNumber = (mobile_number) => {
@@ -66,7 +69,8 @@ const ProfileView = ({ data }) => {
   const handleLangSelect = async () => {
     let lang = language === 'ar' ? 'en' : 'ar';
     i18n.changeLanguage(lang);
-    let userDataWithLanguage = { ...userData, language: language };
+    let userDataWithLanguage = { ...userData, language: lang };
+    UpdateLanguage(client, { user_id: userData?.id, language: lang });
     try {
       await AsyncStorage.setItem('@xzero_user', JSON.stringify(userDataWithLanguage));
     } catch (error) {

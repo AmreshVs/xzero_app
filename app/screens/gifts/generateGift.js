@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Text, View, Animated, Image } from 'react-native';
+import { Text, View, Animated, Image, Modal } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -14,9 +14,12 @@ import styles from './styles';
 import { GIFTS } from 'navigation/routes';
 import { isTab, thumbnailUrl } from 'constants/commonFunctions';
 import { memo } from 'react';
+import Box from 'components/box';
+import ProgressiveImage from 'components/progressiveImage';
 
-const GenerateGift = () => {
+const GenerateGift = ({ refetch }) => {
   const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState([]);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateAnim = useRef(new Animated.Value(0)).current;
@@ -26,7 +29,8 @@ const GenerateGift = () => {
   const client = useApolloClient();
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  let language = i18n.language;
 
   const handleGenerate = async () => {
     setLoading(true);
@@ -39,7 +43,7 @@ const GenerateGift = () => {
       });
       setLoading(false);
       setData(data?.GenerateGift);
-      Won();
+      Won(data?.GenerateGift);
     }
     catch (error) {
       console.log('Generate Gift error', error);
@@ -54,9 +58,31 @@ const GenerateGift = () => {
         error: JSON.stringify(error)
       });
     }
+
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 0,
+        duration: 200,
+      }
+    ).start();
+    Animated.timing(
+      translateAnim,
+      {
+        toValue: 0,
+        duration: 200,
+      }
+    ).start();
+    Animated.timing(
+      giftTextAnim,
+      {
+        toValue: 0,
+        duration: 200,
+      }
+    ).start();
   }
 
-  const Won = () => {
+  const Won = (data) => {
     if (giftRef.current) {
       giftRef.current.play(0, 140);
       setTimeout(() => {
@@ -84,52 +110,96 @@ const GenerateGift = () => {
         ).start();
       }, 2000);
     }
+    console.log(data);
+    if (data?.won) {
+      setTimeout(() => {
+        setModalVisible(true);
+      }, 5000);
+    }
+  }
+
+  const handleClose = () => {
+    setModalVisible(false);
+    refetch();
   }
 
   return (
-    <Card style={styles.lottieGiftContainer}>
-      <View style={styles.hideOverflow}>
-        <Animated.View
-          style={{
-            ...styles.giftReveal,
-            opacity: fadeAnim,
-            transform: [{ translateY: translateAnim }],
-          }}
-        >
-          <View style={styles.giftRevealImage}>
-            <Image
-              source={data?.won ? { uri: IMAGE_URL + thumbnailUrl(data?.gift?.featured_img?.url) } : require('../../../assets/sad.png')} style={styles.sadIcon}
-              resizeMode="contain"
-            />
+    <>
+      <Card style={styles.lottieGiftContainer}>
+        <View style={styles.hideOverflow}>
+          <Animated.View
+            style={{
+              ...styles.giftReveal,
+              opacity: fadeAnim,
+              transform: [{ translateY: translateAnim }],
+            }}
+          >
+            <View style={styles.giftRevealImage}>
+              <Image
+                source={data?.won ? { uri: IMAGE_URL + thumbnailUrl(data?.gift?.featured_img?.url) } : require('../../../assets/sad.png')} style={styles.sadIcon}
+                resizeMode="contain"
+              />
+            </View>
+          </Animated.View>
+          <LottieView
+            ref={giftRef}
+            style={styles.generateGift}
+            source={require("../../../assets/gift_animation.json")}
+            loop={false}
+          />
+          <LottieView
+            ref={confettiRef}
+            style={styles.confetti}
+            source={require("../../../assets/confetti.json")}
+            loop={false}
+          />
+          <Animated.View
+            style={{
+              ...styles.giftReveal,
+              opacity: fadeAnim,
+              transform: [{ translateY: giftTextAnim }],
+            }}
+          >
+            <Text style={styles.giftRevealText}>{data?.won ? t('you_won') + data?.gift?.[`name_${language}`] : t('better_luck')}</Text>
+          </Animated.View>
+          <View style={styles.generate}>
+            <Button status="chip_1" width="50%" onPress={() => handleGenerate()} loading={loading}>{t('try_your_luck')}</Button>
+            <Text style={styles.caption}>{t('gifts_open')}</Text>
           </View>
-        </Animated.View>
-        <LottieView
-          ref={giftRef}
-          style={styles.generateGift}
-          source={require("../../../assets/gift_animation.json")}
-          loop={false}
-        />
-        <LottieView
-          ref={confettiRef}
-          style={styles.confetti}
-          source={require("../../../assets/confetti.json")}
-          loop={false}
-        />
-        <Animated.View
-          style={{
-            ...styles.giftReveal,
-            opacity: fadeAnim,
-            transform: [{ translateY: giftTextAnim }],
-          }}
-        >
-          <Text style={styles.giftRevealText}>{data?.won ? t('you_won') + data?.gift?.name_en : t('better_luck')}</Text>
-        </Animated.View>
-        <View style={styles.generate}>
-          <Button status="chip_1" width="50%" onPress={() => handleGenerate()} loading={loading}>{t('try_your_luck')}</Button>
-          <Text style={styles.caption}>{t('gifts_open')}</Text>
         </View>
-      </View>
-    </Card>
+      </Card>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        style={styles.modal}
+        statusBarTranslucent={true}
+      >
+        <View style={styles.modal}>
+          <Box style={styles.modalView}>
+            <ProgressiveImage
+              thumbnailsource={{ uri: IMAGE_URL + thumbnailUrl(data?.gift?.featured_img?.url) }} style={styles.winImage}
+              source={{ uri: IMAGE_URL + data?.gift?.featured_img?.url }} style={styles.winImage}
+              style={styles.winImage}
+            />
+            <Text style={styles.giftRevealText}>{t('you_won') + data?.gift?.[`name_${language}`]}</Text>
+            <Box marginBottom={10}>
+              <Text style={styles.caption}>{t('gift_notification')}</Text>
+            </Box>
+            <View style={styles.btnContainer}>
+              <Button
+                icon="times"
+                status="danger"
+                size="small"
+                onPress={() => handleClose()}
+              >
+                {t('close')}
+              </Button>
+            </View>
+          </Box>
+        </View>
+      </Modal>
+    </>
   )
 }
 

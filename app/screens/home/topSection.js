@@ -19,6 +19,23 @@ import { useContext } from 'react';
 import { UserDataContext } from 'context';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ProgressiveImage from 'components/progressiveImage';
+import { useApolloClient } from '@apollo/client';
+import { UPDATE_LANGUAGE } from 'graphql/mutations';
+
+export const UpdateLanguage = async (client, params) => {
+  try {
+    await client.mutate({
+      mutation: UPDATE_LANGUAGE,
+      variables: {
+        user_id: params?.user_id,
+        language: params?.language
+      }
+    });
+  }
+  catch (error) {
+    console.log('Update Language Error', error);
+  }
+}
 
 const TopSection = ({ handleModalOpen }) => {
   const { push, toggleDrawer } = useNavigation();
@@ -26,6 +43,7 @@ const TopSection = ({ handleModalOpen }) => {
   const { logError } = useErrorLog();
   const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();
+  const client = useApolloClient();
 
   let name = userData?.username ?? '';
   let email = userData?.email ?? '';
@@ -37,6 +55,7 @@ const TopSection = ({ handleModalOpen }) => {
       await i18n.changeLanguage(language);
       let userDataWithLanguage = { ...userData, language: language };
       await AsyncStorage.setItem('@xzero_user', JSON.stringify(userDataWithLanguage));
+      await UpdateLanguage(client, { user_id: userData?.id, language });
     }
     catch (error) {
       console.log('Change Language error', error);

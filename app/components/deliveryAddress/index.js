@@ -10,7 +10,6 @@ import { SCREEN_HEIGHT } from 'constants/common';
 import { Formik } from 'formik';
 import { inputs, inputsValidationSchema } from './helpers';
 import FormError from 'components/formError';
-import Loader from 'components/loader';
 import { useApolloClient } from '@apollo/client';
 import { UserDataContext } from 'context';
 import { handleMobileNumber } from 'constants/commonFunctions';

@@ -17,7 +17,7 @@ const AvailedGifts = ({ data }) => {
         <Text style={styles.hcaption}>{t('availed_gifts_caption')}</Text>
       </Box>
       <ScrollView contentContainerStyle={styles.availedWrapper} horizontal={true} removeClippedSubviews={true}>
-        {data.map((gift, index) => <View style={styles.availedGiftContainer} key={index}><Gift data={gift} /></View>)}
+        {data.map((gift, index) => <View style={styles.availedGiftContainer} key={index}><Gift data={gift} availed={true} /></View>)}
       </ScrollView>
     </>
   )

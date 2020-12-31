@@ -10,7 +10,7 @@ import styles from './styles';
 import { thumbnailUrl } from 'constants/commonFunctions';
 import ProgressiveImage from 'components/progressiveImage';
 
-const Gift = ({ data }) => {
+const Gift = ({ data, availed }) => {
   const { i18n } = useTranslation();
   let language = i18n.language;
   const [showDesc, setShowDesc] = useState(false);
@@ -23,6 +23,7 @@ const Gift = ({ data }) => {
             <RippleFX style={styles.closeContainer} onPress={() => setShowDesc(!showDesc)}>
               <FontAwesomeIcon icon="times" color="#FFF" />
             </RippleFX>
+            <Text style={styles.imageTitle}>{data?.[`name_${language}`]}</Text>
             <Text style={styles.imageDesc}>{data?.[`desc_${language}`]}</Text>
           </View>
         )}
@@ -34,7 +35,7 @@ const Gift = ({ data }) => {
                 style={styles.gift}
               />
             </View>
-            <Image source={require('../../../assets/gift3.png')} style={styles.giftImage} />
+            <Image source={availed ? require('../../../assets/gift2.png') : require('../../../assets/gift3.png')} style={styles.giftImage} />
             <Text style={styles.title} numberOfLines={1}>{data?.[`name_${language}`]}</Text>
           </View>
         </RippleFX>

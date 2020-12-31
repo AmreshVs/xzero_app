@@ -65,6 +65,7 @@ const Intro = ({ navigation }) => {
         <ProgressiveImage
           style={styles.introImageStyle}
           source={{ uri: IMAGE_URL + item?.featured_img?.url }}
+          resizeMode="contain"
         />
         <View style={styles.textContainer}>
           <Text style={styles.introTextStyle}>{item?.[`desc_${language}`]}</Text>
@@ -118,8 +119,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   introImageStyle: {
-    width: '75%',
-    height: 600,
+    width: '100%',
+    height: 500,
     resizeMode: 'contain',
   },
   introTextStyle: {

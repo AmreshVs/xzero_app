@@ -13,6 +13,7 @@ export const USER_LOGIN = gql`
         confirmed
         provider
         address
+        show_popup
         membership{
           id
           package{
@@ -41,6 +42,7 @@ export const CREATE_USER = gql`
         confirmed
         provider
         address
+        show_popup
         membership{
           id
           package{
@@ -76,6 +78,7 @@ export const UPDATE_USER = gql`
         confirmed
         provider
         address
+        show_popup
         membership{
           id
           package{
@@ -108,6 +111,7 @@ export const UPDATE_USER_WITHOUT_PASS = gql`
         provider
         address
         mobile_number
+        show_popup
       }
     }
   }
@@ -325,6 +329,24 @@ export const CREATE_NON_USER = gql`
     }){
       nonUser{
         id
+      }
+    }
+  }
+`;
+
+export const UPDATE_LANGUAGE = gql`
+  mutation updateUser($user_id: ID!, $language: String! ){
+    updateUser(input: {
+      where: {
+        id: $user_id
+      },
+      data: {
+        language: $language,
+      }
+    }){
+      user{
+        id
+        language
       }
     }
   }

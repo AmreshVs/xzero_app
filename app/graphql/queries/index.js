@@ -15,6 +15,7 @@ export const GET_USER = gql`
       birthday
       created_at
       address
+      show_popup
     }
   }
 `;
@@ -33,6 +34,7 @@ export const GET_USER_BY_EMAIL = gql`
       notification_token
       favourites
       address
+      show_popup
     }
   }
 `;

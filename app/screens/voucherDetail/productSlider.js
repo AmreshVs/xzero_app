@@ -68,7 +68,7 @@ const ProductSlider = ({ data, height, popup = false }) => {
     <>
       <View style={styles.slider}>
         <Carousel
-          autoplay={true}
+          autoplay={false}
           sliderWidth={SCREEN_WIDTH - 45}
           itemWidth={popup === false ? SCREEN_WIDTH - 130 : SCREEN_WIDTH}
           data={data}
