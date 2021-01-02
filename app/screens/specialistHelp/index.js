@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
-import { CATEGORIES } from 'graphql/queries';
 import TopNavigator from 'components/topNavigator';
 import NoData from 'components/noData';
 import SafeView from 'components/safeView';
-import Categories from './categories';
-import styles from './styles';
+import { ToastMsg } from 'components/toastMsg';
 import { isTab } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
-import { ToastMsg } from 'components/toastMsg';
+import { CATEGORIES } from 'graphql/queries';
 import { SPECIALIST_HELP } from 'navigation/routes';
-import { useTranslation } from 'react-i18next';
-import { memo } from 'react';
+import Categories from './categories';
+import styles from './styles';
 
 const SpecialistHelp = () => {
   const [reloading, setReloading] = useState(false);

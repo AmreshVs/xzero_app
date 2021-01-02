@@ -2,17 +2,17 @@ import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
-import { IMAGE_URL } from 'constants/common';
 import Row from 'components/row';
-import colors from 'constants/colors';
-import { useTranslation } from 'react-i18next';
 import RippleFX from 'components/rippleFx';
-import { SPECIALIST_DETAIL } from 'navigation/routes';
 import ProgressiveImage from 'components/progressiveImage';
-import styles from './styles';
+import { IMAGE_URL } from 'constants/common';
+import colors from 'constants/colors';
 import { thumbnailUrl } from 'constants/commonFunctions';
+import { SPECIALIST_DETAIL } from 'navigation/routes';
+import styles from './styles';
 
 const Specialist = ({ data }) => {
   const { push } = useNavigation();

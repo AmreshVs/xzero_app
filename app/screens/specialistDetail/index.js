@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
@@ -6,29 +6,28 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
 import SafeView from 'components/safeView';
-import colors from 'constants/colors';
 import TopNavigator from 'components/topNavigator';
+import Box from 'components/box';
+import { ToastMsg } from 'components/toastMsg';
+import colors from 'constants/colors';
+import { isTab } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
 import { SPECIALIST } from 'graphql/queries';
+import useErrorLog from 'hooks/useErrorLog';
+import { SPECIALIST_DETAIL } from 'navigation/routes';
 import SpecialistInfo from './specialistInfo';
 import AboutSpecialist from './aboutSpecialist';
 import AboutCenter from './aboutCenter';
 import ContactSpecialist from './contactSpecialist';
 import styles from './styles';
-import Box from 'components/box';
-import { isTab } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
-import useErrorLog from 'hooks/useErrorLog';
-import { ToastMsg } from 'components/toastMsg';
-import { SPECIALIST_DETAIL } from 'navigation/routes';
-import { memo } from 'react';
 
 const SpecialistDetail = () => {
 
   const { t, i18n } = useTranslation();
-  let language = i18n.language;
   const { logError } = useErrorLog();
   const { userData } = useContext(UserDataContext);
   const { params } = useRoute();
+  let language = i18n.language;
 
   const queryInput = {
     id: Number(params?.id)

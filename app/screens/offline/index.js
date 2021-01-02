@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import LottieView from 'lottie-react-native';
 import NetInfo from "@react-native-community/netinfo";
+import { useTranslation } from 'react-i18next';
 
-import styles from './styles';
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import Button from 'components/button';
-import { HOME_SCREEN } from 'navigation/routes';
 import { ToastMsg } from 'components/toastMsg';
-import { useTranslation } from 'react-i18next';
+import { HOME_SCREEN } from 'navigation/routes';
+import styles from './styles';
 
 export default function Offline({ navigation }) {
   const offlineRef = useRef(null);

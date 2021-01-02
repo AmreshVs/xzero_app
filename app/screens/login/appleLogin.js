@@ -1,16 +1,16 @@
 import React from 'react';
 import { View } from 'react-native';
-import * as AppleAuthentication from 'expo-apple-authentication';
-import jwtDecode from 'jwt-decode';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faApple, faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import jwtDecode from 'jwt-decode';
+import { useTranslation } from 'react-i18next';
 
 import { ToastMsg } from 'components/toastMsg';
 import RippleFX from 'components/rippleFx';
-import styles from './styles';
-import { useTranslation } from 'react-i18next';
-import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN } from 'navigation/routes';
+import useErrorLog from 'hooks/useErrorLog';
+import styles from './styles';
 
 const AppleLoginButton = ({ handleSocialLogin }) => {
   const { t } = useTranslation();

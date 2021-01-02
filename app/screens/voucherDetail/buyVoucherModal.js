@@ -1,52 +1,66 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { useApolloClient } from '@apollo/client';
 
 import Button from 'components/button';
 import ApplyPromocode from 'components/applyPromocode';
 import DeliveryAddress from 'components/deliveryAddress';
 import Card from 'components/card';
-import { PAYMENT } from 'navigation/routes';
-import styles from './styles';
 import Box from 'components/box';
+import { ToastMsg } from 'components/toastMsg';
 import { isTab, userVerified } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
-import { memo } from 'react';
-import { useApolloClient } from '@apollo/client';
 import { VOUCHER_QUEUE } from 'graphql/mutations';
-import { ToastMsg } from 'components/toastMsg';
+import { PAYMENT, VOUCHER_DETAIL } from 'navigation/routes';
+import useErrorLog from 'hooks/useErrorLog';
+import styles from './styles';
 
 const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher }) => {
   const { push } = useNavigation();
   const { t } = useTranslation();
   const { userData } = useContext(UserDataContext);
   const client = useApolloClient();
+  const { logError } = useErrorLog();
 
   const handlePayment = async () => {
-    const { data } = await client.mutate({
-      mutation: VOUCHER_QUEUE,
-      variables: {
-        user: Number(userData?.id),
-        voucher: Number(voucher?.id)
-      }
-    });
+    let mutationInput = {
+      user: Number(userData?.id),
+      voucher: Number(voucher?.id)
+    };
 
-    if (!data?.VoucherQueue?.disabled) {
-      if (await userVerified()) {
-        push(PAYMENT, {
-          currency_code: 'AED',
-          amount: promocodeData?.discountedPrice,
-          multiplier: 100,
-          voucher_id: voucher?.id,
-          promocode: promocodeData?.codeApplied,
-          discount: promocodeData?.discount
-        });
+    try {
+      const { data } = await client.mutate({
+        mutation: VOUCHER_QUEUE,
+        variables: mutationInput
+      });
+
+      if (!data?.VoucherQueue?.disabled) {
+        if (await userVerified()) {
+          push(PAYMENT, {
+            currency_code: 'AED',
+            amount: promocodeData?.discountedPrice,
+            multiplier: 100,
+            voucher_id: voucher?.id,
+            promocode: promocodeData?.codeApplied,
+            discount: promocodeData?.discount
+          });
+        }
+      }
+      else {
+        ToastMsg(t('queue_full'));
       }
     }
-    else {
-      ToastMsg(t('queue_full'));
+    catch (error) {
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: VOUCHER_DETAIL,
+        module: 'Buy Voucher',
+        input: JSON.stringify(mutationInput),
+        error: JSON.stringify(error)
+      });
     }
   }
 

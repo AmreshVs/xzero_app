@@ -1,27 +1,25 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, memo, useEffect, useContext } from 'react';
 import { KeyboardAvoidingView, Text, View } from 'react-native';
 import Clipboard from 'expo-clipboard';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import { useApolloClient } from '@apollo/client';
 
+import { saveUserDataLocally } from 'screens/login/helpers';
 import Button from 'components/button';
 import Row from 'components/row';
 import Textbox from 'components/textbox';
-import styles from './styles';
 import Box from 'components/box';
-import { useApolloClient } from '@apollo/client';
-import { SEND_SMS } from 'graphql/mutations';
+import ProgressiveImage from 'components/progressiveImage';
 import { ToastMsg } from 'components/toastMsg';
+import { handleMobileNumber } from 'constants/commonFunctions';
+import { IMAGE_URL } from 'constants/common';
+import { UserDataContext } from 'context';
+import { SEND_SMS } from 'graphql/mutations';
 import { VERIFY_OTP } from 'graphql/queries';
-import { useTranslation } from 'react-i18next';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { HOME_SCREEN } from 'navigation/routes';
 import { useInterval } from './helpers';
-import { useEffect } from 'react';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
-import { saveUserDataLocally } from 'screens/login/helpers';
-import { memo } from 'react';
-import { IMAGE_URL } from 'constants/common';
-import ProgressiveImage from 'components/progressiveImage';
+import styles from './styles';
 
 let otpArray = [];
 
@@ -96,7 +94,6 @@ const Otp = () => {
   }
 
   const handleConfirm = async () => {
-    setOtp([...initialState]);
     setLoading(true);
     const { data, errors } = await client.query({
       query: VERIFY_OTP,
@@ -115,6 +112,7 @@ const Otp = () => {
     if (errors) {
       ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
     }
+    setOtp([...initialState]);
     setLoading(false);
   }
 
@@ -130,13 +128,27 @@ const Otp = () => {
       }
     });
 
-    if (data?.SendSms) {
+    if (data?.SendSms?.status) {
       setResponseOtp(data?.SendSms?.otp);
       toggleSmsListener();
       ToastMsg(t('otp_sent'));
     }
 
     return;
+  }
+
+  const handleOTPType = (text, index) => {
+    if (text.length === 4) {
+      setOtp(otp => [
+        { ...otp[0], value: text[0] },
+        { ...otp[1], value: text[1] },
+        { ...otp[2], value: text[2] },
+        { ...otp[3], value: text[3] },
+      ]);
+    }
+    else {
+      handleType(text, index);
+    }
   }
 
   return (
@@ -147,6 +159,7 @@ const Otp = () => {
           source={{ uri: IMAGE_URL + '/uploads/otp_security_71bddb259b.webp' }}
         />
         <Text style={styles.caption}>{t('otp_desc')}</Text>
+        <Text style={styles.mobile}>{handleMobileNumber(params?.mobile_number)}</Text>
         <Row style={styles.inputsContainer}>
           {otp.map((item, index) => {
             return (
@@ -155,7 +168,7 @@ const Otp = () => {
                 placeholder=""
                 value={otp[index].value}
                 style={styles.textbox}
-                onChangeText={(text) => handleType(text, index)}
+                onChangeText={(text) => handleOTPType(text, index)}
                 key={index}
               />
             )

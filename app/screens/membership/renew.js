@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
@@ -8,7 +8,6 @@ import Box from 'components/box';
 import Card from 'components/card';
 import { PAYMENT } from 'navigation/routes';
 import styles from './styles';
-import { memo } from 'react';
 
 const Renew = ({ membershipData, expired }) => {
   const { push } = useNavigation();

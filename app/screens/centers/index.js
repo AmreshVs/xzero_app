@@ -1,4 +1,4 @@
-import React, { useState, createRef } from 'react';
+import React, { useState, createRef, memo } from 'react';
 import { FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -10,14 +10,13 @@ import TopNavigator from 'components/topNavigator';
 import FloatingButton from 'components/floatingButton';
 import SearchModal from 'components/searchModal';
 import ModalSearchHeader from 'components/modalSearchHeader';
-import Center from './center';
-import { GET_CENTERS } from 'graphql/queries';
-import styles from './styles';
 import { isTab } from 'constants/commonFunctions';
-import useErrorLog from 'hooks/useErrorLog';
-import { CENTERS_SCREEN } from 'navigation/routes';
 import { ToastMsg } from 'components/toastMsg';
-import { memo } from 'react';
+import { GET_CENTERS } from 'graphql/queries';
+import { CENTERS_SCREEN } from 'navigation/routes';
+import useErrorLog from 'hooks/useErrorLog';
+import Center from './center';
+import styles from './styles';
 
 let initialWhereCondition = {
   _limit: -1

@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
-import colors from 'constants/colors';
-import Row from 'components/row';
+import Box from 'components/box';
 import SafeView from 'components/safeView';
 import Button from 'components/button';
+import colors from 'constants/colors';
 import { HOME_TAB_SCREEN } from 'navigation/routes';
 import styles from './styles';
 
@@ -24,9 +24,9 @@ export default function PaymentStatus({ status = 1 }) {
       />
       <SafeView style={styles.container}>
         <View style={styles.circleContainer}>
-          <Row style={styles.circle} hcenter vcenter>
+          <Box style={styles.circle}>
             <FontAwesomeIcon icon="check" size={50} color={colors.success} />
-          </Row>
+          </Box>
           <Text style={styles.title}>
             {status ? t('payment_successfull') : t('payment_failed')}
           </Text>

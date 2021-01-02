@@ -7,11 +7,11 @@ import Box from 'components/box';
 import Button from 'components/button';
 import Row from 'components/row';
 import Progress from 'components/progress';
+import Chip from 'components/chip';
 import { IMAGE_URL } from 'constants/common';
+import colors from 'constants/colors';
 import { calculatePercentage, isTab } from 'constants/commonFunctions';
 import styles from './styles';
-import Chip from 'components/chip';
-import colors from 'constants/colors';
 
 const VoucherInfo = ({ data }) => {
   const { t, i18n } = useTranslation();

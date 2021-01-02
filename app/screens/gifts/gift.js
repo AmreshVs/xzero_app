@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import Card from 'components/card';
-import { IMAGE_URL } from 'constants/common';
 import RippleFX from 'components/rippleFx';
-import styles from './styles';
-import { thumbnailUrl } from 'constants/commonFunctions';
 import ProgressiveImage from 'components/progressiveImage';
+import { IMAGE_URL } from 'constants/common';
+import { thumbnailUrl } from 'constants/commonFunctions';
+import styles from './styles';
 
 const Gift = ({ data, availed }) => {
   const { i18n } = useTranslation();

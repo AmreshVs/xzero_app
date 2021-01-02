@@ -8,7 +8,7 @@ import styles from './styles';
 
 const Buy = ({ member, data }) => {
   const { t, i18n } = useTranslation();
-  const language = i18n.language;
+  let language = i18n.language;
 
   return (
     <Card paddingBottom={15}>

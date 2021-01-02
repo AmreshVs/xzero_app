@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
 import Box from 'components/box';
 import RippleFX from 'components/rippleFx';
-import { CENTERS_SCREEN, SPECIALIST_HELP } from 'navigation/routes';
-import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
+import { isTab, thumbnailUrl } from 'constants/commonFunctions';
+import { IMAGE_URL } from 'constants/common';
+import { CENTERS_SCREEN, SPECIALIST_HELP } from 'navigation/routes';
 import styles from './styles';
-import { memo } from 'react';
-import { isTab, smallUrl, thumbnailUrl } from 'constants/commonFunctions';
 
 const Category = ({ data, length, index }) => {
   if (data?.centersCount <= 0) {
@@ -37,7 +36,10 @@ const Category = ({ data, length, index }) => {
   };
 
   return (
-    <RippleFX style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddContainer : styles.categoryContainer} onPress={navigateToCenters}>
+    <RippleFX
+      style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddContainer : styles.categoryContainer}
+      onPress={navigateToCenters}
+    >
       <ProgressiveImage
         thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img) }}
         source={{ uri: IMAGE_URL + data?.featured_img }}

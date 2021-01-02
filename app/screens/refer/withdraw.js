@@ -2,23 +2,26 @@ import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { useQuery } from '@apollo/client';
 
-import WithdrawAmount from './withdrawAmount';
-import Transactions from './transactions';
-import BankInfo from './bankInfo';
+import { ToastMsg } from 'components/toastMsg';
 import { UserDataContext } from 'context';
 import { WITHDRAW_HISTORY } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
-import styles from './styles';
-import { ToastMsg } from 'components/toastMsg';
 import { REFER } from 'navigation/routes';
+import WithdrawAmount from './withdrawAmount';
+import Transactions from './transactions';
+import BankInfo from './bankInfo';
+import styles from './styles';
 
 const Withdraw = ({ balance, min_withdraw }) => {
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
+
+  let queryInput = {
+    user_id: Number(userData?.id)
+  };
+
   const { data, loading, refetch: _refetch, error } = useQuery(WITHDRAW_HISTORY, {
-    variables: {
-      user_id: Number(userData?.id)
-    }
+    variables: queryInput
   });
 
   if (error) {
@@ -26,9 +29,7 @@ const Withdraw = ({ balance, min_withdraw }) => {
     logError({
       screen: REFER,
       module: 'Withdraw History',
-      input: JSON.stringify({
-        user_id: Number(userData?.id)
-      }),
+      input: JSON.stringify(queryInput),
       error: JSON.stringify(error)
     });
   }

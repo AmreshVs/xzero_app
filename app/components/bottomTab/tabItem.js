@@ -8,12 +8,14 @@ import RippleFX from 'components/rippleFx';
 import getIconName from './getIconName';
 import style from "./style";
 import { MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
+import { useTranslation } from 'react-i18next';
 
 const TabItem = ({ options, route, index, state, navigation }) => {
   const insets = useSafeAreaInsets();
   const styles = style(insets, state?.history.length);
   const isFocused = state.index === index;
   const selectedTabTextAnim = useRef(new Animated.Value(-2)).current;
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isFocused) {
@@ -70,7 +72,17 @@ const TabItem = ({ options, route, index, state, navigation }) => {
           size={22}
         />
       </RippleFX>
-      {route.name !== MEMBERSHIP_TAB_SCREEN ? isFocused && <Animated.Text style={[styles.itemText, { color: colors?.primary, transform: [{ translateY: selectedTabTextAnim }] }]}>{label}</Animated.Text> : null}
+      {route.name !== MEMBERSHIP_TAB_SCREEN ? isFocused && (
+        <Animated.Text
+          style={[styles.itemText, {
+            color: colors?.primary,
+            transform: [{ translateY: selectedTabTextAnim }]
+          }]}
+          numberOfLines={1}
+        >
+          {t(label)}
+        </Animated.Text>
+      ) : null}
     </View>
   );
 };

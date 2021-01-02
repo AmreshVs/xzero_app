@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
 import Card from 'components/card';
-import styles from './styles';
 import Row from 'components/row';
 import RippleFX from 'components/rippleFx';
-import { GIFTS } from 'navigation/routes';
-import { useNavigation } from '@react-navigation/native';
-import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
-import { useTranslation } from 'react-i18next';
+import { IMAGE_URL } from 'constants/common';
+import { GIFTS } from 'navigation/routes';
+import styles from './styles';
 
 const GiftCard = () => {
   const { navigate } = useNavigation();

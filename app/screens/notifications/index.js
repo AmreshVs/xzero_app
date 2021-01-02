@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
-import Notification from './notification';
 import Divider from 'components/divider';
-import { NOTIFICATIONS } from 'graphql/queries';
-import { NOTIFICATIONS as NAV_NOTIFICATIONS } from 'navigation/routes';
-import NoData from 'components/noData';
-import useErrorLog from 'hooks/useErrorLog';
-import styles from './styles';
 import { ToastMsg } from 'components/toastMsg';
-import { memo } from 'react';
+import NoData from 'components/noData';
+import { NOTIFICATIONS as NAV_NOTIFICATIONS } from 'navigation/routes';
+import { NOTIFICATIONS } from 'graphql/queries';
+import useErrorLog from 'hooks/useErrorLog';
+import Notification from './notification';
+import styles from './styles';
 
 const Notifications = () => {
   const [reloading, setReloading] = useState(false);

@@ -4,19 +4,19 @@ import { useRoute } from '@react-navigation/native';
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 
-import { SPECIALISTS_BY_CENTER } from 'graphql/queries';
 import TopNavigator from 'components/topNavigator';
 import NoData from 'components/noData';
 import SafeView from 'components/safeView';
 import SearchModal from 'components/searchModal';
 import FloatingButton from 'components/floatingButton';
 import ModalSearchHeader from 'components/modalSearchHeader';
+import { ToastMsg } from 'components/toastMsg';
+import { isTab } from 'constants/commonFunctions';
+import { SPECIALISTS } from 'navigation/routes';
+import { SPECIALISTS_BY_CENTER } from 'graphql/queries';
+import useErrorLog from 'hooks/useErrorLog';
 import Specialist from './specialist';
 import styles from './styles';
-import { isTab } from 'constants/commonFunctions';
-import { ToastMsg } from 'components/toastMsg';
-import { SPECIALISTS } from 'navigation/routes';
-import useErrorLog from 'hooks/useErrorLog';
 
 let initialWhereCondition = {
   _limit: -1

@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
     width: 41,
     borderRadius: 5,
     marginHorizontal: 10
+  },
+  mobile: {
+    marginTop: 10,
+    fontSize: 17,
+    fontWeight: '700'
   }
 });
 

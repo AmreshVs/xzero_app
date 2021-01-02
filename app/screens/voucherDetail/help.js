@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
@@ -9,7 +9,6 @@ import Box from 'components/box';
 import { sendWhatsappMessage } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import styles from './styles';
-import { memo } from 'react';
 
 const Help = () => {
   const { t } = useTranslation();

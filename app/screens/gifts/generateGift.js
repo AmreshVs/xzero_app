@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState, memo } from 'react';
 import { Text, View, Animated, Image, Modal } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { useApolloClient } from '@apollo/client';
@@ -6,16 +6,15 @@ import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
 import Button from 'components/button';
-import { GENERATE_GIFT } from 'graphql/mutations';
-import { UserDataContext } from 'context';
+import ProgressiveImage from 'components/progressiveImage';
+import Box from 'components/box';
 import { IMAGE_URL, SCREEN_HEIGHT } from 'constants/common';
+import { isTab, thumbnailUrl } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
+import { GIFTS } from 'navigation/routes';
+import { GENERATE_GIFT } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
 import styles from './styles';
-import { GIFTS } from 'navigation/routes';
-import { isTab, thumbnailUrl } from 'constants/commonFunctions';
-import { memo } from 'react';
-import Box from 'components/box';
-import ProgressiveImage from 'components/progressiveImage';
 
 const GenerateGift = ({ refetch }) => {
   const [loading, setLoading] = useState(false);
@@ -110,7 +109,7 @@ const GenerateGift = ({ refetch }) => {
         ).start();
       }, 2000);
     }
-    console.log(data);
+
     if (data?.won) {
       setTimeout(() => {
         setModalVisible(true);

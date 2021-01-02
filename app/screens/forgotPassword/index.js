@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
@@ -9,16 +9,15 @@ import SafeView from 'components/safeView';
 import Textbox from 'components/textbox';
 import Button from 'components/button';
 import HeadingCaption from 'components/headingCaption';
+import ProgressiveImage from 'components/progressiveImage';
 import FormError from 'components/formError';
-import styles from './styles';
 import { ToastMsg } from 'components/toastMsg';
-import { FORGOT_PASSWORD } from 'graphql/mutations';
 import TopNavigator from 'components/topNavigator';
 import { IMAGE_URL } from 'constants/common';
-import useErrorLog from 'hooks/useErrorLog';
+import { FORGOT_PASSWORD } from 'graphql/mutations';
 import { FORGOT_PASSWORD as FORGET } from 'navigation/routes';
-import { memo } from 'react';
-import ProgressiveImage from 'components/progressiveImage';
+import useErrorLog from 'hooks/useErrorLog';
+import styles from './styles';
 
 const inputsValidationSchema = () =>
   object().shape({

@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useContext } from 'react';
 import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useApolloClient } from '@apollo/client';
@@ -7,20 +7,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import Box from 'components/box';
 import Row from 'components/row';
-import colors from 'constants/colors';
 import Chip from 'components/chip';
+import RippleFX from 'components/rippleFx';
 import { IMAGE_URL } from 'constants/common';
 import Column from 'components/column';
-import RippleFX from 'components/rippleFx';
-import { OFFERS_SCREEN, OFFER_DETAIL } from 'navigation/routes';
-import addFavourite from './addFavourite';
-import useErrorLog from 'hooks/useErrorLog';
-import styles from './styles';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
-import { ToastMsg } from 'components/toastMsg';
-import { isTab, thumbnailUrl } from 'constants/commonFunctions';
 import ProgressiveImage from 'components/progressiveImage';
+import { ToastMsg } from 'components/toastMsg';
+import colors from 'constants/colors';
+import { isTab, thumbnailUrl } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
+import { OFFERS_SCREEN, OFFER_DETAIL } from 'navigation/routes';
+import useErrorLog from 'hooks/useErrorLog';
+import addFavourite from './addFavourite';
+import styles from './styles';
 
 function Offer({ data, center, favourites }) {
 

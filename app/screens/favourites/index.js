@@ -1,25 +1,23 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useContext } from 'react';
 import { View, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useApolloClient } from '@apollo/client';
+import { useNavigation } from '@react-navigation/native';
 
 import Offer from 'screens/offers/offer';
 import NoData from 'components/noData';
 import SafeView from 'components/safeView';
 import Button from 'components/button';
-import { FAVOURITES_BY_USER } from 'graphql/queries';
-import { CLEAR_FAVOURITES } from 'graphql/mutations';
-import IsLoggedIn from 'hoc/isLoggedIn';
-import TopStatusBar from 'components/topStatusBar';
-import styles from './styles';
-import { isTab } from 'constants/commonFunctions';
-import useErrorLog from 'hooks/useErrorLog';
-import { FAVOURITES_TAB_SCREEN } from 'navigation/routes';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
-import { ToastMsg } from 'components/toastMsg';
-import { useNavigation } from '@react-navigation/native';
 import TopNavigator from 'components/topNavigator';
+import { ToastMsg } from 'components/toastMsg';
+import { UserDataContext } from 'context';
+import { isTab } from 'constants/commonFunctions';
+import { CLEAR_FAVOURITES } from 'graphql/mutations';
+import { FAVOURITES_BY_USER } from 'graphql/queries';
+import { FAVOURITES_TAB_SCREEN } from 'navigation/routes';
+import IsLoggedIn from 'hoc/isLoggedIn';
+import useErrorLog from 'hooks/useErrorLog';
+import styles from './styles';
 
 const Favourites = () => {
   const { t } = useTranslation();

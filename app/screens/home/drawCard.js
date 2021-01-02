@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import ProgressiveImage from 'components/progressiveImage';
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
-import styles from './styles';
+import ProgressiveImage from 'components/progressiveImage';
 import Row from 'components/row';
 import RippleFX from 'components/rippleFx';
-import { useNavigation } from '@react-navigation/native';
-import { VOUCHERS } from 'navigation/routes';
 import { IMAGE_URL } from 'constants/common';
-import { useTranslation } from 'react-i18next';
+import { VOUCHERS } from 'navigation/routes';
+import styles from './styles';
 
 const DrawCard = () => {
   const { navigate } = useNavigation();

@@ -7,16 +7,16 @@ import { useTranslation } from 'react-i18next';
 import NoData from 'components/noData';
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
-import Offer from './offer';
-import { OFFERS_LIST } from 'graphql/queries';
 import FloatingButton from 'components/floatingButton';
 import SearchModal from 'components/searchModal';
-import ModalSearchHeader from 'components/modalSearchHeader';
-import styles from './styles';
-import { isTab } from 'constants/commonFunctions';
 import { ToastMsg } from 'components/toastMsg';
-import { OFFERS_SCREEN } from 'navigation/routes';
+import ModalSearchHeader from 'components/modalSearchHeader';
+import { isTab } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
+import { OFFERS_SCREEN } from 'navigation/routes';
+import { OFFERS_LIST } from 'graphql/queries';
+import Offer from './offer';
+import styles from './styles';
 
 let initialWhereCondition = {
   _limit: -1

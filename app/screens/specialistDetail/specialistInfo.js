@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { IMAGE_URL } from 'constants/common';
 import Card from 'components/card';
 import ProgressiveImage from 'components/progressiveImage';
-import styles from './styles';
 import { smallUrl } from 'constants/commonFunctions';
-import { memo } from 'react';
+import styles from './styles';
 
 const SpecialistInfo = ({ specialist }) => {
   const { i18n } = useTranslation();

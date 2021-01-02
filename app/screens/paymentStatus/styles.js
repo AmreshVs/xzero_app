@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT / 5.5,
     width: SCREEN_WIDTH / 2.5,
     borderRadius: SCREEN_WIDTH / 4,
+    alignItems: 'center',
+    justifyContent: 'center',
     ...whiteBg,
     ...getShadowStyle(),
   },

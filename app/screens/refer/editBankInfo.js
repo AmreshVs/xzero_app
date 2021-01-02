@@ -10,11 +10,11 @@ import Row from 'components/row';
 import Button from 'components/button';
 import Box from 'components/box';
 import { ToastMsg } from 'components/toastMsg';
-import { inputsValidationSchema, inputs } from './helpers';
-import { CREATE_BANK_INFO, UPDATE_BANK_INFO } from 'graphql/mutations';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
+import { CREATE_BANK_INFO, UPDATE_BANK_INFO } from 'graphql/mutations';
 import { REFER } from 'navigation/routes';
+import { inputsValidationSchema, inputs } from './helpers';
 
 const EditBankInfo = ({ setEdit, data, reload }) => {
   const { t } = useTranslation();

@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
 import Card from 'components/card';
-import styles from './styles';
 import Row from 'components/row';
-import { useNavigation } from '@react-navigation/native';
 import RippleFX from 'components/rippleFx';
-import { REFER } from 'navigation/routes';
 import ProgressiveImage from 'components/progressiveImage';
 import { IMAGE_URL } from 'constants/common';
-import { useTranslation } from 'react-i18next';
+import { REFER } from 'navigation/routes';
+import styles from './styles';
 
 const ReferCard = () => {
   const { navigate } = useNavigation();

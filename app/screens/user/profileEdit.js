@@ -1,34 +1,24 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useContext } from 'react';
 import { View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { useNavigation } from '@react-navigation/native';
 
 import Textbox from 'components/textbox';
 import FormError from 'components/formError';
 import Row from 'components/row';
 import Button from 'components/button';
-import {
-  inputsValidationSchema,
-  passwordValidationSchema,
-  inputs,
-  passwordInputs,
-} from './helpers';
-import { UPDATE_USER } from 'graphql/mutations';
-import {
-  handleDOB,
-  handleServerDOB,
-  getFormatedDate,
-} from 'constants/commonFunctions';
 import Checkbox from 'components/checkbox';
 import { ToastMsg } from 'components/toastMsg';
-import styles from './styles';
-import { useContext } from 'react';
+import { handleDOB, handleServerDOB, getFormatedDate } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
-import { useNavigation } from '@react-navigation/native';
+import { UPDATE_USER } from 'graphql/mutations';
 import { OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
+import { inputsValidationSchema, passwordValidationSchema, inputs, passwordInputs } from './helpers';
+import styles from './styles';
 
 const ProfileEdit = ({ setEdit, data }) => {
   const { t } = useTranslation();

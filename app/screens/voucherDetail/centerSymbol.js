@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+
 import colors from 'constants/colors';
 
 const CenterSymbol = ({ icon = "equals", text = "" }) => {

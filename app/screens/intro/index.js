@@ -1,24 +1,22 @@
-import React from 'react';
+import React, { useEffect, memo } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import AppIntroSlider from 'react-native-app-intro-slider';
-
-import SafeView from 'components/safeView';
-import colors from 'constants/colors';
-import { IMAGE_URL } from 'constants/common';
-import { INTRO, MAIN_SCREEN } from 'navigation/routes';
-import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useQuery } from '@apollo/client';
-import { APP_INTROS } from 'graphql/queries';
-import Box from 'components/box';
+import { useTranslation } from 'react-i18next';
+
+import SafeView from 'components/safeView';
 import VHCenter from 'components/vhCenter';
 import Spinner from 'components/spinner';
-import useErrorLog from 'hooks/useErrorLog';
-import { ToastMsg } from 'components/toastMsg';
-import { useTranslation } from 'react-i18next';
-import { memo } from 'react';
+import Box from 'components/box';
 import ProgressiveImage from 'components/progressiveImage';
+import { ToastMsg } from 'components/toastMsg';
+import { IMAGE_URL } from 'constants/common';
+import colors from 'constants/colors';
+import { INTRO, MAIN_SCREEN } from 'navigation/routes';
+import useErrorLog from 'hooks/useErrorLog';
+import { APP_INTROS } from 'graphql/queries';
 
 const Intro = ({ navigation }) => {
   const { logError } = useErrorLog();

@@ -1,5 +1,7 @@
-import React, { memo } from 'react';
-import { Image, Text, View } from 'react-native';
+import React, { memo, useContext } from 'react';
+import { Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
 import Card from 'components/card';
 import Box from 'components/box';
@@ -7,18 +9,15 @@ import Button from 'components/button';
 import Row from 'components/row';
 import Progress from 'components/progress';
 import Divider from 'components/divider';
-import { IMAGE_URL } from 'constants/common';
-import { calculatePercentage, smallUrl, thumbnailUrl } from 'constants/commonFunctions';
-import styles from './styles';
-import { useTranslation } from 'react-i18next';
 import RippleFX from 'components/rippleFx';
-import { useNavigation } from '@react-navigation/native';
-import { VOUCHER_DETAIL } from 'navigation/routes';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
 import Chip from 'components/chip';
-import colors from 'constants/colors';
 import ProgressiveImage from 'components/progressiveImage';
+import { IMAGE_URL } from 'constants/common';
+import colors from 'constants/colors';
+import { calculatePercentage, smallUrl, thumbnailUrl } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
+import { VOUCHER_DETAIL } from 'navigation/routes';
+import styles from './styles';
 
 const Voucher = ({ data, handleOpenModal }) => {
   const { t } = useTranslation();

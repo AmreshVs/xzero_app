@@ -1,38 +1,36 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
+import React, { useState, useEffect, useRef, memo, useContext } from 'react';
 import { ScrollView, RefreshControl, Text, View } from 'react-native';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { Modalize } from 'react-native-modalize';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
+import Card from 'components/card';
+import Box from 'components/box';
+import ApplyPromocode from 'components/applyPromocode';
+import Button from 'components/button';
 import SafeView from 'components/safeView';
+import TopNavigator from 'components/topNavigator';
+import { ToastMsg } from 'components/toastMsg';
+import { isTab, userVerified } from 'constants/commonFunctions';
+import { SCREEN_HEIGHT } from 'constants/common';
+import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
+import IsLoggedIn from 'hoc/isLoggedIn';
+import { GET_MEMBERSHIP_BY_USER, MEMBERSHIP_PLANS } from 'graphql/queries';
+import { MEMBERSHIP_TAB_SCREEN, PAYMENT } from 'navigation/routes';
+import GetHelp from './getHelp';
+import Plan from './plan';
 import Note from './note';
 import MembershipCard from './membershipCard';
 import Renew from './renew';
 import Benefits from './benefits';
 import BuyMembership from './buyMembership';
 import QRCode from './qrcode';
-import { isTab, userVerified } from 'constants/commonFunctions';
-import { GET_MEMBERSHIP_BY_USER, MEMBERSHIP_PLANS } from 'graphql/queries';
-import IsLoggedIn from 'hoc/isLoggedIn';
-import GetHelp from './getHelp';
 import styles from './styles';
-import Card from 'components/card';
-import Box from 'components/box';
-import ApplyPromocode from 'components/applyPromocode';
-import Button from 'components/button';
-import Plan from './plan';
-import { MEMBERSHIP_TAB_SCREEN, PAYMENT } from 'navigation/routes';
-import { SCREEN_HEIGHT } from 'constants/common';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
-import useErrorLog from 'hooks/useErrorLog';
-import { ToastMsg } from 'components/toastMsg';
-import TopNavigator from 'components/topNavigator';
 
 let numOfDays = null;
 let render = 0;
-let context = {};
 
 const Membership = () => {
   const [member, setMember] = useState(false);
@@ -70,21 +68,17 @@ const Membership = () => {
 
   const getMemberData = async () => {
 
-    if (userData?.membership !== null) {
-      context = {
-        headers: {
-          authorization: 'Bearer ' + userData?.jwt,
-        },
-      }
-    }
-
     let { data, error } = await client.query({
       query: GET_MEMBERSHIP_BY_USER,
       variables: {
         user_id: Number(userData?.id),
         user: Number(userData?.id),
       },
-      context: context,
+      context: {
+        headers: {
+          authorization: 'Bearer ' + userData?.jwt,
+        },
+      },
     });
 
     if (error) {

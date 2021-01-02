@@ -2,12 +2,13 @@ import React, { memo, useContext } from 'react';
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
+
 import Box from 'components/box';
 import Divider from 'components/divider';
-import styles from './styles';
 import RippleFX from 'components/rippleFx';
 import { UserDataContext } from 'context';
 import { OFFERS_SCREEN, OFFER_DETAIL, SPECIALIST_DETAIL } from 'navigation/routes';
+import styles from './styles';
 
 const ListItem = ({ name, data }) => {
   const { push } = useNavigation();

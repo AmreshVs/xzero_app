@@ -1,27 +1,25 @@
-import React from 'react';
+import React, { useContext, memo } from 'react';
 import { Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { CacheManager } from "react-native-expo-image-cache";
+import { useApolloClient } from '@apollo/client';
 
+import { UpdateLanguage } from 'screens/home/topSection';
 import Row from 'components/row';
 import Box from 'components/box';
-import colors from 'constants/colors';
 import Divider from 'components/divider';
-import { MAIN_SCREEN, OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
-import { handleDOB } from 'constants/commonFunctions';
 import RippleFX from 'components/rippleFx';
-import styles from './styles';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
-import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import Button from 'components/button';
-import { memo } from 'react';
-import { useApolloClient } from '@apollo/client';
-import { UpdateLanguage } from 'screens/home/topSection';
+import colors from 'constants/colors';
+import { handleDOB } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
+import { MAIN_SCREEN, OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
+import styles from './styles';
 
 export const handlelogout = async ({ dispatch, setUserData, logError }) => {
   const resetAction = CommonActions.reset({
@@ -32,8 +30,8 @@ export const handlelogout = async ({ dispatch, setUserData, logError }) => {
   try {
     let removeJWTData = await AsyncStorage.removeItem('@xzero_jwt');
     let removeUserData = await AsyncStorage.removeItem('@xzero_user');
-    let removePopup = await AsyncStorage.removeItem('@xzero_popup');
-    if (removeJWTData === null && removeUserData === null && removePopup === null) {
+
+    if (removeJWTData === null && removeUserData === null) {
       await CacheManager.clearCache();
       dispatch(resetAction);
       setUserData(null);
@@ -120,7 +118,7 @@ const ProfileView = ({ data }) => {
                       status="chip_1"
                       onPress={() => handleVerify()}
                     >
-                      Verify Now
+                      {t('verify_now')}
                     </Button>
                   </Box>
                 }

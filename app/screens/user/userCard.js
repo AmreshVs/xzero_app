@@ -1,18 +1,17 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { View, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 
+import ProgressiveImage from 'components/progressiveImage';
+import TopNavigator from 'components/topNavigator';
+import RippleFX from 'components/rippleFx';
 import colors from 'constants/colors';
 import { firstLetterUpper, handleDOB } from 'constants/commonFunctions';
-import styles from './styles';
-import { useContext } from 'react';
 import { UserDataContext } from 'context';
-import RippleFX from 'components/rippleFx';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import TopNavigator from 'components/topNavigator';
-import { useNavigation } from '@react-navigation/native';
-import ProgressiveImage from 'components/progressiveImage';
+import styles from './styles';
 
 const UserCard = ({ edit, setEdit, data }) => {
   const { t } = useTranslation();

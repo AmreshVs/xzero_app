@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
-import colors from 'constants/colors';
 import Row from 'components/row';
 import Box from 'components/box';
 import RippleFX from 'components/rippleFx';
+import colors from 'constants/colors';
 import styles from './styles';
 
 const Plan = ({ data, index, planIndex, setPlanData, setPromocodeData }) => {

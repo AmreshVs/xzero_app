@@ -305,6 +305,7 @@ export const SEND_SMS = gql`
       otp
       msg
       balance
+      status
     }
   }
 `;
@@ -320,12 +321,9 @@ export const VOUCHER_QUEUE = gql`
 `;
 
 export const CREATE_NON_USER = gql`
-  mutation CreateNonUser($token: String!, $language: String!){
+  mutation CreateNonUser($data: NonUserInput){
     createNonUser(input: {
-      data: {
-        notification_token: $token,
-        language: $language
-      }
+      data: $data
     }){
       nonUser{
         id
@@ -334,15 +332,13 @@ export const CREATE_NON_USER = gql`
   }
 `;
 
-export const UPDATE_LANGUAGE = gql`
-  mutation updateUser($user_id: ID!, $language: String! ){
+export const UPDATE_USER_NEW = gql`
+  mutation updateUser($user_id: ID!, $data: editUserInput ){
     updateUser(input: {
       where: {
         id: $user_id
       },
-      data: {
-        language: $language,
-      }
+      data: $data
     }){
       user{
         id

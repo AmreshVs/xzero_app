@@ -1,31 +1,32 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Text, ScrollView, KeyboardAvoidingView, Switch } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useQuery } from '@apollo/client';
+import { useApolloClient, useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
-import AsyncStorage from '@react-native-community/async-storage';
 
 import Row from 'components/row';
 import colors from 'constants/colors';
-import ProfileView from './profileView';
-import ProfileEdit from './profileEdit';
 import Box from 'components/box';
+import { ToastMsg } from 'components/toastMsg';
+import SafeView from 'components/safeView';
+import { UserDataContext } from 'context';
 import { GET_USER } from 'graphql/queries';
 import IsLoggedIn from 'hoc/isLoggedIn';
-import UserCard from './userCard';
-import styles from './styles';
 import useErrorLog from 'hooks/useErrorLog';
-import { UserDataContext } from 'context';
-import { ToastMsg } from 'components/toastMsg';
 import { PROFILE_TAB_SCREEN } from 'navigation/routes';
-import SafeView from 'components/safeView';
+import { UPDATE_USER_NEW } from 'graphql/mutations';
+import UserCard from './userCard';
+import ProfileView from './profileView';
+import ProfileEdit from './profileEdit';
+import styles from './styles';
 
 const User = () => {
   const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
   const [isEnabled, setIsEnabled] = useState(true);
-  const { userData } = useContext(UserDataContext);
+  const { userData, setUserData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
+  const client = useApolloClient();
 
   const queryInput = {
     ID: Number(userData?.id),
@@ -47,11 +48,19 @@ const User = () => {
 
   const toggleSwitch = async () => {
     try {
-      const popupData = await AsyncStorage.getItem('@xzero_popup');
-      if (popupData !== null) {
-        await AsyncStorage.setItem('@xzero_popup', JSON.stringify({ status: !isEnabled }));
-      }
+      const enabledStatus = !isEnabled;
       setIsEnabled(previousState => !previousState);
+
+      await client.mutate({
+        mutation: UPDATE_USER_NEW,
+        variables: {
+          user_id: Number(userData?.id),
+          data: {
+            show_popup: enabledStatus
+          }
+        }
+      });
+      setUserData({ ...userData, show_popup: enabledStatus })
     }
     catch (error) {
       console.log('Toggle Popup error', error);
@@ -72,16 +81,7 @@ const User = () => {
   }, [edit]);
 
   const checkPopUp = async () => {
-    const popupData = await AsyncStorage.getItem('@xzero_popup');
-    if (popupData !== null) {
-      let data = JSON.parse(popupData);
-      if (data?.status !== '') {
-        setIsEnabled(data?.status);
-      }
-    }
-    else {
-      await AsyncStorage.setItem('@xzero_popup', JSON.stringify({ status: true }));
-    }
+    setIsEnabled(userData?.show_popup);
   }
 
   return (

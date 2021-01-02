@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 
 import Box from 'components/box';
 import RippleFX from 'components/rippleFx';
-import { SPECIALISTS } from 'navigation/routes';
-import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
-import styles from './styles';
+import { IMAGE_URL } from 'constants/common';
 import { smallUrl } from 'constants/commonFunctions';
+import { SPECIALISTS } from 'navigation/routes';
+import styles from './styles';
 
 const Categories = ({ data }) => {
   if (data?.centersCount <= 0) {

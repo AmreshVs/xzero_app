@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { memo, useContext } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
+import NoMembership from 'components/noMembership';
+import Box from 'components/box';
+import { UserDataContext } from 'context';
+import IsLoggedIn from 'hoc/isLoggedIn';
+import { GET_GIFTS } from 'graphql/queries';
+import { GIFTS } from 'navigation/routes';
+import useErrorLog from 'hooks/useErrorLog';
 import AvailableGifts from './availableGifts';
 import AvailedGifts from './availedGifts';
 import GenerateGift from './generateGift';
-import { GET_GIFTS } from 'graphql/queries';
-import useErrorLog from 'hooks/useErrorLog';
-import { GIFTS } from 'navigation/routes';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import IsLoggedIn from 'hoc/isLoggedIn';
-import { memo } from 'react';
 
 const Gifts = () => {
   const { t } = useTranslation();
@@ -26,7 +26,8 @@ const Gifts = () => {
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_GIFTS, {
     variables: {
-      membership_plan: Number(userData?.membership?.package?.id) || undefined
+      membership_plan: Number(userData?.membership?.package?.id) || null,
+      user_id: Number(userData?.id)
     }
   });
 
@@ -48,11 +49,17 @@ const Gifts = () => {
         leftClick={() => params?.drawer ? navigation.toggleDrawer() : navigation.pop()}
         gradient
       />
-      <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={_refetch} />} removeClippedSubviews={true} >
-        <GenerateGift refetch={_refetch} />
-        <AvailableGifts data={data?.AvailableGifts?.gifts} />
-        {data?.AvailableGifts?.AvailedGifts.length > 0 && <AvailedGifts data={data?.AvailableGifts?.AvailedGifts} />}
-      </ScrollView>
+      {userData?.membership === null ?
+        <Box padding={10}>
+          <NoMembership />
+        </Box>
+        :
+        <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={_refetch} />} removeClippedSubviews={true} >
+          <GenerateGift refetch={_refetch} />
+          <AvailableGifts data={data?.AvailableGifts?.gifts} />
+          {data?.AvailableGifts?.AvailedGifts.length > 0 && <AvailedGifts data={data?.AvailableGifts?.AvailedGifts} />}
+        </ScrollView>
+      }
     </SafeView>
   );
 }

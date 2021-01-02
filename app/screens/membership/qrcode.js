@@ -1,11 +1,11 @@
 import React, { memo } from 'react';
 import { View, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
-import styles from './styles';
-import { IMAGE_URL } from 'constants/common';
-import { useTranslation } from 'react-i18next';
 import ProgressiveImage from 'components/progressiveImage';
+import { IMAGE_URL } from 'constants/common';
+import styles from './styles';
 
 const QRCode = ({ data }) => {
   const { t } = useTranslation();

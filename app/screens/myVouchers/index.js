@@ -1,26 +1,25 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo, useContext } from 'react';
 import { FlatList, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
+import { useApolloClient } from '@apollo/client';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
-import VoucherList from './voucherList';
-import styles from './styles';
 import Row from 'components/row';
 import Box from 'components/box';
 import Loader from 'components/loader';
 import RippleFX from 'components/rippleFx';
-import { useApolloClient } from '@apollo/client';
-import { MY_VOUCHER_BOUGHT, MY_VOUCHER_WON } from 'graphql/queries';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
+import { ToastMsg } from 'components/toastMsg';
 import NoData from 'components/noData';
 import { isTab } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
+import IsLoggedIn from 'hoc/isLoggedIn';
 import useErrorLog from 'hooks/useErrorLog';
 import { MY_VOUCHERS } from 'navigation/routes';
-import { ToastMsg } from 'components/toastMsg';
-import IsLoggedIn from 'hoc/isLoggedIn';
-import { useNavigation } from '@react-navigation/native';
+import { MY_VOUCHER_BOUGHT, MY_VOUCHER_WON } from 'graphql/queries';
+import VoucherList from './voucherList';
+import styles from './styles';
 
 const MyVouchers = () => {
   const [reloading, setReloading] = useState(false);

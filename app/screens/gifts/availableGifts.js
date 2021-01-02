@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import Box from 'components/box';
 import Gift from './gift';
 import styles from './styles';
-import { memo } from 'react';
 
 const AvailableGifts = ({ data }) => {
   const { t } = useTranslation();

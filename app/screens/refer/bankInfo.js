@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -8,9 +8,8 @@ import Column from 'components/column';
 import Row from 'components/row';
 import Button from 'components/button';
 import ViewBankInfo from './viewBankInfo';
-import styles from './styles';
 import EditBankInfo from './editBankInfo';
-import { memo } from 'react';
+import styles from './styles';
 
 const BankInfo = ({ data, loading, reload }) => {
   const [edit, setEdit] = useState(false);

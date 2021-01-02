@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Carousel from 'react-native-banner-carousel';
 
-import { IMAGE_URL } from 'constants/common';
 import ProgressiveImage from 'components/progressiveImage';
-import styles from './styles';
-import useScreenDimensions from 'hooks/useScreenDimensions';
 import { isTab, smallUrl } from 'constants/commonFunctions';
-import { memo } from 'react';
+import { IMAGE_URL } from 'constants/common';
+import useScreenDimensions from 'hooks/useScreenDimensions';
+import styles from './styles';
 
 const Slider = ({ data }) => {
   const screenData = useScreenDimensions();
@@ -14,7 +13,7 @@ const Slider = ({ data }) => {
   return (
     <Carousel
       autoplay
-      autoplayTimeout={5000}
+      autoplayTimeout={7000}
       activePageIndicatorStyle={styles.indicator}
       loop
       pageSize={screenData?.width}

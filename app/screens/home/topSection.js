@@ -1,39 +1,50 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import AsyncStorage from '@react-native-community/async-storage';
+import { useApolloClient } from '@apollo/client';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import SafeView from 'components/safeView';
 import colors from 'constants/colors';
 import Box from 'components/box';
 import RippleFX from 'components/rippleFx';
 import Row from 'components/row';
-import { firstLetterUpper } from 'constants/commonFunctions';
-import AsyncStorage from '@react-native-community/async-storage';
-import { GIFTS, HOME_SCREEN, NOTIFICATIONS } from 'navigation/routes';
-import styles from './styles';
-import useErrorLog from 'hooks/useErrorLog';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ProgressiveImage from 'components/progressiveImage';
-import { useApolloClient } from '@apollo/client';
+import { ToastMsg } from 'components/toastMsg';
+import { firstLetterUpper } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
+import { GIFTS, HOME_SCREEN, NOTIFICATIONS } from 'navigation/routes';
 import { UPDATE_LANGUAGE } from 'graphql/mutations';
+import styles from './styles';
 
 export const UpdateLanguage = async (client, params) => {
   try {
-    await client.mutate({
-      mutation: UPDATE_LANGUAGE,
-      variables: {
-        user_id: params?.user_id,
+    let mutationInput = {
+      user_id: params?.user_id,
+      data: {
         language: params?.language
       }
+    };
+
+    await client.mutate({
+      mutation: UPDATE_LANGUAGE,
+      variables: mutationInput
     });
   }
   catch (error) {
     console.log('Update Language Error', error);
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: HOME_SCREEN,
+      module: 'Top Section',
+      input: JSON.stringify(mutationInput),
+      error: JSON.stringify(error)
+    });
   }
 }
 

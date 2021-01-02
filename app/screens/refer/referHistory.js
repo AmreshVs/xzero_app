@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { View, Text } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -7,20 +7,36 @@ import Box from 'components/box';
 import Card from 'components/card';
 import Column from 'components/column';
 import Divider from 'components/divider';
-import { REFER_HISTORY } from 'graphql/queries';
-import styles from './styles';
-import { UserDataContext } from 'context';
+import { ToastMsg } from 'components/toastMsg';
 import { getFormattedDateTime } from 'constants/commonFunctions';
-import { memo } from 'react';
+import { UserDataContext } from 'context';
+import { REFER_HISTORY } from 'graphql/queries';
+import useErrorLog from 'hooks/useErrorLog';
+import { REFER } from 'navigation/routes';
+import styles from './styles';
 
 const ReferHistory = () => {
   const { userData } = useContext(UserDataContext);
   const { t } = useTranslation();
-  const { data, loading } = useQuery(REFER_HISTORY, {
-    variables: {
-      referrer: Number(userData?.id)
-    }
+  const { logError } = useErrorLog();
+
+  let queryInput = {
+    referrer: Number(userData?.id)
+  };
+
+  const { data, loading, error } = useQuery(REFER_HISTORY, {
+    variables: queryInput
   });
+
+  if (error) {
+    ToastMsg(t('error_occured'));
+    logError({
+      screen: REFER,
+      module: '',
+      input: JSON.stringify(queryInput),
+      error: JSON.stringify(error)
+    });
+  }
 
   return (
     <View style={styles.historyContainer}>

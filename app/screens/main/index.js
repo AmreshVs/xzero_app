@@ -1,19 +1,19 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, memo } from 'react';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Updates from 'expo-updates';
 
-import { BASIC_INFORMATION, GET_MEMBER_DATA } from 'graphql/queries';
-import { HOME_SCREEN, INTRO, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE, OTP } from 'navigation/routes';
+import { saveUserDataLocally } from 'screens/login/helpers';
 import Loader from 'components/loader';
+import { ToastMsg } from 'components/toastMsg';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
-import { ToastMsg } from 'components/toastMsg';
-import { memo } from 'react';
-import { saveUserDataLocally } from 'screens/login/helpers';
+import { BASIC_INFORMATION, GET_MEMBER_DATA } from 'graphql/queries';
+import { HOME_SCREEN, INTRO, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE, OTP } from 'navigation/routes';
 
 const Main = ({ navigation }) => {
   const client = useApolloClient();
@@ -23,7 +23,27 @@ const Main = ({ navigation }) => {
 
   useEffect(() => {
     checkNewVersion();
+    checkExpoUpdates();
   }, []);
+
+  const checkExpoUpdates = async () => {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        Updates.reloadAsync();
+      }
+    } catch (error) {
+      console.log('Expo Updates Error', error);
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: MAIN_SCREEN,
+        module: 'Expo Updates',
+        input: JSON.stringify(),
+        error: JSON.stringify(error)
+      });
+    }
+  }
 
   const checkNewVersion = async () => {
     const { data, error } = await client.query({
@@ -84,7 +104,6 @@ const Main = ({ navigation }) => {
             if (data?.user === null || data?.user === 'null') {
               await AsyncStorage.removeItem('@xzero_jwt');
               await AsyncStorage.removeItem('@xzero_user');
-              await AsyncStorage.removeItem('@xzero_popup');
               navigation.replace(LOGIN_SCREEN);
               return;
             }
@@ -101,8 +120,8 @@ const Main = ({ navigation }) => {
             }
             else {
               navigation.replace(OTP, {
-                user_id: loginData?.id,
-                mobile_number: loginData?.mobile_number
+                user_id: data?.user?.id,
+                mobile_number: data?.user?.mobile_number
               });
             }
             return;

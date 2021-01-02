@@ -4,22 +4,22 @@ import RippleFX from 'components/rippleFx';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useApolloClient } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
+import { ToastMsg } from 'components/toastMsg';
+import Loader from 'components/loader';
+import { getUserData } from 'constants/commonFunctions';
+import colors from 'constants/colors';
+import { UserDataContext } from 'context';
+import { PAYMENT, PAYMENT_STATUS } from 'navigation/routes';
+import { BUY_VOUCHER, GENERATE_MEMBESHIP } from 'graphql/mutations';
 import { GENERATE_PAYMENT_ACCESS_TOKEN, GENERATE_PAYMENT_URL, CHECK_PAYMENT_STATUS } from 'api';
 import { useAxios } from 'hooks';
-import colors from 'constants/colors';
-import { PAYMENT, PAYMENT_STATUS } from 'navigation/routes';
-import { getUserData } from 'constants/commonFunctions';
-import { BUY_VOUCHER, GENERATE_MEMBESHIP } from 'graphql/mutations';
-import Loader from 'components/loader';
-import { UserDataContext } from 'context';
-import styles from './styles';
 import useErrorLog from 'hooks/useErrorLog';
 import usePaymentLog from 'hooks/usePaymentLog';
-import { ToastMsg } from 'components/toastMsg';
-import { useTranslation } from 'react-i18next';
+import styles from './styles';
 
 var captured = false;
 var failed = false;
@@ -218,7 +218,7 @@ export default function Payment() {
           variables: {
             user_id: Number(userData?.id),
             voucher_id: Number(params?.voucher_id),
-            code: params?.promocode || ""
+            code: params?.promocode || null
           },
           // context: {
           //   headers: {
@@ -228,18 +228,12 @@ export default function Payment() {
         });
       }
       else {
-        console.log({
-          user_id: Number(userData?.id),
-          plan: Number(params?.plan),
-          code: params?.promocode,
-          jwt: userData?.jwt
-        });
         await client.mutate({
           mutation: GENERATE_MEMBESHIP,
           variables: {
             user_id: Number(userData?.id),
             plan: Number(params?.plan),
-            code: params?.promocode
+            code: params?.promocode || null
           },
           context: {
             headers: {

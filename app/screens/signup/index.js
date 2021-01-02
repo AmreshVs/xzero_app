@@ -13,32 +13,32 @@ import { useTranslation } from 'react-i18next';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Constants from 'expo-constants';
 
+import { saveUserDataLocally } from 'screens/login/helpers';
 import TopNavigator from 'components/topNavigator';
 import SafeView from 'components/safeView';
 import Textbox from 'components/textbox';
 import Button from 'components/button';
 import HeadingCaption from 'components/headingCaption';
 import FormError from 'components/formError';
-import { inputsValidationSchema, inputs } from './helpers';
-import styles from './styles';
-import { LOGIN_SCREEN, OTP, SIGNUP_SCREEN } from 'navigation/routes';
-import { CREATE_USER, UPDATE_NOTIFICATION_TOKEN } from 'graphql/mutations';
-import { saveUserDataLocally } from 'screens/login/helpers';
-import { getNotificationToken } from '../../../helpers';
 import { ToastMsg } from 'components/toastMsg';
 import { firstLetterUpper, handleServerDOB, getFormatedDate } from 'constants/commonFunctions';
+import { LOGIN_SCREEN, OTP, SIGNUP_SCREEN } from 'navigation/routes';
 import { UserDataContext } from 'context';
+import { CREATE_USER, UPDATE_NOTIFICATION_TOKEN } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
+import { getNotificationToken } from '../../../helpers';
+import { inputsValidationSchema, inputs } from './helpers';
+import styles from './styles';
 
-export default function Signup({ navigation }) {
+const Signup = ({ navigation }) => {
   const { t, i18n } = useTranslation();
   const { setUserData } = useContext(UserDataContext);
-  let language = i18n.language;
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(new Date());
   const { logError } = useErrorLog();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const client = useApolloClient();
+  let language = i18n.language;
 
   const platform = Platform.OS;
   const app_version = Constants.nativeAppVersion;
@@ -262,3 +262,5 @@ export default function Signup({ navigation }) {
     </KeyboardAvoidingView>
   );
 }
+
+export default Signup;

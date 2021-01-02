@@ -1,34 +1,42 @@
-import React, { memo } from 'react';
-import { View, Text, Image } from 'react-native';
+import React, { memo, useContext } from 'react';
+import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
 import Column from 'components/column';
 import colors from 'constants/colors';
-import { getUserData, isTab, thumbnailUrl } from 'constants/commonFunctions';
 import Box from 'components/box';
 import Row from 'components/row';
 import Chip from 'components/chip';
 import RippleFX from 'components/rippleFx';
-import { IMAGE_URL } from 'constants/common';
-import { OFFERS_SCREEN } from 'navigation/routes';
-import styles from './styles';
 import VHCenter from 'components/vhCenter';
 import ProgressiveImage from 'components/progressiveImage';
+import { isTab, thumbnailUrl } from 'constants/commonFunctions';
+import { IMAGE_URL } from 'constants/common';
+import { UserDataContext } from 'context';
+import { OFFERS_SCREEN } from 'navigation/routes';
+import styles from './styles';
 
 const Center = ({ data }) => {
   const { push } = useNavigation();
   const { t, i18n } = useTranslation();
+  const { userData } = useContext(UserDataContext);
   const language = i18n.language;
 
   const handlePress = async (id) => {
-    const userData = await getUserData();
-    push(OFFERS_SCREEN, { center: id, user_id: Number(userData?.id) || 0 });
+    push(OFFERS_SCREEN, {
+      center: id,
+      user_id: Number(userData?.id) || 0
+    }
+    );
   };
 
   return (
     <Box width={isTab() ? '49.4%' : '100%'}>
-      <RippleFX style={styles.centerContainer} onPress={() => handlePress(data?.id)}>
+      <RippleFX
+        style={styles.centerContainer}
+        onPress={() => handlePress(data?.id)}
+      >
         <Row>
           <VHCenter paddingLeft={10}>
             <ProgressiveImage

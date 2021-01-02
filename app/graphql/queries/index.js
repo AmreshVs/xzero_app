@@ -186,11 +186,6 @@ export const GET_MEMBERSHIP_BY_USER = gql`
       text_en
       text_ar
     }
-    basicMembershipAmount{
-      currency_code
-      amount
-      multiplier
-    }
   }
 `;
 
@@ -295,10 +290,12 @@ export const BASIC_INFORMATION = gql`
 `;
 
 export const GET_GIFTS = gql`
-  query GetGifts($membership_plan: Int){
+  query GetGifts($membership_plan: Int, $user_id: Int){
     AvailableGifts(where: {
       membership_plan: $membership_plan,
-      _limit: -1
+      user: $user_id,
+      _limit: -1,
+      status: true
     }){
       gifts{
         id
@@ -316,6 +313,7 @@ export const GET_GIFTS = gql`
         name_ar
         desc_en
         desc_ar
+        is_delivered
         featured_img{
           url
         }
@@ -628,6 +626,7 @@ export const GET_MEMBER_DATA = gql`
       address
       confirmed
       provider
+      show_popup
       membership{
         id
         package{
@@ -667,9 +666,17 @@ export const APP_INTROS = gql`
 `;
 
 export const NON_USER_CHECK = gql`
-  query NonUserCheck($token: String!){
+  query NonUserCheck($device_id: String!){
+    users(where: {
+      device_id: $device_id
+    }){
+      id
+      notification_token
+      language
+    }
+
     nonUsers(where: {
-      notification_token: $token
+      device_id: $device_id
     }){
       id
       notification_token

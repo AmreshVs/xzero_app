@@ -1,51 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, memo, useContext } from 'react';
 import { View, StyleSheet, Modal } from 'react-native';
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
+import ProductSlider from 'screens/voucherDetail/productSlider';
 import Box from 'components/box';
 import Button from 'components/button';
-import ProductSlider from 'screens/voucherDetail/productSlider';
-import { POPUP } from 'graphql/queries';
-import { useTranslation } from 'react-i18next';
 import { SCREEN_HEIGHT } from 'constants/common';
-import AsyncStorage from '@react-native-community/async-storage';
-import { HOME_SCREEN } from 'navigation/routes';
-import { ToastMsg } from 'components/toastMsg';
-import useErrorLog from 'hooks/useErrorLog';
-import { memo } from 'react';
+import { UserDataContext } from 'context';
+import { POPUP } from 'graphql/queries';
 
 const Popup = () => {
   const [modalVisible, setModalVisible] = useState(true);
   const { data, loading } = useQuery(POPUP);
+  const { userData } = useContext(UserDataContext);
   const { t } = useTranslation();
-  const { logError } = useErrorLog();
-
-  useEffect(() => {
-    checkPopup();
-  }, []);
-
-  const checkPopup = async () => {
-    try {
-      const popupData = await AsyncStorage.getItem('@xzero_popup');
-      if (popupData !== null) {
-        let data = JSON.parse(popupData);
-        setModalVisible(data?.status);
-      }
-    }
-    catch (error) {
-      console.log('Popup Data error', error);
-      ToastMsg(t('error_occured'));
-      logError({
-        screen: HOME_SCREEN,
-        module: 'Getting popup data from Async Storage',
-        input: '',
-        error: JSON.stringify(error)
-      });
-    }
-  }
 
   return (
-    (loading === false && data?.popUp?.status === true) && (
+    (loading === false && data?.popUp?.status === true && userData?.show_popup === true) && (
       <View style={styles.container}>
         <Modal
           animationType="slide"

@@ -8,14 +8,14 @@ import Row from 'components/row';
 import Divider from 'components/divider';
 import colors from 'constants/colors';
 import Chip from 'components/chip';
-import { IMAGE_URL } from 'constants/common';
 import RippleFX from 'components/rippleFx';
+import ProgressiveImage from 'components/progressiveImage';
+import { useContext } from 'react';
+import { thumbnailUrl } from 'constants/commonFunctions';
+import { IMAGE_URL } from 'constants/common';
+import { UserDataContext } from 'context';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import styles from './styles';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
-import { thumbnailUrl } from 'constants/commonFunctions';
-import ProgressiveImage from 'components/progressiveImage';
 
 const Center = ({ data }) => {
   const { push } = useNavigation();

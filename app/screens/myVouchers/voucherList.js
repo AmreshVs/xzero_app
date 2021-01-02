@@ -1,18 +1,17 @@
-import React from 'react';
-import { Image, Text } from 'react-native';
+import React, { memo } from 'react';
+import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
-import { IMAGE_URL } from 'constants/common';
 import Box from 'components/box';
 import Row from 'components/row';
 import RippleFX from 'components/rippleFx';
+import ProgressiveImage from 'components/progressiveImage';
+import { thumbnailUrl } from 'constants/commonFunctions';
+import { IMAGE_URL } from 'constants/common';
 import { VOUCHER_DETAIL } from 'navigation/routes';
 import styles from './styles';
-import { thumbnailUrl } from 'constants/commonFunctions';
-import { memo } from 'react';
-import ProgressiveImage from 'components/progressiveImage';
 
 const VoucherList = ({ data }) => {
   const { t, i18n } = useTranslation();

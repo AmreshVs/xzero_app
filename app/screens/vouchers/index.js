@@ -1,23 +1,22 @@
-import React, { useRef, useState, memo } from 'react';
+import React, { useRef, useState, memo, useContext } from 'react';
 import { FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
+import BuyVoucherModal from 'screens/voucherDetail/buyVoucherModal';
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import NoData from 'components/noData';
-import BuyVoucherModal from 'screens/voucherDetail/buyVoucherModal';
+import { ToastMsg } from 'components/toastMsg';
+import { isTab } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
 import { VOUCHERS } from 'graphql/queries';
 import { VOUCHERS as NAV_VOUCHER } from 'graphql/queries';
+import useErrorLog from 'hooks/useErrorLog';
+import { LOGIN_SCREEN } from 'navigation/routes';
 import Voucher from './voucher';
 import styles from './styles';
-import { isTab } from 'constants/commonFunctions';
-import useErrorLog from 'hooks/useErrorLog';
-import { ToastMsg } from 'components/toastMsg';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
-import { LOGIN_SCREEN } from 'navigation/routes';
-import { useNavigation, useRoute } from '@react-navigation/native';
 
 let queryInput = {
   status: 1,

@@ -1,19 +1,18 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useApolloClient } from '@apollo/client';
 
 import Card from 'components/card';
-import ProductSlider from './productSlider';
-import styles from './styles';
 import Divider from 'components/divider';
 import Chip from 'components/chip';
-import colors from 'constants/colors';
 import Column from 'components/column';
-import { useApolloClient } from '@apollo/client';
-import { GET_GIFT_WINNERS } from 'graphql/queries';
 import Box from 'components/box';
-import { useState } from 'react';
 import Row from 'components/row';
+import colors from 'constants/colors';
+import { GET_GIFT_WINNERS } from 'graphql/queries';
+import ProductSlider from './productSlider';
+import styles from './styles';
 
 const ShowWinners = ({ draw_status, voucher_id, gift }) => {
   const client = useApolloClient();

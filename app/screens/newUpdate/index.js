@@ -3,10 +3,10 @@ import { Text, View, Platform, Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import SafeView from 'components/safeView';
-import { BASE_URL, APP_STORE_URL, GOOGLE_PLAY_URL } from 'constants/common';
 import TopNavigator from 'components/topNavigator';
 import VHCenter from 'components/vhCenter';
 import Button from 'components/button';
+import { BASE_URL, APP_STORE_URL, GOOGLE_PLAY_URL } from 'constants/common';
 import styles from './styles';
 
 export default function NewUpdate() {

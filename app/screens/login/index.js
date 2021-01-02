@@ -1,33 +1,31 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, memo, useEffect } from 'react';
 import { Text, Image, View, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
+import { getDeviceLang } from 'i18n';
 
 import SafeView from 'components/safeView';
 import Textbox from 'components/textbox';
 import Button from 'components/button';
 import HeadingCaption from 'components/headingCaption';
 import FormError from 'components/formError';
-import styles from './styles';
-import facebookLogin from './facebookLogin';
-import googleSignin from './googleLogin';
-import { inputsValidationSchema, saveUserDataLocally } from './helpers';
+import Row from 'components/row';
 import { ToastMsg } from 'components/toastMsg';
-import { SIGNUP_SCREEN, HOME_SCREEN, FORGOT_PASSWORD, DRAWER_TERMS, LOGIN_SCREEN, MAIN_SCREEN } from 'navigation/routes';
+import { SOCIAL_TOKEN, ERROR_OCCURED } from 'constants/common';
+import { UserDataContext } from 'context';
 import { GET_USER_BY_EMAIL, NON_USER_CHECK } from 'graphql/queries';
 import { USER_LOGIN, CREATE_USER, UPDATE_NOTIFICATION_TOKEN, CREATE_NON_USER } from 'graphql/mutations';
-import { getNotificationToken } from '../../../helpers';
-import { SOCIAL_TOKEN, ERROR_OCCURED } from 'constants/common';
-import Row from 'components/row';
-import AppleLoginButton from './appleLogin';
-import { UserDataContext } from 'context';
+import { SIGNUP_SCREEN, HOME_SCREEN, FORGOT_PASSWORD, DRAWER_TERMS, LOGIN_SCREEN, MAIN_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
-import { memo } from 'react';
-import { useEffect } from 'react';
-import { getDeviceLang } from 'i18n';
+import { getNotificationToken } from '../../../helpers';
+import { inputsValidationSchema, saveUserDataLocally } from './helpers';
+import AppleLoginButton from './appleLogin';
+import facebookLogin from './facebookLogin';
+import googleSignin from './googleLogin';
+import styles from './styles';
 
 const Login = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -48,23 +46,42 @@ const Login = ({ navigation }) => {
   const collectNonUserToken = async () => {
     let token = await getNotificationToken();
     let language = await getDeviceLang();
+    let mutationInput = {
+      token,
+      language,
+      device_id,
+      app_version,
+      platform
+    };
 
-    if (token !== undefined) {
-      const { data } = await client.query({
-        query: NON_USER_CHECK,
-        variables: {
-          token
-        }
-      });
-      if (data?.nonUsers?.length === 0) {
-        await client.mutate({
-          mutation: CREATE_NON_USER,
+    try {
+      if (device_id !== undefined) {
+        const { data } = await client.query({
+          query: NON_USER_CHECK,
           variables: {
-            token,
-            language
+            device_id
           }
         });
+
+        if (data?.nonUsers?.length === 0 && data?.users?.length === 0) {
+          await client.mutate({
+            mutation: CREATE_NON_USER,
+            variables: {
+              data: mutationInput
+            }
+          });
+        }
       }
+    }
+    catch (error) {
+      console.log('Create Non User Error', error);
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: LOGIN_SCREEN,
+        module: 'Non User Insert',
+        input: JSON.stringify(mutationInput),
+        error: JSON.stringify(error)
+      });
     }
   }
 

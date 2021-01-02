@@ -15,7 +15,6 @@ const addFavourite = async (client, offer_id, center) => {
       center: Number(center),
     }
   }
-  console.log(input);
 
   let { data } = await client.mutate({
     mutation: ADD_FAVOURITE,

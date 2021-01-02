@@ -3,11 +3,11 @@ import { Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 
-import colors from 'constants/colors';
-import { BASE_URL } from 'constants/common';
 import Card from 'components/card';
-import styles from './styles';
 import ProgressiveImage from 'components/progressiveImage';
+import { BASE_URL } from 'constants/common';
+import colors from 'constants/colors';
+import styles from './styles';
 
 const OfferCard = ({ discount }) => {
   const { t } = useTranslation();

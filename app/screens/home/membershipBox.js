@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, memo } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
@@ -9,17 +9,15 @@ import Box from 'components/box';
 import Row from 'components/row';
 import Divider from 'components/divider';
 import Column from 'components/column';
+import RippleFX from 'components/rippleFx';
+import { ToastMsg } from 'components/toastMsg';
 import { getFormatedDate } from 'constants/commonFunctions';
 import colors from 'constants/colors';
+import { UserDataContext } from 'context';
+import useErrorLog from 'hooks/useErrorLog';
 import { GET_MEMBERSHIP_BY_USER } from 'graphql/queries';
 import { CENTERS_SCREEN, GIFTS, HOME_SCREEN, MEMBERSHIP_TAB_SCREEN, OFFERS_SCREEN, SPECIALISTS, VOUCHERS } from 'navigation/routes';
 import styles from './styles';
-import RippleFX from 'components/rippleFx';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
-import { ToastMsg } from 'components/toastMsg';
-import useErrorLog from 'hooks/useErrorLog';
-import { memo } from 'react';
 
 const MembershipBox = ({ data }) => {
   const [expiry, setExpiry] = useState(null);

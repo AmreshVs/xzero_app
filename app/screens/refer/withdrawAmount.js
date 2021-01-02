@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, memo } from 'react';
 import { Text } from 'react-native';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +11,10 @@ import Textbox from 'components/textbox';
 import Button from 'components/button';
 import { ToastMsg } from 'components/toastMsg';
 import { UserDataContext } from 'context';
-import styles from './styles';
 import { WITHDRAW_AMOUNT } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
-import { memo } from 'react';
+import { REFER } from 'navigation/routes';
+import styles from './styles';
 
 const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
   const [amount, setAmount] = useState('');
@@ -27,23 +27,25 @@ const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
   const handleWithdraw = async () => {
     setLoading(true);
     if (amount < min_withdraw) {
-      ToastMsg(`Amount cannot be less than ${min_withdraw} AED`);
+      ToastMsg(`${t('amount_less')} ${min_withdraw} ${t('aed')}`);
     }
     else if (amount >= balance) {
-      ToastMsg('Amount cannot be more than your wallet balance');
+      ToastMsg(t('amount_more'));
     }
     else {
+      let mutationInput = {
+        user_id: Number(userData?.id),
+        withdraw_amount: Number(amount)
+      };
+
       try {
         const { data } = await client.mutate({
           mutation: WITHDRAW_AMOUNT,
-          variables: {
-            user_id: Number(userData?.id),
-            withdraw_amount: Number(amount)
-          }
+          variables: mutationInput
         });
         if (data?.WithdrawMoney?.msg === 'success') {
           setAmount('');
-          ToastMsg('Your request is submitted, Please wait for the transaction to complete!');
+          ToastMsg(t('withdraw_submitted'));
           reload();
         }
       }
@@ -51,12 +53,9 @@ const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
         console.log('Withdraw amount error', error);
         ToastMsg(t('error_occured'));
         logError({
-          screen: HOME_SCREEN,
+          screen: REFER,
           module: '',
-          input: JSON.stringify({
-            user_id: Number(userData?.id),
-            withdraw_amount: Number(amount)
-          }),
+          input: JSON.stringify(mutationInput),
           error: JSON.stringify(error)
         });
       }

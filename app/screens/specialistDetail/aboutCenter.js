@@ -1,24 +1,23 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
-import colors from 'constants/colors';
-import { IMAGE_URL } from 'constants/common';
 import Row from 'components/row';
 import Card from 'components/card';
 import RippleFX from 'components/rippleFx';
+import ProgressiveImage from 'components/progressiveImage';
+import colors from 'constants/colors';
+import { IMAGE_URL } from 'constants/common';
+import { thumbnailUrl } from 'constants/commonFunctions';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import styles from './styles';
-import { thumbnailUrl } from 'constants/commonFunctions';
-import { memo } from 'react';
-import ProgressiveImage from 'components/progressiveImage';
 
 const AboutCenter = ({ specialist, userData }) => {
   const { t, i18n } = useTranslation();
-  const language = i18n.language;
   const { push } = useNavigation();
+  let language = i18n.language;
 
   const handleViewCenter = async () => {
     push(OFFERS_SCREEN, {
