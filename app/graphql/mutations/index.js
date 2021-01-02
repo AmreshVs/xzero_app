@@ -347,3 +347,9 @@ export const UPDATE_USER_NEW = gql`
     }
   }
 `;
+
+export const MARK_NOTIFICATION = gql`
+  mutation MarkNotification($user_id: Int!, $notification_id: Int!){
+    MarkAsRead(user: $user_id, notification: $notification_id)
+  }
+`;

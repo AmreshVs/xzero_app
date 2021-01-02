@@ -684,3 +684,18 @@ export const NON_USER_CHECK = gql`
     }
   }
 `;
+
+export const NOTIFICATIONS_BY_USER = gql`
+  query NotificationsByUser($user_id: Int){
+    NotificationsByUser(user_id: $user_id){
+      id
+      title_en
+      title_ar
+      desc_en
+      desc_ar
+      data
+      is_read
+      # created_at
+    }
+  }
+`;
