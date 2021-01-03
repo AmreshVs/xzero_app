@@ -42,6 +42,7 @@ const Textbox = forwardRef(({
         <TextInput
           style={styles.textInput}
           placeholder={placeholder || ''}
+          placeholderTextColor="#BBB"
           onFocus={() => setFocus(true)}
           onBlur={handleBlur}
           ref={ref}
@@ -102,6 +103,6 @@ const dynamicStyles = ({ multiline }) => StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: multiline ? 10 : null,
     borderRadius: 50,
-    zIndex: 9,
+    zIndex: 99,
   },
 });
