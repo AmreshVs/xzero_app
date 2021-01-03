@@ -3,9 +3,11 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios --simulator='iPhone 12'",
+    "build_APK": "cd android && ./gradlew assembleRelease",
+    "build_AAB": "cd android && ./gradlew bundleRelease",
+    "clean": "cd android && ./gradlew clean",
     "web": "expo start --web",
-    "eject": "expo eject",
-    "build": "cd android && ./gradlew assembleRelease"
+    "eject": "expo eject"
   },
   "dependencies": {
     "@apollo/client": "^3.2.4",

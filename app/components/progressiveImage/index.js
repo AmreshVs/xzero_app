@@ -1,6 +1,4 @@
-import { IMAGE_URL } from 'constants/common';
-import React from 'react';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Image } from "react-native-expo-image-cache";
 
@@ -14,10 +12,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ProgressiveImage = (props) => {
-
-  const { thumbnailSource, source, style, resizeMode, noBg = false, noCStyle = false } = props;
-
+const ProgressiveImage = ({ thumbnailSource, source, style, resizeMode, noBg = false, noCStyle = false }) => {
   return (
     <View style={[!noCStyle && style, !noBg && styles.container]}>
       <Image

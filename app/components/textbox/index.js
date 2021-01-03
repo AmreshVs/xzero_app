@@ -89,19 +89,19 @@ const dynamicStyles = ({ multiline }) => StyleSheet.create({
     fontSize: 19,
     fontWeight: '700',
     marginBottom: 10,
-    zIndex: 9
+    zIndex: 9,
   },
   icon: {
     marginLeft: 15,
     marginRight: -10,
-    marginTop: multiline ? 10 : 0,
+    marginTop: multiline ? 10 : null,
   },
   textInput: {
     width: '95%',
     height: '100%',
     paddingHorizontal: 15,
-    paddingTop: multiline ? 10 : 0,
+    paddingTop: multiline ? 10 : null,
     borderRadius: 50,
-    zIndex: 9
+    zIndex: 9,
   },
 });

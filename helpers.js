@@ -70,7 +70,7 @@ export const getNotificationToken = async () => {
       ToastMsg('Failed to get push token for push notification!');
       return;
     }
-    return (await Notifications.getExpoPushTokenAsync()).data;
+    return (await Notifications.getExpoPushTokenAsync({ experienceId: '@xzero/Xzero' })).data;
   } else {
     ToastMsg('Must use physical device for Push Notifications');
   }

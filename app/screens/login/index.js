@@ -47,7 +47,7 @@ const Login = ({ navigation }) => {
     let token = await getNotificationToken();
     let language = await getDeviceLang();
     let mutationInput = {
-      token,
+      notification_token: token,
       language,
       device_id,
       app_version,

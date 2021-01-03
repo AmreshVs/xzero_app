@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { LogBox, Platform } from 'react-native';
 import { library } from '@fortawesome/fontawesome-svg-core';
