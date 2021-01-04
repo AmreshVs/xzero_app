@@ -13,7 +13,7 @@ import { ToastMsg } from 'components/toastMsg';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { BASIC_INFORMATION, GET_MEMBER_DATA } from 'graphql/queries';
-import { HOME_SCREEN, INTRO, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE, OTP } from 'navigation/routes';
+import { EXPO_UPDATE, HOME_SCREEN, INTRO, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE, OTP } from 'navigation/routes';
 
 const Main = ({ navigation }) => {
   const client = useApolloClient();
@@ -23,15 +23,13 @@ const Main = ({ navigation }) => {
 
   useEffect(() => {
     checkNewVersion();
-    checkExpoUpdates();
   }, []);
 
   const checkExpoUpdates = async () => {
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
-        await Updates.fetchUpdateAsync();
-        Updates.reloadAsync();
+        navigation.replace(EXPO_UPDATE);
       }
     } catch (error) {
       console.log('Expo Updates Error', error);
@@ -76,6 +74,7 @@ const Main = ({ navigation }) => {
     }
 
     await checkUser();
+    checkExpoUpdates();
     await SplashScreen.hideAsync();
   };
 

@@ -217,7 +217,7 @@ const mobileStyles = StyleSheet.create({
   notificationCount: {
     backgroundColor: colors.danger,
     borderRadius: 20,
-    padding: 4,
+    padding: 3,
     position: 'absolute',
     top: 5,
     right: 5,

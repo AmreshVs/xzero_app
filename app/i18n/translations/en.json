@@ -165,6 +165,8 @@
   "winners": "Winners",
   "winner": "Winner",
   "Home": "Home",
+  "DHome": "Home",
+  "THome": "Home",
   "My Draws": "My Draws",
   "Refer": "Refer",
   "Privacy Policy": "Privacy Policy",
@@ -211,5 +213,8 @@
   "refer_3": "discount upto",
   "refer_4": "Use this code upon purchasing membership or draws to save a lot of money 💰 and to earn even more!\n\nFor more visit\nhttps://xzero.app",
   "nomembership": "No Membership",
-  "membership_gift": "You don't have membership yet! Buy now to get amazing gifts every week!"
+  "membership_gift": "You don't have membership yet! Buy now to get amazing gifts every week!",
+  "checking_update": "Checking for New Update",
+  "downloading_update": "Downloading new update...",
+  "restart_app": "Please wait while the update is being downloaded, Once completed the app will restart"
 }

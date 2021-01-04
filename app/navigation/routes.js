@@ -21,14 +21,15 @@ export const REFER = 'Refer';
 export const OFFLINE = 'Offline';
 export const OTP = 'Otp';
 export const INTRO = 'Intro';
+export const EXPO_UPDATE = 'ExpoUpdate';
 
 // Tab Routes
-export const HOME_TAB_SCREEN = 'Home';
+export const HOME_TAB_SCREEN = 'THome';
 export const FAVOURITES_TAB_SCREEN = 'Favourites';
 export const MEMBERSHIP_TAB_SCREEN = 'Member';
 export const PROFILE_TAB_SCREEN = 'Profile';
 
 // Drawer
-export const DRAWER_HOME = 'Home';
+export const DRAWER_HOME = 'DHome';
 export const DRAWER_PRIVACY = 'Privacy Policy';
 export const DRAWER_TERMS = 'Terms and Conditions'

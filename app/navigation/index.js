@@ -61,6 +61,7 @@ import {
   OFFLINE,
   OTP,
   INTRO,
+  EXPO_UPDATE,
 } from './routes';
 import { NotificationCountContext, UserDataContext } from 'context';
 import Loader from 'components/loader';
@@ -68,6 +69,7 @@ import Offline from 'screens/offline';
 import CustomDrawer from 'components/drawer';
 import Otp from 'screens/otp';
 import Intro from 'screens/intro';
+import ExpoUpdate from 'screens/expoUpdate';
 
 const Tab = createBottomTabNavigator();
 
@@ -111,6 +113,7 @@ function StackNavigation() {
       <Stack.Screen name={OFFLINE} component={Offline} />
       <Stack.Screen name={OTP} component={Otp} />
       <Stack.Screen name={INTRO} component={Intro} />
+      <Stack.Screen name={EXPO_UPDATE} component={ExpoUpdate} />
     </Stack.Navigator>
   );
 }

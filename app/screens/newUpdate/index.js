@@ -6,6 +6,7 @@ import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import VHCenter from 'components/vhCenter';
 import Button from 'components/button';
+import ProgressiveImage from 'components/progressiveImage';
 import { BASE_URL, APP_STORE_URL, GOOGLE_PLAY_URL } from 'constants/common';
 import styles from './styles';
 
