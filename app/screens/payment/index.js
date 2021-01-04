@@ -10,7 +10,7 @@ import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import { ToastMsg } from 'components/toastMsg';
 import Loader from 'components/loader';
-import { getUserData } from 'constants/commonFunctions';
+import { getAuthenticationHeader, getUserData } from 'constants/commonFunctions';
 import colors from 'constants/colors';
 import { UserDataContext } from 'context';
 import { PAYMENT, PAYMENT_STATUS } from 'navigation/routes';
@@ -66,8 +66,8 @@ export default function Payment() {
           firstName: username,
         },
         amount: {
-          currencyCode: params?.currency_code,
-          value: params?.amount * params?.multiplier,
+          currencyCode: 'AED',
+          value: params?.amount * 100,
         },
         merchantAttributes: {
           skipConfirmationPage: true,
@@ -220,11 +220,7 @@ export default function Payment() {
             voucher_id: Number(params?.voucher_id),
             code: params?.promocode || null
           },
-          // context: {
-          //   headers: {
-          //     authorization: 'Bearer ' + jwt,
-          //   },
-          // },
+          ...getAuthenticationHeader(userData?.jwt)
         });
       }
       else {
@@ -235,11 +231,7 @@ export default function Payment() {
             plan: Number(params?.plan),
             code: params?.promocode || null
           },
-          context: {
-            headers: {
-              authorization: 'Bearer ' + userData?.jwt,
-            },
-          },
+          ...getAuthenticationHeader(userData?.jwt)
         });
 
       }
@@ -273,7 +265,7 @@ export default function Payment() {
   return (
     <SafeView style={styles.container} loading={state.loading}>
       <TopNavigator
-        title={`${t('pay')} - ${params?.amount} ${params?.currency_code}`}
+        title={`${t('pay')} - ${params?.amount} ${t('aed')}`}
         rightContainer={<RightIcon />}
         gradient
       />

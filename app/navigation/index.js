@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import BottomTab from 'components/bottomTab';
 import Login from 'screens/login';
@@ -136,26 +135,24 @@ function Navigation({ connection }) {
   }, [connection]);
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer ref={navigationRef} linking={linking} fallback={<Loader />}>
-        <UserDataContext.Provider value={{ userData, setUserData }}>
-          <NotificationCountContext.Provider value={{ notificationCount, setNotificationCount }}>
-            <Drawer.Navigator
-              initialRouteName={DRAWER_HOME}
-              drawerType="slide"
-              drawerContent={props => <CustomDrawer {...props} />}
-            >
-              <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
-              <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} />
-              <Drawer.Screen name={REFER} component={Refer} />
-              <Drawer.Screen name={GIFTS} component={Gifts} />
-              <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
-              <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
-            </Drawer.Navigator>
-          </NotificationCountContext.Provider>
-        </UserDataContext.Provider>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <NavigationContainer ref={navigationRef} linking={linking} fallback={<Loader />}>
+      <UserDataContext.Provider value={{ userData, setUserData }}>
+        <NotificationCountContext.Provider value={{ notificationCount, setNotificationCount }}>
+          <Drawer.Navigator
+            initialRouteName={DRAWER_HOME}
+            drawerType="slide"
+            drawerContent={props => <CustomDrawer {...props} />}
+          >
+            <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
+            <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} />
+            <Drawer.Screen name={REFER} component={Refer} />
+            <Drawer.Screen name={GIFTS} component={Gifts} />
+            <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
+            <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
+          </Drawer.Navigator>
+        </NotificationCountContext.Provider>
+      </UserDataContext.Provider>
+    </NavigationContainer>
   );
 }
 

@@ -12,7 +12,7 @@ import Button from 'components/button';
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import { ToastMsg } from 'components/toastMsg';
-import { isTab, userVerified } from 'constants/commonFunctions';
+import { getAuthenticationHeader, isTab, userVerified } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT } from 'constants/common';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
@@ -74,11 +74,7 @@ const Membership = () => {
         user_id: Number(userData?.id),
         user: Number(userData?.id),
       },
-      context: {
-        headers: {
-          authorization: 'Bearer ' + userData?.jwt,
-        },
-      },
+      ...getAuthenticationHeader(userData?.jwt),
     });
 
     if (error) {

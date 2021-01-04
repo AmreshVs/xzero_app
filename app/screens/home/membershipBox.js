@@ -11,7 +11,7 @@ import Divider from 'components/divider';
 import Column from 'components/column';
 import RippleFX from 'components/rippleFx';
 import { ToastMsg } from 'components/toastMsg';
-import { getFormatedDate } from 'constants/commonFunctions';
+import { getAuthenticationHeader, getFormatedDate } from 'constants/commonFunctions';
 import colors from 'constants/colors';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
@@ -31,25 +31,23 @@ const MembershipBox = ({ data }) => {
     checkMembership();
   }, []);
 
-  const checkMembership = async () => {
+  const checkMembership = () => {
     try {
       if (userData?.jwt) {
-        let { data } = await client.query({
+        client.query({
           query: GET_MEMBERSHIP_BY_USER,
           variables: {
             user_id: Number(userData?.id),
             user: Number(userData?.id),
           },
-          context: {
-            headers: {
-              Authorization: 'Bearer ' + userData?.jwt,
-            },
-          },
+          ...getAuthenticationHeader(userData?.jwt)
+        }).then(({ data }) => {
+          if (data && data?.memberships !== null && data?.memberships?.length > 0) {
+            setExpiry(data?.memberships[0]?.expiry);
+          }
+        }).catch((error) => {
+          console.log('Error getting Membership by user', error);
         });
-
-        if (data?.memberships !== null && data?.memberships.length > 0) {
-          setExpiry(data?.memberships[0]?.expiry);
-        }
       }
     }
     catch (error) {
@@ -75,7 +73,7 @@ const MembershipBox = ({ data }) => {
       <View style={styles.membershipContainer}>
         <Row spaceBetween padding={10} paddingBottom={0}>
           <Text style={styles.title}>{t('my_membership')}</Text>
-          {expiry ? (
+          {expiry !== null ? (
             <Text style={styles.secondaryText}>
               {t('expires_on')} {getFormatedDate(new Date(expiry))}
             </Text>

@@ -16,6 +16,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import AvailableGifts from './availableGifts';
 import AvailedGifts from './availedGifts';
 import GenerateGift from './generateGift';
+import { getAuthenticationHeader } from 'constants/commonFunctions';
 
 const Gifts = () => {
   const { t } = useTranslation();
@@ -27,8 +28,9 @@ const Gifts = () => {
   const { data, loading, refetch: _refetch, error } = useQuery(GET_GIFTS, {
     variables: {
       membership_plan: Number(userData?.membership?.package?.id) || null,
-      user_id: Number(userData?.id)
-    }
+      user_id: Number(userData?.id),
+    },
+    ...getAuthenticationHeader(userData?.jwt)
   });
 
   if (error) {

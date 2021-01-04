@@ -104,11 +104,11 @@ const TopSection = ({ handleModalOpen }) => {
             </Box>
             <RippleFX style={styles.iconContainer} onPress={() => push(NOTIFICATIONS)}>
               <FontAwesomeIcon icon="bell" color={colors.white} size={20} />
-              {(notificationCount && notificationCount !== 0) && (
+              {notificationCount > 0 ? (
                 <View style={styles.notificationCount}>
                   <Text style={styles.ncount}>{notificationCount}</Text>
                 </View>
-              )}
+              ) : null}
             </RippleFX>
             <RippleFX style={styles.iconContainer} onPress={() => handleLangSelect()}>
               <Row flexWrap="nowrap" vcenter>

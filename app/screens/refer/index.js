@@ -16,7 +16,7 @@ import Button from 'components/button';
 import RippleFX from 'components/rippleFx';
 import Column from 'components/column';
 import { ToastMsg } from 'components/toastMsg';
-import { isTab } from 'constants/commonFunctions';
+import { getAuthenticationHeader, isTab } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import IsLoggedIn from 'hoc/isLoggedIn';
@@ -43,7 +43,8 @@ const Refer = () => {
   };
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_REFER_HISTORY, {
-    variables: queryInput
+    variables: queryInput,
+    ...getAuthenticationHeader(userData?.jwt)
   });
 
   let refer = data?.GetReferHistory;
@@ -178,7 +179,7 @@ const Refer = () => {
         {modalComp ?
           <ReferHistory />
           :
-          <Withdraw balance={refer?.balance || 0} min_withdraw={min_withdraw} />
+          <Withdraw />
         }
       </Modalize>
     </SafeView>

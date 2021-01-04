@@ -9,7 +9,7 @@ import Button from 'components/button';
 import ProgressiveImage from 'components/progressiveImage';
 import Box from 'components/box';
 import { IMAGE_URL, SCREEN_HEIGHT } from 'constants/common';
-import { isTab, thumbnailUrl } from 'constants/commonFunctions';
+import { getAuthenticationHeader, isTab, thumbnailUrl } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import { GIFTS } from 'navigation/routes';
 import { GENERATE_GIFT } from 'graphql/mutations';
@@ -38,8 +38,10 @@ const GenerateGift = ({ refetch }) => {
         mutation: GENERATE_GIFT,
         variables: {
           user_id: Number(userData?.id)
-        }
+        },
+        ...getAuthenticationHeader(userData?.jwt)
       });
+
       setLoading(false);
       setData(data?.GenerateGift);
       Won(data?.GenerateGift);

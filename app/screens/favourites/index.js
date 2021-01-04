@@ -84,7 +84,7 @@ const Favourites = () => {
         gradient
       />
       {data?.favouritesByUser === null || !data?.favouritesByUser?.length ? (
-        <NoData reload={() => reload()} reloading={reloading} />
+        <NoData reload={() => reload()} reloading={reloading} topNav />
       ) : (
           <>
             <FlatList

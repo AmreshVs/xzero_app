@@ -14,6 +14,7 @@ import { APPLY_CODE } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { ToastMsg } from 'components/toastMsg';
 import { memo } from 'react';
+import { getAuthenticationHeader } from 'constants/commonFunctions';
 
 let promoApplied = 0;
 
@@ -64,7 +65,8 @@ const ApplyPromocode = ({ voucher_id, plan, voucherPrice, setPromocodeData, prom
 
     const { data, errors } = await client.query({
       query: APPLY_CODE,
-      variables: queryInput
+      variables: queryInput,
+      ...getAuthenticationHeader(userData?.jwt)
     });
 
     if (errors) {

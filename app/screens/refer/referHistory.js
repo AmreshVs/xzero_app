@@ -8,7 +8,7 @@ import Card from 'components/card';
 import Column from 'components/column';
 import Divider from 'components/divider';
 import { ToastMsg } from 'components/toastMsg';
-import { getFormattedDateTime } from 'constants/commonFunctions';
+import { getAuthenticationHeader, getFormattedDateTime } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import { REFER_HISTORY } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
@@ -25,7 +25,8 @@ const ReferHistory = () => {
   };
 
   const { data, loading, error } = useQuery(REFER_HISTORY, {
-    variables: queryInput
+    variables: queryInput,
+    ...getAuthenticationHeader(userData?.jwt)
   });
 
   if (error) {

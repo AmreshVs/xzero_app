@@ -551,6 +551,17 @@ export const APPLY_CODE = gql`
 
 export const WITHDRAW_HISTORY = gql`
   query TranscationInfo($user_id: Int!){
+    GetReferHistory(referrer: $user_id) {
+      referralCode
+      totalEarned
+      totalReferred
+      balance
+      referProgram{
+				discount
+        allowed_maximum_discount
+        minimum_withdrawal_amount
+      }
+    }
     TransactionInfo(user: $user_id){
       userBankDetails{
         id

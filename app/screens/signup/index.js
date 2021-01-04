@@ -77,7 +77,6 @@ const Signup = ({ navigation }) => {
     let phone = values.phone.replace('+', '');
     setLoading(true);
     const token = await getNotificationToken();
-    let dob = handleServerDOB(values.dob);
 
     let mutationInput = {
       username: values.fullname,
@@ -85,7 +84,7 @@ const Signup = ({ navigation }) => {
       password: values.repassword,
       mobile_number: Number(phone),
       notification_token: token || '',
-      birthday: new Date(dob),
+      birthday: new Date(values.dob),
       language: language,
       provider: 'local',
       platform,

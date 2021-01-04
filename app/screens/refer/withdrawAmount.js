@@ -15,8 +15,9 @@ import { WITHDRAW_AMOUNT } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
 import { REFER } from 'navigation/routes';
 import styles from './styles';
+import { getAuthenticationHeader } from 'constants/commonFunctions';
 
-const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
+const WithdrawAmount = ({ min_withdraw, balance, reload, loading: rootLoading }) => {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const { userData } = useContext(UserDataContext);
@@ -41,8 +42,10 @@ const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
       try {
         const { data } = await client.mutate({
           mutation: WITHDRAW_AMOUNT,
-          variables: mutationInput
+          variables: mutationInput,
+          ...getAuthenticationHeader(userData?.jwt)
         });
+
         if (data?.WithdrawMoney?.msg === 'success') {
           setAmount('');
           ToastMsg(t('withdraw_submitted'));
@@ -64,12 +67,12 @@ const WithdrawAmount = ({ min_withdraw, balance, reload }) => {
   };
 
   return (
-    <Card marginBottom={10}>
+    <Card marginBottom={10} loading={rootLoading}>
       <Column marginBottom={10}>
         <Text style={styles.referTitle}>{t('withdraw')}</Text>
         <Row>
           <Text style={styles.caption}>{t('total_earnings')}</Text>
-          <Text style={styles.caption}> {balance} {t('aed')}</Text>
+          <Text style={styles.caption}> {balance || 0} {t('aed')}</Text>
         </Row>
       </Column>
       <Row justifyContent="space-between">

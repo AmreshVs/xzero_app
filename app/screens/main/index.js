@@ -35,7 +35,6 @@ const Main = ({ navigation }) => {
       }
     } catch (error) {
       console.log('Expo Updates Error', error);
-      ToastMsg(t('error_occured'));
       logError({
         screen: MAIN_SCREEN,
         module: 'Expo Updates',
@@ -51,7 +50,7 @@ const Main = ({ navigation }) => {
     });
 
     if (error) {
-      ToastMsg(t('error_occured'));
+      console.log('Basic Information Error', error);
       logError({
         screen: MAIN_SCREEN,
         module: 'Basic Information',
@@ -81,13 +80,13 @@ const Main = ({ navigation }) => {
   };
 
   const checkUser = async () => {
+    try {
+      let appInstall = await AsyncStorage.getItem('@xzero_install');
 
-    let appInstall = await AsyncStorage.getItem('@xzero_install');
+      if (appInstall == "true") {
+        let jwt = null;
+        let userData = null;
 
-    if (appInstall == "true") {
-      let jwt = null;
-      let userData = null;
-      try {
         jwt = await AsyncStorage.getItem('@xzero_jwt');
         userData = await AsyncStorage.getItem('@xzero_user');
 
@@ -100,7 +99,6 @@ const Main = ({ navigation }) => {
                 ID: Number(loginData?.id)
               }
             });
-
             if (data?.user === null || data?.user === 'null') {
               await AsyncStorage.removeItem('@xzero_jwt');
               await AsyncStorage.removeItem('@xzero_user');
@@ -132,19 +130,19 @@ const Main = ({ navigation }) => {
           }
         }
         navigation.replace(LOGIN_SCREEN);
-      } catch (error) {
-        console.log('Getting user data from async error', error);
-        ToastMsg(t('error_occured'));
-        logError({
-          screen: MAIN_SCREEN,
-          module: 'Getting Userdata and JWT from Asyncstorage',
-          input: JSON.stringify({ userData, jwt }),
-          error: JSON.stringify(error)
-        });
       }
-    }
-    else {
-      navigation.replace(INTRO);
+      else {
+        navigation.replace(INTRO);
+      }
+    } catch (error) {
+      console.log('Getting user data from async error', error);
+      ToastMsg(t('error_occured'));
+      logError({
+        screen: MAIN_SCREEN,
+        module: 'Getting Userdata and JWT from Asyncstorage',
+        input: JSON.stringify({ userData, jwt }),
+        error: JSON.stringify(error)
+      });
     }
   };
 

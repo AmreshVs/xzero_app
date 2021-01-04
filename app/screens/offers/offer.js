@@ -30,7 +30,7 @@ function Offer({ data, center, favourites }) {
   const { t, i18n } = useTranslation();
   const language = i18n.language;
 
-  const [favourite, setFavourite] = useState(data.is_favourite);
+  const [favourite, setFavourite] = useState(data?.is_favourite);
 
   const handlePress = async () => {
     push(OFFER_DETAIL, {

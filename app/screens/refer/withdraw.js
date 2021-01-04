@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { useQuery } from '@apollo/client';
 
 import { ToastMsg } from 'components/toastMsg';
+import { getAuthenticationHeader } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import { WITHDRAW_HISTORY } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
@@ -12,7 +13,7 @@ import Transactions from './transactions';
 import BankInfo from './bankInfo';
 import styles from './styles';
 
-const Withdraw = ({ balance, min_withdraw }) => {
+const Withdraw = () => {
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
 
@@ -21,7 +22,8 @@ const Withdraw = ({ balance, min_withdraw }) => {
   };
 
   const { data, loading, refetch: _refetch, error } = useQuery(WITHDRAW_HISTORY, {
-    variables: queryInput
+    variables: queryInput,
+    ...getAuthenticationHeader(userData?.jwt)
   });
 
   if (error) {
@@ -34,9 +36,12 @@ const Withdraw = ({ balance, min_withdraw }) => {
     });
   }
 
+  let min_withdraw = data?.GetReferHistory?.referProgram?.minimum_withdrawal_amount;
+  let balance = data?.GetReferHistory?.balance;
+
   return (
     <View style={styles.historyContainer}>
-      {data?.TransactionInfo?.userBankDetails !== null && <WithdrawAmount balance={balance} min_withdraw={min_withdraw} reload={_refetch} />}
+      {data?.TransactionInfo?.userBankDetails !== null && <WithdrawAmount loading={loading} balance={balance} min_withdraw={min_withdraw} reload={_refetch} />}
       <BankInfo data={data?.TransactionInfo?.userBankDetails} loading={loading} reload={_refetch} />
       <Transactions data={data?.TransactionInfo?.withdrawalHistory} loading={loading} reload={_refetch} />
     </View>

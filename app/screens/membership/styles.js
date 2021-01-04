@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 import { isTab, responsiveHeight } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT } from 'constants/common';
@@ -45,7 +45,7 @@ const mobileStyles = StyleSheet.create({
     ...w100
   },
   memberContainer: {
-    height: responsiveHeight(27),
+    height: Platform?.OS === 'ios' ? responsiveHeight(27) : responsiveHeight(34),
     ...paddingHorizontal10,
     ...marginTop10,
     ...w100,
@@ -57,7 +57,7 @@ const mobileStyles = StyleSheet.create({
     ...padding15,
   },
   title: {
-    fontWeight: '800',
+    fontWeight: 'bold',
     ...font18,
     ...colorWhite,
   },
@@ -65,7 +65,7 @@ const mobileStyles = StyleSheet.create({
     borderRadius: 5,
   },
   memberPlanTitle: {
-    fontWeight: '800',
+    fontWeight: 'bold',
     textTransform: 'uppercase',
     ...font18,
   },

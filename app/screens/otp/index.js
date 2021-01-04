@@ -38,9 +38,10 @@ const Otp = () => {
   const { userData, setUserData } = useContext(UserDataContext);
 
   const client = useApolloClient();
-  const { navigate } = useNavigation();
+  const { replace } = useNavigation();
   const { params } = useRoute();
   const { t } = useTranslation();
+
 
   let [toggleSmsListener] = useInterval(async () => {
     let clipboardOtp = await Clipboard.getStringAsync();
@@ -106,7 +107,7 @@ const Otp = () => {
     if (data?.verifyOtp?.status) {
       setUserData(prevData => ({ ...prevData, confirmed: true }));
       saveUserDataLocally('xzero_user', { ...userData, confirmed: true });
-      navigate(HOME_SCREEN);
+      replace(HOME_SCREEN);
     }
 
     if (errors) {
@@ -125,7 +126,7 @@ const Otp = () => {
       variables: {
         user: Number(params?.user_id),
         mobile: String(params?.mobile_number),
-      }
+      },
     });
 
     if (data?.SendSms?.status) {
@@ -168,6 +169,8 @@ const Otp = () => {
                 placeholder=""
                 value={otp[index].value}
                 style={styles.textbox}
+                keyboardType='numeric'
+                maxLength={1}
                 onChangeText={(text) => handleOTPType(text, index)}
                 key={index}
               />

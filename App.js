@@ -9,6 +9,7 @@ import * as Notifications from 'expo-notifications';
 import * as Linking from 'expo-linking';
 import NetInfo from "@react-native-community/netinfo";
 import * as SplashScreen from 'expo-splash-screen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import i18nLang from './app/i18n';
 import { ToastComponent } from 'components/toastMsg';
@@ -64,9 +65,11 @@ const App = () => {
 
   return (
     <ApolloProvider client={client}>
-      <StatusBar hidden={Platform.OS === 'android'} style="light" />
-      <Navigation connection={connection} />
-      <ToastComponent />
+      <SafeAreaProvider>
+        <StatusBar hidden={Platform.OS === 'android'} style="light" />
+        <Navigation connection={connection} />
+        <ToastComponent />
+      </SafeAreaProvider>
     </ApolloProvider>
   );
 }

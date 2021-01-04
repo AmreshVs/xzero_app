@@ -149,3 +149,13 @@ export const responsiveWidth = (w) => {
   const { width } = Dimensions.get("screen");
   return percentageCalculation(width, w);
 }
+
+export const getAuthenticationHeader = (jwt) => {
+  return {
+    context: {
+      headers: {
+        authorization: 'Bearer ' + jwt,
+      },
+    },
+  }
+} 

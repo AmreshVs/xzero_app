@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 import { SCREEN_HEIGHT } from 'constants/common';
 import { w100, padding10, positionAbsolute, padding15, paddingBottom10, zIndex1, alignItemsCenter } from 'constants/commonStyles';
 
 const styles = StyleSheet.create({
   flatlist: {
-    paddingBottom: SCREEN_HEIGHT / 13,
+    paddingBottom: Platform?.OS === 'ios' ? SCREEN_HEIGHT / 5 : SCREEN_HEIGHT / 6.5,
     minHeight: '100%',
     paddingTop: 0,
     ...padding10,
