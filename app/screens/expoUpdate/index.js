@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Updates from 'expo-updates';
+import * as SplashScreen from 'expo-splash-screen';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
@@ -22,6 +23,7 @@ export default function ExpoUpdate() {
   }, []);
 
   const downloadUpdate = async () => {
+    await SplashScreen.hideAsync();
     await Updates.fetchUpdateAsync();
     ToastMsg('Finished updating! App will restart now');
     setLoading(false);
@@ -38,7 +40,7 @@ export default function ExpoUpdate() {
           style={styles.image}
           source={{ uri: BASE_URL + '/uploads/expo_update_a6850d4917.webp' }}
         />
-        <Spinner color={loading ? colors?.white : colors.primary} />
+        <Spinner color={loading ? colors?.primary : colors.white} />
         <Text style={styles.title}>{t('downloading_update')}</Text>
         <Text style={styles.caption}>{t('restart_app')}</Text>
       </VHCenter>

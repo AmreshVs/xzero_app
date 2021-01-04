@@ -188,6 +188,12 @@ const styles = StyleSheet.create({
     height: 350,
     marginBottom: 10,
     resizeMode: 'contain'
+  },
+  deliveredContainer: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
+    zIndex: 5
   }
 });
 

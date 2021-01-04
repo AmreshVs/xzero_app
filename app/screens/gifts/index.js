@@ -57,7 +57,7 @@ const Gifts = () => {
         </Box>
         :
         <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={_refetch} />} removeClippedSubviews={true} >
-          <GenerateGift refetch={_refetch} />
+          <GenerateGift generated={data?.memberships[0]?.is_gift_generated} refetch={_refetch} />
           <AvailableGifts data={data?.AvailableGifts?.gifts} />
           {data?.AvailableGifts?.AvailedGifts.length > 0 && <AvailedGifts data={data?.AvailableGifts?.AvailedGifts} />}
         </ScrollView>

@@ -173,6 +173,7 @@ export const FORGOT_PASSWORD = gql`
 export const GENERATE_GIFT = gql`
   mutation GenerateGift($user_id: Int!){
     GenerateGift(user_id: $user_id){
+      disabled
       won
       gift{
         id

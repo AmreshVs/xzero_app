@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
-import { LogBox, Platform } from 'react-native';
+import { LogBox, Platform, Text } from 'react-native';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { StatusBar } from 'expo-status-bar';
@@ -17,6 +17,9 @@ import Navigation from 'navigation';
 import { client } from './helpers';
 
 SplashScreen.preventAutoHideAsync();
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+
 
 LogBox.ignoreLogs([
   'Animated: `useNativeDriver` was not specified.',
@@ -35,6 +38,7 @@ const App = () => {
 
   // Initialize Language
   useEffect(() => {
+    // console.log(Text.prototype.props)
     i18nLang();
 
     const unsubscribe = NetInfo.addEventListener(state => {

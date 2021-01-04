@@ -292,6 +292,12 @@ export const BASIC_INFORMATION = gql`
 
 export const GET_GIFTS = gql`
   query GetGifts($membership_plan: Int, $user_id: Int){
+    memberships(where: {
+      user: $user_id
+    }){
+      id
+      is_gift_generated
+  	}
     AvailableGifts(where: {
       membership_plan: $membership_plan,
       user: $user_id,

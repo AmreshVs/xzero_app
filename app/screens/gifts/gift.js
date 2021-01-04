@@ -9,9 +9,11 @@ import ProgressiveImage from 'components/progressiveImage';
 import { IMAGE_URL } from 'constants/common';
 import { thumbnailUrl } from 'constants/commonFunctions';
 import styles from './styles';
+import Chip from 'components/chip';
+import colors from 'constants/colors';
 
 const Gift = ({ data, availed }) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   let language = i18n.language;
   const [showDesc, setShowDesc] = useState(false);
 
@@ -25,6 +27,11 @@ const Gift = ({ data, availed }) => {
             </RippleFX>
             <Text style={styles.imageTitle}>{data?.[`name_${language}`]}</Text>
             <Text style={styles.imageDesc}>{data?.[`desc_${language}`]}</Text>
+          </View>
+        )}
+        {data?.is_delivered && (
+          <View style={styles.deliveredContainer}>
+            <Chip title={t('delivered')} color={colors.success} />
           </View>
         )}
         <RippleFX onPress={() => setShowDesc(!showDesc)}>

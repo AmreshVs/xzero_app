@@ -30,7 +30,9 @@ const Main = ({ navigation }) => {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
         navigation.replace(EXPO_UPDATE);
+        return false;
       }
+      return true;
     } catch (error) {
       console.log('Expo Updates Error', error);
       logError({
@@ -73,9 +75,10 @@ const Main = ({ navigation }) => {
       }
     }
 
-    await checkUser();
-    checkExpoUpdates();
-    await SplashScreen.hideAsync();
+    if (await checkExpoUpdates()) {
+      await checkUser();
+      await SplashScreen.hideAsync();
+    }
   };
 
   const checkUser = async () => {

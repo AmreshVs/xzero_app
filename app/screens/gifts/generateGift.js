@@ -16,8 +16,9 @@ import { GENERATE_GIFT } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
 import styles from './styles';
 
-const GenerateGift = ({ refetch }) => {
+const GenerateGift = ({ generated, refetch }) => {
   const [loading, setLoading] = useState(false);
+  const [tried, setTried] = useState(generated);
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState([]);
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -32,6 +33,7 @@ const GenerateGift = ({ refetch }) => {
   let language = i18n.language;
 
   const handleGenerate = async () => {
+    setTried(true);
     setLoading(true);
     try {
       const { data } = await client.mutate({
@@ -164,7 +166,15 @@ const GenerateGift = ({ refetch }) => {
             <Text style={styles.giftRevealText}>{data?.won ? t('you_won') + data?.gift?.[`name_${language}`] : t('better_luck')}</Text>
           </Animated.View>
           <View style={styles.generate}>
-            <Button status="chip_1" width="50%" onPress={() => handleGenerate()} loading={loading}>{t('try_your_luck')}</Button>
+            <Button
+              status="chip_1"
+              width="50%"
+              onPress={() => handleGenerate()}
+              loading={loading}
+              disabled={tried !== true ? false : true}
+            >
+              {t('try_your_luck')}
+            </Button>
             <Text style={styles.caption}>{t('gifts_open')}</Text>
           </View>
         </View>

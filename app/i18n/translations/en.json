@@ -216,5 +216,6 @@
   "membership_gift": "You don't have membership yet! Buy now to get amazing gifts every week!",
   "checking_update": "Checking for New Update",
   "downloading_update": "Downloading new update...",
-  "restart_app": "Please wait while the update is being downloaded, Once completed the app will restart"
+  "restart_app": "Please wait while the update is being downloaded, Once completed the app will restart",
+  "delivered": "Delivered"
 }
