@@ -5,6 +5,7 @@ import { LOGIN_SCREEN } from 'navigation/routes';
 
 const facebookLogin = async (logError) => {
   let input = null;
+
   try {
     await Facebook.initializeAsync({ appId: FB_APP_ID, appName: APP_NAME });
     const {

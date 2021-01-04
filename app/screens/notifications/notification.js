@@ -7,7 +7,7 @@ import { useApolloClient } from '@apollo/client';
 import Card from 'components/card';
 import RippleFX from 'components/rippleFx';
 import { MARK_NOTIFICATION } from 'graphql/mutations';
-import { UserDataContext } from 'context';
+import { NotificationCountContext, UserDataContext } from 'context';
 import styles from './styles';
 
 const Notification = (data) => {
@@ -15,6 +15,7 @@ const Notification = (data) => {
   const client = useApolloClient();
   const [read, setRead] = useState(data?.is_read);
   const { userData } = useContext(UserDataContext);
+  const { setNotificationCount } = useContext(NotificationCountContext);
   let language = i18n.language;
 
   const handlePress = async (notificationData) => {
@@ -27,9 +28,9 @@ const Notification = (data) => {
           notification_id: Number(notificationData?.id)
         }
       });
-
       if (response?.MarkAsRead?.status) {
         setRead(response?.MarkAsRead?.status);
+        setNotificationCount(Number(response?.MarkAsRead?.notificationCount || 0));
       }
     }
 

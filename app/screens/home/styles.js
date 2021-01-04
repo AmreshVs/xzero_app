@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 import { getShadowStyle, isTab, responsiveHeight } from 'constants/commonFunctions';
 import { SCREEN_WIDTH } from 'constants/common';
@@ -112,8 +112,8 @@ const mobileStyles = StyleSheet.create({
   },
   sliderImage: {
     width: SCREEN_WIDTH - 20,
-    borderRadius: 10,
-    height: responsiveHeight(25),
+    borderRadius: Platform.OS === 'ios' ? 10 : 5,
+    height: Platform.OS === 'ios' ? responsiveHeight(25) : responsiveHeight(30),
     ...marginBottom0,
     ...marginLeft10,
     ...marginTop5,
@@ -213,6 +213,21 @@ const mobileStyles = StyleSheet.create({
   gcaption: {
     color: colors.white,
     marginVertical: 5
+  },
+  notificationCount: {
+    backgroundColor: colors.danger,
+    borderRadius: 20,
+    padding: 4,
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    minWidth: 22,
+    alignItems: 'center'
+  },
+  ncount: {
+    color: colors.white,
+    fontSize: 11,
+    fontWeight: '700'
   }
 });
 

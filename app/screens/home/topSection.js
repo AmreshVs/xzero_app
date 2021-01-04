@@ -16,7 +16,7 @@ import Row from 'components/row';
 import ProgressiveImage from 'components/progressiveImage';
 import { ToastMsg } from 'components/toastMsg';
 import { firstLetterUpper } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { NotificationCountContext, UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { GIFTS, HOME_SCREEN, NOTIFICATIONS } from 'navigation/routes';
 import { UPDATE_LANGUAGE } from 'graphql/mutations';
@@ -55,6 +55,7 @@ const TopSection = ({ handleModalOpen }) => {
   const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();
   const client = useApolloClient();
+  const { notificationCount } = useContext(NotificationCountContext);
 
   let name = userData?.username ?? '';
   let email = userData?.email ?? '';
@@ -103,6 +104,11 @@ const TopSection = ({ handleModalOpen }) => {
             </Box>
             <RippleFX style={styles.iconContainer} onPress={() => push(NOTIFICATIONS)}>
               <FontAwesomeIcon icon="bell" color={colors.white} size={20} />
+              {(notificationCount && notificationCount !== 0) && (
+                <View style={styles.notificationCount}>
+                  <Text style={styles.ncount}>{notificationCount}</Text>
+                </View>
+              )}
             </RippleFX>
             <RippleFX style={styles.iconContainer} onPress={() => handleLangSelect()}>
               <Row flexWrap="nowrap" vcenter>

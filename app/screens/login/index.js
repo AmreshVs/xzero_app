@@ -211,17 +211,22 @@ const Login = ({ navigation }) => {
     setLoading(true);
     const token = (await getNotificationToken()) || '';
 
+    const mutationInput = {
+      username: values?.username,
+      email: values?.email,
+      password: values?.email + SOCIAL_TOKEN,
+      mobile_number: Number(0),
+      notification_token: String(token) || '',
+      provider
+    };
+
     try {
       let { data, errors } = await client.mutate({
         mutation: CREATE_USER,
         variables: {
-          username: values?.username,
-          email: values?.email,
-          password: values?.email + SOCIAL_TOKEN,
-          mobile_number: Number(0),
-          notification_token: String(token) || '',
-          provider
-        },
+          input: mutationInput,
+        }
+
       });
 
       setLoading(false);
@@ -229,13 +234,7 @@ const Login = ({ navigation }) => {
       logError({
         screen: LOGIN_SCREEN,
         module: 'Create User',
-        input: JSON.stringify({
-          username: values?.username,
-          email: values?.email,
-          password: values?.email + SOCIAL_TOKEN,
-          mobile_number: Number(0),
-          notification_token: String(token) || '',
-        }),
+        input: JSON.stringify(mutationInput),
         error: JSON.stringify(errors)
       });
 

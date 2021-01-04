@@ -40,7 +40,8 @@ export const GET_USER_BY_EMAIL = gql`
 `;
 
 export const GET_HOME = gql`
-  query{
+  query GetHome($user_id: Int!){
+    notificationCount(user: $user_id)
     centersCount: centersConnection {
       aggregate {
         totalCount
@@ -695,7 +696,7 @@ export const NOTIFICATIONS_BY_USER = gql`
       desc_ar
       data
       is_read
-      # created_at
+      created_at
     }
   }
 `;

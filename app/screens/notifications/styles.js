@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 10,
     position: 'absolute',
-    right: 10,
-    top: 10
+    right: 5,
+    top: 5
   }
 });
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef, memo } from 'react';
+import React, { useState, useEffect, createRef, memo, useContext } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
@@ -9,6 +9,7 @@ import Box from 'components/box';
 import Heading from 'components/heading';
 import Row from 'components/row';
 import { GET_HOME } from 'graphql/queries';
+import { NotificationCountContext, UserDataContext } from 'context';
 import { isTab } from 'constants/commonFunctions';
 import { HOME_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
@@ -29,12 +30,24 @@ let backupLink = "";
 let counts = {};
 
 const Home = () => {
-  const { data, loading, refetch: _refetch, error } = useQuery(GET_HOME);
   const [reloading, setReloading] = useState(false);
   const modalizeRef = createRef();
+  const { userData } = useContext(UserDataContext);
+  const { notificationCount, setNotificationCount } = useContext(NotificationCountContext);
   const { t } = useTranslation();
-
   const { logError } = useErrorLog();
+
+  const { data, loading, refetch: _refetch, error } = useQuery(GET_HOME, {
+    variables: {
+      user_id: Number(userData?.id || 0)
+    }
+  });
+
+  useEffect(() => {
+    if (notificationCount !== data?.notificationCount) {
+      setNotificationCount(data?.notificationCount);
+    }
+  }, [data?.notificationCount]);
 
   if (error) {
     logError({
@@ -100,7 +113,7 @@ const Home = () => {
   const Header = () => {
     return (
       <>
-        <TopSection handleModalOpen={handleModalOpen} data={counts} />
+        <TopSection handleModalOpen={handleModalOpen} />
         <MembershipBox data={counts} />
         <Slider data={banners} />
         <Box padding={10} paddingBottom={0}>

@@ -190,7 +190,6 @@ const ProfileEdit = ({ setEdit, data }) => {
                 setFieldValue('dob', getFormatedDate(date));
               }}
               onCancel={() => setDatePickerVisibility(false)}
-              isDarkModeEnabled={false}
             />
           </>
         )}
