@@ -37,7 +37,6 @@ const User = () => {
   });
 
   if (error) {
-    ToastMsg(t('error_occured'));
     logError({
       screen: PROFILE_TAB_SCREEN,
       module: 'Get User Profile Data',

@@ -354,3 +354,21 @@ export const MARK_NOTIFICATION = gql`
     MarkAsRead(user: $user_id, notification: $notification_id)
   }
 `;
+
+export const UPDATE_LANGUAGE = gql`
+  mutation updateUser($user_id: ID!, $language: String! ){
+    updateUser(input: {
+      where: {
+        id: $user_id
+      },
+      data: {
+        language: $language,
+      }
+    }){
+      user{
+        id
+        language
+      }
+    }
+  }
+`;

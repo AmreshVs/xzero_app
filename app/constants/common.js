@@ -10,14 +10,14 @@ export const SOCIAL_TOKEN = 'a308430d2bfd491027ec990136bdb42a';
 
 // Payment URL's
 // Ngenius Sandbox
-export const PAYMENT_OUTLET_ID = 'c78c96d1-2877-46f5-b17c-7558d7369998';
-export const PAYMENT_DOMAIN = 'https://api-gateway.sandbox.ngenius-payments.com';
-export const PAYMENT_API_KEY = 'YTJlMjQyOTItNjMyOC00Y2Y5LWFjYzUtMWFhNGY4ZWQ5Nzg5OjEyYzBiMTExLTM2ZmMtNDdmNi1iZWY2LWQ5NjlhOWVjOTM5Mg==';
+// export const PAYMENT_OUTLET_ID = 'c78c96d1-2877-46f5-b17c-7558d7369998';
+// export const PAYMENT_DOMAIN = 'https://api-gateway.sandbox.ngenius-payments.com';
+// export const PAYMENT_API_KEY = 'YTJlMjQyOTItNjMyOC00Y2Y5LWFjYzUtMWFhNGY4ZWQ5Nzg5OjEyYzBiMTExLTM2ZmMtNDdmNi1iZWY2LWQ5NjlhOWVjOTM5Mg==';
 
 // Ngenius Live
-// export const PAYMENT_OUTLET_ID = 'fa398596-5e9b-40a8-ab6e-e897aefccf17';
-// export const PAYMENT_DOMAIN = 'https://api-gateway.ngenius-payments.com';
-// export const PAYMENT_API_KEY = 'N2JjNGUwZjEtYjI5My00MTgxLWEyZWUtOTRmNDQzYjI5NjEyOmQ5NzI4ODZhLTY0YzYtNDBlZS04NWY5LTdiZWFhOGY5OTU0Mw==';
+export const PAYMENT_OUTLET_ID = 'fa398596-5e9b-40a8-ab6e-e897aefccf17';
+export const PAYMENT_DOMAIN = 'https://api-gateway.ngenius-payments.com';
+export const PAYMENT_API_KEY = 'N2JjNGUwZjEtYjI5My00MTgxLWEyZWUtOTRmNDQzYjI5NjEyOmQ5NzI4ODZhLTY0YzYtNDBlZS04NWY5LTdiZWFhOGY5OTU0Mw==';
 
 export const GENERATE_ACCESS_TOKEN_URL = `${PAYMENT_DOMAIN}/identity/auth/access-token`;
 export const CREATE_PAYMENT_URL = `${PAYMENT_DOMAIN}/transactions/outlets/${PAYMENT_OUTLET_ID}/orders`;
@@ -26,12 +26,12 @@ export const CHECK_PAYMENT_STATUS_URL = `${PAYMENT_DOMAIN}/transactions/outlets/
 // Social Login - Live
 // export const FB_APP_ID = '366021757877568';
 // export const APP_NAME = 'Xzero App';
-// export const GOOGLE_CLIENT_ID = '471013991175-4rroh153tfrmh484j6tu7dgbupq3tnpq.apps.googleusercontent.com';
+export const GOOGLE_CLIENT_ID = '471013991175-4rroh153tfrmh484j6tu7dgbupq3tnpq.apps.googleusercontent.com';
 
 // Social Login - Dev
 export const FB_APP_ID = '366021757877568';
 export const APP_NAME = 'Xzero App';
-export const GOOGLE_CLIENT_ID = '471013991175-3m4mtp6hrogfrq87dg5tbqbdsi0tvuv5.apps.googleusercontent.com';
+// export const GOOGLE_CLIENT_ID = '471013991175-3m4mtp6hrogfrq87dg5tbqbdsi0tvuv5.apps.googleusercontent.com';
 
 // Screen
 export const SCREEN_HEIGHT = Dimensions.get("screen").height;

@@ -9,11 +9,11 @@ import Box from 'components/box';
 import SafeView from 'components/safeView';
 import Button from 'components/button';
 import colors from 'constants/colors';
-import { HOME_TAB_SCREEN } from 'navigation/routes';
+import { HOME_SCREEN } from 'navigation/routes';
 import styles from './styles';
 
 export default function PaymentStatus({ status = 1 }) {
-  const { replace } = useNavigation();
+  const { replace, navigate } = useNavigation();
   const { t } = useTranslation();
 
   return (
@@ -31,7 +31,7 @@ export default function PaymentStatus({ status = 1 }) {
             {status ? t('payment_successfull') : t('payment_failed')}
           </Text>
           <View style={styles.backButton}>
-            <Button width="100%" onPress={() => replace(HOME_TAB_SCREEN)}>
+            <Button width="100%" onPress={() => replace ? replace(HOME_SCREEN) : navigate(HOME_SCREEN)}>
               {t('back_to_home')}
             </Button>
           </View>

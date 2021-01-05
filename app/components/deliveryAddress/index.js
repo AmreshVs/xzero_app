@@ -37,7 +37,6 @@ export default function DeliveryAddress({ ...otherStyles }) {
         user_id: Number(userData?.id),
         username: values?.fullname,
         address: values?.address,
-        mobile_number: values?.phone
       }
     });
     setBtnLoading(false);

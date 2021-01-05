@@ -97,7 +97,7 @@ const ProfileView = ({ data }) => {
             <FontAwesomeIcon icon="mobile-alt" color={colors.primary} size={23} />
           </Box>
           <Box flex={8}>
-            {data?.mobile_number !== 0 ? (
+            {(data?.mobile_number !== 0 && data?.mobile_number !== null) ? (
               <Row vcenter justifyContent="space-between">
                 <Row vcenter>
                   <Text style={styles.text}>

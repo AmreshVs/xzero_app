@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   gradient: {
     width: '100%',
-    height: isTab() ? 70 : Platform.OS === 'ios' ? 94 : 50,
+    height: isTab() ? 70 : Platform.OS === 'ios' ? 97 : 50,
     position: 'absolute',
     top: 0,
     left: 0,

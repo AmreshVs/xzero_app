@@ -26,6 +26,7 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
   const { logError } = useErrorLog();
 
   const handlePayment = async () => {
+
     let mutationInput = {
       user: Number(userData?.id),
       voucher: Number(voucher?.id)

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, memo } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useApolloClient } from '@apollo/client';
@@ -8,13 +8,12 @@ import Button from 'components/button';
 import colors from 'constants/colors';
 import Box from 'components/box';
 import Row from 'components/row';
+import { ToastMsg } from 'components/toastMsg';
 import { font16, font17, fontWeight700, marginTop10, paddingTop10, textBoldDark, textLite } from 'constants/commonStyles';
+import { getAuthenticationHeader, userVerified } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import { APPLY_CODE } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
-import { ToastMsg } from 'components/toastMsg';
-import { memo } from 'react';
-import { getAuthenticationHeader } from 'constants/commonFunctions';
 
 let promoApplied = 0;
 
@@ -42,50 +41,52 @@ const ApplyPromocode = ({ voucher_id, plan, voucherPrice, setPromocodeData, prom
   }, [plan]);
 
   const handleApply = async () => {
-    setLoading(true);
-    let params = {};
+    if (await userVerified()) {
+      setLoading(true);
+      let params = {};
 
-    if (voucher_id) {
-      params = {
-        voucher: Number(voucher_id)
+      if (voucher_id) {
+        params = {
+          voucher: Number(voucher_id)
+        }
       }
-    }
 
-    if (plan) {
-      params = {
-        plan: Number(plan)
+      if (plan) {
+        params = {
+          plan: Number(plan)
+        }
       }
-    }
 
-    const queryInput = {
-      receiver: Number(userData?.id),
-      code: promocode,
-      ...params,
-    };
+      const queryInput = {
+        receiver: Number(userData?.id),
+        code: promocode,
+        ...params,
+      };
 
-    const { data, errors } = await client.query({
-      query: APPLY_CODE,
-      variables: queryInput,
-      ...getAuthenticationHeader(userData?.jwt)
-    });
-
-    if (errors) {
-      ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
-      logError({
-        screen: 'Apply Promocode',
-        module: 'Apply Promocode',
-        input: JSON.stringify(queryInput),
-        error: JSON.stringify(errors)
+      const { data, errors } = await client.query({
+        query: APPLY_CODE,
+        variables: queryInput,
+        ...getAuthenticationHeader(userData?.jwt)
       });
-    }
 
-    if (data?.ApplyCode?.applied) {
-      promoApplied = 1;
-      setPromocodeData({ ...promocodeData, ...data?.ApplyCode });
-      setAppliedPromocode(data?.ApplyCode);
-    }
+      if (errors) {
+        ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
+        logError({
+          screen: 'Apply Promocode',
+          module: 'Apply Promocode',
+          input: JSON.stringify(queryInput),
+          error: JSON.stringify(errors)
+        });
+      }
 
-    setLoading(false);
+      if (data?.ApplyCode?.applied) {
+        promoApplied = 1;
+        setPromocodeData({ ...promocodeData, ...data?.ApplyCode });
+        setAppliedPromocode(data?.ApplyCode);
+      }
+
+      setLoading(false);
+    }
   }
 
   const clearPromocode = () => {

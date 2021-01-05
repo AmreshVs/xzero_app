@@ -48,11 +48,6 @@ const ProfileEdit = ({ setEdit, data }) => {
             password: values.repassword || null,
             dob: dob,
           },
-          // context: {
-          //   headers: {
-          //     Authorization: 'Bearer ' + userData?.jwt,
-          //   },
-          // },
         });
         data = updateData;
       } else {
@@ -64,11 +59,6 @@ const ProfileEdit = ({ setEdit, data }) => {
             mobile_number: Number(values.phone),
             dob: new Date(dob),
           },
-          // context: {
-          //   headers: {
-          //     Authorization: 'Bearer ' + userData?.jwt,
-          //   },
-          // },
         });
         data = updateData;
       }
@@ -116,7 +106,7 @@ const ProfileEdit = ({ setEdit, data }) => {
         initialValues={{
           email: data?.email,
           phone:
-            data?.mobile_number === 0 ? '+971' : String(handleMobileNumber(data?.mobile_number)),
+            (data?.mobile_number === 0 || data?.mobile_number === null) ? '+971' : String(handleMobileNumber(data?.mobile_number)),
           password: '',
           repassword: '',
           dob: data?.birthday ? handleDOB(data?.birthday) : '',
@@ -141,6 +131,7 @@ const ProfileEdit = ({ setEdit, data }) => {
                     onChangeText={handleChange(name)}
                     icon={icon}
                     marginTop={marginTop}
+                    keyboardType={name === 'phone' ? 'phone-pad' : 'default'}
                     onBlur={() => setFieldTouched(name)}
                     autoCapitalize="none"
                     secureTextEntry={name.includes('password', 'repassword') ? true : false}

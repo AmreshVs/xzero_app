@@ -63,7 +63,7 @@ import {
   INTRO,
   EXPO_UPDATE,
 } from './routes';
-import { NotificationCountContext, UserDataContext } from 'context';
+import { UserDataContext } from 'context';
 import Loader from 'components/loader';
 import Offline from 'screens/offline';
 import CustomDrawer from 'components/drawer';
@@ -124,7 +124,6 @@ const prefix = ['xzero://'];
 function Navigation({ connection }) {
   const navigationRef = useRef();
   const [userData, setUserData] = useState();
-  const [notificationCount, setNotificationCount] = useState(0);
   const linking = {
     prefixes: prefix,
   };
@@ -140,20 +139,18 @@ function Navigation({ connection }) {
   return (
     <NavigationContainer ref={navigationRef} linking={linking} fallback={<Loader />}>
       <UserDataContext.Provider value={{ userData, setUserData }}>
-        <NotificationCountContext.Provider value={{ notificationCount, setNotificationCount }}>
-          <Drawer.Navigator
-            initialRouteName={DRAWER_HOME}
-            drawerType="slide"
-            drawerContent={props => <CustomDrawer {...props} />}
-          >
-            <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
-            <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} />
-            <Drawer.Screen name={REFER} component={Refer} />
-            <Drawer.Screen name={GIFTS} component={Gifts} />
-            <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
-            <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
-          </Drawer.Navigator>
-        </NotificationCountContext.Provider>
+        <Drawer.Navigator
+          initialRouteName={DRAWER_HOME}
+          drawerType="slide"
+          drawerContent={props => <CustomDrawer {...props} />}
+        >
+          <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
+          <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} />
+          <Drawer.Screen name={REFER} component={Refer} />
+          <Drawer.Screen name={GIFTS} component={Gifts} />
+          <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
+          <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
+        </Drawer.Navigator>
       </UserDataContext.Provider>
     </NavigationContainer>
   );

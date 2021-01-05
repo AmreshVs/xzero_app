@@ -6,8 +6,8 @@ buildscript {
         minSdkVersion = 21
         compileSdkVersion = 29
         targetSdkVersion = 29
-        versionCode = 22117
-        versionName = "22.1.17"
+        versionCode = 23001
+        versionName = "23.0.1"
     }
     repositories {
         google()

@@ -38,8 +38,8 @@ const Refer = () => {
   const navigation = useNavigation();
   const { params } = useRoute();
 
-  let queryInput = {
-    user_id: Number(userData?.id)
+  const queryInput = {
+    user_id: Number(userData?.id || 0)
   };
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_REFER_HISTORY, {
@@ -50,6 +50,7 @@ const Refer = () => {
   let refer = data?.GetReferHistory;
 
   if (error) {
+    console.log('Get Refer Error', error);
     ToastMsg(t('error_occured'));
     logError({
       screen: REFER,

@@ -14,9 +14,8 @@ import Box from 'components/box';
 import RippleFX from 'components/rippleFx';
 import Row from 'components/row';
 import ProgressiveImage from 'components/progressiveImage';
-import { ToastMsg } from 'components/toastMsg';
 import { firstLetterUpper } from 'constants/commonFunctions';
-import { NotificationCountContext, UserDataContext } from 'context';
+import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { GIFTS, HOME_SCREEN, NOTIFICATIONS } from 'navigation/routes';
 import { UPDATE_LANGUAGE } from 'graphql/mutations';
@@ -26,9 +25,7 @@ export const UpdateLanguage = async (client, params) => {
   try {
     let mutationInput = {
       user_id: params?.user_id,
-      data: {
-        language: params?.language
-      }
+      language: params?.language
     };
 
     await client.mutate({
@@ -38,24 +35,16 @@ export const UpdateLanguage = async (client, params) => {
   }
   catch (error) {
     console.log('Update Language Error', error);
-    ToastMsg(t('error_occured'));
-    logError({
-      screen: HOME_SCREEN,
-      module: 'Top Section',
-      input: JSON.stringify(mutationInput),
-      error: JSON.stringify(error)
-    });
   }
 }
 
-const TopSection = ({ handleModalOpen }) => {
+const TopSection = ({ notificationCount, handleModalOpen }) => {
   const { push, toggleDrawer } = useNavigation();
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const insets = useSafeAreaInsets();
   const client = useApolloClient();
-  const { notificationCount } = useContext(NotificationCountContext);
 
   let name = userData?.username ?? '';
   let email = userData?.email ?? '';
@@ -71,7 +60,6 @@ const TopSection = ({ handleModalOpen }) => {
     }
     catch (error) {
       console.log('Change Language error', error);
-      ToastMsg(t('error_occured'));
       logError({
         screen: HOME_SCREEN,
         module: 'Saving Change language data',
@@ -105,9 +93,7 @@ const TopSection = ({ handleModalOpen }) => {
             <RippleFX style={styles.iconContainer} onPress={() => push(NOTIFICATIONS)}>
               <FontAwesomeIcon icon="bell" color={colors.white} size={20} />
               {notificationCount > 0 ? (
-                <View style={styles.notificationCount}>
-                  <Text style={styles.ncount}>{notificationCount}</Text>
-                </View>
+                <View style={styles.notificationCount} />
               ) : null}
             </RippleFX>
             <RippleFX style={styles.iconContainer} onPress={() => handleLangSelect()}>

@@ -41,6 +41,7 @@ const Main = ({ navigation }) => {
         input: JSON.stringify(),
         error: JSON.stringify(error)
       });
+      return true;
     }
   }
 

@@ -12,7 +12,7 @@ import Loader from 'components/loader';
 import RippleFX from 'components/rippleFx';
 import { ToastMsg } from 'components/toastMsg';
 import NoData from 'components/noData';
-import { isTab } from 'constants/commonFunctions';
+import { getAuthenticationHeader, isTab } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import useErrorLog from 'hooks/useErrorLog';
@@ -54,7 +54,8 @@ const MyVouchers = () => {
       query: !tab ? MY_VOUCHER_BOUGHT : MY_VOUCHER_WON,
       variables: {
         user_id: Number(userData?.id)
-      }
+      },
+      ...getAuthenticationHeader(userData?.jwt)
     });
 
     if (error) {
@@ -96,7 +97,7 @@ const MyVouchers = () => {
           </Box>
         )
         :
-        data.length <= 0 ?
+        data?.length <= 0 ?
           <Box>
             <NoData reload={() => reload()} />
           </Box>

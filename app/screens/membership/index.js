@@ -169,7 +169,7 @@ const Membership = () => {
         <Note data={note?.info} />
         <Box flexDirection={isTab() ? "row-reverse" : "column"} >
           {member && <QRCode data={memberData} />}
-          <Benefits data={note?.benefits} />
+          <Benefits member={member} data={note?.benefits} />
         </Box>
         <Box flexDirection={isTab() ? "row-reverse" : "column"} >
           {member && numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? (
