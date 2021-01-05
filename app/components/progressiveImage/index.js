@@ -19,7 +19,7 @@ const ProgressiveImage = ({ thumbnailSource, source, style, resizeMode, noBg = f
         preview={thumbnailSource?.uri || null}
         uri={source?.uri || null}
         style={style}
-        transitionDuration={60}
+        transitionDuration={1000}
         tint="light"
         resizeMode={resizeMode || "cover"}
       />

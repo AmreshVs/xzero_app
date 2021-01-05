@@ -102,6 +102,7 @@ const Main = ({ navigation }) => {
                 ID: Number(loginData?.id)
               }
             });
+
             if (data?.user === null || data?.user === 'null') {
               await AsyncStorage.removeItem('@xzero_jwt');
               await AsyncStorage.removeItem('@xzero_user');
@@ -115,8 +116,8 @@ const Main = ({ navigation }) => {
               ...data?.user,
             });
 
+            await saveUserDataLocally('xzero_user', { ...loginData, ...data?.user });
             if (data?.user?.confirmed || data?.user?.provider !== 'local') {
-              await saveUserDataLocally('xzero_user', { ...loginData, ...data?.user });
               navigation.replace(HOME_SCREEN);
             }
             else {

@@ -173,10 +173,10 @@ export default function Payment() {
       return;
     }
 
-    if (paymentState === 'FAILED') {
+    if (paymentState === 'FAILED' || paymentState === 'DECLINED' || paymentState === 'AUTHORISATION_FAILED' || paymentState === 'CANCELLED') {
       if (!failed) {
         failed = true;
-        await replace(PAYMENT_STATUS, { status: false });
+        await replace(PAYMENT_STATUS, { status: 0 });
         return;
       }
     }

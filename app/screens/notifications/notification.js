@@ -18,8 +18,7 @@ const Notification = (data) => {
   let language = i18n.language;
 
   const handlePress = async (notificationData) => {
-
-    if (!read) {
+    if (!read && userData !== null) {
       const { data: response } = await client.mutate({
         mutation: MARK_NOTIFICATION,
         variables: {

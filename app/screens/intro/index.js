@@ -17,14 +17,26 @@ import colors from 'constants/colors';
 import { INTRO, MAIN_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
 import { APP_INTROS } from 'graphql/queries';
+import { getDeviceLang } from 'i18n';
+import { useState } from 'react';
 
 const Intro = ({ navigation }) => {
   const { logError } = useErrorLog();
-  const { t, i18n } = useTranslation();
-  let language = i18n.language;
+  const { t } = useTranslation();
+  const [language, setLanguage] = useState('en');
+
+  useEffect(() => {
+    checkDeviceLang();
+  }, []);
+
+  const checkDeviceLang = async () => {
+    console.log(await getDeviceLang())
+    setLanguage(await getDeviceLang());
+  }
 
   const { data, loading, errors } = useQuery(APP_INTROS);
 
+  console.log(language);
   if (errors) {
     ToastMsg(t('error_occured'));
     logError({

@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, Linking, Platform, StyleSheet, Text } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 
+import { handlelogout } from 'screens/user/profileView';
 import colors from 'constants/colors';
 import Box from 'components/box';
 import Row from 'components/row';
 import Button from 'components/button';
-import { useContext } from 'react';
+import RippleFX from 'components/rippleFx';
 import { UserDataContext } from 'context';
-import { handlelogout } from 'screens/user/profileView';
 import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN } from 'navigation/routes';
-import { useTranslation } from 'react-i18next';
-import RippleFX from 'components/rippleFx';
 
 export default function CustomDrawer(props) {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -132,16 +131,19 @@ export default function CustomDrawer(props) {
         </Box>
       </Box>
       {props.state.routeNames.map((item, index) => {
-        return (
-          <DrawerItem
-            label={({ focused, color }) => <Text style={[{ color: focused ? colors.primary : color }, styles.drawerText]}>{t(item)}</Text>}
-            icon={({ focused, color, size }) => <FontAwesomeIcon icon={getIcon(index)} color={focused ? colors.primary : color} size={size} />}
-            focused={props.state.index === index}
-            onPress={() => props.navigation.navigate(item, { drawer: 1 })}
-            activeBackgroundColor="#FFF"
-            key={index}
-          />
-        )
+        if (userData === null && !['My Draws', 'Refer', 'Gifts'].includes(item)) {
+          return (
+            <DrawerItem
+              label={({ focused, color }) => <Text style={[{ color: focused ? colors.primary : color }, styles.drawerText]}>{t(item)}</Text>}
+              icon={({ focused, color, size }) => <FontAwesomeIcon icon={getIcon(index)} color={focused ? colors.primary : color} size={size} />}
+              focused={props.state.index === index}
+              onPress={() => props.navigation.navigate(item, { drawer: 1 })}
+              activeBackgroundColor="#FFF"
+              key={index}
+            />
+          )
+        }
+        return null;
       })}
       <Box style={styles.footer} padding={20}>
         <Text style={styles.heading}>{t('follow_us')}</Text>

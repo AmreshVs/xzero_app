@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { Image, Share, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -11,15 +11,17 @@ import Chip from 'components/chip';
 import { IMAGE_URL } from 'constants/common';
 import colors from 'constants/colors';
 import { calculatePercentage, isTab } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
 import styles from './styles';
 
 const VoucherInfo = ({ data }) => {
   const { t, i18n } = useTranslation();
+  const { userData } = useContext(UserDataContext);
   let language = i18n.language;
 
   const handleShare = async () => {
     try {
-      const message = `${t('buy')} - ${data?.[`buy_title_${language}`]}\n${t('win')} - ${data?.[`win_title_${language}`]}\n\nBuy this voucher at ${data?.cost} ${t('aed')}\n\nCheck the Voucher on Xzero App\nhttps://xzero.app/open?q=xzero://Home/VoucherDetail?id=1`;
+      const message = `${t('buy')} - ${data?.[`buy_title_${language}`]}\n${t('win')} - ${data?.[`win_title_${language}`]}\n\nBuy this voucher at ${(!userData || userData?.membership === null) ? data?.cost_for_non_members : data?.cost} ${t('aed')}\n\nCheck the Voucher on Xzero App\nhttps://xzero.app/open?q=xzero://Home/VoucherDetail?id=1`;
       await Share.share({
         message: message,
         title: message,
