@@ -54,10 +54,11 @@ export const firstLetterUpper = (name) => {
   return name !== undefined ? name.charAt(0).toUpperCase() + name.slice(1) : '';
 };
 
-export const dialNumber = (number) => {
+export const dialNumber = (phone) => {
   let phoneNumber = '';
-  if (Platform.OS === 'android') { phoneNumber = `tel:${number}`; }
-  else { phoneNumber = `telprompt://${number}`; }
+  let number = '+' + phone;
+  phoneNumber = Platform.OS === 'android' ? `tel:${number}` : `telprompt://${number}`;
+
   Linking.openURL(phoneNumber);
 };
 
