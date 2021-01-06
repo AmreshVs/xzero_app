@@ -18,13 +18,14 @@ import colors from 'constants/colors';
 import { handleDOB } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
-import { MAIN_SCREEN, OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
+import { LOGIN_SCREEN, OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
 import styles from './styles';
+import { client } from '../../../helpers';
 
 export const handlelogout = async ({ dispatch, setUserData, logError }) => {
   const resetAction = CommonActions.reset({
     index: 0,
-    routes: [{ name: MAIN_SCREEN }],
+    routes: [{ name: LOGIN_SCREEN }],
   });
 
   try {
@@ -32,8 +33,9 @@ export const handlelogout = async ({ dispatch, setUserData, logError }) => {
     let removeUserData = await AsyncStorage.removeItem('@xzero_user');
 
     if (removeJWTData === null && removeUserData === null) {
+      await dispatch(resetAction);
       await CacheManager.clearCache();
-      dispatch(resetAction);
+      await client.cache.reset();
       setUserData(null);
     }
   } catch (error) {

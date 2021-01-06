@@ -57,7 +57,7 @@ export default function DeliveryAddress({ ...otherStyles }) {
             <Text style={styles.caption}>{userData?.mobile_number ? handleMobileNumber(userData?.mobile_number) : ''}</Text>
           </Box>
           <Box flex={1}>
-            <Button size="small" icon="pen" onPress={() => setEdit(true)}>Edit</Button>
+            <Button size="small" icon="pen" onPress={() => setEdit(true)}>{t('edit')}</Button>
           </Box>
         </Row>
         :

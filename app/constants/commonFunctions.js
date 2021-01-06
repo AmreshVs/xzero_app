@@ -151,11 +151,14 @@ export const responsiveWidth = (w) => {
 }
 
 export const getAuthenticationHeader = (jwt) => {
-  return {
-    context: {
-      headers: {
-        authorization: 'Bearer ' + jwt,
+  if (jwt !== '') {
+    return {
+      context: {
+        headers: {
+          authorization: 'Bearer ' + jwt,
+        },
       },
-    },
+    }
   }
+  return {};
 } 

@@ -24,7 +24,7 @@
   "offer_detail": "Offer Detail",
   "limited_offer": "Offer is for limited time, Grab Soon!",
   "description": "Description",
-  "avail_discount": "How to avail discount",
+  "avail_discount": "How to avail discount?",
   "open_map": "Map",
   "call": "Call",
   "membership_card": "Membership Card",
@@ -217,5 +217,11 @@
   "checking_update": "Checking for New Update",
   "downloading_update": "Downloading new update...",
   "restart_app": "Please wait while the update is being downloaded, Once completed the app will restart",
-  "delivered": "Delivered"
+  "delivered": "Delivered",
+  "no_referral": "We are sorry! Referral program is closed for now. We will notify you when its back live!",
+  "share_app": "Share app",
+  "share_app_desc": "Hi, I found *Xzero* a very useful app,\nwhich provides lot of offers on Health, Beauty, Dental, Gym, Spa and Healthy Food for membership holders.\n\nWith membership you can save a lot of money that you spend!\n\nNot only offers! this app provides lot of gifts 🎁 to users each week!\nEven get benefited more! Join the draws and be a winner 🏆 everytime, because when you participate you will get the product, assured gift and there will be more than 10 winners on each draw! you can be one of them!.\n\nWhy wait!? Download now!\n\nhttps://xzero.app/download\n\nFor more visit\nhttps://xzero.app",
+  "withdraw_history": "Withdraw History",
+  "buy_voucher_at": "Buy this voucher at",
+  "check_voucher": "Check the Voucher on Xzero App"
 }

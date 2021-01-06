@@ -5,6 +5,7 @@ import ProgressiveImage from 'components/progressiveImage';
 import Row from 'components/row';
 import colors from 'constants/colors';
 import { IMAGE_URL } from 'constants/common';
+import { smallUrl } from 'constants/commonFunctions';
 import { MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +20,7 @@ const NoMembership = () => {
       <Text style={styles.title}>{t('nomembership')}</Text>
       <Row hcenter>
         <ProgressiveImage
-          source={{ uri: IMAGE_URL + '/uploads/no_access_863e89685e.webp' }}
+          source={{ uri: IMAGE_URL + smallUrl('/uploads/no_access_863e89685e.webp') }}
           style={styles.image}
           resizeMode='contain'
         />

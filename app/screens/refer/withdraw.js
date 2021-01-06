@@ -13,7 +13,7 @@ import Transactions from './transactions';
 import BankInfo from './bankInfo';
 import styles from './styles';
 
-const Withdraw = () => {
+const Withdraw = ({ refer_program }) => {
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
 
@@ -41,8 +41,8 @@ const Withdraw = () => {
 
   return (
     <View style={styles.historyContainer}>
-      {data?.TransactionInfo?.userBankDetails !== null && <WithdrawAmount loading={loading} balance={balance} min_withdraw={min_withdraw} reload={_refetch} />}
-      <BankInfo data={data?.TransactionInfo?.userBankDetails} loading={loading} reload={_refetch} />
+      {(data?.TransactionInfo?.userBankDetails !== null && refer_program) && <WithdrawAmount loading={loading} balance={balance} min_withdraw={min_withdraw} reload={_refetch} />}
+      {refer_program && <BankInfo data={data?.TransactionInfo?.userBankDetails} loading={loading} reload={_refetch} />}
       <Transactions data={data?.TransactionInfo?.withdrawalHistory} loading={loading} reload={_refetch} />
     </View>
   )

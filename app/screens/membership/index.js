@@ -98,12 +98,12 @@ const Membership = () => {
 
     if (data?.memberships?.length) {
       setMember(true);
-      setMemberData({ ...data.memberships[0], ...data?.getMembershipExpiryDays });
+      setMemberData({ ...data?.memberships[0], ...data?.getMembershipExpiryDays });
 
-      if (userData?.membership === null && userData?.membership?.serial !== data.memberships[0].serial) {
+      if (userData?.membership === null && userData?.membership?.serial !== data?.memberships[0].serial) {
         setUserData({
           ...userData,
-          membership: data.memberships[0]
+          membership: data?.memberships[0]
         });
       }
     }

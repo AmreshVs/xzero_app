@@ -20,9 +20,10 @@ import { VOUCHER_DETAIL } from 'navigation/routes';
 import styles from './styles';
 
 const Voucher = ({ data, handleOpenModal }) => {
-  const { t } = useTranslation();
   const { push } = useNavigation();
   const { userData } = useContext(UserDataContext);
+  const { t, i18n } = useTranslation();
+  let language = i18n.language;
 
   const handleVoucherDetailNavigation = () => {
     push(VOUCHER_DETAIL, { id: data?.id });
@@ -58,11 +59,11 @@ const Voucher = ({ data, handleOpenModal }) => {
           <RippleFX onPress={() => handleVoucherDetailNavigation()}>
             <Text numberOfLines={1}>
               <Text style={styles.title}>{t('buy')} </Text>
-              <Text style={styles.caption}>{data?.buy_title_en}</Text>
+              <Text style={styles.caption}>{data?.[`buy_title_${language}`]}</Text>
             </Text>
             <Text numberOfLines={1}>
               <Text style={styles.title}>{t('win')} </Text>
-              <Text style={styles.caption} numberOfLines={1}>{data?.win_title_en}</Text>
+              <Text style={styles.caption} numberOfLines={1}>{data?.[`win_title_${language}`]}</Text>
             </Text>
           </RippleFX>
         </Box>

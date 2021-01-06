@@ -12,16 +12,9 @@ const Rules = ({ data }) => {
   return (
     <Card style={styles.rulesContainer} marginBottom={10}>
       <Text style={styles.title}>{t('rules')}</Text>
-      {data?.[`title_${language}`].split('\n').map((rule, index) => {
-        if (rule !== '') {
-          return (
-            <Text style={styles.caption} key={index}>
-              {index + 1 + '. ' + rule}
-            </Text>
-          );
-        }
-        return null;
-      })}
+      <Text style={styles.caption}>
+        {data?.[`title_${language}`]}
+      </Text>
     </Card>
   )
 }

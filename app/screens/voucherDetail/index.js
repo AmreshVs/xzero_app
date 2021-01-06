@@ -28,13 +28,14 @@ import Win from './win';
 import styles from './styles';
 
 const VoucherDetail = ({ navigation }) => {
-  const { t } = useTranslation();
   const [reloading, setReloading] = useState(false);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
   const modalizeRef = useRef(null);
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
   const { params } = useRoute();
+  const { t, i18n } = useTranslation();
+  let language = i18n.language;
 
   const queryInput = {
     id: Number(params?.id)
@@ -98,7 +99,7 @@ const VoucherDetail = ({ navigation }) => {
   return (
     <>
       <SafeView loading={loading} topNav>
-        <TopNavigator gradient title={data?.voucher?.buy_title_en || t('voucher_detail')} />
+        <TopNavigator gradient title={data?.voucher?.[`buy_title_${language}`] || t('voucher_detail')} />
         {!data?.voucher ? (
           <NoData topNav />
         ) : (

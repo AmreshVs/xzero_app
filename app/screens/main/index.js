@@ -52,12 +52,16 @@ const Main = ({ navigation }) => {
 
     if (error) {
       console.log('Basic Information Error', error);
+      if (await checkExpoUpdates()) {
+        await SplashScreen.hideAsync();
+      }
       logError({
         screen: MAIN_SCREEN,
         module: 'Basic Information',
         input: '',
         error: JSON.stringify(error)
       });
+      return;
     }
 
     let appInfo = data?.appBasicInformation;

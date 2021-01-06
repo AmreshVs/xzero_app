@@ -21,7 +21,7 @@ const VoucherInfo = ({ data }) => {
 
   const handleShare = async () => {
     try {
-      const message = `${t('buy')} - ${data?.[`buy_title_${language}`]}\n${t('win')} - ${data?.[`win_title_${language}`]}\n\nBuy this voucher at ${(!userData || userData?.membership === null) ? data?.cost_for_non_members : data?.cost} ${t('aed')}\n\nCheck the Voucher on Xzero App\nhttps://xzero.app/open?q=xzero://Home/VoucherDetail?id=1`;
+      const message = `${t('buy')} - ${data?.[`buy_title_${language}`]}\n${t('win')} - ${data?.[`win_title_${language}`]}\n\n${t('buy_voucher_at')} ${(!userData || userData?.membership === null) ? data?.cost_for_non_members : data?.cost} ${t('aed')}\n\n${t('check_voucher')}\nhttps://xzero.app/open?q=xzero://Home/VoucherDetail?id=1`;
       await Share.share({
         message: message,
         title: message,

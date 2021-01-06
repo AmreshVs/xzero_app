@@ -8,6 +8,7 @@ import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import NoMembership from 'components/noMembership';
 import Box from 'components/box';
+import { ToastMsg } from 'components/toastMsg';
 import { UserDataContext } from 'context';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import { GET_GIFTS } from 'graphql/queries';
@@ -34,6 +35,7 @@ const Gifts = () => {
   });
 
   if (error) {
+    console.log('Gifts Error', error);
     ToastMsg(t('error_occured'));
     logError({
       screen: GIFTS,

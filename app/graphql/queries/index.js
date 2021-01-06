@@ -156,8 +156,8 @@ export const FAVOURITES_BY_USER = gql`
 `;
 
 export const GET_MEMBERSHIP_BY_USER = gql`
-  query membershipByUser($user_id: ID!, $user: ID!){
-    getMembershipExpiryDays(user_id: $user)
+  query membershipByUser($user_id: ID!){
+    getMembershipExpiryDays(user_id: $user_id)
     memberships(where:{
       user: $user_id
     }){
@@ -510,13 +510,17 @@ export const GET_ADDRESS = gql`
 `;
 
 export const GET_REFER_HISTORY = gql`
-  query GetReferHistory($user_id: Int!){
+  query GetReferHistory($user_id: Int!, $user: ID!){
+    user(id: $user){
+      enable_refer_and_earn
+    }
     GetReferHistory(referrer: $user_id) {
       referralCode
       totalEarned
       totalReferred
       balance
       referProgram{
+        status
 				discount
         allowed_maximum_discount
         minimum_withdrawal_amount

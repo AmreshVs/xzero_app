@@ -55,6 +55,7 @@ const Vouchers = () => {
   });
 
   if (error) {
+    console.log('Vouchers Error', error);
     ToastMsg(t('error_occured'));
     logError({
       screen: NAV_VOUCHER,
@@ -77,7 +78,7 @@ const Vouchers = () => {
 
   const reload = async () => {
     setReloading(true);
-    _refetch();
+    await _refetch();
     setReloading(false);
   };
 

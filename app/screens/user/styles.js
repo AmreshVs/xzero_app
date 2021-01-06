@@ -97,8 +97,8 @@ const mobileStyles = StyleSheet.create({
     ...marginTop5,
   },
   profile_pic: {
-    width: 60,
-    height: 60,
+    width: 35,
+    height: 35,
   },
   tickIcon: {
     position: 'absolute',

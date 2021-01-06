@@ -24,7 +24,7 @@
   "offer_detail": "تفاصيل العرض",
   "limited_offer": "!العرض لفترة محدودة ,احصل عليه قبل الانتهاء",
   "description": "وصف",
-  "avail_discount": "كيفية الإستفادة من الخصم",
+  "avail_discount": "كيفية الإستفادة من الخصم؟",
   "open_map": "الرؤية على الخريطة",
   "call": "اتصل",
   "membership_card": "بطاقة العضوية",
@@ -157,7 +157,7 @@
   "edit_address": " تعديل العنوان",
   "applied_code": " تم تطبيق كود الخصم / رمز الإحالة ",
   "discounted_price": "السعر بعد الخصم",
-  "refer_and_earn_now": "قم بدعوة أصدقائك واكس المال الآن",
+  "refer_and_earn_now": "قم بدعوة أصدقائك واكسب المال الآن",
   "details": "التفاصيل",
   "draw_closed": " مغلق! يرجى محاولة السحب التالي",
   "draw_publish": " تم إعلان الفائزين! ، تحقق مما إذا كنت قد فزت",
@@ -216,5 +216,11 @@
   "checking_update": "التحقق من وجود تحديث جديد",
   "downloading_update": "يحمل تحديث جديد...",
   "restart_app": "يرجى الانتظار بينما يتم تنزيل التحديث ، بمجرد الانتهاء ، سيتم إعادة تشغيل التطبيق",
-  "delivered": "تم التوصيل"
+  "delivered": "تم التوصيل",
+  "no_referral": "We are sorry! Referral program is closed for now. We will notify you when its back live!",
+  "share_app": "شارك التطبيق",
+  "share_app_desc": "Hi, I found *Xzero* a very useful app,\nwhich provides lot of offers on Health, Beauty, Dental, Gym, Spa and Healthy Food for membership holders.\n\nWith membership you can save a lot of money that you spend!\n\nNot only offers! this app provides lot of gifts 🎁 to users each week!\nEven get benefited more! Join the draws and be a winner 🏆 everytime, because when you participate you will get the product, assured gift and there will be more than 10 winners on each draw! you can be one of them!.\n\nWhy wait!? Download now!\n\nhttps://xzero.app/download\n\nFor more visit\nhttps://xzero.app",
+  "withdraw_history": "سحب التاريخ",
+  "buy_voucher_at": "قم بشراء هذه القسيمة من",
+  "check_voucher": "تحقق من القسيمة في التطبيق"
 }

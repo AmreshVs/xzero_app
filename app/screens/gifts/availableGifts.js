@@ -16,7 +16,7 @@ const AvailableGifts = ({ data }) => {
         <Text style={styles.hcaption}>{t('gifts_listed_below')}</Text>
       </Box>
       <View style={styles.wrapper}>
-        {data.map((gift, index) => (
+        {data?.map((gift, index) => (
           <View style={styles.giftContainer} key={index}>
             <Gift data={gift} />
           </View>

@@ -30,13 +30,11 @@ const Intro = ({ navigation }) => {
   }, []);
 
   const checkDeviceLang = async () => {
-    console.log(await getDeviceLang())
     setLanguage(await getDeviceLang());
   }
 
   const { data, loading, errors } = useQuery(APP_INTROS);
 
-  console.log(language);
   if (errors) {
     ToastMsg(t('error_occured'));
     logError({

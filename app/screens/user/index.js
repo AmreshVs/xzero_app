@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import Row from 'components/row';
 import colors from 'constants/colors';
 import Box from 'components/box';
-import { ToastMsg } from 'components/toastMsg';
 import SafeView from 'components/safeView';
 import { UserDataContext } from 'context';
 import { GET_USER } from 'graphql/queries';

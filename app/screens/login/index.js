@@ -28,12 +28,12 @@ import googleSignin from './googleLogin';
 import styles from './styles';
 
 const Login = ({ navigation }) => {
-  const { t, i18n } = useTranslation();
-  let language = i18n.language;
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
   const { logError } = useErrorLog();
   const { setUserData } = useContext(UserDataContext);
+  const { t, i18n } = useTranslation();
+  let language = i18n.language;
 
   const platform = Platform.OS;
   const app_version = Constants.nativeAppVersion;
@@ -92,7 +92,8 @@ const Login = ({ navigation }) => {
       password: values.password,
       platform,
       app_version,
-      device_id
+      device_id,
+      provider: values?.type || 'local'
     };
 
     const { data: response, errors } = await client.mutate({
@@ -106,7 +107,8 @@ const Login = ({ navigation }) => {
 
     setUserData({
       jwt: loginData?.jwt,
-      ...loginData?.user
+      ...loginData?.user,
+      profile_pic: values?.profile_pic
     });
 
     setLoading(false);
@@ -140,13 +142,12 @@ const Login = ({ navigation }) => {
     }
   };
 
-  const updateNotificationToken = async (id, provider = 'local') => {
+  const updateNotificationToken = async (id) => {
     const token = await getNotificationToken();
 
     const mutationInput = {
       user_id: Number(id),
       notification_token: token || "",
-      provider,
     };
 
     try {
@@ -187,7 +188,7 @@ const Login = ({ navigation }) => {
           await handleCreateUser(socialData, type);
         } else {
           // Login user, if already signed in
-          handleSubmit({ ...socialData, password: socialData.email + SOCIAL_TOKEN });
+          handleSubmit({ ...socialData, password: socialData.email + SOCIAL_TOKEN, type });
         }
       }
       catch (error) {
@@ -217,7 +218,11 @@ const Login = ({ navigation }) => {
       password: values?.email + SOCIAL_TOKEN,
       mobile_number: Number(0),
       notification_token: String(token) || '',
-      provider
+      provider,
+      platform,
+      app_version,
+      device_id,
+      language,
     };
 
     try {
@@ -226,9 +231,7 @@ const Login = ({ navigation }) => {
         variables: {
           input: mutationInput,
         }
-
       });
-
       setLoading(false);
 
       logError({
@@ -246,11 +249,12 @@ const Login = ({ navigation }) => {
       if (data && data?.createNewUser?.jwt) {
         setUserData({
           jwt: data?.createNewUser?.jwt,
-          ...data?.createNewUser.user
+          ...data?.createNewUser.user,
+          profile_pic: values?.profile_pic
         });
         await saveUserDataLocally('xzero_jwt', data?.createNewUser?.jwt);
         await saveUserDataLocally('xzero_user', data?.createNewUser?.user);
-        await updateNotificationToken(data?.createNewUser?.user?.id, provider);
+        await updateNotificationToken(data?.createNewUser?.user?.id);
         navigation.replace(HOME_SCREEN);
       }
     } catch (error) {
@@ -270,7 +274,7 @@ const Login = ({ navigation }) => {
       if (loading) {
         setLoading(!loading);
       }
-      ToastMsg(ERROR_OCCURED);
+      ToastMsg(t('error_occured'));
     }
   };
 

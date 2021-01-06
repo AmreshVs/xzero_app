@@ -8,6 +8,7 @@ import ProgressiveImage from 'components/progressiveImage';
 import { BASE_URL } from 'constants/common';
 import colors from 'constants/colors';
 import styles from './styles';
+import { smallUrl } from 'constants/commonFunctions';
 
 const OfferCard = ({ discount }) => {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ const OfferCard = ({ discount }) => {
     <Card style={styles.discountContainer}>
       <ProgressiveImage
         style={styles.offerBg}
-        source={{ uri: BASE_URL + '/uploads/3522051_dc4fe0d199.jpg' }}
+        source={{ uri: BASE_URL + smallUrl('/uploads/3522051_dc4fe0d199.jpg') }}
       />
       <LinearGradient
         colors={[colors.gradient1, colors.gradient2]}

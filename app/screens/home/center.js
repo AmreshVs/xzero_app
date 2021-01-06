@@ -50,7 +50,7 @@ const Center = ({ data }) => {
               {data?.[`title_${language}`]}
             </Text>
             <Text style={styles.caption} numberOfLines={1}>
-              {data.place}, {data.city}
+              {data.place}, {(data.city).replace('_', ' ')}
             </Text>
             <View style={styles.chipContainer}>
               <Column>

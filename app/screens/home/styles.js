@@ -112,7 +112,7 @@ const mobileStyles = StyleSheet.create({
   },
   sliderImage: {
     width: SCREEN_WIDTH - 20,
-    borderRadius: Platform.OS === 'ios' ? 10 : 5,
+    borderRadius: 10,
     height: Platform.OS === 'ios' ? responsiveHeight(25) : responsiveHeight(30),
     ...marginBottom0,
     ...marginLeft10,
@@ -181,8 +181,9 @@ const mobileStyles = StyleSheet.create({
     color: colors.text_dark,
   },
   profile_pic: {
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 45,
+    resizeMode: 'cover'
   },
   imgContainer: {
     backgroundColor: colors.white,

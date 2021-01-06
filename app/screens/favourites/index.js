@@ -11,7 +11,7 @@ import Button from 'components/button';
 import TopNavigator from 'components/topNavigator';
 import { ToastMsg } from 'components/toastMsg';
 import { UserDataContext } from 'context';
-import { isTab } from 'constants/commonFunctions';
+import { getAuthenticationHeader, isTab } from 'constants/commonFunctions';
 import { CLEAR_FAVOURITES } from 'graphql/mutations';
 import { FAVOURITES_BY_USER } from 'graphql/queries';
 import { FAVOURITES_TAB_SCREEN } from 'navigation/routes';
@@ -55,9 +55,10 @@ const Favourites = () => {
         variables: {
           user_id: Number(userData.id),
         },
+        ...getAuthenticationHeader(userData?.jwt)
       });
       setReloading(false);
-      if (data?.ClearAllFavourites) {
+      if (data?.ClearAllFavourites === true) {
         reload();
       }
     }

@@ -14,7 +14,7 @@ import Button from 'components/button';
 import RippleFX from 'components/rippleFx';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
-import { LOGIN_SCREEN } from 'navigation/routes';
+import { HOME_SCREEN, HOME_TAB_SCREEN, LOGIN_SCREEN } from 'navigation/routes';
 
 export default function CustomDrawer(props) {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -102,11 +102,13 @@ export default function CustomDrawer(props) {
 
     props.navigation.toggleDrawer();
     if (userData) {
+      props.navigation.navigate(LOGIN_SCREEN);
       handlelogout({ dispatch, setUserData, logError });
     }
     else {
       props.navigation.navigate(LOGIN_SCREEN);
     }
+
   }
 
   return (
@@ -131,18 +133,24 @@ export default function CustomDrawer(props) {
         </Box>
       </Box>
       {props.state.routeNames.map((item, index) => {
+        const Item = () => (
+          <DrawerItem
+            label={({ focused, color }) => <Text style={[{ color: focused ? colors.primary : color }, styles.drawerText]}>{t(item)}</Text>}
+            icon={({ focused, color, size }) => <FontAwesomeIcon icon={getIcon(index)} color={focused ? colors.primary : color} size={size} />}
+            focused={props.state.index === index}
+            onPress={() => props.navigation.navigate(item, { drawer: 1 })}
+            activeBackgroundColor="#FFF"
+          />
+        );
+
         if (userData === null && !['My Draws', 'Refer', 'Gifts'].includes(item)) {
-          return (
-            <DrawerItem
-              label={({ focused, color }) => <Text style={[{ color: focused ? colors.primary : color }, styles.drawerText]}>{t(item)}</Text>}
-              icon={({ focused, color, size }) => <FontAwesomeIcon icon={getIcon(index)} color={focused ? colors.primary : color} size={size} />}
-              focused={props.state.index === index}
-              onPress={() => props.navigation.navigate(item, { drawer: 1 })}
-              activeBackgroundColor="#FFF"
-              key={index}
-            />
-          )
+          return <Item key={index} />
         }
+
+        if (userData !== null) {
+          return <Item key={index} />
+        }
+
         return null;
       })}
       <Box style={styles.footer} padding={20}>

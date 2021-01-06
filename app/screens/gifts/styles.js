@@ -4,7 +4,7 @@ import { whiteBg, textBoldDark, font16, w300, h300, textAlignCenter, marginTop5,
 import { getShadowStyle, isTab } from 'constants/commonFunctions';
 import colors from 'constants/colors';
 
-const styles = StyleSheet.create({
+const mobileStyles = StyleSheet.create({
   image: {
     ...w300,
     ...h300,
@@ -196,5 +196,15 @@ const styles = StyleSheet.create({
     zIndex: 5
   }
 });
+
+const tabStyles = StyleSheet.create({
+  ...mobileStyles,
+  wrapper: {
+    ...mobileStyles.wrapper,
+    justifyContent: 'flex-start'
+  }
+});
+
+const styles = isTab() ? tabStyles : mobileStyles;
 
 export default styles;

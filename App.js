@@ -38,20 +38,26 @@ const App = () => {
 
   // Initialize Language
   useEffect(() => {
-    // console.log(Text.prototype.props)
     i18nLang();
 
     const unsubscribe = NetInfo.addEventListener(state => {
-      setConnection(state.isConnected);
+      setConnection(state?.isInternetReachable);
     });
 
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
 
+    checkInternet();
+
     return () => {
       unsubscribe();
     }
   }, []);
+
+  const checkInternet = async () => {
+    const state = await NetInfo.fetch();
+    setConnection(state?.isInternetReachable);
+  }
 
   const handleNotification = (notification) => {
     const responseData = notification?.request?.content?.data;

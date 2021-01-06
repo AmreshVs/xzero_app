@@ -39,7 +39,8 @@ const Refer = () => {
   const { params } = useRoute();
 
   const queryInput = {
-    user_id: Number(userData?.id || 0)
+    user_id: Number(userData?.id || 0),
+    user: Number(userData?.id || 0)
   };
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_REFER_HISTORY, {
@@ -48,6 +49,7 @@ const Refer = () => {
   });
 
   let refer = data?.GetReferHistory;
+  let refer_program = data?.user?.enable_refer_and_earn && refer?.referProgram?.status;
 
   if (error) {
     console.log('Get Refer Error', error);
@@ -86,7 +88,7 @@ const Refer = () => {
   const handleShare = async () => {
     try {
       await Share.share({
-        message: `${t('refer_1')} *${refer?.referralCode}*\n${t('refer_2')} ${refer?.referProgram?.discount}% ${t('refer_3')} ${refer?.referProgram?.allowed_maximum_discount} ${t('aed')}\n\n${t('refer_4')}`,
+        message: refer_program ? `${t('refer_1')} *${refer?.referralCode}*\n${t('refer_2')} ${refer?.referProgram?.discount}% ${t('refer_3')} ${refer?.referProgram?.allowed_maximum_discount} ${t('aed')}\n\n${t('refer_4')}` : `${t('share_app_desc')}`,
         url: 'https://xzero.app',
         title: 'Refer your friends',
         subject: 'Refer your friends, family and earn rewards',
@@ -97,8 +99,6 @@ const Refer = () => {
       console.log('Share and earn error', error);
     }
   }
-
-  let min_withdraw = refer?.referProgram?.minimum_withdrawal_amount;
 
   return (
     <SafeView style={styles.container} loading={loading} topNav>
@@ -114,28 +114,36 @@ const Refer = () => {
       >
         <Box alignItems="center">
           {Platform.OS === 'ios' ?
-            <RippleFX onPress={() => handlePlayAnim()}>
+            <RippleFX onPress={() => refer_program && handlePlayAnim()}>
               <LottieView
                 ref={shareRef}
                 style={styles.share}
                 source={require("../../../assets/share.json")}
-                autoPlay
+                autoPlay={refer_program}
               />
             </RippleFX>
             :
             <Image style={styles.image} source={require('../../../assets/refer.png')} />
           }
-          <Text style={styles.referTitle}>{t('your_referral_code')}</Text>
-          <View style={styles.gradient}>
-            <Text style={styles.code}>{refer?.referralCode}</Text>
-          </View>
-          <Row marginBottom={10}>
-            <Text style={styles.caption}>{t('discount')} - {refer?.referProgram?.discount}%, </Text>
-            <Text style={styles.caption}>{t('max_discount')} {t('aed')} {refer?.referProgram?.allowed_maximum_discount}</Text>
-          </Row>
-          <Box paddingHorizontal={isTab() ? 100 : 0}>
-            <Text style={styles.caption}>{t('refer_desc')}</Text>
-          </Box>
+          {refer_program === true ? (
+            <>
+              <Text style={styles.referTitle}>{t('your_referral_code')}</Text>
+              <View style={styles.gradient}>
+                <Text style={styles.code}>{refer?.referralCode || 'XXXXXX'}</Text>
+              </View>
+              <Row marginBottom={10}>
+                <Text style={styles.caption}>{t('discount')} - {refer?.referProgram?.discount}%, </Text>
+                <Text style={styles.caption}>{t('max_discount')}{t('aed')} {refer?.referProgram?.allowed_maximum_discount}</Text>
+              </Row>
+              <Box paddingHorizontal={isTab() ? 100 : 0}>
+                <Text style={styles.caption}>{t('refer_desc')}</Text>
+              </Box>
+            </>
+          )
+            : (
+              <Text style={styles.caption}>{t('no_referral')}</Text>
+            )
+          }
         </Box>
         <Row paddingHorizontal={isTab() ? 100 : 0} justifyContent="space-between" marginTop={10}>
           <Column style={styles.countsContainer}>
@@ -169,10 +177,10 @@ const Refer = () => {
         <Box paddingHorizontal={isTab() ? 100 : 0}>
           <Row style={styles.check} justifyContent="space-between">
             <Button width="49%" status="chip_1" icon="history" onPress={() => handleOpenModal(true)}>{t('refer_history')}</Button>
-            <Button width="49%" status="chip_2" icon="coins" onPress={() => handleOpenModal(false)}>{t('withdraw')}</Button>
+            <Button width="49%" status="chip_2" icon="coins" onPress={() => handleOpenModal(false)}>{refer_program ? t('withdraw') : t('withdraw_history')}</Button>
           </Row>
           <Box marginTop={10} width="100%">
-            <Button icon="share-alt" onPress={() => handleShare()}>{t('refer_and_earn_now')}</Button>
+            <Button icon="share-alt" onPress={() => handleShare()}>{t(refer_program ? 'refer_and_earn_now' : 'share_app')}</Button>
           </Box>
         </Box>
       </ScrollView>
@@ -180,7 +188,7 @@ const Refer = () => {
         {modalComp ?
           <ReferHistory />
           :
-          <Withdraw />
+          <Withdraw refer_program={refer_program} />
         }
       </Modalize>
     </SafeView>

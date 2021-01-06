@@ -17,8 +17,7 @@ const useIncomingData = {
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: 'network-only',
-    errorPolicy: 'ignore',
-    notifyOnNetworkStatusChange: true
+    errorPolicy: 'all',
   },
   query: {
     fetchPolicy: 'network-only',
@@ -40,12 +39,13 @@ export const client = new ApolloClient({
           memberships: useIncomingData,
           notifications: useIncomingData,
           voucherAvaileds: useIncomingData,
-          UsersPermissionsUser: useIncomingData
+          UsersPermissionsUser: useIncomingData,
+          GetReferHistory: useIncomingData
         }
       }
     }
   }),
-  defaultOptions: defaultOptions
+  defaultOptions: defaultOptions,
 });
 
 export const getNotificationToken = async () => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, CommonActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -129,9 +129,13 @@ function Navigation({ connection }) {
   };
 
   useEffect(() => {
-    if (navigationRef.current) {
+    if (navigationRef?.current) {
       if (connection === false) {
-        navigationRef.current.navigate(OFFLINE);
+        const resetAction = CommonActions.reset({
+          index: 0,
+          routes: [{ name: OFFLINE }],
+        });
+        navigationRef?.current?.dispatch(resetAction);
       }
     }
   }, [connection]);
@@ -144,7 +148,7 @@ function Navigation({ connection }) {
           drawerType="slide"
           drawerContent={props => <CustomDrawer {...props} />}
         >
-          <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
+          <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} options={{ gestureEnabled: connection }} />
           <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} />
           <Drawer.Screen name={REFER} component={Refer} />
           <Drawer.Screen name={GIFTS} component={Gifts} />

@@ -23,7 +23,7 @@ export default function Offline({ navigation }) {
 
   const handleRetry = () => {
     NetInfo.fetch().then(state => {
-      if (state.isConnected) {
+      if (state.isInternetReachable) {
         navigation.navigate(HOME_SCREEN);
       }
       else {

@@ -50,7 +50,6 @@ const Signup = ({ navigation }) => {
     let mutationInput = {
       user_id: Number(id),
       notification_token: token,
-      provider: 'local',
     };
 
     if (token) {

@@ -14,16 +14,14 @@ const styles = StyleSheet.create({
 
 const ProgressiveImage = ({ thumbnailSource, source, style, resizeMode, noBg = false, noCStyle = false }) => {
   return (
-    <View style={[!noCStyle && style, !noBg && styles.container]}>
-      <Image
-        preview={thumbnailSource?.uri || null}
-        uri={source?.uri || null}
-        style={style}
-        transitionDuration={1000}
-        tint="light"
-        resizeMode={resizeMode || "cover"}
-      />
-    </View>
+    <Image
+      preview={thumbnailSource || null}
+      uri={source?.uri || null}
+      style={style}
+      // transitionDuration={5000}
+      tint="light"
+      resizeMode={resizeMode || "cover"}
+    />
   );
 }
 

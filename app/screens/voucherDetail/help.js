@@ -6,7 +6,7 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import Button from 'components/button';
 import Card from 'components/card';
 import Box from 'components/box';
-import { sendWhatsappMessage } from 'constants/commonFunctions';
+import { handleMobileNumber, sendWhatsappMessage } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import styles from './styles';
 

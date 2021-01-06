@@ -16,7 +16,7 @@ const ShareOffer = ({ data }) => {
     try {
       const centerName = String(data?.center?.[`title_${language}`]);
       let center = centerName.split(" ").join("%20");
-      const message = `${t('offer')}:\n${data?.center?.[`title_${language}`]}\n${data?.[`desc_${language}`]}\n\n${t('original_price')} - ${data?.actual_price} ${t('aed')}\n${t('discounted_price')} - ${data?.discounted_price} ${t('aed')}\${t('discount)} - ${data?.discount}%\n\n\n\n${t('check_offer_on_app')}\nhttps://xzero.app/open?q=xzero://Home/OfferDetail?offer_id=${Number(data.id)}&center=${center}`;
+      const message = `${t('offer')}:\n${data?.center?.[`title_${language}`]}\n${data?.[`desc_${language}`]}\n\n${t('original_price')} - ${data?.actual_price} ${t('aed')}\n${t('discounted_price')} - ${data?.discounted_price} ${t('aed')}\n${t('discount')} - ${data?.discount}%\n\n\n\n${t('check_offer_on_app')}\nhttps://xzero.app/open?q=xzero://Home/OfferDetail?offer_id=${Number(data.id)}&center=${center}`;
       await Share.share({
         message: message,
         title: message,
