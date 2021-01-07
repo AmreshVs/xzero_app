@@ -6,7 +6,7 @@ import Row from 'components/row';
 import Card from 'components/card';
 import styles from './styles';
 
-const AvailDiscount = ({ loading, data }) => {
+const AvailDiscount = ({ data }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language;
 
@@ -16,17 +16,9 @@ const AvailDiscount = ({ loading, data }) => {
         <Text style={styles.title} numberOfLines={2}>
           {t('avail_discount')}
         </Text>
-        {loading === false &&
-          data?.membershipBenefit?.[`text_${language}`].split('\n').map((benefit, index) => {
-            if (benefit !== '') {
-              return (
-                <Text style={styles.descText} key={index}>
-                  {index + 1 + '. ' + benefit}
-                </Text>
-              );
-            }
-            return null;
-          })}
+        <Text style={styles.descText}>
+          {data?.[`text_${language}`]}
+        </Text>
       </Card>
     </Row>
   );

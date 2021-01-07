@@ -1,7 +1,7 @@
 import { Platform, StyleSheet } from 'react-native';
 
 import { getShadowStyle, isTab, responsiveHeight } from 'constants/commonFunctions';
-import { SCREEN_WIDTH } from 'constants/common';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from 'constants/common';
 import colors from 'constants/colors';
 import { flex, flexSpaceBetween, flexRow, borderRadius10, w100, textBoldDark, textLite, whiteBg, alignJustifyCenter, font16, positionAbsolute, colorWhite, font15, fontWeight700, marginBottom10, marginTop5, borderRadius30, overflowHidden, marginLeft10, marginBottom0, colorDanger, font20, w50, h50, h200, resizeModeCover, flex1, h100px, w100px, paddingBottom5 } from 'constants/commonStyles';
 
@@ -113,7 +113,7 @@ const mobileStyles = StyleSheet.create({
   sliderImage: {
     width: SCREEN_WIDTH - 20,
     borderRadius: 10,
-    height: Platform.OS === 'ios' ? responsiveHeight(25) : responsiveHeight(30),
+    height: Platform.OS === 'ios' ? SCREEN_HEIGHT < 800 ? responsiveHeight(30) : responsiveHeight(25) : SCREEN_HEIGHT > 735 ? responsiveHeight(25) : responsiveHeight(30),
     ...marginBottom0,
     ...marginLeft10,
     ...marginTop5,
@@ -181,14 +181,13 @@ const mobileStyles = StyleSheet.create({
     color: colors.text_dark,
   },
   profile_pic: {
-    width: 45,
-    height: 45,
-    resizeMode: 'cover'
+    width: 65,
+    height: 65,
+    borderRadius: 50,
   },
   imgContainer: {
     backgroundColor: colors.white,
     borderRadius: 50,
-    padding: 10,
     overflow: 'hidden'
   },
   referContainer: {
@@ -239,7 +238,7 @@ const tabStyles = StyleSheet.create({
   },
   sliderImage: {
     ...mobileStyles.sliderImage,
-    height: responsiveHeight(35)
+    height: responsiveHeight(40),
   },
   categoryContainer: {
     ...mobileStyles.categoryContainer,

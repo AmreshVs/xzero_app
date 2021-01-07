@@ -69,7 +69,7 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
     <Modalize
       ref={modalizeRef}
       childrenStyle={styles.modal}
-      modalTopOffset={200}
+      modalTopOffset={100}
       scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
       FooterComponent={
         <View style={styles.footer}>

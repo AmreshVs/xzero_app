@@ -9,6 +9,7 @@ import Button from 'components/button';
 import { SCREEN_HEIGHT } from 'constants/common';
 import { UserDataContext } from 'context';
 import { POPUP } from 'graphql/queries';
+import { responsiveHeight } from 'constants/commonFunctions';
 
 const Popup = () => {
   const [modalVisible, setModalVisible] = useState(true);
@@ -41,7 +42,7 @@ const Popup = () => {
               <ProductSlider
                 data={data?.popUp?.featured_imgs}
                 popup={true}
-                height={SCREEN_HEIGHT / 1.5}
+                height={responsiveHeight(70)}
               />
             </Box>
           </View>
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "#FFF",
+    backgroundColor: "#000",
     borderRadius: 20,
     overflow: 'hidden',
     alignItems: "center",
@@ -78,9 +79,9 @@ const styles = StyleSheet.create({
     minHeight: 200
   },
   image: {
-    width: 350,
-    height: 500,
-    resizeMode: 'cover'
+    // width: 600,
+    // height: 800,
+    resizeMode: 'stretch'
   },
   btnContainer: {
     position: 'absolute',

@@ -28,6 +28,7 @@ import Benefits from './benefits';
 import BuyMembership from './buyMembership';
 import QRCode from './qrcode';
 import styles from './styles';
+import IsVerified from 'hoc/isVerified';
 
 let numOfDays = null;
 let render = 0;
@@ -230,4 +231,4 @@ const Membership = () => {
   );
 };
 
-export default memo(IsLoggedIn(Membership));
+export default memo(IsLoggedIn(IsVerified(Membership)));

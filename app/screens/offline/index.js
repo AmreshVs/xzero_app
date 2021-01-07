@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import LottieView from 'lottie-react-native';
 import NetInfo from "@react-native-community/netinfo";
 import { useTranslation } from 'react-i18next';
+import { CommonActions } from '@react-navigation/native';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
@@ -23,8 +24,13 @@ export default function Offline({ navigation }) {
 
   const handleRetry = () => {
     NetInfo.fetch().then(state => {
-      if (state.isInternetReachable) {
-        navigation.navigate(HOME_SCREEN);
+      const resetAction = CommonActions.reset({
+        index: 0,
+        routes: [{ name: HOME_SCREEN }],
+      });
+
+      if (state?.isInternetReachable === true) {
+        navigation.dispatch(resetAction);
       }
       else {
         ToastMsg(t('device_offline_desc'));

@@ -16,18 +16,21 @@ const styles = StyleSheet.create({
   },
   desc: {
     ...textLite,
-    ...marginTop5,
+    marginTop: 2
   },
   timestamp: {
     ...textAlignRight,
     ...marginTop5,
     ...textLite,
+    fontSize: 11
   },
   container: {
     backgroundColor: '#eef8ff',
+    marginBottom: 10
   },
   readContainer: {
     backgroundColor: colors.white,
+    marginBottom: 10
   },
   unread: {
     width: 10,

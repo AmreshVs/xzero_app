@@ -5,7 +5,7 @@ import ProgressiveImage from 'components/progressiveImage';
 import Row from 'components/row';
 import colors from 'constants/colors';
 import { IMAGE_URL } from 'constants/common';
-import { smallUrl } from 'constants/commonFunctions';
+import { isTab, smallUrl } from 'constants/commonFunctions';
 import { MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ const NoMembership = () => {
   const { t } = useTranslation();
 
   return (
-    <Card>
+    <Card width={isTab() ? '70%' : '100%'}>
       <Text style={styles.title}>{t('nomembership')}</Text>
       <Row hcenter>
         <ProgressiveImage

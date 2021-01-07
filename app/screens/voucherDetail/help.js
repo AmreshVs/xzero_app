@@ -14,8 +14,8 @@ const Help = () => {
   const { t } = useTranslation();
   const { userData } = useContext(UserDataContext);
 
-  const getWhatsappMessage = () => {
-    return `${t('whatsapp1')} ${userData?.username} ${t('whatsapp3')}`;
+  const getWhatsappMessage = (voucher = false) => {
+    return `${t('whatsapp1')} ${userData?.username} ${voucher ? t('whatsapp3_voucher') : t('whatsapp3')}`;
   };
 
   return (

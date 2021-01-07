@@ -129,7 +129,7 @@ export const OFFERS_DETAIL = gql`
       discounted_price
       google_map_location
     }
-    membershipBenefit{
+    offerGuideline{
       text_en
       text_ar
     }

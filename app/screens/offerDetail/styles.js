@@ -24,7 +24,7 @@ const mobileStyles = StyleSheet.create({
   discountCircle: {
     height: SCREEN_HEIGHT / 5,
     width: SCREEN_HEIGHT / 5,
-    borderRadius: Platform.OS === 'ios' ? SCREEN_WIDTH / 4.5 : 100,
+    borderRadius: Platform.OS === 'ios' ? isTab() ? 140 : SCREEN_WIDTH / 4.5 : 100,
     ...justifyContentCenter,
     ...alignItemsCenter,
   },

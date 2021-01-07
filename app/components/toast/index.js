@@ -15,7 +15,7 @@ export const DURATION = {
   FOREVER: 0,
 };
 
-const { height, width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 export default class Toast extends Component {
   constructor(props) {
@@ -98,8 +98,8 @@ export default class Toast extends Component {
           {React.isValidElement(this.state.text) ? (
             this.state.text
           ) : (
-            <Text style={this.props.textStyle}>{this.state.text}</Text>
-          )}
+              <Text style={this.props.textStyle}>{this.state.text}</Text>
+            )}
         </Animated.View>
       </View>
     ) : null;
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     elevation: 999,
     alignItems: 'center',
     zIndex: 10000,
+    padding: 5
   },
   content: {
     backgroundColor: 'black',

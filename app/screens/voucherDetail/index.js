@@ -42,7 +42,8 @@ const VoucherDetail = ({ navigation }) => {
   };
 
   const { data, loading, refetch: _refetch, error } = useQuery(VOUCHER_DETAIL, {
-    variables: queryInput
+    variables: queryInput,
+    notifyOnNetworkStatusChange: true
   });
 
   if (error) {
@@ -87,7 +88,7 @@ const VoucherDetail = ({ navigation }) => {
         <>
           <MembershipPlan data={voucher?.membership_plans[0]} />
           <CenterSymbol text={t('you_will_get')} />
-          <Buy member={userData?.membership === null} data={voucher?.product} />
+          {voucher?.product && <Buy member={userData?.membership === null} data={voucher?.product} />}
           <CenterSymbol icon="plus" />
         </>
       )
@@ -112,10 +113,14 @@ const VoucherDetail = ({ navigation }) => {
               >
                 <VoucherInfo data={voucher} />
                 <Details data={voucher} />
-                <GetProduct />
-                <AssuredGift data={voucher?.assured_gift[0]} />
-                <CenterSymbol icon="plus" />
-                <Win voucher_id={voucher?.id} draw_status={voucher?.draw_status} data={voucher?.draw_gift} />
+                {voucher?.product?.length > 0 && <GetProduct key={voucher?.product?.length} />}
+                {voucher?.assured_gift?.length > 0 && <AssuredGift data={voucher?.assured_gift[0]} />}
+                {voucher?.draw_gift?.length > 0 ? (
+                  <>
+                    {voucher?.assured_gift?.length > 0 && <CenterSymbol icon="plus" />}
+                    <Win voucher_id={voucher?.id} draw_status={voucher?.draw_status} data={voucher?.draw_gift} />
+                  </>
+                ) : <Box marginBottom={10} />}
                 <Box
                   justifyContent="space-between"
                   flexDirection={isTab() ? "row" : "column"}

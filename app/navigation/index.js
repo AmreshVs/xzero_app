@@ -64,21 +64,22 @@ import {
   EXPO_UPDATE,
 } from './routes';
 import { UserDataContext } from 'context';
-import Loader from 'components/loader';
 import Offline from 'screens/offline';
 import CustomDrawer from 'components/drawer';
 import Otp from 'screens/otp';
 import Intro from 'screens/intro';
-import ExpoUpdate from 'screens/expoUpdate';
+import AppLoader from 'components/appLoader';
 
 const Tab = createBottomTabNavigator();
 
 function HomeNavigation() {
   return (
-    <Tab.Navigator tabBar={(props) => <BottomTab {...props} />}>
+    <Tab.Navigator
+      tabBar={(props) => <BottomTab {...props} />}
+    >
       <Tab.Screen name={HOME_TAB_SCREEN} component={Home} />
       <Tab.Screen name={FAVOURITES_TAB_SCREEN} component={Favourites} />
-      <Tab.Screen name={MEMBERSHIP_TAB_SCREEN} component={Membership} />
+      <Tab.Screen name={MEMBERSHIP_TAB_SCREEN} component={Membership} options={{ unmountOnBlur: true }} />
       <Tab.Screen name={VOUCHERS} component={Vouchers} />
       <Tab.Screen name={PROFILE_TAB_SCREEN} component={User} />
     </Tab.Navigator>
@@ -113,7 +114,6 @@ function StackNavigation() {
       <Stack.Screen name={OFFLINE} component={Offline} />
       <Stack.Screen name={OTP} component={Otp} />
       <Stack.Screen name={INTRO} component={Intro} />
-      <Stack.Screen name={EXPO_UPDATE} component={ExpoUpdate} />
     </Stack.Navigator>
   );
 }
@@ -141,14 +141,18 @@ function Navigation({ connection }) {
   }, [connection]);
 
   return (
-    <NavigationContainer ref={navigationRef} linking={linking} fallback={<Loader />}>
+    <NavigationContainer
+      ref={navigationRef}
+      linking={linking}
+      fallback={<AppLoader />}
+    >
       <UserDataContext.Provider value={{ userData, setUserData }}>
         <Drawer.Navigator
           initialRouteName={DRAWER_HOME}
           drawerType="slide"
           drawerContent={props => <CustomDrawer {...props} />}
         >
-          <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} options={{ gestureEnabled: connection }} />
+          <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} options={{ gestureEnabled: connection || true }} />
           <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} />
           <Drawer.Screen name={REFER} component={Refer} />
           <Drawer.Screen name={GIFTS} component={Gifts} />

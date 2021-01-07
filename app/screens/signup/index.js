@@ -217,7 +217,8 @@ const Signup = ({ navigation }) => {
                               ? 'email-address'
                               : 'default'
                         }
-                        onTouchStart={() => name === 'dob' && setDatePickerVisibility(true)}
+                        showSoftInputOnFocus={name === 'dob' ? false : true}
+                        onTouchEnd={() => name === 'dob' && setDatePickerVisibility(true)}
                       />
                       <FormError touched={touched[name]} errorText={errors[name]} />
                     </View>

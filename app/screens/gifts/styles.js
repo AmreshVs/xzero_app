@@ -12,6 +12,7 @@ const mobileStyles = StyleSheet.create({
   title: {
     ...textBoldDark,
     ...font16,
+    marginTop: 20
   },
   imageTitle: {
     color: colors.white,
@@ -30,7 +31,7 @@ const mobileStyles = StyleSheet.create({
     height: 130,
     resizeMode: 'cover',
     ...w100,
-    marginBottom: 10
+    marginBottom: 10,
   },
   availableGiftsContainer: {
     ...marginBottom0,
@@ -50,15 +51,16 @@ const mobileStyles = StyleSheet.create({
   giftImageContainer: {
     ...justifyContentCenter,
     ...alignItemsCenter,
-    padding: 10
+    padding: 10,
   },
   giftImages: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     backgroundColor: colors.gradient2,
     opacity: 1,
+    borderRadius: 60,
+    top: 30,
     ...positionAbsolute,
-    ...borderRadius50,
     ...zIndex1,
     ...getShadowStyle(),
   },
@@ -122,10 +124,10 @@ const mobileStyles = StyleSheet.create({
     resizeMode: 'contain'
   },
   gift: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     resizeMode: 'cover',
-    borderRadius: 50,
+    borderRadius: 60,
   },
   overlay: {
     position: 'absolute',

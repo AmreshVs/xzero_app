@@ -81,6 +81,7 @@
   "help_membership": "Need help?",
   "membership_difficulties": "Difficulties with buying membership? We will help you.",
   "whatsapp3": " from Xzero app, I have difficulties in buying membership, can you help?",
+  "whatsapp3_voucher": " from Xzero app, I have difficulties in buying voucher, can you help?",
   "offer": "Offer",
   "update_available": "New update available!",
   "please_update": "There is an new version of the app available. Please update to get the latest features and bug fixes",
@@ -223,5 +224,7 @@
   "share_app_desc": "Hi, I found *Xzero* a very useful app,\nwhich provides lot of offers on Health, Beauty, Dental, Gym, Spa and Healthy Food for membership holders.\n\nWith membership you can save a lot of money that you spend!\n\nNot only offers! this app provides lot of gifts 🎁 to users each week!\nEven get benefited more! Join the draws and be a winner 🏆 everytime, because when you participate you will get the product, assured gift and there will be more than 10 winners on each draw! you can be one of them!.\n\nWhy wait!? Download now!\n\nhttps://xzero.app/download\n\nFor more visit\nhttps://xzero.app",
   "withdraw_history": "Withdraw History",
   "buy_voucher_at": "Buy this voucher at",
-  "check_voucher": "Check the Voucher on Xzero App"
+  "check_voucher": "Check the Voucher on Xzero App",
+  "check_updates": "Hold on! Checking for Updates...",
+  "updates_applied": "Updates applied, Restarting app now!" 
 }

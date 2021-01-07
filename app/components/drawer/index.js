@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Image, Linking, Platform, StyleSheet, Text } from 'react-native';
+import { Image, Linking, Platform, StyleSheet, Text, View } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,7 +14,8 @@ import Button from 'components/button';
 import RippleFX from 'components/rippleFx';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
-import { HOME_SCREEN, HOME_TAB_SCREEN, LOGIN_SCREEN } from 'navigation/routes';
+import { LOGIN_SCREEN } from 'navigation/routes';
+import ProgressiveImage from 'components/progressiveImage';
 
 export default function CustomDrawer(props) {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -44,8 +45,6 @@ export default function CustomDrawer(props) {
     footer: {
       position: 'absolute',
       bottom: 0 + insets.bottom,
-      borderTopWidth: 2,
-      borderTopColor: colors.lite_gray,
       width: '100%'
     },
     content: {
@@ -54,7 +53,8 @@ export default function CustomDrawer(props) {
     },
     heading: {
       fontWeight: '700',
-      color: colors.text_dark
+      color: colors.text_dark,
+      paddingTop: 20,
     },
     header: {
       alignItems: 'center',
@@ -69,13 +69,29 @@ export default function CustomDrawer(props) {
     headText: {
       fontWeight: '700',
       color: colors.white,
-      marginBottom: 5,
+      marginVertical: 5,
+      fontSize: 17
+    },
+    headingText: {
+      fontWeight: '700',
+      color: colors.white,
+      marginVertical: 5,
     },
     gradient: {
       height: '100%',
       width: '100%',
       position: 'absolute',
-    }
+    },
+    profile_pic: {
+      width: 65,
+      height: 65,
+      borderRadius: 50,
+    },
+    imgContainer: {
+      backgroundColor: colors.white,
+      borderRadius: 50,
+      overflow: 'hidden'
+    },
   });
 
   const getIcon = (index) => {
@@ -119,17 +135,19 @@ export default function CustomDrawer(props) {
       <Box style={styles.headerContainer}>
         <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={styles.gradient} />
         <Box style={styles.header} padding={20}>
-          <Text style={styles.headText}>{t('hello')}</Text>
+          <Text style={styles.headingText}>{t('hello')}</Text>
+          {userData?.profile_pic ?
+            <View style={styles.imgContainer}>
+              <ProgressiveImage
+                style={styles.profile_pic}
+                thumbnailSource={{ uri: userData?.profile_pic }}
+                source={{ uri: userData?.profile_pic }}
+              />
+            </View>
+            :
+            <FontAwesomeIcon icon="user-circle" color={colors.white} size={45} />
+          }
           <Text style={styles.headText}>{userData?.username}</Text>
-          <Button
-            size="small"
-            status={userData ? 'danger' : 'chip_1'}
-            width="50%"
-            icon={userData ? 'sign-out-alt' : 'sign-in-alt'}
-            onPress={() => handlePress()}
-          >
-            {userData ? t('logout') : t('login')}
-          </Button>
         </Box>
       </Box>
       {props.state.routeNames.map((item, index) => {
@@ -154,6 +172,16 @@ export default function CustomDrawer(props) {
         return null;
       })}
       <Box style={styles.footer} padding={20}>
+        <Button
+          size="small"
+          status={userData ? 'danger' : 'chip_1'}
+          width="100%"
+          icon={userData ? 'sign-out-alt' : 'sign-in-alt'}
+          onPress={() => handlePress()}
+          outline
+        >
+          {userData ? t('logout') : t('login')}
+        </Button>
         <Text style={styles.heading}>{t('follow_us')}</Text>
         <Row marginTop={10}>
           <RippleFX style={styles.logoContainer} onPress={() => Linking.openURL('https://www.facebook.com/xzeroapp')}>

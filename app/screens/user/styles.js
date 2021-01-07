@@ -6,6 +6,7 @@ import { whiteBg, h100, w100, positionAbsolute, borderRadius10, borderRadius50, 
 const mobileStyles = StyleSheet.create({
   container: {
     ...whiteBg,
+    minHeight: '100%'
   },
   safeView: {
     ...h100,
@@ -80,11 +81,9 @@ const mobileStyles = StyleSheet.create({
     height: 220,
   },
   userIconContainer: {
-    ...padding10,
     ...borderRadius50,
     ...whiteBg,
     overflow: 'hidden',
-    marginTop: 10
   },
   username: {
     ...colorWhite,
@@ -97,8 +96,9 @@ const mobileStyles = StyleSheet.create({
     ...marginTop5,
   },
   profile_pic: {
-    width: 35,
-    height: 35,
+    width: 60,
+    height: 60,
+    borderRadius: 50,
   },
   tickIcon: {
     position: 'absolute',

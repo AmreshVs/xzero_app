@@ -8,12 +8,12 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Updates from 'expo-updates';
 
 import { saveUserDataLocally } from 'screens/login/helpers';
-import Loader from 'components/loader';
 import { ToastMsg } from 'components/toastMsg';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { BASIC_INFORMATION, GET_MEMBER_DATA } from 'graphql/queries';
-import { EXPO_UPDATE, HOME_SCREEN, INTRO, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE, OTP } from 'navigation/routes';
+import { HOME_SCREEN, INTRO, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE, OTP } from 'navigation/routes';
+import AppLoader from 'components/appLoader';
 
 const Main = ({ navigation }) => {
   const client = useApolloClient();
@@ -22,17 +22,20 @@ const Main = ({ navigation }) => {
   const { logError } = useErrorLog();
 
   useEffect(() => {
-    checkNewVersion();
+    checkExpoUpdates();
   }, []);
 
   const checkExpoUpdates = async () => {
+    await SplashScreen.hideAsync();
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
-        navigation.replace(EXPO_UPDATE);
-        return false;
+        await Updates.fetchUpdateAsync();
+        ToastMsg(t('updates_applied'));
+        setTimeout(async () => {
+          await Updates.reloadAsync();
+        }, 1500);
       }
-      return true;
     } catch (error) {
       console.log('Expo Updates Error', error);
       logError({
@@ -41,8 +44,9 @@ const Main = ({ navigation }) => {
         input: JSON.stringify(),
         error: JSON.stringify(error)
       });
-      return true;
     }
+
+    await checkNewVersion();
   }
 
   const checkNewVersion = async () => {
@@ -52,9 +56,6 @@ const Main = ({ navigation }) => {
 
     if (error) {
       console.log('Basic Information Error', error);
-      if (await checkExpoUpdates()) {
-        await SplashScreen.hideAsync();
-      }
       logError({
         screen: MAIN_SCREEN,
         module: 'Basic Information',
@@ -80,10 +81,7 @@ const Main = ({ navigation }) => {
       }
     }
 
-    if (await checkExpoUpdates()) {
-      await checkUser();
-      await SplashScreen.hideAsync();
-    }
+    await checkUser();
   };
 
   const checkUser = async () => {
@@ -154,7 +152,7 @@ const Main = ({ navigation }) => {
     }
   };
 
-  return <Loader />;
+  return <AppLoader />;
 }
 
 export default memo(Main);

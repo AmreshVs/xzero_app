@@ -20,7 +20,6 @@ SplashScreen.preventAutoHideAsync();
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
 
-
 LogBox.ignoreLogs([
   'Animated: `useNativeDriver` was not specified.',
 ]);
@@ -38,6 +37,8 @@ const App = () => {
 
   // Initialize Language
   useEffect(() => {
+    checkInternet();
+
     i18nLang();
 
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -47,7 +48,6 @@ const App = () => {
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
 
-    checkInternet();
 
     return () => {
       unsubscribe();

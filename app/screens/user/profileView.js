@@ -50,7 +50,7 @@ export const handlelogout = async ({ dispatch, setUserData, logError }) => {
   }
 };
 
-const ProfileView = ({ data }) => {
+const ProfileView = ({ data, setEdit }) => {
   const { t, i18n } = useTranslation();
   const { dispatch, push } = useNavigation();
   const { userData, setUserData } = useContext(UserDataContext);
@@ -126,7 +126,9 @@ const ProfileView = ({ data }) => {
                 }
               </Row>
             ) : (
-                <Text style={styles.caption}>{t('fill_mobile')}</Text>
+                <RippleFX onPress={() => setEdit(true)}>
+                  <Text style={styles.caption}>{t('fill_mobile')}</Text>
+                </RippleFX>
               )}
           </Box>
         </Row>
@@ -152,7 +154,9 @@ const ProfileView = ({ data }) => {
             {data?.birthday ? (
               <Text style={styles.text}>{handleDOB(data?.birthday)}</Text>
             ) : (
-                <Text style={styles.caption}>{t('fill_birthday')}</Text>
+                <RippleFX onPress={() => setEdit(true)}>
+                  <Text style={styles.caption}>{t('fill_birthday')}</Text>
+                </RippleFX>
               )}
           </Box>
         </Row>

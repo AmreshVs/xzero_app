@@ -12,7 +12,7 @@ import Textbox from 'components/textbox';
 import Box from 'components/box';
 import ProgressiveImage from 'components/progressiveImage';
 import { ToastMsg } from 'components/toastMsg';
-import { handleMobileNumber } from 'constants/commonFunctions';
+import { handleMobileNumber, thumbnailUrl } from 'constants/commonFunctions';
 import { IMAGE_URL } from 'constants/common';
 import { UserDataContext } from 'context';
 import { SEND_SMS } from 'graphql/mutations';
@@ -32,6 +32,7 @@ const Otp = () => {
   ];
 
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [otp, setOtp] = useState(initialState);
   const [responseOtp, setResponseOtp] = useState('');
   const [timer, setTimer] = useState(0);
@@ -45,7 +46,6 @@ const Otp = () => {
 
   let [toggleSmsListener] = useInterval(async () => {
     let clipboardOtp = await Clipboard.getStringAsync();
-
     if (clipboardOtp === responseOtp) {
       setOtp([
         { ...otp[0], value: responseOtp[0] },
@@ -139,13 +139,14 @@ const Otp = () => {
   }
 
   const handleOTPType = (text, index) => {
-    if (text.length === 4) {
+    if (text?.length === 4) {
       setOtp(otp => [
         { ...otp[0], value: text[0] },
         { ...otp[1], value: text[1] },
         { ...otp[2], value: text[2] },
         { ...otp[3], value: text[3] },
       ]);
+      setDisabled(false);
     }
     else {
       handleType(text, index);
@@ -157,6 +158,7 @@ const Otp = () => {
       <View style={styles.container}>
         <ProgressiveImage
           style={styles.image}
+          thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl('/uploads/otp_security_71bddb259b.webp') }}
           source={{ uri: IMAGE_URL + '/uploads/otp_security_71bddb259b.webp' }}
         />
         <Text style={styles.caption}>{t('otp_desc')}</Text>
@@ -170,7 +172,7 @@ const Otp = () => {
                 value={otp[index].value}
                 style={styles.textbox}
                 keyboardType='numeric'
-                maxLength={1}
+                editable={disabled}
                 onChangeText={(text) => handleOTPType(text, index)}
                 key={index}
               />

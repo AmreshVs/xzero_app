@@ -1,5 +1,6 @@
 import { Platform } from "react-native";
-import { InMemoryCache, ApolloClient } from "@apollo/client";
+import { InMemoryCache, ApolloClient, HttpLink } from "@apollo/client";
+import { onError } from "apollo-link-error";
 import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
@@ -28,8 +29,24 @@ const defaultOptions = {
   },
 };
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, extensions }) => {
+      // console.log(
+      //   `[GraphQL error]: Message: ${message}, Location: ${extensions.code}`
+      // );
+    });
+  if (networkError) {
+    // console.log(`[Network error]: ${networkError}`);
+  }
+});
+
+const httpLink = new HttpLink({
+  uri: `${BASE_URL}/api`
+});
+
 export const client = new ApolloClient({
-  uri: `${BASE_URL}/api`,
+  link: errorLink.concat(httpLink),
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
@@ -40,7 +57,9 @@ export const client = new ApolloClient({
           notifications: useIncomingData,
           voucherAvaileds: useIncomingData,
           UsersPermissionsUser: useIncomingData,
-          GetReferHistory: useIncomingData
+          GetReferHistory: useIncomingData,
+          Vouchers: useIncomingData,
+          assured_gift: useIncomingData
         }
       }
     }

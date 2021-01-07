@@ -1,20 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { useApolloClient } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
+import { Formik } from 'formik';
 
-import { borderRadius10, font17, marginTop10, textBoldDark, textLite } from 'constants/commonStyles';
 import Row from 'components/row';
 import Button from 'components/button';
 import Box from 'components/box';
 import Textbox from 'components/textbox';
 import { SCREEN_HEIGHT } from 'constants/common';
-import { Formik } from 'formik';
-import { inputs, inputsValidationSchema } from './helpers';
 import FormError from 'components/formError';
-import { useApolloClient } from '@apollo/client';
-import { UserDataContext } from 'context';
+import { ToastMsg } from 'components/toastMsg';
 import { handleMobileNumber } from 'constants/commonFunctions';
+import { borderRadius10, font17, marginTop10, textBoldDark, textLite } from 'constants/commonStyles';
+import { UserDataContext } from 'context';
 import { EDIT_ADDRESS } from 'graphql/mutations';
-import { useTranslation } from 'react-i18next';
+import useErrorLog from 'hooks/useErrorLog';
+import { VOUCHER_DETAIL } from 'navigation/routes';
+import { inputs, inputsValidationSchema } from './helpers';
 
 export default function DeliveryAddress({ ...otherStyles }) {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -22,6 +25,7 @@ export default function DeliveryAddress({ ...otherStyles }) {
   const [edit, setEdit] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const client = useApolloClient();
+  const { logError } = useErrorLog();
 
   useEffect(() => {
     if (userData !== undefined && userData?.address === null) {
@@ -30,19 +34,40 @@ export default function DeliveryAddress({ ...otherStyles }) {
   }, [userData]);
 
   const handleSave = async (values) => {
-    setBtnLoading(true);
-    const { data } = await client.mutate({
-      mutation: EDIT_ADDRESS,
-      variables: {
-        user_id: Number(userData?.id),
-        username: values?.fullname,
-        address: values?.address,
+    if (values?.fullname?.split(" ")?.length <= 1) {
+      ToastMsg('Please enter full name');
+      return;
+    }
+    try {
+      setBtnLoading(true);
+      const { data, errors } = await client.mutate({
+        mutation: EDIT_ADDRESS,
+        variables: {
+          user_id: Number(userData?.id),
+          username: values?.fullname,
+          address: values?.address,
+        },
+      });
+
+      if (errors) {
+        console.log('Edit Delivery Address', errors);
+        ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
+        logError({
+          screen: VOUCHER_DETAIL,
+          module: '',
+          input: JSON.stringify(),
+          error: JSON.stringify(errors)
+        });
       }
-    });
-    setBtnLoading(false);
-    if (Object.keys(data.updateUser.user).length > 0) {
-      setUserData(userData => ({ ...userData, ...data?.updateUser?.user }));
-      setEdit(false);
+
+      setBtnLoading(false);
+      if (data?.updateUserData?.user && Object.keys(data?.updateUserData?.user).length > 0) {
+        setUserData(userData => ({ ...userData, ...data?.updateUserData?.user }));
+        setEdit(false);
+      }
+    }
+    catch (error) {
+      console.log('Edit address error', errror);
     }
   }
 
@@ -104,11 +129,11 @@ export default function DeliveryAddress({ ...otherStyles }) {
                 <Row justifyContent="flex-end" marginTop={10}>
                   {(userData?.address !== null && userData?.address !== '') &&
                     <>
-                      <Button size="small" status="text_lite" width="32%" icon="times" onPress={() => setEdit(false)} outline>Cancel</Button>
+                      <Button size="small" status="text_lite" width="32%" icon="times" onPress={() => setEdit(false)} outline>{t('cancel')}</Button>
                       <Box marginHorizontal={5} />
                     </>
                   }
-                  <Button size="small" status="success" width="30%" icon="check" onPress={() => handleSubmit()} loading={btnLoading} outline>Save</Button>
+                  <Button size="small" status="success" width="30%" icon="check" onPress={() => handleSubmit()} loading={btnLoading} outline>{t('save')}</Button>
                 </Row>
               </>
             )}

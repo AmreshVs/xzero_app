@@ -22,7 +22,7 @@ const UserCard = ({ edit, setEdit, data }) => {
   const RightIcon = () => {
     return (
       <RippleFX style={styles.rightIconContainer} onPress={() => setEdit(!edit)}>
-        <FontAwesomeIcon icon="edit" size={17} color={colors.white} />
+        {!edit && <FontAwesomeIcon icon="edit" size={17} color={colors.white} />}
       </RippleFX>
     );
   };

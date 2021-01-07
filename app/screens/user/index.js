@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, ScrollView, KeyboardAvoidingView, Switch } from 'react-native';
+import { Text, ScrollView, KeyboardAvoidingView, Switch, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -83,20 +83,24 @@ const User = () => {
   }
 
   return (
-    <SafeView loading={loading} noTop>
-      <Row style={styles.topContainer} hcenter>
-        <LinearGradient
-          colors={[colors.gradient1, colors.gradient2]}
-          style={styles.gradient}
-        />
-        <UserCard edit={edit} setEdit={setEdit} data={data?.user} />
-      </Row>
-      <Box style={styles.safeView}>
+    <SafeView style={styles.safeView} loading={loading} noTop noBottom>
+      <KeyboardAvoidingView
+        behavior="position"
+        keyboardVerticalOffset={Platform.OS === 'ios' ? -10 : -150}
+      >
         <ScrollView
           contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="always"
         >
-          <KeyboardAvoidingView behavior="position">
+          <Row style={styles.topContainer} hcenter>
+            <LinearGradient
+              colors={[colors.gradient1, colors.gradient2]}
+              style={styles.gradient}
+            />
+            <UserCard edit={edit} setEdit={setEdit} data={data?.user} />
+          </Row>
+          <Box style={styles.safeView}>
             <Box style={styles.profileViewContainer}>
               <Box style={styles.profileView}>
                 {!edit ? (
@@ -118,10 +122,10 @@ const User = () => {
                 </Row>
               </Box>
             </Box>
-          </KeyboardAvoidingView>
+          </Box>
         </ScrollView>
-      </Box>
-    </SafeView>
+      </KeyboardAvoidingView>
+    </SafeView >
   );
 };
 

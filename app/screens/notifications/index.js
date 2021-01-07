@@ -24,7 +24,8 @@ const Notifications = () => {
   const { data, loading, refetch: _refetch, error } = useQuery(NOTIFICATIONS_BY_USER, {
     variables: {
       user_id: Number(userData?.id)
-    }
+    },
+    notifyOnNetworkStatusChange: true
   });
 
   if (error) {
@@ -58,7 +59,6 @@ const Notifications = () => {
             maxToRenderPerBatch={10}
             windowSize={10}
             contentContainerStyle={styles.flatlist}
-            ItemSeparatorComponent={() => <Divider />}
             refreshing={reloading}
             onRefresh={reload}
           />

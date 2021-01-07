@@ -31,6 +31,7 @@ const Notification = (data) => {
       }
     }
 
+    console.log(notificationData);
     if (notificationData?.data?.type === 'appLink') {
       try {
         Linking.openURL(notificationData?.data?.link)

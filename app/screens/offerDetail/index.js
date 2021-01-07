@@ -89,7 +89,7 @@ const OfferDetail = () => {
           <CenterInfo offer={offer} username={userData?.id} />
           <PriceDetails offer={offer} center={center} />
           <OfferDescription offer={offer} />
-          <AvailDiscount loading={loading} data={data} />
+          <AvailDiscount data={data?.offerGuideline} />
           <Row justifyContent="space-between">
             <ContactCenter username={userData?.username} mobile_number={offer?.mobile_number} />
             <ShareOffer data={offer} />

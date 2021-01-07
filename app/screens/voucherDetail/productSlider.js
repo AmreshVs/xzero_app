@@ -14,13 +14,13 @@ const ProductSlider = ({ data, height, popup = false }) => {
     },
     imageContainer: {
       marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
-      backgroundColor: 'white',
+      backgroundColor: popup === false ? '#FFF' : '#000',
       borderRadius: 8,
       width: popup === false ? '80%' : '100%',
       height: popup === false ? 250 : height,
     },
     sliderImage: {
-      resizeMode: popup === false ? 'contain' : 'cover',
+      resizeMode: 'contain',
     },
     slider: {
       width: '100%',

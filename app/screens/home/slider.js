@@ -26,10 +26,8 @@ const Slider = ({ data }) => {
               style={styles.sliderImage}
               thumbnailSource={{ uri: IMAGE_URL + banner.banner_img.url }}
               source={{ uri: IMAGE_URL + (isTab() ? banner.banner_img.url : smallUrl(banner.banner_img.url)) }}
-              resizeMode="stretch"
+              resizeMode="cover"
               key={banner.id}
-              noCStyle
-              noBg
             />
           );
         })}

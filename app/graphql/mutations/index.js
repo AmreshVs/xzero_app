@@ -197,21 +197,19 @@ export const BUY_VOUCHER = gql`
 `;
 
 export const EDIT_ADDRESS = gql`
-  mutation EditAddress($user_id: ID!, $username: String, $mobile_number: Long, $address: String){
-    updateUser(input: {
+  mutation EditAddress($user_id: ID!, $username: String!, $address: String!){
+    updateUserData(input: {
       where: {
         id: $user_id
       },
       data: {
         username: $username,
-        mobile_number: $mobile_number,
         address: $address
       }
     }){
       user{
-        id
+        username
         address
-        mobile_number
       }
     }
   }

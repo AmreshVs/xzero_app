@@ -132,6 +132,7 @@ const ProfileEdit = ({ setEdit, data }) => {
                     icon={icon}
                     marginTop={marginTop}
                     keyboardType={name === 'phone' ? 'phone-pad' : 'default'}
+                    showSoftInputOnFocus={name === 'dob' ? false : true}
                     onBlur={() => setFieldTouched(name)}
                     autoCapitalize="none"
                     secureTextEntry={name.includes('password', 'repassword') ? true : false}
