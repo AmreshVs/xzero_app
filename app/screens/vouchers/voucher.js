@@ -60,6 +60,7 @@ const Voucher = ({ data, handleOpenModal }) => {
             <Text numberOfLines={1}>
               <Text style={styles.title}>{t('buy')} </Text>
               <Text style={styles.caption}>{data?.[`buy_title_${language}`]}</Text>
+              {(!userData || userData?.membership === null) && <Text style={styles.caption}> + {data?.membership_plans[0]?.[`name_${language}`]} {t('membership')}</Text>}
             </Text>
             <Text numberOfLines={1}>
               <Text style={styles.title}>{t('win')} </Text>

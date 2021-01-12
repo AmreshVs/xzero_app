@@ -1,6 +1,7 @@
 import { Dimensions } from "react-native";
 
-export const phoneRegExp = /^(?:\+)((?:3|4|5|6|7|9|50|51|52|55|56)[0-9]{7,})$/;
+// export const phoneRegExp = /^(?:\+)((?:3|4|5|6|7|9|50|51|52|55|56)[0-9]{7,})$/;
+export const phoneRegExp = /^(\+?\d{1,3}[- ]?)?\d{10}$/;
 // export const BASE_URL = 'http://192.168.108.59:1337';
 export const BASE_URL = 'https://be.xzero.app/v2';
 export const API_URL = `${BASE_URL}/`;
@@ -46,3 +47,5 @@ export const ERROR_OCCURED = 'Error Occured, Try Later!';
 // App Url's
 export const APP_STORE_URL = 'https://apps.apple.com/ae/app/xzeroo/id1526109721';
 export const GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.media.xzero';
+
+export const WHATSAPP_CONTACT = 971565255256;

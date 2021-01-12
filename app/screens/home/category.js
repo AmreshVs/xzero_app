@@ -45,7 +45,7 @@ const Category = ({ data, length, index }) => {
         source={{ uri: IMAGE_URL + data?.featured_img }}
         style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddImage : styles.image}
       />
-      <Box padding={10}>
+      <Box padding={10} paddingTop={5}>
         <Text style={styles.heading}>{data?.[`title_${language}`]}</Text>
         <Text style={styles.caption}>
           {data?.centersCount} {data?.type === 'specialist' ? t('specialist') : t('centers')}

@@ -15,6 +15,7 @@ import NoData from 'components/noData';
 import { getAuthenticationHeader, isTab } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import IsLoggedIn from 'hoc/isLoggedIn';
+import IsVerified from 'hoc/isVerified';
 import useErrorLog from 'hooks/useErrorLog';
 import { MY_VOUCHERS } from 'navigation/routes';
 import { MY_VOUCHER_BOUGHT, MY_VOUCHER_WON } from 'graphql/queries';
@@ -120,4 +121,4 @@ const MyVouchers = () => {
   )
 }
 
-export default memo(IsLoggedIn(MyVouchers));
+export default memo(IsLoggedIn(IsVerified(MyVouchers)));

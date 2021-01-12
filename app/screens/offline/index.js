@@ -9,10 +9,10 @@ import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import Button from 'components/button';
 import { ToastMsg } from 'components/toastMsg';
-import { HOME_SCREEN } from 'navigation/routes';
+import { HOME_SCREEN, MAIN_SCREEN } from 'navigation/routes';
 import styles from './styles';
 
-export default function Offline({ navigation }) {
+export default function Offline({ navigation, connection }) {
   const offlineRef = useRef(null);
   const { t } = useTranslation();
 
@@ -26,7 +26,7 @@ export default function Offline({ navigation }) {
     NetInfo.fetch().then(state => {
       const resetAction = CommonActions.reset({
         index: 0,
-        routes: [{ name: HOME_SCREEN }],
+        routes: [{ name: connection ? HOME_SCREEN : MAIN_SCREEN }],
       });
 
       if (state?.isInternetReachable === true) {
@@ -39,8 +39,8 @@ export default function Offline({ navigation }) {
   }
 
   return (
-    <SafeView topNav>
-      <TopNavigator title={t('device_offline')} leftIcon={false} gradient />
+    <SafeView topNav={connection}>
+      {connection && <TopNavigator title={t('device_offline')} leftIcon={false} gradient />}
       <View style={styles.container}>
         <LottieView
           ref={offlineRef}

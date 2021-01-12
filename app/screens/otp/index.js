@@ -12,7 +12,7 @@ import Textbox from 'components/textbox';
 import Box from 'components/box';
 import ProgressiveImage from 'components/progressiveImage';
 import { ToastMsg } from 'components/toastMsg';
-import { handleMobileNumber, thumbnailUrl } from 'constants/commonFunctions';
+import { thumbnailUrl } from 'constants/commonFunctions';
 import { IMAGE_URL } from 'constants/common';
 import { UserDataContext } from 'context';
 import { SEND_SMS } from 'graphql/mutations';
@@ -33,6 +33,7 @@ const Otp = () => {
 
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const [btnDisabled, setBtnDisabled] = useState(true);
   const [otp, setOtp] = useState(initialState);
   const [responseOtp, setResponseOtp] = useState('');
   const [timer, setTimer] = useState(0);
@@ -114,6 +115,7 @@ const Otp = () => {
       ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
     }
     setOtp([...initialState]);
+    otp[0].ref?.current.focus();
     setLoading(false);
   }
 
@@ -147,11 +149,25 @@ const Otp = () => {
         { ...otp[3], value: text[3] },
       ]);
       setDisabled(false);
+      setBtnDisabled(false);
     }
     else {
+      if (index === 3) {
+        setBtnDisabled(false);
+      }
       handleType(text, index);
     }
   }
+
+  const handleMobileNumber = (mobile_number) => {
+    let mobile = String(mobile_number);
+
+    if (!mobile.includes("+")) {
+      return String('+' + mobile);
+    }
+
+    return mobile;
+  };
 
   return (
     <KeyboardAvoidingView behavior="position">
@@ -203,7 +219,7 @@ const Otp = () => {
             status={'primary'}
             onPress={() => handleConfirm()}
             loading={loading}
-            disabled={otp[0].value === '' && otp[1].value === '' && otp[2].value === '' && otp[3].value === ''}
+            disabled={btnDisabled}
           >
             {t('confirm')}
           </Button>

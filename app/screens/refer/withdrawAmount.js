@@ -29,9 +29,11 @@ const WithdrawAmount = ({ min_withdraw, balance, reload, loading: rootLoading })
     setLoading(true);
     if (amount < min_withdraw) {
       ToastMsg(`${t('amount_less')} ${min_withdraw} ${t('aed')}`);
+      setAmount('');
     }
     else if (amount >= balance) {
       ToastMsg(t('amount_more'));
+      setAmount('');
     }
     else {
       let mutationInput = {

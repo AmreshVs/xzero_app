@@ -86,7 +86,7 @@ function Offer({ data, center, favourites }) {
           </Text>
           {data?.discount === 100 ? (
             <Row>
-              <Chip style={styles.chip} title={t('free')} color={colors.danger} />
+              <Chip style={styles.chip} marginBottom={10} title={t('free')} color={colors.danger} />
             </Row>
           ) : (
               <Row width="120%">
@@ -94,6 +94,7 @@ function Offer({ data, center, favourites }) {
                   <Chip
                     color={colors.success}
                     marginRight={5}
+                    marginBottom={10}
                     title={
                       <>
                         <Text>{t('aed')} </Text>
@@ -105,6 +106,7 @@ function Offer({ data, center, favourites }) {
                 }
                 <Chip
                   color={colors.chip_1}
+                  marginBottom={10}
                   title={
                     language === 'en'
                       ? `${data?.discount || 0}% ${t('discount')}`

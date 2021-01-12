@@ -29,6 +29,23 @@ export const getDeviceLang = async () => {
   return language !== undefined ? language : ['ar'].includes(deviceLanguage.substring(0, 2)) ? 'ar' : 'en';
 }
 
+export const deviceLang = () => {
+
+  let deviceLanguage = Platform.OS === 'ios' ?
+    NativeModules.SettingsManager.settings.AppleLocale :
+    NativeModules.I18nManager.localeIdentifier;
+
+  if (deviceLanguage === undefined) {
+    // iOS 13 workaround, take first of AppleLanguages array 
+    deviceLanguage = NativeModules.SettingsManager.settings.AppleLanguages[0]
+    if (deviceLanguage == undefined) {
+      return 'en'; // default language
+    }
+  }
+
+  return ['ar'].includes(deviceLanguage.substring(0, 2)) ? 'ar' : 'en';
+}
+
 const i18nLang = async () =>
   i18n
     .use(initReactI18next)
@@ -60,7 +77,7 @@ const i18nLang = async () =>
       },
 
       otherLanguages: ['en', 'ar'],
-      lng: await getDeviceLang(),
+      lng: await getDeviceLang() || deviceLang(),
       preload: 'en',
     });
 

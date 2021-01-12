@@ -1,4 +1,4 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef, useState, useContext } from 'react';
 import { FlatList } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { useRoute } from '@react-navigation/native';
@@ -12,20 +12,22 @@ import SearchModal from 'components/searchModal';
 import { ToastMsg } from 'components/toastMsg';
 import ModalSearchHeader from 'components/modalSearchHeader';
 import { isTab } from 'constants/commonFunctions';
+import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import { OFFERS_LIST } from 'graphql/queries';
 import Offer from './offer';
 import styles from './styles';
 
-let initialWhereCondition = {
-  _limit: -1
-};
-let headerCondition = 1;
-
 export default function Offers() {
   const { params } = useRoute();
   const { logError } = useErrorLog();
+  const { userData } = useContext(UserDataContext);
+
+  let initialWhereCondition = {
+    _limit: -1
+  };
+  let headerCondition = 1;
 
   if (params?.center) {
     initialWhereCondition = {
@@ -44,7 +46,7 @@ export default function Offers() {
   let { data, loading, refetch: _refetch, error } = useQuery(OFFERS_LIST, {
     variables: {
       where: whereCondition,
-      user_id: Number(params?.user_id) || 0
+      user_id: Number(userData?.id) || 0
     },
   });
 
@@ -55,7 +57,7 @@ export default function Offers() {
       module: 'Get Offers',
       input: JSON.stringify({
         where: whereCondition,
-        user_id: Number(params?.user_id) || 0,
+        user_id: Number(userData?.id) || 0,
       }),
       error: JSON.stringify(error)
     });

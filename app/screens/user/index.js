@@ -33,6 +33,7 @@ const User = () => {
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_USER, {
     variables: queryInput,
+    notifyOnNetworkStatusChange: true
   });
 
   if (error) {

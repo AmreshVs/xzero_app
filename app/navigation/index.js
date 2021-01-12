@@ -61,7 +61,6 @@ import {
   OFFLINE,
   OTP,
   INTRO,
-  EXPO_UPDATE,
 } from './routes';
 import { UserDataContext } from 'context';
 import Offline from 'screens/offline';
@@ -78,10 +77,10 @@ function HomeNavigation() {
       tabBar={(props) => <BottomTab {...props} />}
     >
       <Tab.Screen name={HOME_TAB_SCREEN} component={Home} />
-      <Tab.Screen name={FAVOURITES_TAB_SCREEN} component={Favourites} />
+      <Tab.Screen name={FAVOURITES_TAB_SCREEN} component={Favourites} options={{ unmountOnBlur: true }} />
       <Tab.Screen name={MEMBERSHIP_TAB_SCREEN} component={Membership} options={{ unmountOnBlur: true }} />
-      <Tab.Screen name={VOUCHERS} component={Vouchers} />
-      <Tab.Screen name={PROFILE_TAB_SCREEN} component={User} />
+      <Tab.Screen name={VOUCHERS} component={Vouchers} options={{ unmountOnBlur: true }} />
+      <Tab.Screen name={PROFILE_TAB_SCREEN} component={User} options={{ unmountOnBlur: true }} />
     </Tab.Navigator>
   );
 }
@@ -121,6 +120,15 @@ function StackNavigation() {
 const Drawer = createDrawerNavigator();
 const prefix = ['xzero://'];
 
+export const offlineReset = (navigation) => {
+  navigation?.navigate(HOME_SCREEN);
+  const resetAction = CommonActions.reset({
+    index: -1,
+    routes: [{ name: OFFLINE }],
+  });
+  navigation?.dispatch(resetAction);
+}
+
 function Navigation({ connection }) {
   const navigationRef = useRef();
   const [userData, setUserData] = useState();
@@ -131,11 +139,7 @@ function Navigation({ connection }) {
   useEffect(() => {
     if (navigationRef?.current) {
       if (connection === false) {
-        const resetAction = CommonActions.reset({
-          index: 0,
-          routes: [{ name: OFFLINE }],
-        });
-        navigationRef?.current?.dispatch(resetAction);
+        offlineReset(navigationRef?.current);
       }
     }
   }, [connection]);
@@ -151,11 +155,12 @@ function Navigation({ connection }) {
           initialRouteName={DRAWER_HOME}
           drawerType="slide"
           drawerContent={props => <CustomDrawer {...props} />}
+          screenOptions={{ gestureEnabled: connection }}
         >
-          <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} options={{ gestureEnabled: connection || true }} />
-          <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} />
-          <Drawer.Screen name={REFER} component={Refer} />
-          <Drawer.Screen name={GIFTS} component={Gifts} />
+          <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
+          <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} options={{ unmountOnBlur: true }} />
+          <Drawer.Screen name={REFER} component={Refer} options={{ unmountOnBlur: true }} />
+          <Drawer.Screen name={GIFTS} component={Gifts} options={{ unmountOnBlur: true }} />
           <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
           <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
         </Drawer.Navigator>

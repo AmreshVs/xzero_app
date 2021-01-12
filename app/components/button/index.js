@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import colors from 'constants/colors';
 import RippleFX from 'components/rippleFx';
 import Spinner from 'components/spinner';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 export default function Button({
   children,
@@ -19,15 +21,33 @@ export default function Button({
   disabled,
   style,
   size = "big",
+  timeout = true
 }) {
+  const [btnDisabled, setBtnDisabled] = useState(disabled || false);
   const styles = getStyles(colors, status, width, color, size);
   let buttonStyle = outline ? styles.outlineButton : styles.button;
   let textStyle = outline ? styles.outlineText : styles.text;
 
+  const handlePress = () => {
+    setBtnDisabled(true);
+    onPress();
+    if (timeout) {
+      setTimeout(() => {
+        setBtnDisabled(disabled || false);
+      }, 1000);
+    }
+  }
+
+  useEffect(() => {
+    if (disabled !== undefined && disabled !== btnDisabled) {
+      setBtnDisabled(disabled);
+    }
+  }, [disabled]);
+
   return (
     <View style={styles.btnContainer}>
-      {(disabled || loading) && <View style={styles.disabled} />}
-      <RippleFX onPress={onPress || null}>
+      {(btnDisabled || loading) && <View style={styles.disabled} />}
+      <RippleFX onPress={handlePress || null}>
         <View style={[style, buttonStyle]}>
           {loading ? (
             <Spinner color={outline ? colors[status] : '#FFF'} />

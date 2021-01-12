@@ -10,14 +10,12 @@ export default function IsVerified(Component) {
 
   const HOCIsVerified = () => {
     const [loading, setLoading] = useState(true);
-    const navigation = useNavigation();
+    const { navigate } = useNavigation();
     const { userData } = useContext(UserDataContext);
 
     useEffect(() => {
       checkUser();
-
-      const listener = navigation.addListener('focus', () => console.log('here'))
-    }, [navigation]);
+    }, []);
 
     const checkUser = async () => {
       if (userData?.confirmed) {
@@ -25,7 +23,7 @@ export default function IsVerified(Component) {
       }
       else {
         ToastMsg('Please Verify your account to continue!');
-        navigation.navigate(PROFILE_TAB_SCREEN);
+        navigate(PROFILE_TAB_SCREEN);
       }
     }
 

@@ -13,10 +13,18 @@ const ShareOffer = ({ data }) => {
   let language = i18n.language;
 
   const handleShare = async () => {
+    let message = "";
+    let freeMessage = "";
     try {
       const centerName = String(data?.center?.[`title_${language}`]);
       let center = centerName.split(" ").join("%20");
-      const message = `${t('offer')}:\n${data?.center?.[`title_${language}`]}\n${data?.[`desc_${language}`]}\n\n${t('original_price')} - ${data?.actual_price} ${t('aed')}\n${t('discounted_price')} - ${data?.discounted_price} ${t('aed')}\n${t('discount')} - ${data?.discount}%\n\n\n\n${t('check_offer_on_app')}\nhttps://xzero.app/open?q=xzero://Home/OfferDetail?offer_id=${Number(data.id)}&center=${center}`;
+      message = `${t('offer')}:\n${data?.center?.[`title_${language}`]}\n${data?.[`desc_${language}`]}\n\n${t('original_price')} - ${data?.actual_price} ${t('aed')}\n${t('discounted_price')} - ${data?.discounted_price} ${t('aed')}\n${t('discount')} - ${data?.discount}%\n\n\n${t('check_offer_on_app')}\nhttps://xzero.app/open?q=xzero://DHome/OfferDetail?offer_id=${Number(data.id)}&center=${center}`;
+      freeMessage = `${t('offer')}:\n${data?.center?.[`title_${language}`]}\n${data?.[`desc_${language}`]}\n\n${t('discount')} - ${data?.discount}\n*${t('free')}*\n\n\n${t('check_offer_on_app')}\nhttps://xzero.app/open?q=xzero://DHome/OfferDetail?offer_id=${Number(data.id)}&center=${center}`;
+
+      if (data?.discount === 100) {
+        message = freeMessage;
+      }
+
       await Share.share({
         message: message,
         title: message,

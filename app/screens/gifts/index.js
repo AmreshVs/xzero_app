@@ -13,6 +13,7 @@ import IsLoggedIn from 'hoc/isLoggedIn';
 import { GET_GIFTS } from 'graphql/queries';
 import { GIFTS } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
+import IsVerified from 'hoc/isVerified';
 import AvailableGifts from './availableGifts';
 import AvailedGifts from './availedGifts';
 import GenerateGift from './generateGift';
@@ -66,4 +67,4 @@ const Gifts = () => {
   );
 }
 
-export default memo(IsLoggedIn(Gifts));
+export default memo(IsLoggedIn(IsVerified(Gifts)));

@@ -18,14 +18,14 @@ const useIncomingData = {
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: 'network-only',
-    errorPolicy: 'all',
+    errorPolicy: 'ignore',
   },
   query: {
     fetchPolicy: 'network-only',
-    errorPolicy: 'all',
+    errorPolicy: 'ignore',
   },
   mutate: {
-    errorPolicy: 'all',
+    errorPolicy: 'ignore',
   },
 };
 
@@ -59,7 +59,8 @@ export const client = new ApolloClient({
           UsersPermissionsUser: useIncomingData,
           GetReferHistory: useIncomingData,
           Vouchers: useIncomingData,
-          assured_gift: useIncomingData
+          assured_gift: useIncomingData,
+          user: useIncomingData
         }
       }
     }

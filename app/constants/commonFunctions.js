@@ -93,7 +93,7 @@ export const handleDOB = (dobDate) => {
   let month = dobDate.slice(5, 7);
   let day = Number(dobDate.slice(8, 10));
 
-  return day + '/' + month + "/" + year;
+  return String(day).padStart(2, 0) + '/' + String(month).padStart(2, 0) + "/" + year;
 }
 
 export const handleServerDOB = (dobDate) => {
@@ -101,7 +101,7 @@ export const handleServerDOB = (dobDate) => {
   let month = dobDate.slice(3, 5);
   let year = dobDate.slice(6, 10);
 
-  return year + '-' + month + "-" + day;
+  return year + '-' + String(month).padStart(2, 0) + "-" + String(day).padStart(2, 0);
 }
 
 export const calculatePercentage = (y, x) => {

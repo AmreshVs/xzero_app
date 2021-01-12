@@ -12,6 +12,7 @@ const mobileStyles = StyleSheet.create({
   offerContainer: {
     paddingVertical: 10,
     marginTop: 10,
+    paddingBottom: 0,
     ...w100,
     ...whiteBg,
     ...borderRadius10,

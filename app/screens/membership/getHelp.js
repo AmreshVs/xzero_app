@@ -7,6 +7,7 @@ import Row from 'components/row';
 import Card from 'components/card';
 import Button from 'components/button';
 import { sendWhatsappMessage, handleMobileNumber } from 'constants/commonFunctions';
+import { WHATSAPP_CONTACT } from 'constants/common';
 import { UserDataContext } from 'context';
 import styles from './styles';
 
@@ -30,7 +31,7 @@ const GetHelp = () => {
           icon={faWhatsapp}
           disabled={!userData?.username}
           onPress={() =>
-            sendWhatsappMessage(getWhatsappMessage(), handleMobileNumber(971565255256))
+            sendWhatsappMessage(getWhatsappMessage(), handleMobileNumber(WHATSAPP_CONTACT))
           }
         >
           {t('connect_whatsapp')}

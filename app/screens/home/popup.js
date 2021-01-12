@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import ProductSlider from 'screens/voucherDetail/productSlider';
 import Box from 'components/box';
 import Button from 'components/button';
-import { SCREEN_HEIGHT } from 'constants/common';
 import { UserDataContext } from 'context';
 import { POPUP } from 'graphql/queries';
 import { responsiveHeight } from 'constants/commonFunctions';
@@ -18,7 +17,7 @@ const Popup = () => {
   const { t } = useTranslation();
 
   return (
-    (loading === false && data?.popUp?.status === true && userData?.show_popup === true) && (
+    (loading === false && data?.popUp?.status === true && userData?.show_popup === true && data?.popUp?.featured_imgs[0]) && (
       <View style={styles.container}>
         <Modal
           animationType="slide"

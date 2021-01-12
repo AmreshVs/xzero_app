@@ -347,6 +347,12 @@ export const VOUCHERS = gql`
       limit
       total_bought
       draw_status
+      membership_plans(where: {
+        status: 1
+      }){
+        name_en
+        name_ar
+      }
     }
   }
 `;
@@ -515,6 +521,7 @@ export const GET_REFER_HISTORY = gql`
       enable_refer_and_earn
     }
     GetReferHistory(referrer: $user_id) {
+      label
       referralCode
       totalEarned
       totalReferred
@@ -562,6 +569,7 @@ export const APPLY_CODE = gql`
 export const WITHDRAW_HISTORY = gql`
   query TranscationInfo($user_id: Int!){
     GetReferHistory(referrer: $user_id) {
+      label
       referralCode
       totalEarned
       totalReferred

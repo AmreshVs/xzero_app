@@ -1,6 +1,7 @@
 import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
 import { ToastMsg } from 'components/toastMsg';
 import { getAuthenticationHeader } from 'constants/commonFunctions';
@@ -16,6 +17,7 @@ import styles from './styles';
 const Withdraw = ({ refer_program }) => {
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
+  const { t } = useTranslation();
 
   let queryInput = {
     user_id: Number(userData?.id)
@@ -43,9 +45,9 @@ const Withdraw = ({ refer_program }) => {
     <View style={styles.historyContainer}>
       {(data?.TransactionInfo?.userBankDetails !== null && refer_program) && <WithdrawAmount loading={loading} balance={balance} min_withdraw={min_withdraw} reload={_refetch} />}
       {refer_program && <BankInfo data={data?.TransactionInfo?.userBankDetails} loading={loading} reload={_refetch} />}
-      <Transactions data={data?.TransactionInfo?.withdrawalHistory} loading={loading} reload={_refetch} />
+      <Transactions data={data?.TransactionInfo?.withdrawalHistory} loading={loading} />
     </View>
   )
 }
 
-export default memo(Withdraw);
+export default Withdraw;

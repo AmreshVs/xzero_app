@@ -20,11 +20,33 @@ import { getAuthenticationHeader, isTab } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import IsLoggedIn from 'hoc/isLoggedIn';
+import IsVerified from 'hoc/isVerified';
 import { GET_REFER_HISTORY } from 'graphql/queries';
 import { REFER } from 'navigation/routes';
 import ReferHistory from './referHistory';
 import Withdraw from './withdraw';
 import styles from './styles';
+
+export const ARChange = ({ children }) => {
+  const { i18n } = useTranslation();
+  let language = i18n.language;
+
+  if (language === 'ar') {
+    return (
+      <>
+        {children[1]}
+        {children[0]}
+      </>
+    )
+  }
+
+  return (
+    <>
+      {children[0]}
+      {children[1]}
+    </>
+  )
+}
 
 const Refer = () => {
   const [modalComp, setModalComp] = useState(false);
@@ -45,7 +67,7 @@ const Refer = () => {
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_REFER_HISTORY, {
     variables: queryInput,
-    ...getAuthenticationHeader(userData?.jwt)
+    ...getAuthenticationHeader(userData?.jwt),
   });
 
   let refer = data?.GetReferHistory;
@@ -125,15 +147,17 @@ const Refer = () => {
             :
             <Image style={styles.image} source={require('../../../assets/refer.png')} />
           }
-          {refer_program === true ? (
+          {(refer_program === true && refer?.referralCode) ? (
             <>
-              <Text style={styles.referTitle}>{t('your_referral_code')}</Text>
+              <Text style={styles.referTitle}>{refer?.label === 'affiliate' ? t('your_affiliate_code') : t('your_referral_code')}</Text>
               <View style={styles.gradient}>
                 <Text style={styles.code}>{refer?.referralCode || 'XXXXXX'}</Text>
               </View>
               <Row marginBottom={10}>
-                <Text style={styles.caption}>{t('discount')} - {refer?.referProgram?.discount}%, </Text>
-                <Text style={styles.caption}>{t('max_discount')}{t('aed')} {refer?.referProgram?.allowed_maximum_discount}</Text>
+                <ARChange>
+                  <Text style={styles.caption}>{refer?.referProgram?.discount}% {t('purchase_value')}, </Text>
+                  <Text style={styles.caption}>{t('max_discount')}{t('aed')} {refer?.referProgram?.allowed_maximum_discount}</Text>
+                </ARChange>
               </Row>
               <Box paddingHorizontal={isTab() ? 100 : 0}>
                 <Text style={styles.caption}>{t('refer_desc')}</Text>
@@ -177,22 +201,27 @@ const Refer = () => {
         <Box paddingHorizontal={isTab() ? 100 : 0}>
           <Row style={styles.check} justifyContent="space-between">
             <Button width="49%" status="chip_1" icon="history" onPress={() => handleOpenModal(true)}>{t('refer_history')}</Button>
-            <Button width="49%" status="chip_2" icon="coins" onPress={() => handleOpenModal(false)}>{refer_program ? t('withdraw') : t('withdraw_history')}</Button>
+            <Button width="49%" status="chip_2" icon="coins" onPress={() => handleOpenModal(false)}>{(refer_program && refer?.referralCode) ? t('withdraw') : t('withdraw_history')}</Button>
           </Row>
           <Box marginTop={10} width="100%">
-            <Button icon="share-alt" onPress={() => handleShare()}>{t(refer_program ? 'refer_and_earn_now' : 'share_app')}</Button>
+            <Button
+              icon="share-alt"
+              onPress={() => handleShare()}
+            >
+              {t((refer_program && refer?.referralCode) ? 'refer_and_earn_now' : 'share_app')}
+            </Button>
           </Box>
         </Box>
       </ScrollView>
-      <Modalize ref={modalizeRef} childrenStyle={styles.modal} snapPoint={400} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }} onClosed={() => _refetch()}>
+      <Modalize ref={modalizeRef} childrenStyle={styles.modal} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }} onClosed={() => reload()}>
         {modalComp ?
           <ReferHistory />
           :
-          <Withdraw refer_program={refer_program} />
+          <Withdraw refer_program={refer_program && refer?.referralCode !== ''} />
         }
       </Modalize>
     </SafeView>
   )
 }
 
-export default memo(IsLoggedIn(Refer));
+export default IsLoggedIn(IsVerified(Refer));

@@ -310,7 +310,7 @@
 				CODE_SIGN_ENTITLEMENTS = Xzero/xzero.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23.3;
+				CURRENT_PROJECT_VERSION = 23.4;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = NO;
@@ -326,7 +326,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 23.3;
+				MARKETING_VERSION = 23.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -352,7 +352,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: Abdulaziz Al Hosani (VU23X8B5TW)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 23.3;
+				CURRENT_PROJECT_VERSION = 23.4;
 				DEVELOPMENT_TEAM = VU23X8B5TW;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_NO_COMMON_BLOCKS = NO;
@@ -362,7 +362,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 23.3;
+				MARKETING_VERSION = 23.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

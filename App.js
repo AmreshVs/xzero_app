@@ -15,6 +15,7 @@ import i18nLang from './app/i18n';
 import { ToastComponent } from 'components/toastMsg';
 import Navigation from 'navigation';
 import { client } from './helpers';
+import Offline from 'screens/offline';
 
 SplashScreen.preventAutoHideAsync();
 Text.defaultProps = Text.defaultProps || {};
@@ -34,6 +35,7 @@ Notifications.setNotificationHandler({
 
 const App = () => {
   const [connection, setConnection] = useState(true);
+  let unsubscribe = null
 
   // Initialize Language
   useEffect(() => {
@@ -41,16 +43,19 @@ const App = () => {
 
     i18nLang();
 
-    const unsubscribe = NetInfo.addEventListener(state => {
-      setConnection(state?.isInternetReachable);
+    unsubscribe = NetInfo.addEventListener(state => {
+      setConnection(state?.isInternetReachable || false);
     });
+
 
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
 
 
     return () => {
-      unsubscribe();
+      if (unsubscribe !== null) {
+        unsubscribe();
+      }
     }
   }, []);
 
@@ -60,28 +65,44 @@ const App = () => {
   }
 
   const handleNotification = (notification) => {
-    const responseData = notification?.request?.content?.data;
+    let responseData = notification?.request?.content?.data;
     if (responseData?.type === 'appLink') {
       Linking.openURL(responseData?.link);
     }
   }
 
   const handleNotificationResponse = (response) => {
-    const responseData = response?.notification?.request?.content?.data;
+    let responseData = response?.notification?.request?.content?.data;
     if (responseData?.type === 'appLink') {
       Linking.openURL(responseData?.link);
     }
   }
 
-  return (
-    <ApolloProvider client={client}>
+  const unhideSplash = async () => {
+    await SplashScreen.hideAsync();
+  }
+
+  if (connection) {
+    return (
+      <ApolloProvider client={client}>
+        <SafeAreaProvider>
+          <StatusBar hidden={Platform.OS === 'android'} style="light" />
+          <Navigation connection={connection} />
+          <ToastComponent />
+        </SafeAreaProvider>
+      </ApolloProvider>
+    )
+  }
+  else {
+    unhideSplash();
+    return (
       <SafeAreaProvider>
-        <StatusBar hidden={Platform.OS === 'android'} style="light" />
-        <Navigation connection={connection} />
+        <StatusBar style="dark" />
+        <Offline connection={false} />
         <ToastComponent />
       </SafeAreaProvider>
-    </ApolloProvider>
-  );
+    )
+  }
 }
 
 export default App;

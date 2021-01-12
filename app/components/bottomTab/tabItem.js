@@ -9,17 +9,23 @@ import getIconName from './getIconName';
 import style from "./style";
 import { MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
 import { useTranslation } from 'react-i18next';
+import { memo } from 'react';
 
 const TabItem = ({ options, route, index, state, navigation }) => {
   const insets = useSafeAreaInsets();
   const styles = style(insets, state?.history.length);
   const isFocused = state.index === index;
-  const selectedTabTextAnim = useRef(new Animated.Value(-2)).current;
+  const selectedTabTextAnim = useRef(new Animated.Value(0)).current;
+  const selectedTabView = useRef(new Animated.Value(0)).current;
   const { t } = useTranslation();
 
   useEffect(() => {
     if (isFocused) {
       onPress();
+    }
+
+    if (!isFocused) {
+      focusOut();
     }
   }, [isFocused]);
 
@@ -36,7 +42,13 @@ const TabItem = ({ options, route, index, state, navigation }) => {
     });
 
     Animated.timing(selectedTabTextAnim, {
-      toValue: -20,
+      toValue: -5,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+
+    Animated.timing(selectedTabView, {
+      toValue: -10,
       duration: 200,
       useNativeDriver: true,
     }).start();
@@ -55,8 +67,29 @@ const TabItem = ({ options, route, index, state, navigation }) => {
     });
   };
 
+  const focusOut = () => {
+    Animated.timing(selectedTabTextAnim, {
+      toValue: -20,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+
+    Animated.timing(selectedTabView, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
-    <View style={styles.tabItem} key={index}>
+    <Animated.View
+      style={[styles.tabItem, {
+        transform: [{
+          translateY: route.name !== MEMBERSHIP_TAB_SCREEN ? selectedTabView : 0,
+        }],
+      }]}
+      key={index}
+    >
       <RippleFX
         accessibilityRole="button"
         accessibilityStates={isFocused ? ['selected'] : []}
@@ -64,14 +97,17 @@ const TabItem = ({ options, route, index, state, navigation }) => {
         testID={options.tabBarTestID}
         onPress={onPress}
         onLongPress={onLongPress}
-        style={route.name === MEMBERSHIP_TAB_SCREEN ? styles.memberIconContainer : styles.iconContainer}
+        style={route.name === MEMBERSHIP_TAB_SCREEN ? isFocused ? styles.memberIconContainerFocused : styles.memberIconContainer : isFocused ? styles.iconContainerFocused : styles.iconContainer}
+        rippleColor={colors?.primary}
       >
         <FontAwesomeIcon
           icon={getIconName(route.name)}
-          color={route.name === MEMBERSHIP_TAB_SCREEN ? colors.white : isFocused ? colors.primary : colors.text_lite}
+          color={route.name === MEMBERSHIP_TAB_SCREEN ? isFocused ? colors.primary : colors.white : isFocused ? colors.primary : colors.text_lite}
           size={22}
+          style={styles.icon}
         />
       </RippleFX>
+
       {route.name !== MEMBERSHIP_TAB_SCREEN ? isFocused && (
         <Animated.Text
           style={[styles.itemText, {
@@ -83,8 +119,8 @@ const TabItem = ({ options, route, index, state, navigation }) => {
           {t(label)}
         </Animated.Text>
       ) : null}
-    </View>
+    </Animated.View>
   );
 };
 
-export default TabItem;
+export default memo(TabItem);

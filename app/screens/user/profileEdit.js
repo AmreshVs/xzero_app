@@ -1,5 +1,5 @@
 import React, { useState, memo, useContext } from 'react';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ import Row from 'components/row';
 import Button from 'components/button';
 import Checkbox from 'components/checkbox';
 import { ToastMsg } from 'components/toastMsg';
-import { handleDOB, handleServerDOB, getFormatedDate } from 'constants/commonFunctions';
+import { handleDOB, handleServerDOB, getFormatedDate, getAuthenticationHeader } from 'constants/commonFunctions';
 import { UserDataContext } from 'context';
 import { UPDATE_USER } from 'graphql/mutations';
 import { OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
@@ -31,43 +31,60 @@ const ProfileEdit = ({ setEdit, data }) => {
   const { push } = useNavigation();
   const { logError } = useErrorLog();
 
+  let mutationInput = {};
+
   const handleSave = async (values) => {
     setLoading(true);
     let dob = handleServerDOB(values.dob);
-
     let data = null;
 
     try {
       if (checked) {
-        let { data: updateData } = await client.mutate({
+        mutationInput = {
+          user_id: Number(userData?.id),
+          email: values.email,
+          mobile_number: Number(values.phone),
+          password: values.repassword || null,
+          dob: new Date(dob),
+        };
+
+        let { data: updateData, errors } = await client.mutate({
           mutation: UPDATE_USER,
-          variables: {
-            user_id: Number(userData?.id),
-            email: values.email,
-            mobile_number: Number(values.phone),
-            password: values.repassword || null,
-            dob: dob,
-          },
+          variables: mutationInput,
+          ...getAuthenticationHeader(userData?.jwt)
         });
+
         data = updateData;
+        if (errors) {
+          ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
+        }
       } else {
-        let { data: updateData } = await client.mutate({
+        mutationInput = {
+          user_id: Number(userData?.id),
+          email: values.email,
+          mobile_number: Number(values.phone),
+          dob: new Date(dob),
+        };
+
+        let { data: updateData, errors } = await client.mutate({
           mutation: UPDATE_USER,
-          variables: {
-            user_id: Number(userData?.id),
-            email: values.email,
-            mobile_number: Number(values.phone),
-            dob: new Date(dob),
-          },
+          variables: mutationInput,
+          ...getAuthenticationHeader(userData?.jwt)
         });
+
         data = updateData;
+
+        if (errors) {
+          ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
+        }
       }
 
+
       setLoading(false);
-      let user = data?.updateUser?.user || [];
+      let user = data?.updateUserData?.user || [];
 
       if (Object.keys(user).length) {
-        let updatedUserData = { ...userData, ...data?.updateUser?.user };
+        let updatedUserData = { ...userData, ...data?.updateUserData?.user };
         setUserData(updatedUserData);
         setEdit(false);
         if (userData?.mobile_number !== Number(values.phone)) {
@@ -80,11 +97,10 @@ const ProfileEdit = ({ setEdit, data }) => {
     } catch (error) {
       console.log('Update Profile error', error);
       setLoading(false);
-      ToastMsg(t('error_occured'));
       logError({
         screen: PROFILE_TAB_SCREEN,
         module: 'Edit profile',
-        input: JSON.stringify(values),
+        input: JSON.stringify(mutationInput),
         error: JSON.stringify(error)
       });
     }
@@ -136,7 +152,7 @@ const ProfileEdit = ({ setEdit, data }) => {
                     onBlur={() => setFieldTouched(name)}
                     autoCapitalize="none"
                     secureTextEntry={name.includes('password', 'repassword') ? true : false}
-                    onTouchStart={() => name === 'dob' && setDatePickerVisibility(true)}
+                    onTouchStart={() => name === 'dob' && (setDatePickerVisibility(true) && Keyboard.dismiss())}
                   />
                   <FormError touched={touched[name]} errorText={errors[name]} />
                 </View>

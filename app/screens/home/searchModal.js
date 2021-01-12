@@ -13,7 +13,6 @@ import Button from 'components/button';
 import FormError from 'components/formError';
 import Card from 'components/card';
 import ModalSearchHeader from 'components/modalSearchHeader';
-import { ToastMsg } from 'components/toastMsg';
 import { SCREEN_HEIGHT } from 'constants/common';
 import { HOME_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
@@ -45,7 +44,6 @@ const SearchModal = ({ modalizeRef }) => {
   });
 
   if (error) {
-    ToastMsg(t('error_occured'));
     logError({
       screen: HOME_SCREEN,
       module: 'Home Common Search',

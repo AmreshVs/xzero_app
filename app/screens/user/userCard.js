@@ -21,9 +21,13 @@ const UserCard = ({ edit, setEdit, data }) => {
 
   const RightIcon = () => {
     return (
-      <RippleFX style={styles.rightIconContainer} onPress={() => setEdit(!edit)}>
-        {!edit && <FontAwesomeIcon icon="edit" size={17} color={colors.white} />}
-      </RippleFX>
+      <View style={styles.rightIconContainer}>
+        {!edit && (
+          <RippleFX style={styles.rightIcon} onPress={() => setEdit(!edit)}>
+            <FontAwesomeIcon icon="edit" size={17} color={colors.white} />
+          </RippleFX>
+        )}
+      </View>
     );
   };
 
@@ -43,7 +47,7 @@ const UserCard = ({ edit, setEdit, data }) => {
             source={{ uri: userData?.profile_pic }}
           />
           :
-          <FontAwesomeIcon icon="user-alt" size={25} color={colors.text_lite} />
+          <FontAwesomeIcon icon="user-alt" style={styles.icon} size={25} color={colors.primary} />
         }
       </View>
       <Text style={styles.username}>{firstLetterUpper(data?.username)}</Text>

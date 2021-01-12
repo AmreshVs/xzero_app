@@ -85,6 +85,9 @@ const mobileStyles = StyleSheet.create({
     ...whiteBg,
     overflow: 'hidden',
   },
+  icon: {
+    margin: 15
+  },
   username: {
     ...colorWhite,
     ...font20,
@@ -112,6 +115,11 @@ const mobileStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1
+  },
+  rightIcon: {
+    padding: 10,
+    borderRadius: 20,
+    overflow: 'hidden'
   }
 });
 

@@ -15,6 +15,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { CREATE_BANK_INFO, UPDATE_BANK_INFO } from 'graphql/mutations';
 import { REFER } from 'navigation/routes';
 import { inputsValidationSchema, inputs } from './helpers';
+import { getAuthenticationHeader } from 'constants/commonFunctions';
 
 const EditBankInfo = ({ setEdit, data, reload }) => {
   const { t } = useTranslation();
@@ -37,15 +38,15 @@ const EditBankInfo = ({ setEdit, data, reload }) => {
     };
 
     try {
-      let { data: bankData } = await client.mutate({
+      let { data: bankData, errors } = await client.mutate({
         mutation: data === null ? CREATE_BANK_INFO : UPDATE_BANK_INFO,
         variables: mutationInput,
-        // context: {
-        //   headers: {
-        //     Authorization: 'Bearer ' + jwt,
-        //   },
-        // },
+        ...getAuthenticationHeader(userData?.jwt)
       });
+
+      if (errors) {
+        ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
+      }
 
       if (data === null) {
         mutationData = bankData?.createBankDetail?.bankDetail;

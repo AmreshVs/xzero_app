@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 import { handlelogout } from 'screens/user/profileView';
 import colors from 'constants/colors';
@@ -12,10 +13,12 @@ import Box from 'components/box';
 import Row from 'components/row';
 import Button from 'components/button';
 import RippleFX from 'components/rippleFx';
+import ProgressiveImage from 'components/progressiveImage';
+import { sendWhatsappMessage } from 'constants/commonFunctions';
+import { WHATSAPP_CONTACT } from 'constants/common';
 import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN } from 'navigation/routes';
-import ProgressiveImage from 'components/progressiveImage';
 
 export default function CustomDrawer(props) {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -127,6 +130,10 @@ export default function CustomDrawer(props) {
 
   }
 
+  const handleContact = () => {
+    return sendWhatsappMessage(`${t('whatsapp1')} ${userData?.username} ${t('drawer_contact')}`, WHATSAPP_CONTACT)
+  }
+
   return (
     <DrawerContentScrollView
       contentContainerStyle={styles.content}
@@ -172,6 +179,17 @@ export default function CustomDrawer(props) {
         return null;
       })}
       <Box style={styles.footer} padding={20}>
+        <Button
+          size="small"
+          status="success"
+          width="100%"
+          icon={faWhatsapp}
+          onPress={() => handleContact()}
+          outline
+        >
+          {t('contact')}
+        </Button>
+        <Box marginBottom={10} />
         <Button
           size="small"
           status={userData ? 'danger' : 'chip_1'}

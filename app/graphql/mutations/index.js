@@ -58,7 +58,7 @@ export const CREATE_USER = gql`
 
 export const UPDATE_USER = gql`
   mutation updateUser($user_id: ID!, $email: String!, $mobile_number: Long!, $password: String, $dob: DateTime! ){
-    updateUser(input: {
+    updateUserData(input: {
       where: {
         id: $user_id
       },

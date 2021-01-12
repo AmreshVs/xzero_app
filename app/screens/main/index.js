@@ -22,11 +22,15 @@ const Main = ({ navigation }) => {
   const { logError } = useErrorLog();
 
   useEffect(() => {
+    unhideSplash();
     checkExpoUpdates();
   }, []);
 
-  const checkExpoUpdates = async () => {
+  const unhideSplash = async () => {
     await SplashScreen.hideAsync();
+  }
+
+  const checkExpoUpdates = async () => {
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {

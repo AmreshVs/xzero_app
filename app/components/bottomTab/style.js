@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import colors from 'constants/colors';
 
-const style = (insets, history = 1) => StyleSheet.create({
+const style = (insets) => StyleSheet.create({
   tabContainer: {
     backgroundColor: colors.white,
     flexDirection: 'row',
@@ -15,24 +15,47 @@ const style = (insets, history = 1) => StyleSheet.create({
     alignItems: 'center',
     padding: 5,
   },
+  icon: {
+    marginBottom: 0
+  },
   iconContainer: {
     borderRadius: 50,
     overflow: 'hidden',
-    paddingBottom: 20,
     width: '100%',
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconContainerFocused: {
+    borderRadius: 50,
+    overflow: 'hidden',
+    width: '100%',
+    height: 40,
     paddingTop: 5,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   memberIconContainer: {
     alignItems: 'center',
     padding: 15,
     borderRadius: 50,
     overflow: 'hidden',
-    marginTop: -10,
+    marginTop: -20,
     position: 'absolute',
     borderWidth: 7,
     borderColor: colors.primary_lite,
     backgroundColor: colors.primary,
+  },
+  memberIconContainerFocused: {
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 50,
+    overflow: 'hidden',
+    marginTop: -20,
+    position: 'absolute',
+    borderWidth: 7,
+    borderColor: colors.primary,
+    backgroundColor: colors.lite_gray,
   },
   itemText: {
     position: 'absolute',

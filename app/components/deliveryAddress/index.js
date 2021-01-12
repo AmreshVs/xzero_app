@@ -11,7 +11,7 @@ import Textbox from 'components/textbox';
 import { SCREEN_HEIGHT } from 'constants/common';
 import FormError from 'components/formError';
 import { ToastMsg } from 'components/toastMsg';
-import { handleMobileNumber } from 'constants/commonFunctions';
+import { getAuthenticationHeader, handleMobileNumber } from 'constants/commonFunctions';
 import { borderRadius10, font17, marginTop10, textBoldDark, textLite } from 'constants/commonStyles';
 import { UserDataContext } from 'context';
 import { EDIT_ADDRESS } from 'graphql/mutations';
@@ -35,7 +35,7 @@ export default function DeliveryAddress({ ...otherStyles }) {
 
   const handleSave = async (values) => {
     if (values?.fullname?.split(" ")?.length <= 1) {
-      ToastMsg('Please enter full name');
+      ToastMsg(t('enter_fullname'));
       return;
     }
     try {
@@ -47,6 +47,7 @@ export default function DeliveryAddress({ ...otherStyles }) {
           username: values?.fullname,
           address: values?.address,
         },
+        ...getAuthenticationHeader(userData?.jwt)
       });
 
       if (errors) {
