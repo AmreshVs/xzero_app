@@ -55,7 +55,7 @@ const Vouchers = () => {
   });
 
   if (error) {
-    console.log('Vouchers Error', error);
+    // console.log('Vouchers Error', error);
     ToastMsg(t('error_occured'));
     logError({
       screen: NAV_VOUCHER,

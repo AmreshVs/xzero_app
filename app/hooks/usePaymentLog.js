@@ -27,7 +27,7 @@ export default function usePaymentLog() {
         });
       }
       catch (error) {
-        console.log('Log Payment Error', error);
+        // console.log('Log Payment Error', error);
       }
 
     }

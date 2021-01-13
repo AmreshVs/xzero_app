@@ -40,7 +40,7 @@ export default function Payment() {
   const client = useApolloClient();
 
   useEffect(() => {
-    if (params?.discount === "100") {
+    if (params?.discount == "100") {
       postPayment('SUCCESS');
     }
     else {
@@ -124,7 +124,7 @@ export default function Payment() {
       });
     }
     catch (error) {
-      console.log('Generate payment url error', error);
+      // console.log('Generate payment url error', error);
       setState({
         ...state,
         loading: false,

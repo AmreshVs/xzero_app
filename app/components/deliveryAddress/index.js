@@ -51,7 +51,7 @@ export default function DeliveryAddress({ ...otherStyles }) {
       });
 
       if (errors) {
-        console.log('Edit Delivery Address', errors);
+        // console.log('Edit Delivery Address', errors);
         ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
         logError({
           screen: VOUCHER_DETAIL,
@@ -68,7 +68,7 @@ export default function DeliveryAddress({ ...otherStyles }) {
       }
     }
     catch (error) {
-      console.log('Edit address error', errror);
+      // console.log('Edit address error', errror);
     }
   }
 

@@ -21,20 +21,11 @@ import { HOME_SCREEN } from 'navigation/routes';
 import { useInterval } from './helpers';
 import styles from './styles';
 
-let otpArray = [];
 
 const Otp = () => {
-  const initialState = [
-    { value: '', ref: useRef() },
-    { value: '', ref: useRef() },
-    { value: '', ref: useRef() },
-    { value: '', ref: useRef() }
-  ];
-
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(true);
-  const [btnDisabled, setBtnDisabled] = useState(true);
-  const [otp, setOtp] = useState(initialState);
+  const [btnDisabled, setBtnDisabled] = useState(false);
+  const [otp, setOtp] = useState('');
   const [responseOtp, setResponseOtp] = useState('');
   const [timer, setTimer] = useState(0);
   const { userData, setUserData } = useContext(UserDataContext);
@@ -48,15 +39,9 @@ const Otp = () => {
   let [toggleSmsListener] = useInterval(async () => {
     let clipboardOtp = await Clipboard.getStringAsync();
     if (clipboardOtp === responseOtp) {
-      setOtp([
-        { ...otp[0], value: responseOtp[0] },
-        { ...otp[1], value: responseOtp[1] },
-        { ...otp[2], value: responseOtp[2] },
-        { ...otp[3], value: responseOtp[3] },
-      ]);
+      setOtp(responseOtp);
       toggleSmsListener();
     }
-
   }, 2000);
 
   const [toggleTimer, runningStatus] = useInterval(() => {
@@ -75,24 +60,8 @@ const Otp = () => {
   }, []);
 
 
-  const handleType = (text, index) => {
-    otpArray = otp;
-    otpArray[index] = { ...otpArray[index], value: text };
-    setOtp([...otpArray]);
-
-    if (text === '') {
-      if (otp[index - 1] !== undefined) {
-        otp[index - 1].ref?.current.focus();
-        return;
-      }
-
-      otp[0].ref?.current.focus();
-      return;
-    }
-
-    if (otp[index].ref?.current && otp[index + 1]) {
-      otp[index + 1].ref?.current.focus();
-    }
+  const handleType = (text) => {
+    setOtp(text);
   }
 
   const handleConfirm = async () => {
@@ -101,7 +70,7 @@ const Otp = () => {
       query: VERIFY_OTP,
       variables: {
         user: Number(params?.user_id),
-        otp: Number(otp[0].value + otp[1].value + otp[2].value + otp[3].value)
+        otp: Number(otp)
       },
     });
 
@@ -113,9 +82,9 @@ const Otp = () => {
 
     if (errors) {
       ToastMsg(errors[0]?.extensions?.exception?.data?.data[0]?.messages[0]?.message);
+      setBtnDisabled(false);
     }
-    setOtp([...initialState]);
-    otp[0].ref?.current.focus();
+    setOtp('');
     setLoading(false);
   }
 
@@ -135,28 +104,10 @@ const Otp = () => {
       setResponseOtp(data?.SendSms?.otp);
       toggleSmsListener();
       ToastMsg(t('otp_sent'));
+      setBtnDisabled(false);
     }
 
     return;
-  }
-
-  const handleOTPType = (text, index) => {
-    if (text?.length === 4) {
-      setOtp(otp => [
-        { ...otp[0], value: text[0] },
-        { ...otp[1], value: text[1] },
-        { ...otp[2], value: text[2] },
-        { ...otp[3], value: text[3] },
-      ]);
-      setDisabled(false);
-      setBtnDisabled(false);
-    }
-    else {
-      if (index === 3) {
-        setBtnDisabled(false);
-      }
-      handleType(text, index);
-    }
   }
 
   const handleMobileNumber = (mobile_number) => {
@@ -180,21 +131,14 @@ const Otp = () => {
         <Text style={styles.caption}>{t('otp_desc')}</Text>
         <Text style={styles.mobile}>{handleMobileNumber(params?.mobile_number)}</Text>
         <Row style={styles.inputsContainer}>
-          {otp.map((item, index) => {
-            return (
-              <Textbox
-                ref={item.ref}
-                placeholder=""
-                value={otp[index].value}
-                style={styles.textbox}
-                keyboardType='numeric'
-                editable={disabled}
-                onChangeText={(text) => handleOTPType(text, index)}
-                key={index}
-              />
-            )
-          }
-          )}
+          <Textbox
+            placeholder="XXXX"
+            value={otp}
+            style={styles.textbox}
+            keyboardType='numeric'
+            onChangeText={(text) => handleType(text)}
+            maxLength={4}
+          />
         </Row>
         {runningStatus ?
           <Box marginTop={20}>

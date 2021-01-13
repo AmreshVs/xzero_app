@@ -19,9 +19,10 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   textbox: {
-    width: 41,
+    width: 75,
     borderRadius: 5,
-    marginHorizontal: 10
+    marginHorizontal: 10,
+    textAlign: 'center'
   },
   mobile: {
     marginTop: 10,

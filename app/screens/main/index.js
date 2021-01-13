@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, memo } from 'react';
+import React, { useContext, useEffect, memo, useState } from 'react';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useApolloClient } from '@apollo/client';
@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Updates from 'expo-updates';
+import * as Linking from 'expo-linking';
 
 import { saveUserDataLocally } from 'screens/login/helpers';
 import { ToastMsg } from 'components/toastMsg';
@@ -41,7 +42,7 @@ const Main = ({ navigation }) => {
         }, 1500);
       }
     } catch (error) {
-      console.log('Expo Updates Error', error);
+      // console.log('Expo Updates Error', error);
       logError({
         screen: MAIN_SCREEN,
         module: 'Expo Updates',
@@ -59,7 +60,7 @@ const Main = ({ navigation }) => {
     });
 
     if (error) {
-      console.log('Basic Information Error', error);
+      // console.log('Basic Information Error', error);
       logError({
         screen: MAIN_SCREEN,
         module: 'Basic Information',
@@ -89,15 +90,16 @@ const Main = ({ navigation }) => {
   };
 
   const checkUser = async () => {
+    let jwt = null;
+    let userData = null;
+
+    jwt = await AsyncStorage.getItem('@xzero_jwt');
+    userData = await AsyncStorage.getItem('@xzero_user');
+
     try {
       let appInstall = await AsyncStorage.getItem('@xzero_install');
 
       if (appInstall == "true") {
-        let jwt = null;
-        let userData = null;
-
-        jwt = await AsyncStorage.getItem('@xzero_jwt');
-        userData = await AsyncStorage.getItem('@xzero_user');
 
         if (userData !== null && userData !== '') {
           let loginData = JSON.parse(userData);
@@ -123,15 +125,18 @@ const Main = ({ navigation }) => {
             });
 
             await saveUserDataLocally('xzero_user', { ...loginData, ...data?.user });
-            if (data?.user?.confirmed || data?.user?.provider !== 'local') {
-              navigation.replace(HOME_SCREEN);
+
+            let deepLink = await Linking.getInitialURL();
+            if (deepLink && deepLink !== null && deepLink !== '') {
+              if (deepLink.includes("Main/")) {
+                deepLink = deepLink.replace("Main/", "");
+              }
+              Linking.openURL(deepLink);
             }
             else {
-              navigation.replace(OTP, {
-                user_id: data?.user?.id,
-                mobile_number: data?.user?.mobile_number
-              });
+              navigation.replace(HOME_SCREEN);
             }
+
             return;
           }
           else {
@@ -145,7 +150,7 @@ const Main = ({ navigation }) => {
         navigation.replace(INTRO);
       }
     } catch (error) {
-      console.log('Getting user data from async error', error);
+      // console.log('Getting user data from async error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: MAIN_SCREEN,

@@ -29,7 +29,7 @@ const Notifications = () => {
   });
 
   if (error) {
-    console.log('Notifications Error', error);
+    // console.log('Notifications Error', error);
     ToastMsg(t('error_occured'));
     logError({
       screen: NAV_NOTIFICATIONS,

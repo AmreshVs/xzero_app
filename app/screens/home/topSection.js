@@ -34,7 +34,7 @@ export const UpdateLanguage = async (client, params) => {
     });
   }
   catch (error) {
-    console.log('Update Language Error', error);
+    // console.log('Update Language Error', error);
   }
 }
 
@@ -42,7 +42,7 @@ const TopSection = ({ notificationCount, handleModalOpen }) => {
   const { push, toggleDrawer } = useNavigation();
   const { userData } = useContext(UserDataContext);
   const { logError } = useErrorLog();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();
   const client = useApolloClient();
 
@@ -59,7 +59,7 @@ const TopSection = ({ notificationCount, handleModalOpen }) => {
       await UpdateLanguage(client, { user_id: userData?.id, language });
     }
     catch (error) {
-      console.log('Change Language error', error);
+      // console.log('Change Language error', error);
       logError({
         screen: HOME_SCREEN,
         module: 'Saving Change language data',
@@ -115,12 +115,19 @@ const TopSection = ({ notificationCount, handleModalOpen }) => {
                 />
               </View>
               :
-              <FontAwesomeIcon icon="user-circle" color={colors.white} size={45} />
+              userData && <FontAwesomeIcon icon="user-circle" color={colors.white} size={45} />
             }
-            <View style={styles.textContiner}>
-              <Text style={styles.username}>{firstLetterUpper(name)}</Text>
-              <Text style={styles.topCaption}>{email}</Text>
-            </View>
+            {userData ?
+              <View style={styles.textContiner}>
+                <Text style={styles.username} numberOfLines={1}>{firstLetterUpper(name)}</Text>
+                <Text style={styles.topCaption} numberOfLines={1}>{email}</Text>
+              </View>
+              :
+              <View style={styles.textContiner}>
+                <Text style={styles.ntitle}>{t('get_started')}</Text>
+                <Text style={styles.topCaption}>{t('signup_note')}</Text>
+              </View>
+            }
           </Row>
         </Box>
       </SafeView>

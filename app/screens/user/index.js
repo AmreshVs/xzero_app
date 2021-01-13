@@ -18,6 +18,7 @@ import UserCard from './userCard';
 import ProfileView from './profileView';
 import ProfileEdit from './profileEdit';
 import styles from './styles';
+import { getAuthenticationHeader } from 'constants/commonFunctions';
 
 const User = () => {
   const { t } = useTranslation();
@@ -57,12 +58,14 @@ const User = () => {
           data: {
             show_popup: enabledStatus
           }
-        }
+        },
+        ...getAuthenticationHeader(userData?.jwt)
       });
+
       setUserData({ ...userData, show_popup: enabledStatus })
     }
     catch (error) {
-      console.log('Toggle Popup error', error);
+      // console.log('Toggle Popup error', error);
       logError({
         screen: PROFILE_TAB_SCREEN,
         module: 'Saving Popup Status',
@@ -76,6 +79,7 @@ const User = () => {
     checkPopUp();
     if (!edit) {
       _refetch();
+      setUserData(user => ({ ...user, ...data?.user }));
     }
   }, [edit]);
 
@@ -117,7 +121,7 @@ const User = () => {
                     trackColor={{ false: colors.text_lite, true: colors.primary }}
                     thumbColor={colors.white}
                     ios_backgroundColor={colors.text_lite}
-                    onValueChange={toggleSwitch}
+                    onValueChange={() => toggleSwitch()}
                     value={isEnabled}
                   />
                 </Row>

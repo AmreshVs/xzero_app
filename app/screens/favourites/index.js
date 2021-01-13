@@ -63,7 +63,7 @@ const Favourites = () => {
       }
     }
     catch (error) {
-      console.log('Clear Favourites error', error);
+      // console.log('Clear Favourites error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: FAVOURITES_TAB_SCREEN,

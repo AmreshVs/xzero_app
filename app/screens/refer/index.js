@@ -74,7 +74,7 @@ const Refer = () => {
   let refer_program = data?.user?.enable_refer_and_earn && refer?.referProgram?.status;
 
   if (error) {
-    console.log('Get Refer Error', error);
+    // console.log('Get Refer Error', error);
     ToastMsg(t('error_occured'));
     logError({
       screen: REFER,
@@ -118,7 +118,7 @@ const Refer = () => {
         dialogTitle: 'Refer your friends'
       });
     } catch (error) {
-      console.log('Share and earn error', error);
+      // console.log('Share and earn error', error);
     }
   }
 

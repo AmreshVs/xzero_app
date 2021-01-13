@@ -49,7 +49,7 @@ const GenerateGift = ({ generated, refetch }) => {
       Won(data?.GenerateGift);
     }
     catch (error) {
-      console.log('Generate Gift error', error);
+      // console.log('Generate Gift error', error);
       setLoading(false);
       ToastMsg(t('error_occured'));
       logError({
@@ -172,6 +172,7 @@ const GenerateGift = ({ generated, refetch }) => {
               onPress={() => handleGenerate()}
               loading={loading}
               disabled={tried !== true ? false : true}
+              timeout={false}
             >
               {t('try_your_luck')}
             </Button>

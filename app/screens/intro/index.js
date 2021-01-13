@@ -54,7 +54,7 @@ const Intro = ({ navigation }) => {
       await AsyncStorage.setItem('@xzero_install', "true");
     }
     catch (error) {
-      console.log('Set Storage Error', error);
+      // console.log('Set Storage Error', error);
     }
   }
 

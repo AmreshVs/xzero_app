@@ -29,14 +29,14 @@ import styles from './styles';
 
 const OfferDetail = () => {
   const { userData } = useContext(UserDataContext);
-  const { params: { offer_id, user_id, center } } = useRoute();
+  const { params } = useRoute();
   const { logError } = useErrorLog();
   const { t } = useTranslation();
 
   let queryInput = {
-    offer_id: Number(offer_id),
-    id: Number(offer_id) || 0,
-    user_id: Number(user_id) || Number(userData?.id) || 0
+    offer_id: Number(params?.offer_id),
+    id: Number(params?.offer_id) || 0,
+    user_id: Number(params?.user_id) || Number(userData?.id) || 0
   };
 
   const { data, loading, error } = useQuery(OFFERS_DETAIL, {
@@ -80,14 +80,14 @@ const OfferDetail = () => {
       <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={styles.gradient} />
       <SafeView style={styles.container} topNav loading={loading}>
         <TopNavigator
-          title={firstLetterUpper(center)}
+          title={firstLetterUpper(params?.center)}
           color={colors.white}
           rightContainer={userData && <RightIcon />}
         />
         <ScrollView showsVerticalScrollIndicator={false}>
           <OfferCard discount={offer?.discount} />
           <CenterInfo offer={offer} username={userData?.id} />
-          <PriceDetails offer={offer} center={center} />
+          <PriceDetails offer={offer} center={params?.center} />
           <OfferDescription offer={offer} />
           <AvailDiscount data={data?.offerGuideline} />
           <Row justifyContent="space-between">

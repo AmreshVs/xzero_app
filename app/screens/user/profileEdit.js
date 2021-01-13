@@ -95,7 +95,7 @@ const ProfileEdit = ({ setEdit, data }) => {
         }
       }
     } catch (error) {
-      console.log('Update Profile error', error);
+      // console.log('Update Profile error', error);
       setLoading(false);
       logError({
         screen: PROFILE_TAB_SCREEN,

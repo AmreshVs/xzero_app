@@ -26,7 +26,7 @@ const googleSignin = async (logError) => {
     }
     return null;
   } catch (error) {
-    console.log('Google Login error', error);
+    // console.log('Google Login error', error);
     await logError({
       screen: LOGIN_SCREEN,
       module: 'Google Login',

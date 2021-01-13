@@ -38,7 +38,8 @@ const Home = () => {
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_HOME, {
     variables: {
-      user_id: Number(userData?.id || 0)
+      user_id: Number(userData?.id || 0),
+      user: Number(userData?.id || 0)
     }
   });
 
@@ -88,8 +89,8 @@ const Home = () => {
 
     if (openLink === 0) {
       backupLink = url;
-      if (url.includes('Home/')) {
-        url = (url).replace("Home/", "");
+      if (url.includes('Main/')) {
+        url = (url).replace("Main/", "");
       }
       await Linking.openURL(url);
     }
@@ -107,7 +108,7 @@ const Home = () => {
     return (
       <>
         <TopSection notificationCount={data?.notificationCount} handleModalOpen={handleModalOpen} />
-        <MembershipBox data={counts} />
+        <MembershipBox expiry={data?.user?.membership?.expiry} data={counts} />
         <Slider data={banners} />
         <Box padding={10} paddingBottom={0}>
           <Heading marginBottom={10}>{t('discover_categories')}</Heading>

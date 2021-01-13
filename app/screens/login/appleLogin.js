@@ -40,7 +40,7 @@ const AppleLoginButton = ({ handleSocialLogin }) => {
         ToastMsg(t('error_occured'));
       }
     } catch (error) {
-      console.log('Apple Login error', error);
+      // console.log('Apple Login error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: LOGIN_SCREEN,

@@ -74,7 +74,7 @@ const Login = ({ navigation }) => {
       }
     }
     catch (error) {
-      console.log('Create Non User Error', error);
+      // console.log('Create Non User Error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: LOGIN_SCREEN,
@@ -105,16 +105,10 @@ const Login = ({ navigation }) => {
 
     let loginData = response?.userlogin;
 
-    setUserData({
-      jwt: loginData?.jwt,
-      ...loginData?.user,
-      profile_pic: values?.profile_pic
-    });
-
     setLoading(false);
 
     if (errors) {
-      console.log('Login Error', errors);
+      // console.log('Login Error', errors);
       ToastMsg(t('error_occured'));
       logError({
         screen: LOGIN_SCREEN,
@@ -130,6 +124,12 @@ const Login = ({ navigation }) => {
     }
 
     if (loginData && loginData?.user) {
+      setUserData({
+        jwt: loginData?.jwt,
+        ...loginData?.user,
+        profile_pic: values?.profile_pic
+      });
+
       await saveUserDataLocally('xzero_user', { ...loginData?.user, profile_pic: values?.profile_pic });
       await saveUserDataLocally('xzero_jwt', loginData?.jwt);
       if (loginData?.user?.confirmed === true || loginData?.user?.provider !== 'local' || loginData?.user?.mobile_number === 0) {
@@ -157,7 +157,7 @@ const Login = ({ navigation }) => {
       });
     }
     catch (error) {
-      console.log('Update notification error', error);
+      // console.log('Update notification error', error);
       ToastMsg(t('error_occured'));
       logError({
         screen: LOGIN_SCREEN,
@@ -192,7 +192,7 @@ const Login = ({ navigation }) => {
         }
       }
       catch (error) {
-        console.log('Getting user Data error', error);
+        // console.log('Getting user Data error', error);
         setLoading(false);
         ToastMsg(t('error_occured'));
         logError({
@@ -258,7 +258,7 @@ const Login = ({ navigation }) => {
         navigation.replace(HOME_SCREEN);
       }
     } catch (error) {
-      console.log('From login error', error);
+      // console.log('From login error', error);
       logError({
         screen: LOGIN_SCREEN,
         module: 'Create User',

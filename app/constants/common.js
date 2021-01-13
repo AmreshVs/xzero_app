@@ -1,7 +1,7 @@
 import { Dimensions } from "react-native";
 
 // export const phoneRegExp = /^(?:\+)((?:3|4|5|6|7|9|50|51|52|55|56)[0-9]{7,})$/;
-export const phoneRegExp = /^(\+?\d{1,3}[- ]?)?\d{10}$/;
+export const phoneRegExp = /^(\+?\d{1,4}[- ]?)?\d{10}$/;
 // export const BASE_URL = 'http://192.168.108.59:1337';
 export const BASE_URL = 'https://be.xzero.app/v2';
 export const API_URL = `${BASE_URL}/`;

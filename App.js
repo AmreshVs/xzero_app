@@ -44,13 +44,11 @@ const App = () => {
     i18nLang();
 
     unsubscribe = NetInfo.addEventListener(state => {
-      setConnection(state?.isInternetReachable || false);
+      setConnection(state?.isInternetReachable !== null ? state?.isInternetReachable : state?.isConnected);
     });
-
 
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
-
 
     return () => {
       if (unsubscribe !== null) {
@@ -61,7 +59,7 @@ const App = () => {
 
   const checkInternet = async () => {
     const state = await NetInfo.fetch();
-    setConnection(state?.isInternetReachable);
+    setConnection(state?.isInternetReachable !== null ? state?.isInternetReachable : state?.isConnected);
   }
 
   const handleNotification = (notification) => {

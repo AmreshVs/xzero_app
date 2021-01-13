@@ -9,12 +9,19 @@ import Button from 'components/button';
 import { UserDataContext } from 'context';
 import { POPUP } from 'graphql/queries';
 import { responsiveHeight } from 'constants/commonFunctions';
+import { useEffect } from 'react';
 
 const Popup = () => {
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const { data, loading } = useQuery(POPUP);
   const { userData } = useContext(UserDataContext);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setModalVisible(true);
+    }, 5000)
+  }, []);
 
   return (
     (loading === false && data?.popUp?.status === true && userData?.show_popup === true && data?.popUp?.featured_imgs[0]) && (
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "#000",
+    backgroundColor: "#0000008e",
     borderRadius: 20,
     overflow: 'hidden',
     alignItems: "center",

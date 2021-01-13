@@ -47,7 +47,7 @@ const VoucherDetail = ({ navigation }) => {
   });
 
   if (error) {
-    console.log('Voucher Detail error', error);
+    // console.log('Voucher Detail error', error);
     ToastMsg(t('error_occured'));
     logError({
       screen: VOUCHERDETAIL,

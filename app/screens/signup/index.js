@@ -60,7 +60,7 @@ const Signup = ({ navigation }) => {
         });
       }
       catch (error) {
-        console.log('Update Notification token error', error);
+        // console.log('Update Notification token error', error);
         ToastMsg(t('error_occured'));
         logError({
           screen: SIGNUP_SCREEN,
@@ -74,6 +74,7 @@ const Signup = ({ navigation }) => {
 
   const handleSubmit = async (values) => {
     let phone = values.phone.replace('+', '');
+    let dob = handleServerDOB(values.dob);
     setLoading(true);
     const token = await getNotificationToken();
 
@@ -83,7 +84,7 @@ const Signup = ({ navigation }) => {
       password: values.repassword,
       mobile_number: Number(phone),
       notification_token: token || '',
-      birthday: new Date(values.dob),
+      birthday: new Date(dob),
       language: language,
       provider: 'local',
       platform,
@@ -134,7 +135,7 @@ const Signup = ({ navigation }) => {
 
   const RenderHaveAccount = () => {
     const accArr = [
-      <Text key={0}>{t('have_account')}</Text>,
+      <Text key={0}>{t('have_account')} </Text>,
       <Text key={1} style={styles.signup} onPress={() => navigation.replace(LOGIN_SCREEN)}>
         {t('login')}
       </Text>,
@@ -212,7 +213,7 @@ const Signup = ({ navigation }) => {
                         style={styles.textbox}
                         keyboardType={
                           name === 'phone'
-                            ? 'number-pad'
+                            ? 'phone-pad'
                             : name === 'email'
                               ? 'email-address'
                               : 'default'
@@ -244,7 +245,6 @@ const Signup = ({ navigation }) => {
                       setFieldValue('dob', getFormatedDate(date));
                     }}
                     onCancel={() => setDatePickerVisibility(false)}
-                    isDarkModeEnabled={false}
                   />
                 </>
               )}

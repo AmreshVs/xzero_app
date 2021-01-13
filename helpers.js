@@ -18,14 +18,14 @@ const useIncomingData = {
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: 'network-only',
-    errorPolicy: 'ignore',
+    errorPolicy: 'all',
   },
   query: {
     fetchPolicy: 'network-only',
-    errorPolicy: 'ignore',
+    errorPolicy: 'all',
   },
   mutate: {
-    errorPolicy: 'ignore',
+    errorPolicy: 'all',
   },
 };
 

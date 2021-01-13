@@ -50,7 +50,7 @@ const UserCard = ({ edit, setEdit, data }) => {
           <FontAwesomeIcon icon="user-alt" style={styles.icon} size={25} color={colors.primary} />
         }
       </View>
-      <Text style={styles.username}>{firstLetterUpper(data?.username)}</Text>
+      <Text style={styles.username} numberOfLines={1}>{firstLetterUpper(data?.username)}</Text>
       <Text style={styles.userCardCaption}>
         {t('user_since')} {data?.created_at && handleDOB(data?.created_at)}
       </Text>

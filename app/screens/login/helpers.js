@@ -11,6 +11,6 @@ export const saveUserDataLocally = async (key, value) => {
   try {
     await AsyncStorage.setItem(`@${key || 'xzero_user'}`, JSON.stringify(value));
   } catch (error) {
-    console.log('Saving User Data error', error);
+    // console.log('Saving User Data error', error);
   }
 };

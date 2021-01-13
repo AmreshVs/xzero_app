@@ -16,6 +16,7 @@ export const GET_USER = gql`
       created_at
       address
       show_popup
+      confirmed
     }
   }
 `;
@@ -40,7 +41,12 @@ export const GET_USER_BY_EMAIL = gql`
 `;
 
 export const GET_HOME = gql`
-  query GetHome($user_id: Int!){
+  query GetHome($user_id: Int!, $user: ID!){
+    user(id: $user) {
+      membership {
+        expiry
+      }
+    }
     notificationCount(user: $user_id)
     centersCount: centersConnection {
       aggregate {
@@ -69,7 +75,10 @@ export const GET_HOME = gql`
     }
     banners{
       id
-      banner_img{
+      banner_img_en{
+        url
+      }
+      banner_img_ar{
         url
       }
     }

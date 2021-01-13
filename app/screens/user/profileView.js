@@ -39,7 +39,7 @@ export const handlelogout = async ({ dispatch, setUserData, logError }) => {
       setUserData(null);
     }
   } catch (error) {
-    console.log('Logout error', error);
+    // console.log('Logout error', error);
     ToastMsg(t('error_occured'));
     logError({
       screen: PROFILE_TAB_SCREEN,
@@ -74,7 +74,7 @@ const ProfileView = ({ data, setEdit }) => {
     try {
       await AsyncStorage.setItem('@xzero_user', JSON.stringify(userDataWithLanguage));
     } catch (error) {
-      console.log('Change language error', error);
+      // console.log('Change language error', error);
       logError({
         screen: PROFILE_TAB_SCREEN,
         module: 'Change Language',
@@ -106,13 +106,13 @@ const ProfileView = ({ data, setEdit }) => {
                     {handleMobileNumber(data?.mobile_number)}
                   </Text>
                   <View style={styles.verifyContainer}>
-                    <FontAwesomeIcon icon="certificate" color={userData?.confirmed ? colors.primary : colors.text_lite} size={25} />
+                    <FontAwesomeIcon icon="certificate" color={data?.confirmed ? colors.primary : colors.text_lite} size={25} />
                     <View style={styles.tickIcon}>
                       <FontAwesomeIcon icon="check" color={colors.white} size={10} />
                     </View>
                   </View>
                 </Row>
-                {!userData?.confirmed &&
+                {!data?.confirmed &&
                   <Box marginRight={20}>
                     <Button
                       size="small"

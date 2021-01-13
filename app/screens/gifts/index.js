@@ -31,7 +31,8 @@ const Gifts = () => {
       membership_plan: Number(userData?.membership?.package?.id) || null,
       user_id: Number(userData?.id),
     },
-    ...getAuthenticationHeader(userData?.jwt)
+    ...getAuthenticationHeader(userData?.jwt),
+    notifyOnNetworkStatusChange: true
   });
 
   if (error) {

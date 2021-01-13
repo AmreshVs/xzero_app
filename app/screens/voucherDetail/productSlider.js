@@ -14,7 +14,7 @@ const ProductSlider = ({ data, height, popup = false }) => {
     },
     imageContainer: {
       marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
-      backgroundColor: popup === false ? '#FFF' : '#000',
+      backgroundColor: '#FFF',
       borderRadius: 8,
       width: popup === false ? '80%' : '100%',
       height: popup === false ? 250 : height,
@@ -70,12 +70,11 @@ const ProductSlider = ({ data, height, popup = false }) => {
         <Carousel
           autoplay={false}
           sliderWidth={SCREEN_WIDTH - 45}
-          itemWidth={popup === false ? SCREEN_WIDTH - 130 : SCREEN_WIDTH}
+          itemWidth={popup === false ? SCREEN_WIDTH - 130 : (SCREEN_WIDTH - 40)}
           data={data}
           renderItem={renderItem}
           hasParallaxImages={true}
           onSnapToItem={(index) => setSlide(index)}
-          removeClippedSubviews={true}
         />
       </View>
       <View style={popup ? styles.pagination : {}}>

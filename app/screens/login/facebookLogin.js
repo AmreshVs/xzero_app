@@ -35,7 +35,7 @@ const facebookLogin = async (logError) => {
       return null;
     }
   } catch (error) {
-    console.log('Facebook login error', error);
+    // console.log('Facebook login error', error);
     logError({
       screen: LOGIN_SCREEN,
       module: 'Facebook Login',

@@ -228,7 +228,13 @@ const mobileStyles = StyleSheet.create({
     color: colors.white,
     fontSize: 11,
     fontWeight: '700'
-  }
+  },
+  ntitle: {
+    textAlign: 'center',
+    fontSize: 23,
+    ...colorWhite,
+    ...fontWeight700,
+  },
 });
 
 const tabStyles = StyleSheet.create({

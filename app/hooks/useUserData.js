@@ -18,7 +18,7 @@ export default function useUserData() {
       return;
     }
     catch (error) {
-      console.log('useUserData error', error);
+      // console.log('useUserData error', error);
     }
   }
 

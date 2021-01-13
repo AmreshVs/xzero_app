@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext, memo } from 'react';
+import React, { memo } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
-import { useApolloClient } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
 
 import Box from 'components/box';
@@ -10,59 +9,15 @@ import Row from 'components/row';
 import Divider from 'components/divider';
 import Column from 'components/column';
 import RippleFX from 'components/rippleFx';
-import { ToastMsg } from 'components/toastMsg';
-import { getAuthenticationHeader, getFormatedDate } from 'constants/commonFunctions';
+import { getFormatedDate } from 'constants/commonFunctions';
 import colors from 'constants/colors';
-import { UserDataContext } from 'context';
-import useErrorLog from 'hooks/useErrorLog';
-import { GET_MEMBERSHIP_BY_USER } from 'graphql/queries';
-import { CENTERS_SCREEN, GIFTS, HOME_SCREEN, MEMBERSHIP_TAB_SCREEN, OFFERS_SCREEN, SPECIALISTS, VOUCHERS } from 'navigation/routes';
+import { CENTERS_SCREEN, GIFTS, MEMBERSHIP_TAB_SCREEN, OFFERS_SCREEN, SPECIALISTS, VOUCHERS } from 'navigation/routes';
 import styles from './styles';
 
-const MembershipBox = ({ data }) => {
-  const [expiry, setExpiry] = useState(null);
+const MembershipBox = ({ data, expiry }) => {
+
   const { navigate, push } = useNavigation();
-  const { userData } = useContext(UserDataContext);
   const { t } = useTranslation();
-  const { logError } = useErrorLog();
-  const client = useApolloClient();
-
-  useEffect(() => {
-    checkMembership();
-  }, []);
-
-  const checkMembership = () => {
-    try {
-      if (userData?.jwt) {
-        client.query({
-          query: GET_MEMBERSHIP_BY_USER,
-          variables: {
-            user_id: Number(userData?.id),
-            user: Number(userData?.id),
-          },
-          ...getAuthenticationHeader(userData?.jwt)
-        }).then(({ data }) => {
-          if (data && data?.memberships !== null && data?.memberships?.length > 0) {
-            setExpiry(data?.memberships[0]?.expiry);
-          }
-        }).catch((error) => {
-          console.log('Error getting Membership by user', error);
-        });
-      }
-    }
-    catch (error) {
-      console.log('Check Membership error', error);
-      ToastMsg(t('error_occured'));
-      logError({
-        screen: HOME_SCREEN,
-        module: 'Membership Box - Check Membership Function',
-        input: JSON.stringify({
-          user_id: Number(userData?.id),
-        }),
-        error: JSON.stringify(error)
-      });
-    }
-  };
 
   const handleBuyMembership = () => {
     navigate(MEMBERSHIP_TAB_SCREEN);
@@ -73,7 +28,7 @@ const MembershipBox = ({ data }) => {
       <View style={styles.membershipContainer}>
         <Row spaceBetween padding={10} paddingBottom={0}>
           <Text style={styles.title}>{t('my_membership')}</Text>
-          {expiry !== null ? (
+          {expiry && expiry !== null ? (
             <Text style={styles.secondaryText}>
               {t('expires_on')} {getFormatedDate(new Date(expiry))}
             </Text>
