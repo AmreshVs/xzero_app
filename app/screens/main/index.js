@@ -127,7 +127,7 @@ const Main = ({ navigation }) => {
             await saveUserDataLocally('xzero_user', { ...loginData, ...data?.user });
 
             let deepLink = await Linking.getInitialURL();
-            if (deepLink && deepLink !== null && deepLink !== '') {
+            if (deepLink && deepLink !== null && deepLink !== '' && !deepLink.includes("exp://")) {
               if (deepLink.includes("Main/")) {
                 deepLink = deepLink.replace("Main/", "");
               }
