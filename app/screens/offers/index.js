@@ -1,4 +1,4 @@
-import React, { createRef, useState, useContext } from 'react';
+import React, { createRef, useState } from 'react';
 import { FlatList } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { useRoute } from '@react-navigation/native';
@@ -11,8 +11,7 @@ import FloatingButton from 'components/floatingButton';
 import SearchModal from 'components/searchModal';
 import { ToastMsg } from 'components/toastMsg';
 import ModalSearchHeader from 'components/modalSearchHeader';
-import { isTab } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { isTab, useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import { OFFERS_LIST } from 'graphql/queries';
@@ -22,7 +21,7 @@ import styles from './styles';
 export default function Offers() {
   const { params } = useRoute();
   const { logError } = useErrorLog();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
 
   let initialWhereCondition = {
     _limit: -1

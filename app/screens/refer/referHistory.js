@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -8,15 +8,14 @@ import Card from 'components/card';
 import Column from 'components/column';
 import Divider from 'components/divider';
 import { ToastMsg } from 'components/toastMsg';
-import { getAuthenticationHeader, getFormattedDateTime } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { getAuthenticationHeader, getFormattedDateTime, useReduxAction } from 'constants/commonFunctions';
 import { REFER_HISTORY } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { REFER } from 'navigation/routes';
 import styles from './styles';
 
 const ReferHistory = () => {
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { t } = useTranslation();
   const { logError } = useErrorLog();
 

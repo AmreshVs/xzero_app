@@ -1,10 +1,11 @@
-import React, { useState, memo, useContext } from 'react';
+import React, { useState, memo } from 'react';
 import { Keyboard, View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Textbox from 'components/textbox';
 import FormError from 'components/formError';
@@ -12,11 +13,11 @@ import Row from 'components/row';
 import Button from 'components/button';
 import Checkbox from 'components/checkbox';
 import { ToastMsg } from 'components/toastMsg';
-import { handleDOB, handleServerDOB, getFormatedDate, getAuthenticationHeader } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { handleDOB, handleServerDOB, getFormatedDate, getAuthenticationHeader, useReduxAction } from 'constants/commonFunctions';
 import { UPDATE_USER } from 'graphql/mutations';
 import { OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
+import { SetUserData } from 'redux/actions';
 import { inputsValidationSchema, passwordValidationSchema, inputs, passwordInputs } from './helpers';
 import styles from './styles';
 
@@ -26,10 +27,11 @@ const ProfileEdit = ({ setEdit, data }) => {
   const [checked, setChecked] = useState(false);
   const [date, setDate] = useState(data?.birthday ? new Date(data?.birthday) : new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const { userData, setUserData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const client = useApolloClient();
   const { push } = useNavigation();
   const { logError } = useErrorLog();
+  const dispatch = useDispatch();
 
   let mutationInput = {};
 
@@ -85,7 +87,7 @@ const ProfileEdit = ({ setEdit, data }) => {
 
       if (Object.keys(user).length) {
         let updatedUserData = { ...userData, ...data?.updateUserData?.user };
-        setUserData(updatedUserData);
+        dispatch(SetUserData(updatedUserData));
         setEdit(false);
         if (userData?.mobile_number !== Number(values.phone)) {
           push(OTP, {

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState, memo } from 'react';
+import React, { useRef, useState, memo } from 'react';
 import { Text, View, Animated, Image, Modal } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { useApolloClient } from '@apollo/client';
@@ -9,8 +9,7 @@ import Button from 'components/button';
 import ProgressiveImage from 'components/progressiveImage';
 import Box from 'components/box';
 import { IMAGE_URL, SCREEN_HEIGHT } from 'constants/common';
-import { getAuthenticationHeader, isTab, thumbnailUrl } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { getAuthenticationHeader, isTab, thumbnailUrl, useReduxAction } from 'constants/commonFunctions';
 import { GIFTS } from 'navigation/routes';
 import { GENERATE_GIFT } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
@@ -27,7 +26,7 @@ const GenerateGift = ({ generated, refetch }) => {
   const giftRef = useRef(null);
   const confettiRef = useRef(null);
   const client = useApolloClient();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const { t, i18n } = useTranslation();
   let language = i18n.language;

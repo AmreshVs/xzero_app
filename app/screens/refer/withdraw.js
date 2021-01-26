@@ -1,11 +1,10 @@
-import React, { useContext, memo } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 
 import { ToastMsg } from 'components/toastMsg';
-import { getAuthenticationHeader } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { getAuthenticationHeader, useReduxAction } from 'constants/commonFunctions';
 import { WITHDRAW_HISTORY } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { REFER } from 'navigation/routes';
@@ -15,7 +14,7 @@ import BankInfo from './bankInfo';
 import styles from './styles';
 
 const Withdraw = ({ refer_program }) => {
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const { t } = useTranslation();
 

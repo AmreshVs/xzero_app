@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -6,6 +6,7 @@ import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { CacheManager } from "react-native-expo-image-cache";
 import { useApolloClient } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 
 import { UpdateLanguage } from 'screens/home/topSection';
 import Row from 'components/row';
@@ -15,14 +16,14 @@ import RippleFX from 'components/rippleFx';
 import { ToastMsg } from 'components/toastMsg';
 import Button from 'components/button';
 import colors from 'constants/colors';
-import { handleDOB } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { handleDOB, useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN, OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
-import styles from './styles';
+import { ClearUserData } from 'redux/actions';
 import { client } from '../../../helpers';
+import styles from './styles';
 
-export const handlelogout = async ({ dispatch, setUserData, logError }) => {
+export const handlelogout = async ({ dispatch, reduxDispatch, logError }) => {
   const resetAction = CommonActions.reset({
     index: 0,
     routes: [{ name: LOGIN_SCREEN }],
@@ -36,7 +37,7 @@ export const handlelogout = async ({ dispatch, setUserData, logError }) => {
       await dispatch(resetAction);
       await CacheManager.clearCache();
       await client.cache.reset();
-      setUserData(null);
+      reduxDispatch(ClearUserData());
     }
   } catch (error) {
     // console.log('Logout error', error);
@@ -53,9 +54,10 @@ export const handlelogout = async ({ dispatch, setUserData, logError }) => {
 const ProfileView = ({ data, setEdit }) => {
   const { t, i18n } = useTranslation();
   const { dispatch, push } = useNavigation();
-  const { userData, setUserData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const client = useApolloClient();
+  const reduxDispatch = useDispatch();
   let language = i18n.language;
 
   const handleMobileNumber = (mobile_number) => {
@@ -63,7 +65,7 @@ const ProfileView = ({ data, setEdit }) => {
   };
 
   const handlePress = () => {
-    handlelogout({ dispatch, setUserData, logError });
+    handlelogout({ dispatch, reduxDispatch, logError });
   }
 
   const handleLangSelect = async () => {

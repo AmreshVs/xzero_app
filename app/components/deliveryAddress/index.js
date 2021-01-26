@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
+import { useDispatch } from 'react-redux';
 
 import Row from 'components/row';
 import Button from 'components/button';
@@ -11,21 +12,21 @@ import Textbox from 'components/textbox';
 import { SCREEN_HEIGHT } from 'constants/common';
 import FormError from 'components/formError';
 import { ToastMsg } from 'components/toastMsg';
-import { getAuthenticationHeader, handleMobileNumber } from 'constants/commonFunctions';
+import { getAuthenticationHeader, handleMobileNumber, useReduxAction } from 'constants/commonFunctions';
 import { borderRadius10, font17, marginTop10, textBoldDark, textLite } from 'constants/commonStyles';
-import { UserDataContext } from 'context';
 import { EDIT_ADDRESS } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
 import { VOUCHER_DETAIL } from 'navigation/routes';
 import { inputs, inputsValidationSchema } from './helpers';
 
 export default function DeliveryAddress({ ...otherStyles }) {
-  const { userData, setUserData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const client = useApolloClient();
   const { logError } = useErrorLog();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (userData !== undefined && userData?.address === null) {
@@ -63,7 +64,11 @@ export default function DeliveryAddress({ ...otherStyles }) {
 
       setBtnLoading(false);
       if (data?.updateUserData?.user && Object.keys(data?.updateUserData?.user).length > 0) {
-        setUserData(userData => ({ ...userData, ...data?.updateUserData?.user }));
+        dispatch(SetUserData({
+          ...userData,
+          ...data?.updateUserData?.user
+        }));
+
         setEdit(false);
       }
     }

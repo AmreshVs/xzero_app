@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { useNavigation } from '@react-navigation/native';
@@ -11,8 +11,7 @@ import DeliveryAddress from 'components/deliveryAddress';
 import Card from 'components/card';
 import Box from 'components/box';
 import { ToastMsg } from 'components/toastMsg';
-import { isTab, userVerified } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { isTab, useReduxAction, userVerified } from 'constants/commonFunctions';
 import { VOUCHER_QUEUE } from 'graphql/mutations';
 import { PAYMENT, VOUCHER_DETAIL } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
@@ -21,7 +20,7 @@ import styles from './styles';
 const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher }) => {
   const { push } = useNavigation();
   const { t } = useTranslation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const client = useApolloClient();
   const { logError } = useErrorLog();
 

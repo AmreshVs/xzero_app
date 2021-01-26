@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, memo, useState } from 'react';
+import React, { useEffect, memo } from 'react';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useApolloClient } from '@apollo/client';
@@ -7,20 +7,21 @@ import Constants from 'expo-constants';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Updates from 'expo-updates';
 import * as Linking from 'expo-linking';
+import { useDispatch } from 'react-redux';
 
 import { saveUserDataLocally } from 'screens/login/helpers';
 import { ToastMsg } from 'components/toastMsg';
-import { UserDataContext } from 'context';
+import AppLoader from 'components/appLoader';
 import useErrorLog from 'hooks/useErrorLog';
 import { BASIC_INFORMATION, GET_MEMBER_DATA } from 'graphql/queries';
-import { HOME_SCREEN, INTRO, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE, OTP } from 'navigation/routes';
-import AppLoader from 'components/appLoader';
+import { HOME_SCREEN, INTRO, LOGIN_SCREEN, MAIN_SCREEN, NEW_UPDATE } from 'navigation/routes';
+import { SetUserData } from 'redux/actions';
 
 const Main = ({ navigation }) => {
   const client = useApolloClient();
-  const { setUserData } = useContext(UserDataContext);
   const { t } = useTranslation();
   const { logError } = useErrorLog();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     unhideSplash();
@@ -118,11 +119,11 @@ const Main = ({ navigation }) => {
               return;
             }
 
-            setUserData({
+            dispatch(SetUserData({
               jwt: JSON.parse(jwt),
               ...loginData,
               ...data?.user,
-            });
+            }));
 
             await saveUserDataLocally('xzero_user', { ...loginData, ...data?.user });
 

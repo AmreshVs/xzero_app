@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WebView from 'react-native-webview';
 import RippleFX from 'components/rippleFx';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -10,9 +10,8 @@ import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import { ToastMsg } from 'components/toastMsg';
 import Loader from 'components/loader';
-import { getAuthenticationHeader, getUserData } from 'constants/commonFunctions';
+import { getAuthenticationHeader, getUserData, useReduxAction } from 'constants/commonFunctions';
 import colors from 'constants/colors';
-import { UserDataContext } from 'context';
 import { PAYMENT, PAYMENT_STATUS } from 'navigation/routes';
 import { BUY_VOUCHER, GENERATE_MEMBESHIP } from 'graphql/mutations';
 import { GENERATE_PAYMENT_ACCESS_TOKEN, GENERATE_PAYMENT_URL, CHECK_PAYMENT_STATUS } from 'api';
@@ -31,7 +30,7 @@ export default function Payment() {
     access_token: '',
   };
   const [state, setState] = useState(initialState);
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const { logPayment } = usePaymentLog();
   const { replace } = useNavigation();

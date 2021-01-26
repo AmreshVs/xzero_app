@@ -1,9 +1,10 @@
-import React, { useState, useRef, memo, useEffect, useContext } from 'react';
+import React, { useState, memo, useEffect, useContext } from 'react';
 import { KeyboardAvoidingView, Text, View } from 'react-native';
 import Clipboard from 'expo-clipboard';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useApolloClient } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 
 import { saveUserDataLocally } from 'screens/login/helpers';
 import Button from 'components/button';
@@ -12,12 +13,12 @@ import Textbox from 'components/textbox';
 import Box from 'components/box';
 import ProgressiveImage from 'components/progressiveImage';
 import { ToastMsg } from 'components/toastMsg';
-import { thumbnailUrl } from 'constants/commonFunctions';
+import { thumbnailUrl, useReduxAction } from 'constants/commonFunctions';
 import { IMAGE_URL } from 'constants/common';
-import { UserDataContext } from 'context';
 import { SEND_SMS } from 'graphql/mutations';
 import { VERIFY_OTP } from 'graphql/queries';
 import { HOME_SCREEN } from 'navigation/routes';
+import { SetUserData } from 'redux/actions';
 import { useInterval } from './helpers';
 import styles from './styles';
 
@@ -28,7 +29,8 @@ const Otp = () => {
   const [otp, setOtp] = useState('');
   const [responseOtp, setResponseOtp] = useState('');
   const [timer, setTimer] = useState(0);
-  const { userData, setUserData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
+  const dispatch = useDispatch();
 
   const client = useApolloClient();
   const { replace } = useNavigation();
@@ -75,7 +77,7 @@ const Otp = () => {
     });
 
     if (data?.verifyOtp?.status) {
-      setUserData(prevData => ({ ...prevData, confirmed: true }));
+      dispatch(SetUserData({ confirmed: true }));
       saveUserDataLocally('xzero_user', { ...userData, confirmed: true });
       replace(HOME_SCREEN);
     }

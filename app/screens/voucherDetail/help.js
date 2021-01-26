@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { memo } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
@@ -6,13 +6,12 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import Button from 'components/button';
 import Card from 'components/card';
 import Box from 'components/box';
-import { handleMobileNumber, sendWhatsappMessage } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { handleMobileNumber, sendWhatsappMessage, useReduxAction } from 'constants/commonFunctions';
 import styles from './styles';
 
 const Help = () => {
   const { t } = useTranslation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
 
   const getWhatsappMessage = (voucher = false) => {
     return `${t('whatsapp1')} ${userData?.username} ${voucher ? t('whatsapp3_voucher') : t('whatsapp3')}`;

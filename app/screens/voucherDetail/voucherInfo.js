@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { Image, Share, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -10,13 +10,12 @@ import Progress from 'components/progress';
 import Chip from 'components/chip';
 import { IMAGE_URL } from 'constants/common';
 import colors from 'constants/colors';
-import { calculatePercentage, isTab } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { calculatePercentage, isTab, useReduxAction } from 'constants/commonFunctions';
 import styles from './styles';
 
 const VoucherInfo = ({ data }) => {
   const { t, i18n } = useTranslation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   let language = i18n.language;
 
   const handleShare = async () => {

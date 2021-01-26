@@ -26,7 +26,8 @@ const mobileStyles = StyleSheet.create({
     marginBottom: 3
   },
   caption: {
-    ...textLite
+    ...textLite,
+    lineHeight: 25
   },
   productImg: {
     width: '100%',

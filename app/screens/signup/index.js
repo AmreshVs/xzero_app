@@ -1,17 +1,11 @@
-import React, { useContext, useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Constants from 'expo-constants';
+import { useDispatch } from 'react-redux';
 
 import { saveUserDataLocally } from 'screens/login/helpers';
 import TopNavigator from 'components/topNavigator';
@@ -23,21 +17,21 @@ import FormError from 'components/formError';
 import { ToastMsg } from 'components/toastMsg';
 import { firstLetterUpper, handleServerDOB, getFormatedDate } from 'constants/commonFunctions';
 import { LOGIN_SCREEN, OTP, SIGNUP_SCREEN } from 'navigation/routes';
-import { UserDataContext } from 'context';
 import { CREATE_USER, UPDATE_NOTIFICATION_TOKEN } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
+import { SetUserData } from 'redux/actions';
 import { getNotificationToken } from '../../../helpers';
 import { inputsValidationSchema, inputs } from './helpers';
 import styles from './styles';
 
 const Signup = ({ navigation }) => {
   const { t, i18n } = useTranslation();
-  const { setUserData } = useContext(UserDataContext);
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(new Date());
   const { logError } = useErrorLog();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const client = useApolloClient();
+  const dispatch = useDispatch();
   let language = i18n.language;
 
   const platform = Platform.OS;
@@ -101,10 +95,10 @@ const Signup = ({ navigation }) => {
 
     let userData = data?.createNewUser;
 
-    setUserData({
+    dispatch(SetUserData({
       jwt: userData?.jwt,
       ...userData?.user
-    });
+    }));
 
     setLoading(false);
 

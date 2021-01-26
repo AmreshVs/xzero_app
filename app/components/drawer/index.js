@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Image, Linking, Platform, StyleSheet, Text, View } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { useDispatch } from 'react-redux';
 
 import { handlelogout } from 'screens/user/profileView';
 import colors from 'constants/colors';
@@ -14,16 +15,16 @@ import Row from 'components/row';
 import Button from 'components/button';
 import RippleFX from 'components/rippleFx';
 import ProgressiveImage from 'components/progressiveImage';
-import { sendWhatsappMessage } from 'constants/commonFunctions';
+import { sendWhatsappMessage, useReduxAction } from 'constants/commonFunctions';
 import { WHATSAPP_CONTACT } from 'constants/common';
-import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN } from 'navigation/routes';
 
 export default function CustomDrawer(props) {
-  const { userData, setUserData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const { t } = useTranslation();
+  const reduxDispatch = useDispatch();
 
   const insets = useSafeAreaInsets();
 
@@ -122,7 +123,7 @@ export default function CustomDrawer(props) {
     props.navigation.toggleDrawer();
     if (userData) {
       props.navigation.navigate(LOGIN_SCREEN);
-      handlelogout({ dispatch, setUserData, logError });
+      handlelogout({ dispatch, reduxDispatch, logError });
     }
     else {
       props.navigation.navigate(LOGIN_SCREEN);

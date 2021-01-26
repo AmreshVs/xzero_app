@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, memo } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
@@ -13,8 +13,7 @@ import RippleFX from 'components/rippleFx';
 import { ToastMsg } from 'components/toastMsg';
 import Row from 'components/row';
 import colors from 'constants/colors';
-import { firstLetterUpper } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { firstLetterUpper, useReduxAction } from 'constants/commonFunctions';
 import { OFFERS_DETAIL } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { OFFER_DETAIL } from 'navigation/routes';
@@ -28,7 +27,7 @@ import ContactCenter from './contactCenter';
 import styles from './styles';
 
 const OfferDetail = () => {
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { params } = useRoute();
   const { logError } = useErrorLog();
   const { t } = useTranslation();

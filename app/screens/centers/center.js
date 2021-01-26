@@ -10,17 +10,15 @@ import colors from 'constants/colors';
 import Chip from 'components/chip';
 import RippleFX from 'components/rippleFx';
 import ProgressiveImage from 'components/progressiveImage';
-import { useContext } from 'react';
-import { thumbnailUrl } from 'constants/commonFunctions';
+import { thumbnailUrl, useReduxAction } from 'constants/commonFunctions';
 import { IMAGE_URL } from 'constants/common';
-import { UserDataContext } from 'context';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import styles from './styles';
 
 const Center = ({ data }) => {
   const { push } = useNavigation();
   const { t, i18n } = useTranslation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const language = i18n.language;
 
   const handlePress = async () => {

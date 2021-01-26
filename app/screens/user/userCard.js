@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
@@ -9,13 +9,12 @@ import ProgressiveImage from 'components/progressiveImage';
 import TopNavigator from 'components/topNavigator';
 import RippleFX from 'components/rippleFx';
 import colors from 'constants/colors';
-import { firstLetterUpper, handleDOB } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { firstLetterUpper, handleDOB, useReduxAction } from 'constants/commonFunctions';
 import styles from './styles';
 
 const UserCard = ({ edit, setEdit, data }) => {
   const { t } = useTranslation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
 

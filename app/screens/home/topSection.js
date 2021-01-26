@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -14,8 +14,7 @@ import Box from 'components/box';
 import RippleFX from 'components/rippleFx';
 import Row from 'components/row';
 import ProgressiveImage from 'components/progressiveImage';
-import { firstLetterUpper } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { firstLetterUpper, useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { GIFTS, HOME_SCREEN, NOTIFICATIONS } from 'navigation/routes';
 import { UPDATE_LANGUAGE } from 'graphql/mutations';
@@ -40,7 +39,7 @@ export const UpdateLanguage = async (client, params) => {
 
 const TopSection = ({ notificationCount, handleModalOpen }) => {
   const { push, toggleDrawer } = useNavigation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();

@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
@@ -6,13 +6,13 @@ import { useNavigation } from '@react-navigation/native';
 import Box from 'components/box';
 import Divider from 'components/divider';
 import RippleFX from 'components/rippleFx';
-import { UserDataContext } from 'context';
+import { useReduxAction } from 'constants/commonFunctions';
 import { OFFERS_SCREEN, OFFER_DETAIL, SPECIALIST_DETAIL } from 'navigation/routes';
 import styles from './styles';
 
 const ListItem = ({ name, data }) => {
   const { push } = useNavigation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { i18n } = useTranslation();
   let language = i18n.language;
 

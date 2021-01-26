@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
@@ -14,14 +14,13 @@ import Chip from 'components/chip';
 import ProgressiveImage from 'components/progressiveImage';
 import { IMAGE_URL } from 'constants/common';
 import colors from 'constants/colors';
-import { calculatePercentage, smallUrl, thumbnailUrl } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { calculatePercentage, smallUrl, thumbnailUrl, useReduxAction } from 'constants/commonFunctions';
 import { VOUCHER_DETAIL } from 'navigation/routes';
 import styles from './styles';
 
 const Voucher = ({ data, handleOpenModal }) => {
   const { push } = useNavigation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { t, i18n } = useTranslation();
   let language = i18n.language;
 

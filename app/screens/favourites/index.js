@@ -1,4 +1,4 @@
-import React, { useState, memo, useContext } from 'react';
+import React, { useState, memo } from 'react';
 import { View, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useApolloClient } from '@apollo/client';
@@ -10,8 +10,7 @@ import SafeView from 'components/safeView';
 import Button from 'components/button';
 import TopNavigator from 'components/topNavigator';
 import { ToastMsg } from 'components/toastMsg';
-import { UserDataContext } from 'context';
-import { getAuthenticationHeader, isTab } from 'constants/commonFunctions';
+import { getAuthenticationHeader, isTab, useReduxAction } from 'constants/commonFunctions';
 import { CLEAR_FAVOURITES } from 'graphql/mutations';
 import { FAVOURITES_BY_USER } from 'graphql/queries';
 import { FAVOURITES_TAB_SCREEN } from 'navigation/routes';
@@ -22,7 +21,7 @@ import styles from './styles';
 const Favourites = () => {
   const { t } = useTranslation();
   const [reloading, setReloading] = useState(false);
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const client = useApolloClient();
   const { logError } = useErrorLog();
   const navigation = useNavigation();

@@ -2,6 +2,7 @@ import { Platform, Linking, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { SCREEN_WIDTH, THUMBNAIL_SLUG } from './common';
 import { ToastMsg } from 'components/toastMsg';
+import { useSelector, shallowEqual } from 'react-redux'
 
 export const getShadowStyle = () => {
   if (Platform.OS === 'ios') {
@@ -162,4 +163,8 @@ export const getAuthenticationHeader = (jwt) => {
     }
   }
   return {};
-} 
+}
+
+export function useReduxAction(selector) {
+  return useSelector(selector, shallowEqual)
+}

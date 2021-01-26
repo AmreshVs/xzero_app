@@ -1,4 +1,4 @@
-import React, { useContext, useState, memo } from 'react';
+import React, { useState, memo } from 'react';
 import { View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
@@ -10,17 +10,16 @@ import Row from 'components/row';
 import Button from 'components/button';
 import Box from 'components/box';
 import { ToastMsg } from 'components/toastMsg';
-import { UserDataContext } from 'context';
+import { getAuthenticationHeader, useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { CREATE_BANK_INFO, UPDATE_BANK_INFO } from 'graphql/mutations';
 import { REFER } from 'navigation/routes';
 import { inputsValidationSchema, inputs } from './helpers';
-import { getAuthenticationHeader } from 'constants/commonFunctions';
 
 const EditBankInfo = ({ setEdit, data, reload }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const client = useApolloClient();
 

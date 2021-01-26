@@ -66,6 +66,9 @@
     "react-native-unimodules": "~0.11.0",
     "react-native-web": "~0.13.7",
     "react-native-webview": "10.7.0",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "uri-scheme": "^1.0.52",
     "yup": "^0.29.3"
   },

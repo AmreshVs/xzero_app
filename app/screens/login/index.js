@@ -6,6 +6,7 @@ import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
 import { getDeviceLang } from 'i18n';
+import { useDispatch } from 'react-redux';
 
 import SafeView from 'components/safeView';
 import Textbox from 'components/textbox';
@@ -20,6 +21,7 @@ import { GET_USER_BY_EMAIL, NON_USER_CHECK } from 'graphql/queries';
 import { USER_LOGIN, CREATE_USER, UPDATE_NOTIFICATION_TOKEN, CREATE_NON_USER } from 'graphql/mutations';
 import { SIGNUP_SCREEN, HOME_SCREEN, FORGOT_PASSWORD, DRAWER_TERMS, LOGIN_SCREEN, MAIN_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
+import { SetUserData } from 'redux/actions';
 import { getNotificationToken } from '../../../helpers';
 import { inputsValidationSchema, saveUserDataLocally } from './helpers';
 import AppleLoginButton from './appleLogin';
@@ -33,6 +35,7 @@ const Login = ({ navigation }) => {
   const { logError } = useErrorLog();
   const { setUserData } = useContext(UserDataContext);
   const { t, i18n } = useTranslation();
+  const dispatch = useDispatch();
   let language = i18n.language;
 
   const platform = Platform.OS;
@@ -124,11 +127,12 @@ const Login = ({ navigation }) => {
     }
 
     if (loginData && loginData?.user) {
-      setUserData({
+
+      dispatch(SetUserData({
         jwt: loginData?.jwt,
         ...loginData?.user,
         profile_pic: values?.profile_pic
-      });
+      }));
 
       await saveUserDataLocally('xzero_user', { ...loginData?.user, profile_pic: values?.profile_pic });
       await saveUserDataLocally('xzero_jwt', loginData?.jwt);
@@ -247,11 +251,11 @@ const Login = ({ navigation }) => {
       }
 
       if (data && data?.createNewUser?.jwt) {
-        setUserData({
-          jwt: data?.createNewUser?.jwt,
-          ...data?.createNewUser.user,
+        dispatch(SetUserData({
+          jwt: loginData?.jwt,
+          ...loginData?.user,
           profile_pic: values?.profile_pic
-        });
+        }));
         await saveUserDataLocally('xzero_jwt', data?.createNewUser?.jwt);
         await saveUserDataLocally('xzero_user', data?.createNewUser?.user);
         await updateNotificationToken(data?.createNewUser?.user?.id);

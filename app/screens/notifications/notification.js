@@ -1,4 +1,4 @@
-import React, { memo, useState, useContext } from 'react';
+import React, { memo, useState } from 'react';
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Linking from 'expo-linking';
@@ -7,14 +7,14 @@ import { useApolloClient } from '@apollo/client';
 import Card from 'components/card';
 import RippleFX from 'components/rippleFx';
 import { MARK_NOTIFICATION } from 'graphql/mutations';
-import { UserDataContext } from 'context';
+import { useReduxAction } from 'constants/commonFunctions';
 import styles from './styles';
 
 const Notification = (data) => {
   const { i18n } = useTranslation();
   const client = useApolloClient();
   const [read, setRead] = useState(data?.is_read);
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   let language = i18n.language;
 
   const handlePress = async (notificationData) => {

@@ -1,4 +1,4 @@
-import React, { useRef, useState, memo, useContext } from 'react';
+import React, { useRef, useState, memo } from 'react';
 import { FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
@@ -9,8 +9,7 @@ import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import NoData from 'components/noData';
 import { ToastMsg } from 'components/toastMsg';
-import { isTab } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { isTab, useReduxAction } from 'constants/commonFunctions';
 import { VOUCHERS } from 'graphql/queries';
 import { VOUCHERS as NAV_VOUCHER } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
@@ -27,7 +26,7 @@ const Vouchers = () => {
   const [reloading, setReloading] = useState(false);
   const [voucherData, setVoucherData] = useState([]);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const modalizeRef = useRef(null);
   const { logError } = useErrorLog();
   const { t } = useTranslation();

@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { PROFILE_TAB_SCREEN } from 'navigation/routes';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
 import { ToastMsg } from 'components/toastMsg';
+import { useReduxAction } from 'constants/commonFunctions';
 
 export default function IsVerified(Component) {
 
   const HOCIsVerified = () => {
     const [loading, setLoading] = useState(true);
     const { navigate } = useNavigation();
-    const { userData } = useContext(UserDataContext);
+    const userData = useReduxAction(state => state?.userReducer?.user);
 
     useEffect(() => {
       checkUser();

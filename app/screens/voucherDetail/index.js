@@ -1,4 +1,4 @@
-import React, { useRef, useState, memo, useContext } from 'react';
+import React, { useRef, useState, memo } from 'react';
 import { RefreshControl, ScrollView, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -10,8 +10,7 @@ import Button from 'components/button';
 import NoData from 'components/noData';
 import { ToastMsg } from 'components/toastMsg';
 import Box from 'components/box';
-import { isTab } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { isTab, useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { VOUCHER_DETAIL } from 'graphql/queries';
 import { LOGIN_SCREEN, VOUCHER_DETAIL as VOUCHERDETAIL } from 'navigation/routes';
@@ -31,7 +30,7 @@ const VoucherDetail = ({ navigation }) => {
   const [reloading, setReloading] = useState(false);
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: 0 });
   const modalizeRef = useRef(null);
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const { params } = useRoute();
   const { t, i18n } = useTranslation();

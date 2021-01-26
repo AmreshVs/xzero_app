@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
@@ -8,7 +8,7 @@ import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import NoMembership from 'components/noMembership';
 import Box from 'components/box';
-import { UserDataContext } from 'context';
+import { getAuthenticationHeader, useReduxAction } from 'constants/commonFunctions';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import { GET_GIFTS } from 'graphql/queries';
 import { GIFTS } from 'navigation/routes';
@@ -17,12 +17,11 @@ import IsVerified from 'hoc/isVerified';
 import AvailableGifts from './availableGifts';
 import AvailedGifts from './availedGifts';
 import GenerateGift from './generateGift';
-import { getAuthenticationHeader } from 'constants/commonFunctions';
 
 const Gifts = () => {
   const { t } = useTranslation();
   const { logError } = useErrorLog();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { params } = useRoute();
   const navigation = useNavigation();
 

@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { memo } from 'react';
 import { ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
@@ -11,7 +11,6 @@ import Box from 'components/box';
 import { ToastMsg } from 'components/toastMsg';
 import colors from 'constants/colors';
 import { isTab } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
 import { SPECIALIST } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { SPECIALIST_DETAIL } from 'navigation/routes';
@@ -25,7 +24,7 @@ const SpecialistDetail = () => {
 
   const { t, i18n } = useTranslation();
   const { logError } = useErrorLog();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { params } = useRoute();
   let language = i18n.language;
 

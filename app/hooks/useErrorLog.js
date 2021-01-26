@@ -1,13 +1,12 @@
-import { useContext } from "react";
 import Constants from 'expo-constants';
-
-import { UserDataContext } from "context";
 import { useApolloClient } from "@apollo/client";
+
 import { LOG_ERROR } from "graphql/mutations";
 import { BASIC_INFORMATION } from "graphql/queries";
+import { useReduxAction } from "constants/commonFunctions";
 
 export default function useErrorLog() {
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const client = useApolloClient();
 
   const logError = async (params) => {

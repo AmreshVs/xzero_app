@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useApolloClient } from '@apollo/client';
@@ -10,15 +10,14 @@ import Box from 'components/box';
 import Row from 'components/row';
 import { ToastMsg } from 'components/toastMsg';
 import { font16, font17, fontWeight700, marginTop10, paddingTop10, textBoldDark, textLite } from 'constants/commonStyles';
-import { getAuthenticationHeader, userVerified } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { getAuthenticationHeader, useReduxAction, userVerified } from 'constants/commonFunctions';
 import { APPLY_CODE } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 
 let promoApplied = 0;
 
 const ApplyPromocode = ({ voucher_id, plan, voucherPrice, setPromocodeData, promocodeData }) => {
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const client = useApolloClient();
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState, memo } from 'react';
+import React, { useRef, useState } from 'react';
 import { ScrollView, Text, View, Share, RefreshControl, Image, Platform } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -16,8 +16,7 @@ import Button from 'components/button';
 import RippleFX from 'components/rippleFx';
 import Column from 'components/column';
 import { ToastMsg } from 'components/toastMsg';
-import { getAuthenticationHeader, isTab } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { getAuthenticationHeader, isTab, useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import IsVerified from 'hoc/isVerified';
@@ -55,7 +54,7 @@ const Refer = () => {
   const shareRef = useRef(null);
   const modalizeRef = useRef(null);
   const { logError } = useErrorLog();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { params } = useRoute();

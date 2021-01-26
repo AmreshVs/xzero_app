@@ -10,12 +10,14 @@ import * as Linking from 'expo-linking';
 import NetInfo from "@react-native-community/netinfo";
 import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from "react-redux";
 
 import i18nLang from './app/i18n';
 import { ToastComponent } from 'components/toastMsg';
 import Navigation from 'navigation';
 import { client } from './helpers';
 import Offline from 'screens/offline';
+import store from 'redux/store';
 
 SplashScreen.preventAutoHideAsync();
 Text.defaultProps = Text.defaultProps || {};
@@ -83,11 +85,13 @@ const App = () => {
   if (connection) {
     return (
       <ApolloProvider client={client}>
-        <SafeAreaProvider>
-          <StatusBar hidden={Platform.OS === 'android'} style="light" />
-          <Navigation connection={connection} />
-          <ToastComponent />
-        </SafeAreaProvider>
+        <Provider store={store}>
+          <SafeAreaProvider>
+            <StatusBar hidden={Platform.OS === 'android'} style="light" />
+            <Navigation connection={connection} />
+            <ToastComponent />
+          </SafeAreaProvider>
+        </Provider>
       </ApolloProvider>
     )
   }

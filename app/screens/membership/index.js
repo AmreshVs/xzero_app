@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, memo, useContext } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { ScrollView, RefreshControl, Text, View } from 'react-native';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { Modalize } from 'react-native-modalize';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import Card from 'components/card';
 import Box from 'components/box';
@@ -12,13 +13,13 @@ import Button from 'components/button';
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
 import { ToastMsg } from 'components/toastMsg';
-import { getAuthenticationHeader, isTab, userVerified } from 'constants/commonFunctions';
+import { getAuthenticationHeader, isTab, useReduxAction, userVerified } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT } from 'constants/common';
-import { UserDataContext } from 'context';
 import useErrorLog from 'hooks/useErrorLog';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import { GET_MEMBERSHIP_BY_USER, MEMBERSHIP_PLANS } from 'graphql/queries';
 import { MEMBERSHIP_TAB_SCREEN, PAYMENT } from 'navigation/routes';
+import { SetUserData } from 'redux/actions';
 import GetHelp from './getHelp';
 import Plan from './plan';
 import Note from './note';
@@ -44,9 +45,10 @@ const Membership = () => {
   const client = useApolloClient();
   const [promocodeData, setPromocodeData] = useState({ discountedPrice: firstPlanPrice || 0 });
   const { push, toggleDrawer } = useNavigation();
-  const { userData, setUserData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { t, i18n } = useTranslation();
   const { logError } = useErrorLog();
+  const dispatch = useDispatch();
   let language = i18n.language;
 
   const { data: membershipPlansData } = useQuery(MEMBERSHIP_PLANS);
@@ -102,18 +104,18 @@ const Membership = () => {
       setMemberData({ ...data?.memberships[0], ...data?.getMembershipExpiryDays });
 
       if (userData?.membership === null && userData?.membership?.serial !== data?.memberships[0].serial) {
-        setUserData({
+        dispatch(SetUserData({
           ...userData,
           membership: data?.memberships[0]
-        });
+        }));
       }
     }
 
     if ((data?.memberships === null || data?.memberships?.length === 0) && userData?.membership !== null) {
-      setUserData({
+      dispatch(SetUserData({
         ...userData,
-        membership: null
-      });
+        membership: data?.memberships[0]
+      }));
     }
 
     setLoading(false);

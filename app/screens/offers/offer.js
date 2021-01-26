@@ -1,4 +1,4 @@
-import React, { useState, memo, useContext } from 'react';
+import React, { useState, memo } from 'react';
 import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useApolloClient } from '@apollo/client';
@@ -14,8 +14,7 @@ import Column from 'components/column';
 import ProgressiveImage from 'components/progressiveImage';
 import { ToastMsg } from 'components/toastMsg';
 import colors from 'constants/colors';
-import { isTab, thumbnailUrl } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { isTab, thumbnailUrl, useReduxAction } from 'constants/commonFunctions';
 import { OFFERS_SCREEN, OFFER_DETAIL } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
 import addFavourite from './addFavourite';
@@ -25,7 +24,7 @@ function Offer({ data, center, favourites }) {
 
   const client = useApolloClient();
   const { push } = useNavigation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const { t, i18n } = useTranslation();
   const language = i18n.language;

@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { LOGIN_SCREEN } from 'navigation/routes';
-import { useContext } from 'react';
-import { UserDataContext } from 'context';
+import { useReduxAction } from 'constants/commonFunctions';
 
 export default function IsLoggedIn(Component) {
 
   const HOCIsLoggedIn = () => {
     const [loading, setLoading] = useState(true);
     const { replace, navigate } = useNavigation();
-    const { userData } = useContext(UserDataContext);
+    const userData = useReduxAction(state => state?.userReducer?.user);
 
     useEffect(() => {
       checkUser();

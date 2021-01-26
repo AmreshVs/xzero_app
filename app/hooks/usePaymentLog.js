@@ -1,12 +1,11 @@
-import { useContext } from "react";
-
-import { UserDataContext } from "context";
 import { useApolloClient } from "@apollo/client";
+
+import { useReduxAction } from "constants/commonFunctions";
 import { LOG_PAYMENT } from "graphql/mutations";
 import { BASIC_INFORMATION } from "graphql/queries";
 
 export default function usePaymentLog() {
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const client = useApolloClient();
 
   const logPayment = async (params) => {

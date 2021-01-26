@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -11,16 +11,15 @@ import Chip from 'components/chip';
 import RippleFX from 'components/rippleFx';
 import VHCenter from 'components/vhCenter';
 import ProgressiveImage from 'components/progressiveImage';
-import { isTab, thumbnailUrl } from 'constants/commonFunctions';
+import { isTab, thumbnailUrl, useReduxAction } from 'constants/commonFunctions';
 import { IMAGE_URL } from 'constants/common';
-import { UserDataContext } from 'context';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import styles from './styles';
 
 const Center = ({ data }) => {
   const { push } = useNavigation();
   const { t, i18n } = useTranslation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const language = i18n.language;
 
   const handlePress = async (id) => {

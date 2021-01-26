@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo, useContext } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { FlatList, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
@@ -12,8 +12,7 @@ import Loader from 'components/loader';
 import RippleFX from 'components/rippleFx';
 import { ToastMsg } from 'components/toastMsg';
 import NoData from 'components/noData';
-import { getAuthenticationHeader, isTab } from 'constants/commonFunctions';
-import { UserDataContext } from 'context';
+import { getAuthenticationHeader, isTab, useReduxAction } from 'constants/commonFunctions';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import IsVerified from 'hoc/isVerified';
 import useErrorLog from 'hooks/useErrorLog';
@@ -27,7 +26,7 @@ const MyVouchers = () => {
   const [loading, setLoading] = useState(false);
   const [select, setSelect] = useState(0);
   const [data, setData] = useState([]);
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const client = useApolloClient();
   const { t } = useTranslation();

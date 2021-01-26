@@ -10,7 +10,7 @@ import Heading from 'components/heading';
 import Row from 'components/row';
 import { GET_HOME } from 'graphql/queries';
 import { UserDataContext } from 'context';
-import { isTab } from 'constants/commonFunctions';
+import { isTab, useReduxAction } from 'constants/commonFunctions';
 import { HOME_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
 import ReferCard from './referCard';
@@ -32,9 +32,9 @@ let counts = {};
 const Home = () => {
   const [reloading, setReloading] = useState(false);
   const modalizeRef = createRef();
-  const { userData } = useContext(UserDataContext);
   const { t } = useTranslation();
   const { logError } = useErrorLog();
+  const userData = useReduxAction(state => state?.userReducer?.user);
 
   const { data, loading, refetch: _refetch, error } = useQuery(GET_HOME, {
     variables: {

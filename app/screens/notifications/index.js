@@ -1,14 +1,13 @@
-import React, { useState, memo, useContext } from 'react';
+import React, { useState, memo } from 'react';
 import { FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
 import SafeView from 'components/safeView';
 import TopNavigator from 'components/topNavigator';
-import Divider from 'components/divider';
 import { ToastMsg } from 'components/toastMsg';
 import NoData from 'components/noData';
-import { UserDataContext } from 'context';
+import { useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { NOTIFICATIONS as NAV_NOTIFICATIONS } from 'navigation/routes';
 import { NOTIFICATIONS_BY_USER } from 'graphql/queries';
@@ -19,7 +18,7 @@ const Notifications = () => {
   const [reloading, setReloading] = useState(false);
   const { logError } = useErrorLog();
   const { t } = useTranslation();
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
 
   const { data, loading, refetch: _refetch, error } = useQuery(NOTIFICATIONS_BY_USER, {
     variables: {

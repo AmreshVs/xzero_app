@@ -1,4 +1,4 @@
-import React, { useState, memo, useContext } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { View, StyleSheet, Modal } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -6,15 +6,13 @@ import { useTranslation } from 'react-i18next';
 import ProductSlider from 'screens/voucherDetail/productSlider';
 import Box from 'components/box';
 import Button from 'components/button';
-import { UserDataContext } from 'context';
 import { POPUP } from 'graphql/queries';
-import { responsiveHeight } from 'constants/commonFunctions';
-import { useEffect } from 'react';
+import { responsiveHeight, useReduxAction } from 'constants/commonFunctions';
 
 const Popup = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const { data, loading } = useQuery(POPUP);
-  const { userData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { t } = useTranslation();
 
   useEffect(() => {

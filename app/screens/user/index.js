@@ -1,32 +1,34 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, ScrollView, KeyboardAvoidingView, Switch, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import Row from 'components/row';
 import colors from 'constants/colors';
 import Box from 'components/box';
 import SafeView from 'components/safeView';
-import { UserDataContext } from 'context';
+import { getAuthenticationHeader, useReduxAction } from 'constants/commonFunctions';
 import { GET_USER } from 'graphql/queries';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import useErrorLog from 'hooks/useErrorLog';
 import { PROFILE_TAB_SCREEN } from 'navigation/routes';
 import { UPDATE_USER_NEW } from 'graphql/mutations';
+import { SetUserData } from 'redux/actions';
 import UserCard from './userCard';
 import ProfileView from './profileView';
 import ProfileEdit from './profileEdit';
 import styles from './styles';
-import { getAuthenticationHeader } from 'constants/commonFunctions';
 
 const User = () => {
   const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
   const [isEnabled, setIsEnabled] = useState(true);
-  const { userData, setUserData } = useContext(UserDataContext);
+  const userData = useReduxAction(state => state?.userReducer?.user);
   const { logError } = useErrorLog();
   const client = useApolloClient();
+  const dispatch = useDispatch();
 
   const queryInput = {
     ID: Number(userData?.id),
@@ -62,7 +64,7 @@ const User = () => {
         ...getAuthenticationHeader(userData?.jwt)
       });
 
-      setUserData({ ...userData, show_popup: enabledStatus })
+      dispatch(SetUserData({ ...userData, show_popup: enabledStatus }));
     }
     catch (error) {
       // console.log('Toggle Popup error', error);
@@ -79,7 +81,7 @@ const User = () => {
     checkPopUp();
     if (!edit) {
       _refetch();
-      setUserData(user => ({ ...user, ...data?.user }));
+      dispatch(SetUserData({ ...data?.user }));
     }
   }, [edit]);
 
