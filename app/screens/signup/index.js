@@ -220,7 +220,7 @@ const Signup = ({ navigation }) => {
                   ))}
                   <View style={styles.btnContainer}>
                     <Button
-                      icon="sign-in-alt"
+                      icon="sign_in_alt"
                       width="100%"
                       onPress={() => handleSubmit()}
                       disabled={!isValid}

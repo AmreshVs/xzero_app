@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { Linking, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import colors from 'constants/colors';
 import Row from 'components/row';
@@ -9,6 +8,7 @@ import Card from 'components/card';
 import RippleFX from 'components/rippleFx';
 import DisabledContainer from 'components/disabledContainer';
 import Box from 'components/box';
+import Icon from 'icon';
 import styles from './styles';
 
 const CenterInfo = ({ offer, username }) => {
@@ -23,7 +23,7 @@ const CenterInfo = ({ offer, username }) => {
             {offer?.center?.[`title_${language}`]}
           </Text>
           <Row marginTop={5} flexWrap="nowrap">
-            <FontAwesomeIcon icon="map-marker-alt" color={colors.text_lite} />
+            <Icon name="map_marker_alt" color={colors.text_lite} size={17} />
             <Text style={styles.location}>
               {offer?.place}, {offer?.city}
             </Text>
@@ -35,7 +35,7 @@ const CenterInfo = ({ offer, username }) => {
               style={styles.mapContentContainer}
               onPress={() => Linking.openURL(offer?.google_map_location)}
             >
-              <FontAwesomeIcon icon="map-marked-alt" color={colors.primary} size={28} />
+              <Icon name="map_marked_alt" color={colors.primary} size={28} wviewBox={600} />
               <Text style={styles.mapText}>{t('open_map')}</Text>
             </RippleFX>
           </DisabledContainer>

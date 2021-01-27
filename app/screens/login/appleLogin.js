@@ -1,15 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faApple, faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import jwtDecode from 'jwt-decode';
 import { useTranslation } from 'react-i18next';
 
 import { ToastMsg } from 'components/toastMsg';
 import RippleFX from 'components/rippleFx';
-import { LOGIN_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
+import { LOGIN_SCREEN } from 'navigation/routes';
+import Icon from 'icon';
 import styles from './styles';
 
 const AppleLoginButton = ({ handleSocialLogin }) => {
@@ -64,21 +63,21 @@ const AppleLoginButton = ({ handleSocialLogin }) => {
         style={styles.button}
         onPress={() => handleAppleLogin()}
       >
-        <FontAwesomeIcon icon={faApple} color="#FFF" size={25} />
+        <Icon name="apple" color="#FFF" size={25} wviewBox={400} />
       </RippleFX>
       <RippleFX
         cornerRadius={5}
         style={[styles.button, { backgroundColor: '#3b5998' }]}
         onPress={() => handleSocialLogin('fb')}
       >
-        <FontAwesomeIcon icon={faFacebook} color="#FFF" size={25} />
+        <Icon name="facebook" color="#FFF" size={25} />
       </RippleFX>
       <RippleFX
         cornerRadius={5}
         style={[styles.button, { backgroundColor: '#db3236' }]}
         onPress={() => handleSocialLogin('g')}
       >
-        <FontAwesomeIcon icon={faGoogle} color="#FFF" size={25} />
+        <Icon name="google" color="#FFF" size={24} />
       </RippleFX>
     </View>
   );

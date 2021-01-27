@@ -212,7 +212,8 @@ const mobileStyles = StyleSheet.create({
   },
   gcaption: {
     color: colors.white,
-    marginVertical: 5
+    marginVertical: 5,
+    lineHeight: 20
   },
   notificationCount: {
     backgroundColor: colors.danger,

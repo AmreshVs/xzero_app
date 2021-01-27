@@ -1,8 +1,8 @@
 import React, { useState, forwardRef } from 'react';
 import { TextInput, StyleSheet, Text, View } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import colors from 'constants/colors';
+import Icon from 'icon';
 
 const Textbox = forwardRef(({
   style,
@@ -33,10 +33,11 @@ const Textbox = forwardRef(({
       {text ? <Text style={styles.text}>{text}</Text> : null}
       <View style={[textboxStyle, style]}>
         {icon && (
-          <FontAwesomeIcon
+          <Icon
             style={styles.icon}
-            icon={icon}
+            name={icon}
             color={focus ? colors.primary : iconColor}
+            wviewBox={600}
           />
         )}
         <TextInput

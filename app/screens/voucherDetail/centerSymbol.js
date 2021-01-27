@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import colors from 'constants/colors';
+import Icon from 'icon';
 
 const CenterSymbol = ({ icon = "equals", text = "" }) => {
   return (
@@ -11,7 +11,7 @@ const CenterSymbol = ({ icon = "equals", text = "" }) => {
         {text ?
           <Text style={styles.text}>{text}</Text>
           :
-          <FontAwesomeIcon icon={icon} size={15} color={colors.white} />
+          <Icon name={icon} size={14} color={colors.white} wviewBox={450} />
         }
       </View>
     </View>

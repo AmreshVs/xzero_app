@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, TouchableHighlight, Text } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 import colors from 'constants/colors';
+import Icon from 'icon';
 
 export default function Checkbox({ label, checked, handleChecked }) {
   return (
@@ -15,7 +14,7 @@ export default function Checkbox({ label, checked, handleChecked }) {
         onPress={handleChecked}
       >
         <View style={styles.tickContainer}>
-          {checked && <FontAwesomeIcon icon={faCheck} color={colors.primary} size={13} />}
+          {checked && <Icon name="check" color={colors.primary} size={13} />}
         </View>
       </TouchableHighlight>
       <Text style={styles.label} onPress={handleChecked}>

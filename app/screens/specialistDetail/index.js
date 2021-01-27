@@ -10,7 +10,7 @@ import TopNavigator from 'components/topNavigator';
 import Box from 'components/box';
 import { ToastMsg } from 'components/toastMsg';
 import colors from 'constants/colors';
-import { isTab } from 'constants/commonFunctions';
+import { isTab, useReduxAction } from 'constants/commonFunctions';
 import { SPECIALIST } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { SPECIALIST_DETAIL } from 'navigation/routes';

@@ -40,6 +40,7 @@ const mobileStyles = StyleSheet.create({
   caption: {
     ...marginTop5,
     ...textLite,
+    lineHeight: 20
   },
   specializationCaption: {
     color: colors.chip_1,
@@ -87,7 +88,6 @@ const mobileStyles = StyleSheet.create({
   },
   icon: {
     ...marginTop5,
-    ...marginRight5,
   },
   viewOffersContainer: {
     backgroundColor: colors.chip_1,

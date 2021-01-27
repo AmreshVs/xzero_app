@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import RippleFX from 'components/rippleFx';
 import { getShadowStyle } from 'constants/commonFunctions';
 import colors from 'constants/colors';
+import Icon from 'icon';
 
 export default function FloatingButton({ handlePress }) {
   const insets = useSafeAreaInsets();
@@ -28,7 +28,7 @@ export default function FloatingButton({ handlePress }) {
   });
   return (
     <RippleFX style={styles.floatingContainer} onPress={handlePress}>
-      <FontAwesomeIcon icon="search" color="#FFF" size={20} />
+      <Icon name="search" />
     </RippleFX>
   )
 }

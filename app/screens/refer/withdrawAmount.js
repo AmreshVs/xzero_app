@@ -80,7 +80,7 @@ const WithdrawAmount = ({ min_withdraw, balance, reload, loading: rootLoading })
         <Box width="58%">
           <Textbox
             placeholder={t('enter_amount')}
-            icon="money-bill"
+            icon="money_bill"
             value={String(amount)}
             onChangeText={(text) => setAmount(text)}
             keyboardType='numeric'

@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { View, Text } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +9,7 @@ import TopNavigator from 'components/topNavigator';
 import RippleFX from 'components/rippleFx';
 import colors from 'constants/colors';
 import { firstLetterUpper, handleDOB, useReduxAction } from 'constants/commonFunctions';
+import Icon from 'icon';
 import styles from './styles';
 
 const UserCard = ({ edit, setEdit, data }) => {
@@ -23,7 +23,7 @@ const UserCard = ({ edit, setEdit, data }) => {
       <View style={styles.rightIconContainer}>
         {!edit && (
           <RippleFX style={styles.rightIcon} onPress={() => setEdit(!edit)}>
-            <FontAwesomeIcon icon="edit" size={17} color={colors.white} />
+            <Icon name="edit" size={17} color={colors.white} wviewBox={550} />
           </RippleFX>
         )}
       </View>
@@ -46,7 +46,7 @@ const UserCard = ({ edit, setEdit, data }) => {
             source={{ uri: userData?.profile_pic }}
           />
           :
-          <FontAwesomeIcon icon="user-alt" style={styles.icon} size={25} color={colors.primary} />
+          <Icon name="user_alt" style={styles.icon} size={25} color={colors.gradient2} />
         }
       </View>
       <Text style={styles.username} numberOfLines={1}>{firstLetterUpper(data?.username)}</Text>

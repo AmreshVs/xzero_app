@@ -19,6 +19,7 @@ const mobileStyles = StyleSheet.create({
   benefitsText: {
     ...textLite,
     ...marginTop5,
+    lineHeight: 20
   },
   buyMembershipContainer: {
     ...marginTop0,
@@ -42,7 +43,8 @@ const mobileStyles = StyleSheet.create({
   helpCaption: {
     ...textLite,
     ...marginBottom5,
-    ...w100
+    ...w100,
+    lineHeight: 20
   },
   memberContainer: {
     height: Platform?.OS === 'ios' ? responsiveHeight(27) : responsiveHeight(34),
@@ -98,6 +100,7 @@ const mobileStyles = StyleSheet.create({
   },
   noteText: {
     ...textLite,
+    lineHeight: 20
   },
   renewContainer: {
     ...marginTop0,
@@ -142,7 +145,7 @@ const mobileStyles = StyleSheet.create({
     fontSize: 17
   },
   caption: {
-    color: colors.text_lite
+    color: colors.text_lite,
   },
   price: {
     color: colors.primary,

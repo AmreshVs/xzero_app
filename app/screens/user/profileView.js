@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { Text, View } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +19,7 @@ import { handleDOB, useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN, OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
 import { ClearUserData } from 'redux/actions';
+import Icon from 'icon';
 import { client } from '../../../helpers';
 import styles from './styles';
 
@@ -98,7 +98,7 @@ const ProfileView = ({ data, setEdit }) => {
       <Box marginTop={10}>
         <Row vcenter>
           <Box paddingLeft={20} flex={1}>
-            <FontAwesomeIcon icon="mobile-alt" color={colors.primary} size={23} />
+            <Icon name="mobile_alt" color={colors.primary} size={23} wviewBox={300} />
           </Box>
           <Box flex={8}>
             {(data?.mobile_number !== 0 && data?.mobile_number !== null) ? (
@@ -108,9 +108,9 @@ const ProfileView = ({ data, setEdit }) => {
                     {handleMobileNumber(data?.mobile_number)}
                   </Text>
                   <View style={styles.verifyContainer}>
-                    <FontAwesomeIcon icon="certificate" color={data?.confirmed ? colors.primary : colors.text_lite} size={25} />
+                    <Icon name="certificate" color={data?.confirmed ? colors.primary : colors.text_lite} size={25} />
                     <View style={styles.tickIcon}>
-                      <FontAwesomeIcon icon="check" color={colors.white} size={10} />
+                      <Icon name="check" color={colors.white} size={10} />
                     </View>
                   </View>
                 </Row>
@@ -139,7 +139,7 @@ const ProfileView = ({ data, setEdit }) => {
       <Box>
         <Row vcenter>
           <Box paddingLeft={20} flex={1}>
-            <FontAwesomeIcon icon="at" color={colors.primary} size={23} />
+            <Icon name="at" color={colors.primary} size={23} />
           </Box>
           <Box flex={8}>
             <Text style={styles.text}>{data?.email}</Text>
@@ -150,7 +150,7 @@ const ProfileView = ({ data, setEdit }) => {
       <Box>
         <Row vcenter>
           <Box paddingLeft={20} flex={1}>
-            <FontAwesomeIcon icon="birthday-cake" color={colors.primary} size={23} />
+            <Icon name="birthday_cake" color={colors.primary} size={23} wviewBox={400} />
           </Box>
           <Box flex={8}>
             {data?.birthday ? (
@@ -167,7 +167,7 @@ const ProfileView = ({ data, setEdit }) => {
       <Box>
         <Row vcenter>
           <Box paddingLeft={20} flex={1}>
-            <FontAwesomeIcon icon="language" color={colors.primary} size={23} />
+            <Icon name="language" color={colors.primary} size={23} wviewBox={630} />
           </Box>
           <Box flex={8}>
             <RippleFX onPress={() => handleLangSelect()}>
@@ -180,7 +180,7 @@ const ProfileView = ({ data, setEdit }) => {
       <Box>
         <Row vcenter>
           <Box paddingLeft={20} flex={1}>
-            <FontAwesomeIcon icon="sign-out-alt" color={colors.danger} size={23} />
+            <Icon name="sign_out_alt" color={colors.danger} size={20} wviewBox={450} />
           </Box>
           <Box flex={8}>
             <RippleFX onPress={() => handlePress()}>

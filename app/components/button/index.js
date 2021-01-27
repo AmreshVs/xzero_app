@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import colors from 'constants/colors';
 import RippleFX from 'components/rippleFx';
 import Spinner from 'components/spinner';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import Icon from 'icon';
 
 export default function Button({
   children,
@@ -54,10 +52,11 @@ export default function Button({
           ) : (
               <>
                 {icon && (
-                  <FontAwesomeIcon
+                  <Icon
                     style={styles.icon}
-                    icon={icon}
+                    name={icon}
                     color={iconColor ? iconColor : outline ? colors[status] : colors.white}
+                    wviewBox={630}
                   />
                 )}
                 <Text style={textStyle}>{children}</Text>

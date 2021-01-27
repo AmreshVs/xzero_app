@@ -21,7 +21,7 @@ const ContactCenter = ({ username, mobile_number }) => {
         <Box marginTop={10}>
           <Button
             status="success"
-            icon="phone-alt"
+            icon="phone_alt"
             disabled={!username}
             onPress={() => dialNumber(mobile_number)}
           >

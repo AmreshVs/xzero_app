@@ -55,7 +55,6 @@ const SpecialistHelp = () => {
             contentContainerStyle={styles.flatlist}
             refreshing={reloading}
             onRefresh={reload}
-            removeClippedSubviews={true}
           />
         )}
     </SafeView>

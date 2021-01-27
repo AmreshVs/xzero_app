@@ -162,7 +162,7 @@ const Otp = () => {
           <Button
             width="60%"
             icon="check"
-            status={'primary'}
+            status="primary"
             onPress={() => handleConfirm()}
             loading={loading}
             disabled={btnDisabled}

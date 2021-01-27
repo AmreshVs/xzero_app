@@ -11,6 +11,6 @@ export const inputsValidationSchema = () =>
 export const inputs = [
   { name: 'bank_name', icon: 'university' },
   { name: 'holder_name', icon: 'user' },
-  { name: 'account_number', icon: 'grip-horizontal' },
-  { name: 'IBAN_number', icon: 'grip-horizontal' },
+  { name: 'account_number', icon: 'grip_horizontal' },
+  { name: 'IBAN_number', icon: 'grip_horizontal' },
 ];

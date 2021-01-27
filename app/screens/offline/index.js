@@ -50,7 +50,7 @@ export default function Offline({ navigation, connection }) {
         />
         <Button
           width="32%"
-          icon="sync-alt"
+          icon="sync_alt"
           status="chip_1"
           onPress={() => handleRetry()}
         >

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
@@ -10,6 +9,7 @@ import SafeView from 'components/safeView';
 import Button from 'components/button';
 import colors from 'constants/colors';
 import { HOME_SCREEN } from 'navigation/routes';
+import Icon from 'icon';
 import styles from './styles';
 
 export default function PaymentStatus({ status = 1 }) {
@@ -28,7 +28,7 @@ export default function PaymentStatus({ status = 1 }) {
       <SafeView style={styles.container}>
         <View style={styles.circleContainer}>
           <Box style={styles.circle}>
-            <FontAwesomeIcon icon={paymentStatus ? 'check' : 'times'} size={50} color={paymentStatus ? colors.success : colors?.danger} />
+            <Icon name={paymentStatus ? 'check' : 'times'} size={50} color={paymentStatus ? colors.success : colors?.danger} />
           </Box>
           <Text style={styles.title}>
             {paymentStatus ? t('payment_successfull') : t('payment_failed')}

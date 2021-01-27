@@ -7,11 +7,11 @@ export default function getIconName(routeName) {
     case PROFILE_TAB_SCREEN:
       return 'user';
     case MEMBERSHIP_TAB_SCREEN:
-      return 'id-card';
+      return 'id_card';
     case FAVOURITES_TAB_SCREEN:
       return 'heart';
     case VOUCHERS:
-      return 'ticket-alt';
+      return 'ticket_alt';
     default:
       return 'archive';
   }

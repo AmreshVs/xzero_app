@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { View, Text } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
@@ -12,6 +11,7 @@ import { IMAGE_URL } from 'constants/common';
 import colors from 'constants/colors';
 import { thumbnailUrl } from 'constants/commonFunctions';
 import { SPECIALIST_DETAIL } from 'navigation/routes';
+import Icon from 'icon';
 import styles from './styles';
 
 const Specialist = ({ data }) => {
@@ -46,11 +46,10 @@ const Specialist = ({ data }) => {
               {data?.[`desc_${language}`]}
             </Text>
             <Row flexWrap="nowrap">
-              <FontAwesomeIcon
-                icon="map-marker-alt"
+              <Icon
+                name="map_marker_alt"
                 color={colors.text_lite}
-                size={17}
-                style={styles.icon}
+                size={15}
               />
               <Text style={styles.locationCaption} numberOfLines={1}>
                 {data?.center?.place}, {data?.center?.city}

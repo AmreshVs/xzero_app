@@ -1,16 +1,16 @@
 import React, { useState, memo } from 'react';
 import { View, Image, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import Card from 'components/card';
 import RippleFX from 'components/rippleFx';
 import ProgressiveImage from 'components/progressiveImage';
+import Chip from 'components/chip';
 import { IMAGE_URL } from 'constants/common';
 import { thumbnailUrl } from 'constants/commonFunctions';
-import styles from './styles';
-import Chip from 'components/chip';
 import colors from 'constants/colors';
+import Icon from 'icon';
+import styles from './styles';
 
 const Gift = ({ data, availed }) => {
   const { t, i18n } = useTranslation();
@@ -23,7 +23,7 @@ const Gift = ({ data, availed }) => {
         {showDesc && (
           <View style={styles.overlay}>
             <RippleFX style={styles.closeContainer} onPress={() => setShowDesc(!showDesc)}>
-              <FontAwesomeIcon icon="times" color="#FFF" />
+              <Icon name="times" />
             </RippleFX>
             <Text style={styles.imageTitle}>{data?.[`name_${language}`]}</Text>
             <Text style={styles.imageDesc}>{data?.[`desc_${language}`]}</Text>

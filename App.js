@@ -1,8 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { LogBox, Platform, Text } from 'react-native';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
 import { StatusBar } from 'expo-status-bar';
 import { ApolloProvider } from '@apollo/client';
 import * as Notifications from 'expo-notifications';
@@ -108,6 +106,3 @@ const App = () => {
 }
 
 export default App;
-
-// Registering Icon to use throughout the app
-library.add(fas);

@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { Text, View } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
@@ -8,6 +7,7 @@ import Row from 'components/row';
 import Box from 'components/box';
 import RippleFX from 'components/rippleFx';
 import colors from 'constants/colors';
+import Icon from 'icon';
 import styles from './styles';
 
 const Plan = ({ data, index, planIndex, setPlanData, setPromocodeData }) => {
@@ -28,7 +28,7 @@ const Plan = ({ data, index, planIndex, setPlanData, setPromocodeData }) => {
         <Row vcenter>
           <Box width="20%" alignItems="center">
             <View style={[styles.planColor, { borderColor: data?.color || '#EEE' }]}>
-              <FontAwesomeIcon icon="credit-card" color={data?.color || colors.primary} size={25} />
+              <Icon name="credit_card" color={data?.color || colors.primary} size={25} wviewBox={580} />
             </View>
           </Box>
           <Box width="40%" paddingLeft={5}>

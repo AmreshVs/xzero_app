@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import Row from 'components/row';
 import Card from 'components/card';
@@ -12,6 +11,7 @@ import colors from 'constants/colors';
 import { IMAGE_URL } from 'constants/common';
 import { thumbnailUrl } from 'constants/commonFunctions';
 import { OFFERS_SCREEN } from 'navigation/routes';
+import Icon from 'icon';
 import styles from './styles';
 
 const AboutCenter = ({ specialist, userData }) => {
@@ -45,11 +45,12 @@ const AboutCenter = ({ specialist, userData }) => {
               {specialist?.center?.[`title_${language}`]}
             </Text>
             <Row vcenter>
-              <FontAwesomeIcon
-                icon="map-marker-alt"
+              <Icon
+                name="map_marker_alt"
                 color={colors.text_lite}
-                size={17}
-                style={styles.icon} />
+                size={15}
+                style={styles.icon}
+              />
               <Text style={[styles.caption, styles.place]} numberOfLines={1}>
                 {specialist?.center?.place}, {specialist?.center?.city}
               </Text>

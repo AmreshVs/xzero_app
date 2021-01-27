@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -18,6 +17,7 @@ import { firstLetterUpper, useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { GIFTS, HOME_SCREEN, NOTIFICATIONS } from 'navigation/routes';
 import { UPDATE_LANGUAGE } from 'graphql/mutations';
+import Icon from 'icon';
 import styles from './styles';
 
 export const UpdateLanguage = async (client, params) => {
@@ -75,29 +75,29 @@ const TopSection = ({ notificationCount, handleModalOpen }) => {
         <Box style={styles.navContainer}>
           <Row>
             <RippleFX style={styles.iconContainer} onPress={() => toggleDrawer()}>
-              <FontAwesomeIcon icon="bars" color={colors.white} size={20} />
+              <Icon name="bars" />
             </RippleFX>
             <Box marginLeft={-13}>
               <RippleFX style={styles.iconContainer} onPress={() => push(GIFTS)}>
-                <FontAwesomeIcon icon="gift" color={colors.white} size={20} />
+                <Icon name="gift" />
               </RippleFX>
             </Box>
           </Row>
           <Row marginRight={10}>
             <Box marginRight={-15}>
               <RippleFX style={styles.iconContainer} onPress={() => handleModalOpen()}>
-                <FontAwesomeIcon icon="search" color={colors.white} size={20} />
+                <Icon name="search" />
               </RippleFX>
             </Box>
             <RippleFX style={styles.iconContainer} onPress={() => push(NOTIFICATIONS)}>
-              <FontAwesomeIcon icon="bell" color={colors.white} size={20} />
+              <Icon name="bell" />
               {notificationCount > 0 ? (
                 <View style={styles.notificationCount} />
               ) : null}
             </RippleFX>
             <RippleFX style={styles.iconContainer} onPress={() => handleLangSelect()}>
               <Row flexWrap="nowrap" vcenter>
-                <FontAwesomeIcon icon="globe" color={colors.white} size={20} />
+                <Icon name="globe" />
                 <Text style={styles.language}>{i18n.language === 'en' ? 'AR' : 'EN'}</Text>
               </Row>
             </RippleFX>
@@ -114,7 +114,7 @@ const TopSection = ({ notificationCount, handleModalOpen }) => {
                 />
               </View>
               :
-              userData && <FontAwesomeIcon icon="user-circle" color={colors.white} size={45} />
+              userData && <Icon name="user_circle" size={45} />
             }
             {userData ?
               <View style={styles.textContiner}>

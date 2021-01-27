@@ -132,7 +132,7 @@ const VoucherDetail = ({ navigation }) => {
               {!['closed', 'publish'].includes(voucher?.draw_status) && (
                 <View style={styles.buyNowButton}>
                   <Button
-                    icon="money-bill"
+                    icon="money_bill"
                     width={isTab() ? "40%" : "100%"}
                     onPress={() => handleOpenModal()}
                   >

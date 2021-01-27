@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,6 +7,7 @@ import RippleFX from 'components/rippleFx';
 import colors from 'constants/colors';
 import { isTab } from 'constants/commonFunctions';
 import { SCREEN_HEIGHT } from 'constants/common';
+import Icon from 'icon';
 
 export default function TopNavigator({
   title,
@@ -32,7 +32,7 @@ export default function TopNavigator({
           onPress={() => (leftIcon && !leftClick ? pop() : leftClick())}
         >
           {leftIcon && (
-            <FontAwesomeIcon
+            <Icon
               color={gradient || color ? colors.white : colors.text_dark}
               icon={leftIconName}
             />

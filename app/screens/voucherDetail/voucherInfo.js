@@ -68,7 +68,7 @@ const VoucherInfo = ({ data }) => {
         <Text style={styles.caption}>{t('check_below_for_more')}</Text>
       </Box>
       <Box padding={10} paddingTop={0} alignItems="flex-end">
-        <Button width={isTab() ? "20%" : "100%"} status="chip_1" size="small" icon="share-alt" onPress={() => handleShare()}>{t('share')}</Button>
+        <Button width={isTab() ? "20%" : "100%"} status="chip_1" size="small" icon="share_alt" onPress={() => handleShare()}>{t('share')}</Button>
       </Box>
     </Card>
   )

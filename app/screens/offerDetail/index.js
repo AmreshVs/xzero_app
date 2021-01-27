@@ -3,7 +3,6 @@ import { ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
 import { useQuery, useApolloClient } from '@apollo/client';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
 
 import addFavourite from 'screens/offers/addFavourite';
@@ -17,6 +16,7 @@ import { firstLetterUpper, useReduxAction } from 'constants/commonFunctions';
 import { OFFERS_DETAIL } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { OFFER_DETAIL } from 'navigation/routes';
+import Icon from 'icon';
 import ShareOffer from './shareOffer';
 import OfferCard from './offerCard';
 import CenterInfo from './centerInfo';
@@ -69,7 +69,7 @@ const OfferDetail = () => {
   const RightIcon = () => {
     return (
       <RippleFX style={styles.rightIcon} onPress={() => handleFavourite(data?.offer?.id)}>
-        <FontAwesomeIcon icon="heart" color={favourite ? colors.danger : colors.white} size={15} />
+        <Icon name="heart" color={favourite ? colors.danger : colors.white} size={15} />
       </RippleFX>
     );
   };

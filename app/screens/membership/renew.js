@@ -23,7 +23,7 @@ const Renew = ({ membershipData, expired }) => {
         {expired ? t('renew_expired_membership') : t('renew_membership')}
       </Text>
       <Box marginTop={10}>
-        <Button icon="sync-alt" onPress={() => handleRenew()}>
+        <Button icon="sync_alt" onPress={() => handleRenew()}>
           {t('renew_now')}
         </Button>
       </Box>

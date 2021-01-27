@@ -73,7 +73,7 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
       FooterComponent={
         <View style={styles.footer}>
           <Button
-            icon="money-bill"
+            icon="money_bill"
             width={isTab() ? "30%" : "100%"}
             onPress={() => handlePayment()}
             disabled={userData?.address === null}

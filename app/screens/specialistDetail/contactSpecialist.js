@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 import Row from 'components/row';
 import Button from 'components/button';
@@ -25,7 +24,7 @@ const ContactSpecialist = ({ specialist, userData }) => {
         <Button
           style={styles.callButton}
           status="success"
-          icon={faWhatsapp}
+          icon="whatsapp"
           disabled={!userData?.username || specialist?.mobile_number === null}
           onPress={() => sendWhatsappMessage(
             getWhatsappMessage(),

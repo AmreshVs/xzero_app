@@ -45,7 +45,7 @@ const ShareOffer = ({ data }) => {
         <Box marginTop={10}>
           <Button
             status="chip_1"
-            icon="share-alt"
+            icon="share_alt"
             onPress={() => handleShare()}
           >
             {t('share')}

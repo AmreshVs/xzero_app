@@ -31,7 +31,7 @@ const Categories = ({ data }) => {
     <RippleFX style={styles.container} onPress={navigateToCenters}>
       <ProgressiveImage
         style={styles.image}
-        source={{ uri: IMAGE_URL + smallUrl(data?.featured_img) }}
+        source={{ uri: IMAGE_URL + data?.featured_img }}
       />
       <Box padding={10}>
         <Text style={styles.heading}>{data?.[`title_${language}`]}</Text>

@@ -1,15 +1,14 @@
-import React, { useRef, useEffect } from 'react';
-import { View, Animated } from 'react-native';
+import React, { useRef, useEffect, memo } from 'react';
+import { Animated } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useTranslation } from 'react-i18next';
 
 import colors from 'constants/colors';
 import RippleFX from 'components/rippleFx';
+import { MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
+import Icon from 'icon';
 import getIconName from './getIconName';
 import style from "./style";
-import { MEMBERSHIP_TAB_SCREEN } from 'navigation/routes';
-import { useTranslation } from 'react-i18next';
-import { memo } from 'react';
 
 const TabItem = ({ options, route, index, state, navigation }) => {
   const insets = useSafeAreaInsets();
@@ -100,11 +99,12 @@ const TabItem = ({ options, route, index, state, navigation }) => {
         style={route.name === MEMBERSHIP_TAB_SCREEN ? isFocused ? styles.memberIconContainerFocused : styles.memberIconContainer : isFocused ? styles.iconContainerFocused : styles.iconContainer}
         rippleColor={colors?.primary}
       >
-        <FontAwesomeIcon
-          icon={getIconName(route.name)}
+        <Icon
+          name={getIconName(route.name)}
           color={route.name === MEMBERSHIP_TAB_SCREEN ? isFocused ? colors.primary : colors.white : isFocused ? colors.primary : colors.text_lite}
           size={22}
           style={styles.icon}
+          wviewBox={560}
         />
       </RippleFX>
 

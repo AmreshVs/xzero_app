@@ -57,7 +57,6 @@ const mobileStyles = StyleSheet.create({
   location: {
     marginRight: 5,
     ...textLite,
-    ...marginLeft5,
   },
   mapContentContainer: {
     ...justifyContentCenter,
@@ -74,6 +73,7 @@ const mobileStyles = StyleSheet.create({
   descText: {
     ...textLite,
     ...marginTop5,
+    lineHeight: 20
   },
   rightIcon: {
     borderRadius: 70,

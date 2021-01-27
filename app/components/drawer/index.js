@@ -1,11 +1,9 @@
 import React from 'react';
 import { Image, Linking, Platform, StyleSheet, Text, View } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { useDispatch } from 'react-redux';
 
 import { handlelogout } from 'screens/user/profileView';
@@ -19,6 +17,7 @@ import { sendWhatsappMessage, useReduxAction } from 'constants/commonFunctions';
 import { WHATSAPP_CONTACT } from 'constants/common';
 import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN } from 'navigation/routes';
+import Icon from 'icon';
 
 export default function CustomDrawer(props) {
   const userData = useReduxAction(state => state?.userReducer?.user);
@@ -103,15 +102,15 @@ export default function CustomDrawer(props) {
       case 0:
         return 'home';
       case 1:
-        return 'ticket-alt';
+        return 'ticket_alt';
       case 2:
         return 'bullhorn';
       case 3:
         return 'gifts';
       case 4:
-        return 'user-shield';
+        return 'user_shield';
       case 5:
-        return 'check-square';
+        return 'check_square';
       default:
         return 'ad';
     }
@@ -153,7 +152,7 @@ export default function CustomDrawer(props) {
               />
             </View>
             :
-            <FontAwesomeIcon icon="user-circle" color={colors.white} size={45} />
+            <Icon name="user_circle" size={45} />
           }
           <Text style={styles.headText}>{userData?.username}</Text>
         </Box>
@@ -162,7 +161,7 @@ export default function CustomDrawer(props) {
         const Item = () => (
           <DrawerItem
             label={({ focused, color }) => <Text style={[{ color: focused ? colors.primary : color }, styles.drawerText]}>{t(item)}</Text>}
-            icon={({ focused, color, size }) => <FontAwesomeIcon icon={getIcon(index)} color={focused ? colors.primary : color} size={size} />}
+            icon={({ focused, color }) => <Icon name={getIcon(index)} color={focused ? colors.primary : color} viewBox={620} size={22} />}
             focused={props.state.index === index}
             onPress={() => props.navigation.navigate(item, { drawer: 1 })}
             activeBackgroundColor="#FFF"
@@ -184,7 +183,7 @@ export default function CustomDrawer(props) {
           size="small"
           status="success"
           width="100%"
-          icon={faWhatsapp}
+          icon="whatsapp"
           onPress={() => handleContact()}
           outline
         >
@@ -195,7 +194,7 @@ export default function CustomDrawer(props) {
           size="small"
           status={userData ? 'danger' : 'chip_1'}
           width="100%"
-          icon={userData ? 'sign-out-alt' : 'sign-in-alt'}
+          icon={userData ? 'sign_out_alt' : 'sign_in_alt'}
           onPress={() => handlePress()}
           outline
         >

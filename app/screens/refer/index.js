@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { ScrollView, Text, View, Share, RefreshControl, Image, Platform } from 'react-native';
 import { Modalize } from 'react-native-modalize';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import LottieView from 'lottie-react-native';
@@ -22,6 +21,7 @@ import IsLoggedIn from 'hoc/isLoggedIn';
 import IsVerified from 'hoc/isVerified';
 import { GET_REFER_HISTORY } from 'graphql/queries';
 import { REFER } from 'navigation/routes';
+import Icon from 'icon';
 import ReferHistory from './referHistory';
 import Withdraw from './withdraw';
 import styles from './styles';
@@ -171,7 +171,7 @@ const Refer = () => {
         <Row paddingHorizontal={isTab() ? 100 : 0} justifyContent="space-between" marginTop={10}>
           <Column style={styles.countsContainer}>
             <Box style={styles.iconContainer} backgroundColor="#d8ddfe">
-              <FontAwesomeIcon icon="bullhorn" size={25} color={colors.chip_1} />
+              <Icon name="bullhorn" size={25} color={colors.chip_1} wviewBox={580} />
             </Box>
             <Box width="100%">
               <Text style={styles.count}>{refer?.totalReferred || 0}</Text>
@@ -180,7 +180,7 @@ const Refer = () => {
           </Column>
           <Column style={styles.countsContainer}>
             <Box style={styles.iconContainer} backgroundColor="#fee5d0">
-              <FontAwesomeIcon icon="money-bill-wave" size={25} color={colors.chip_2} />
+              <Icon name="money_bill_wave" size={25} color={colors.chip_2} wviewBox={640} />
             </Box>
             <Box width="100%">
               <Text style={styles.count}>{refer?.totalEarned} {t('aed')}</Text>
@@ -189,7 +189,7 @@ const Refer = () => {
           </Column>
           <Column style={styles.countsContainer}>
             <Box style={styles.iconContainer} backgroundColor="#fbcfd0">
-              <FontAwesomeIcon icon="coins" size={25} color={colors.danger} />
+              <Icon name="coins" size={25} color={colors.danger} />
             </Box>
             <Box width="100%">
               <Text style={styles.count}>{refer?.balance || 0} {t('aed')}</Text>

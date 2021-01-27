@@ -33,6 +33,6 @@ export const passwordInputs = [
 
 export const inputs = [
   { name: 'email', icon: 'at' },
-  { name: 'phone', icon: 'phone-alt' },
-  { name: 'dob', icon: 'birthday-cake' },
+  { name: 'phone', icon: 'phone_alt' },
+  { name: 'dob', icon: 'birthday_cake' },
 ];

@@ -17,7 +17,7 @@ const BuyMembership = ({ handleBuy }) => {
       </Text>
       <Text style={styles.helpCaption}>{t('no_membership')}</Text>
       <Box>
-        <Button icon="money-check" onPress={() => handleBuy()}>
+        <Button icon="money_check" onPress={() => handleBuy()}>
           {t('buy_membership')}
         </Button>
       </Box>

@@ -102,7 +102,7 @@ const ForgotPassword = ({ navigation }) => {
                   <FormError touched={touched.email} errorText={errors.email} />
                   <Box marginBottom={20} />
                   <Button
-                    icon="unlock-alt"
+                    icon="unlock_alt"
                     onPress={() => handleSubmit()}
                     disabled={!isValid}
                     loading={loading}

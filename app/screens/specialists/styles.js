@@ -45,9 +45,6 @@ const mobileStyles = StyleSheet.create({
     ...fontWeight700,
     ...marginBottom5,
   },
-  icon: {
-    marginRight: 3,
-  },
 });
 
 const tabStyles = StyleSheet.create({

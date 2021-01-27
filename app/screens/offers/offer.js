@@ -3,7 +3,6 @@ import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import Box from 'components/box';
 import Row from 'components/row';
@@ -17,6 +16,7 @@ import colors from 'constants/colors';
 import { isTab, thumbnailUrl, useReduxAction } from 'constants/commonFunctions';
 import { OFFERS_SCREEN, OFFER_DETAIL } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
+import Icon from 'icon';
 import addFavourite from './addFavourite';
 import styles from './styles';
 
@@ -119,9 +119,8 @@ function Offer({ data, center, favourites }) {
       <Row flex={1} height="100%" vcenter hcenter>
         {userData && (
           <RippleFX style={styles.iconContainer} onPress={() => handleFavourite(data?.id)}>
-            <FontAwesomeIcon
-              icon="heart"
-              size={22}
+            <Icon
+              name="heart"
               color={favourite ? colors.danger : colors.text_lite}
             />
           </RippleFX>

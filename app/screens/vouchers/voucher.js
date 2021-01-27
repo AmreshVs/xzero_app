@@ -70,7 +70,7 @@ const Voucher = ({ data, handleOpenModal }) => {
         <Box width="30%" marginTop={2}>
           <Button
             size="small"
-            icon="money-bill"
+            icon="money_bill"
             onPress={() => {
               handleOpenModal(data);
             }}

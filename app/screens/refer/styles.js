@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   },
   caption: {
     color: colors.text_lite,
+    lineHeight: 20
   },
   referCaption: {
     color: colors.text_lite,

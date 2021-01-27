@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import WebView from 'react-native-webview';
 import RippleFX from 'components/rippleFx';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +17,7 @@ import { GENERATE_PAYMENT_ACCESS_TOKEN, GENERATE_PAYMENT_URL, CHECK_PAYMENT_STAT
 import { useAxios } from 'hooks';
 import useErrorLog from 'hooks/useErrorLog';
 import usePaymentLog from 'hooks/usePaymentLog';
+import Icon from 'icon';
 import styles from './styles';
 
 var captured = false;
@@ -256,7 +256,7 @@ export default function Payment() {
   const RightIcon = () => {
     return (
       <RippleFX style={styles.rightIcon} onPress={() => GeneratePaymentUrl()}>
-        <FontAwesomeIcon icon="redo-alt" color={colors.white} size={15} />
+        <Icon name="redo_alt" color={colors.white} size={15} />
       </RippleFX>
     );
   };

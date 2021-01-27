@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 import Row from 'components/row';
 import Card from 'components/card';
@@ -27,7 +26,7 @@ const GetHelp = () => {
         <Text style={styles.helpCaption}>{t('membership_difficulties')}</Text>
         <Button
           status="success"
-          icon={faWhatsapp}
+          icon="whatsapp"
           disabled={!userData?.username}
           onPress={() =>
             sendWhatsappMessage(getWhatsappMessage(), handleMobileNumber(WHATSAPP_CONTACT))

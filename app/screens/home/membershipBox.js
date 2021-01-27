@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,6 +11,7 @@ import RippleFX from 'components/rippleFx';
 import { getFormatedDate } from 'constants/commonFunctions';
 import colors from 'constants/colors';
 import { CENTERS_SCREEN, GIFTS, MEMBERSHIP_TAB_SCREEN, OFFERS_SCREEN, SPECIALISTS, VOUCHERS } from 'navigation/routes';
+import Icon from 'icon';
 import styles from './styles';
 
 const MembershipBox = ({ data, expiry }) => {
@@ -46,7 +46,7 @@ const MembershipBox = ({ data, expiry }) => {
                 style={[styles.iconContainer, styles.icon1]}
                 onPress={() => push(CENTERS_SCREEN, { title: t('centers') })}
               >
-                <FontAwesomeIcon icon="store" color="#b81fff" size={25} />
+                <Icon name="store" color="#b81fff" size={25} wviewBox={620} hviewBox={490} />
               </RippleFX>
               <Text style={styles.count}>{data.centersCount || 0}+</Text>
               <Text style={styles.secondaryText}>{t('centers')}</Text>
@@ -56,7 +56,7 @@ const MembershipBox = ({ data, expiry }) => {
                 style={[styles.iconContainer, styles.icon2]}
                 onPress={() => push(OFFERS_SCREEN, { title: t('centers') })}
               >
-                <FontAwesomeIcon icon="percentage" color={colors.primary} size={25} />
+                <Icon name="percentage" color={colors.primary} size={22} wviewBox={400} />
               </RippleFX>
               <Text style={styles.count}>{data.offersCount || 0}+</Text>
               <Text style={styles.secondaryText}>{t('offers')}</Text>
@@ -66,7 +66,7 @@ const MembershipBox = ({ data, expiry }) => {
                 style={[styles.iconContainer, styles.icon4]}
                 onPress={() => push(SPECIALISTS, { title: t('specialist') })}
               >
-                <FontAwesomeIcon icon="user-md" color={colors.chip_2} size={25} />
+                <Icon name="user_md" color={colors.chip_2} size={25} wviewBox={450} />
               </RippleFX>
               <Text style={styles.count}>{data.specialistsCount || 0}+</Text>
               <Text style={styles.secondaryText}>{t('specialist')}</Text>
@@ -76,7 +76,7 @@ const MembershipBox = ({ data, expiry }) => {
                 style={[styles.iconContainer, styles.icon5]}
                 onPress={() => push(VOUCHERS)}
               >
-                <FontAwesomeIcon icon="ticket-alt" color={styles.icon5Color.color} size={25} />
+                <Icon name="ticket_alt" color={styles.icon5Color.color} size={25} wviewBox={580} />
               </RippleFX>
               <Text style={styles.count}>{data.vouchersCount || 0}+</Text>
               <Text style={styles.secondaryText}>{t('vouchers')}</Text>
@@ -86,7 +86,7 @@ const MembershipBox = ({ data, expiry }) => {
                 style={[styles.iconContainer, styles.icon3]}
                 onPress={() => push(GIFTS)}
               >
-                <FontAwesomeIcon icon="gifts" color={colors.danger} size={25} />
+                <Icon name="gifts" color={colors.danger} size={25} wviewBox={640} />
               </RippleFX>
               <Text style={styles.count}>{data.giftsCount || 0}+</Text>
               <Text style={styles.secondaryText}>{t('gifts')}</Text>

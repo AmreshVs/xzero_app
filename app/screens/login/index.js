@@ -1,6 +1,5 @@
 import React, { useContext, useState, memo, useEffect } from 'react';
 import { Text, Image, View, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
-import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -369,7 +368,7 @@ const Login = ({ navigation }) => {
                     {t('forgot_password')}
                   </Text>
                   <Button
-                    icon="sign-in-alt"
+                    icon="sign_in_alt"
                     onPress={() => handleSubmit()}
                     disabled={!isValid}
                     loading={loading}
@@ -390,7 +389,7 @@ const Login = ({ navigation }) => {
               <View style={styles.btnContainer}>
                 <Button
                   width="48%"
-                  icon={faFacebookF}
+                  icon="facebook"
                   color="#3b5998"
                   iconColor="#3b5998"
                   onPress={() => handleSocialLogin('fb')}
@@ -400,7 +399,7 @@ const Login = ({ navigation }) => {
                 </Button>
                 <Button
                   width="48%"
-                  icon={faGoogle}
+                  icon="google"
                   color="#db3236"
                   iconColor="#db3236"
                   onPress={() => handleSocialLogin('g')}
