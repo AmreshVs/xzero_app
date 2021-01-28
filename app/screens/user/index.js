@@ -20,6 +20,7 @@ import UserCard from './userCard';
 import ProfileView from './profileView';
 import ProfileEdit from './profileEdit';
 import styles from './styles';
+import { ScaleAnim } from 'animation';
 
 const User = () => {
   const { t } = useTranslation();
@@ -115,18 +116,20 @@ const User = () => {
                 ) : (
                     <ProfileEdit data={data?.user} setEdit={setEdit} />
                   )}
-                <Row style={styles.switch} vcenter>
-                  <Box paddingLeft={20} marginRight={5}>
-                    <Text style={styles.caption}>{t('show_popup')}</Text>
-                  </Box>
-                  <Switch
-                    trackColor={{ false: colors.text_lite, true: colors.primary }}
-                    thumbColor={colors.white}
-                    ios_backgroundColor={colors.text_lite}
-                    onValueChange={() => toggleSwitch()}
-                    value={isEnabled}
-                  />
-                </Row>
+                <ScaleAnim>
+                  <Row style={styles.switch} vcenter>
+                    <Box paddingLeft={20} marginRight={5}>
+                      <Text style={styles.caption}>{t('show_popup')}</Text>
+                    </Box>
+                    <Switch
+                      trackColor={{ false: colors.text_lite, true: colors.primary }}
+                      thumbColor={colors.white}
+                      ios_backgroundColor={colors.text_lite}
+                      onValueChange={() => toggleSwitch()}
+                      value={isEnabled}
+                    />
+                  </Row>
+                </ScaleAnim>
               </Box>
             </Box>
           </Box>

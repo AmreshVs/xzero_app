@@ -18,6 +18,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { GIFTS, HOME_SCREEN, NOTIFICATIONS } from 'navigation/routes';
 import { UPDATE_LANGUAGE } from 'graphql/mutations';
 import Icon from 'icon';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import styles from './styles';
 
 export const UpdateLanguage = async (client, params) => {
@@ -75,59 +76,73 @@ const TopSection = ({ notificationCount, handleModalOpen }) => {
         <Box style={styles.navContainer}>
           <Row>
             <RippleFX style={styles.iconContainer} onPress={() => toggleDrawer()}>
-              <Icon name="bars" />
+              <ScaleAnim>
+                <Icon name="bars" />
+              </ScaleAnim>
             </RippleFX>
             <Box marginLeft={-13}>
               <RippleFX style={styles.iconContainer} onPress={() => push(GIFTS)}>
-                <Icon name="gift" />
+                <ScaleAnim>
+                  <Icon name="gift" />
+                </ScaleAnim>
               </RippleFX>
             </Box>
           </Row>
           <Row marginRight={10}>
             <Box marginRight={-15}>
               <RippleFX style={styles.iconContainer} onPress={() => handleModalOpen()}>
-                <Icon name="search" />
+                <ScaleAnim>
+                  <Icon name="search" />
+                </ScaleAnim>
               </RippleFX>
             </Box>
             <RippleFX style={styles.iconContainer} onPress={() => push(NOTIFICATIONS)}>
-              <Icon name="bell" />
-              {notificationCount > 0 ? (
-                <View style={styles.notificationCount} />
-              ) : null}
+              <ScaleAnim>
+                <Icon name="bell" />
+                {notificationCount > 0 ? (
+                  <View style={styles.notificationCount} />
+                ) : null}
+              </ScaleAnim>
             </RippleFX>
             <RippleFX style={styles.iconContainer} onPress={() => handleLangSelect()}>
-              <Row flexWrap="nowrap" vcenter>
-                <Icon name="globe" />
-                <Text style={styles.language}>{i18n.language === 'en' ? 'AR' : 'EN'}</Text>
-              </Row>
+              <ScaleAnim>
+                <Row flexWrap="nowrap" vcenter>
+                  <Icon name="globe" />
+                  <Text style={styles.language}>{i18n.language === 'en' ? 'AR' : 'EN'}</Text>
+                </Row>
+              </ScaleAnim>
             </RippleFX>
           </Row>
         </Box>
         <Box>
-          <Row hcenter vcenter>
-            {userData?.profile_pic ?
-              <View style={styles.imgContainer}>
-                <ProgressiveImage
-                  style={styles.profile_pic}
-                  thumbnailSource={{ uri: userData?.profile_pic }}
-                  source={{ uri: userData?.profile_pic }}
-                />
-              </View>
-              :
-              userData && <Icon name="user_circle" size={45} />
-            }
-            {userData ?
-              <View style={styles.textContiner}>
-                <Text style={styles.username} numberOfLines={1}>{firstLetterUpper(name)}</Text>
-                <Text style={styles.topCaption} numberOfLines={1}>{email}</Text>
-              </View>
-              :
-              <View style={styles.textContiner}>
-                <Text style={styles.ntitle}>{t('get_started')}</Text>
-                <Text style={styles.topCaption}>{t('signup_note')}</Text>
-              </View>
-            }
-          </Row>
+          <FadeInUpAnim>
+            <Row hcenter vcenter>
+              {userData?.profile_pic ?
+                <View style={styles.imgContainer}>
+                  <ScaleAnim>
+                    <ProgressiveImage
+                      style={styles.profile_pic}
+                      thumbnailSource={{ uri: userData?.profile_pic }}
+                      source={{ uri: userData?.profile_pic }}
+                    />
+                  </ScaleAnim>
+                </View>
+                :
+                userData && <ScaleAnim><Icon name="user_circle" size={45} /></ScaleAnim>
+              }
+              {userData ?
+                <View style={styles.textContiner}>
+                  <Text style={styles.username} numberOfLines={1}>{firstLetterUpper(name)}</Text>
+                  <Text style={styles.topCaption} numberOfLines={1}>{email}</Text>
+                </View>
+                :
+                <View style={styles.textContiner}>
+                  <Text style={styles.ntitle}>{t('get_started')}</Text>
+                  <Text style={styles.topCaption}>{t('signup_note')}</Text>
+                </View>
+              }
+            </Row>
+          </FadeInUpAnim>
         </Box>
       </SafeView>
     </>

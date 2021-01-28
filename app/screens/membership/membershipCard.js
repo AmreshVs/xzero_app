@@ -7,7 +7,9 @@ import Box from 'components/box';
 import colors from 'constants/colors';
 import Row from 'components/row';
 import Column from 'components/column';
-import { firstLetterUpper, getFormatedDate } from 'constants/commonFunctions';
+import ProgressiveImage from 'components/progressiveImage';
+import { firstLetterUpper, getFormatedDate, thumbnailUrl } from 'constants/commonFunctions';
+import { IMAGE_URL } from 'constants/common';
 import styles from './styles';
 
 const MembershipCard = ({ member, data, expired }) => {
@@ -22,7 +24,11 @@ const MembershipCard = ({ member, data, expired }) => {
         style={styles.gradient}
       >
         <Row hcenter>
-          <Image source={require('../../../assets/loader.gif')} style={styles.logo} />
+          <ProgressiveImage
+            preview={{ uri: IMAGE_URL + thumbnailUrl('/uploads/loader_d7d473e3bb.gif') }}
+            source={{ uri: IMAGE_URL + '/uploads/loader_d7d473e3bb.gif' }}
+            style={styles.logo}
+          />
         </Row>
         <View style={styles.textContainer}>
           <Row spaceBetween vcenter>

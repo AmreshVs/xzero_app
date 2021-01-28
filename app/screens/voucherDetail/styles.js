@@ -33,7 +33,8 @@ const mobileStyles = StyleSheet.create({
     width: '100%',
     height: SCREEN_HEIGHT / 3,
     resizeMode: 'contain',
-    marginBottom: 5
+    marginBottom: 5,
+    borderRadius: 10
   },
   buyNowButton: {
     bottom: 60,

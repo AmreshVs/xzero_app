@@ -10,6 +10,7 @@ import RippleFX from 'components/rippleFx';
 import colors from 'constants/colors';
 import { firstLetterUpper, handleDOB, useReduxAction } from 'constants/commonFunctions';
 import Icon from 'icon';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import styles from './styles';
 
 const UserCard = ({ edit, setEdit, data }) => {
@@ -23,7 +24,9 @@ const UserCard = ({ edit, setEdit, data }) => {
       <View style={styles.rightIconContainer}>
         {!edit && (
           <RippleFX style={styles.rightIcon} onPress={() => setEdit(!edit)}>
-            <Icon name="edit" size={17} color={colors.white} wviewBox={550} />
+            <ScaleAnim>
+              <Icon name="edit" size={17} color={colors.white} wviewBox={550} />
+            </ScaleAnim>
           </RippleFX>
         )}
       </View>
@@ -39,20 +42,26 @@ const UserCard = ({ edit, setEdit, data }) => {
         rightContainer={<RightIcon />}
         color="#FFF"
       />
-      <View style={styles.userIconContainer}>
-        {userData?.profile_pic ?
-          <ProgressiveImage
-            style={styles.profile_pic}
-            source={{ uri: userData?.profile_pic }}
-          />
-          :
-          <Icon name="user_alt" style={styles.icon} size={25} color={colors.gradient2} />
-        }
-      </View>
-      <Text style={styles.username} numberOfLines={1}>{firstLetterUpper(data?.username)}</Text>
-      <Text style={styles.userCardCaption}>
-        {t('user_since')} {data?.created_at && handleDOB(data?.created_at)}
-      </Text>
+      <ScaleAnim delay={50}>
+        <View style={styles.userIconContainer}>
+          {userData?.profile_pic ?
+            <ProgressiveImage
+              style={styles.profile_pic}
+              source={{ uri: userData?.profile_pic }}
+            />
+            :
+            <Icon name="user_alt" style={styles.icon} size={25} color={colors.gradient2} />
+          }
+        </View>
+      </ScaleAnim>
+      <FadeInUpAnim delay={50}>
+        <Text style={styles.username} numberOfLines={1}>{firstLetterUpper(data?.username)}</Text>
+      </FadeInUpAnim>
+      <FadeInUpAnim delay={150}>
+        <Text style={styles.userCardCaption}>
+          {t('user_since')} {data?.created_at && handleDOB(data?.created_at)}
+        </Text>
+      </FadeInUpAnim>
     </View>
   );
 }

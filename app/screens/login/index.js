@@ -154,6 +154,7 @@ const Login = ({ navigation }) => {
     };
 
     try {
+      // Need to update to authenticated
       await client.mutate({
         mutation: UPDATE_NOTIFICATION_TOKEN,
         variables: mutationInput,

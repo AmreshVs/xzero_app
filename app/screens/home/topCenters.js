@@ -1,3 +1,4 @@
+import { FadeInLeftAnim } from 'animation';
 import React, { memo } from 'react';
 import { View } from 'react-native';
 
@@ -8,7 +9,9 @@ const TopCenters = ({ data }) => {
   return (
     <View style={styles.topCenters}>
       {data.map((item, index) => (
-        <Center data={item} key={index} />
+        <FadeInLeftAnim delay={index * 50} key={index}>
+          <Center data={item} />
+        </FadeInLeftAnim>
       ))}
     </View>
   );

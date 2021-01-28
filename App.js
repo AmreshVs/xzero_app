@@ -41,7 +41,7 @@ const App = () => {
   useEffect(() => {
     checkInternet();
 
-    i18nLang();
+    initializeLanguage();
 
     unsubscribe = NetInfo.addEventListener(state => {
       setConnection(state?.isInternetReachable !== null ? state?.isInternetReachable : state?.isConnected);
@@ -56,6 +56,10 @@ const App = () => {
       }
     }
   }, []);
+
+  const initializeLanguage = async () => {
+    await i18nLang();
+  }
 
   const checkInternet = async () => {
     const state = await NetInfo.fetch();

@@ -9,6 +9,7 @@ import ProgressiveImage from 'components/progressiveImage';
 import { isTab, thumbnailUrl } from 'constants/commonFunctions';
 import { IMAGE_URL } from 'constants/common';
 import { CENTERS_SCREEN, SPECIALIST_HELP } from 'navigation/routes';
+import { FadeAnim, FadeInUpAnim, ScaleAnim } from 'animation';
 import styles from './styles';
 
 const Category = ({ data, length, index }) => {
@@ -36,22 +37,23 @@ const Category = ({ data, length, index }) => {
   };
 
   return (
-    <RippleFX
-      style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddContainer : styles.categoryContainer}
-      onPress={navigateToCenters}
-    >
-      <ProgressiveImage
-        thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img) }}
-        source={{ uri: IMAGE_URL + data?.featured_img }}
-        style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddImage : styles.image}
-      />
-      <Box padding={10} paddingTop={5}>
-        <Text style={styles.heading}>{data?.[`title_${language}`]}</Text>
-        <Text style={styles.caption}>
-          {data?.centersCount} {data?.type === 'specialist' ? t('specialist') : t('centers')}
-        </Text>
-      </Box>
-    </RippleFX>
+    <FadeInUpAnim delay={index * 100} style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddContainer : styles.categoryContainer}>
+      <RippleFX onPress={navigateToCenters}>
+        <FadeAnim>
+          <ProgressiveImage
+            thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img) }}
+            source={{ uri: IMAGE_URL + data?.featured_img }}
+            style={(length % 2 !== 0 && index === length - 1 && !isTab()) ? styles.oddImage : styles.image}
+          />
+          <Box padding={10} paddingTop={5}>
+            <Text style={styles.heading}>{data?.[`title_${language}`]}</Text>
+            <Text style={styles.caption}>
+              {data?.centersCount} {data?.type === 'specialist' ? t('specialist') : t('centers')}
+            </Text>
+          </Box>
+        </FadeAnim>
+      </RippleFX>
+    </FadeInUpAnim>
   );
 }
 

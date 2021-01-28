@@ -14,6 +14,7 @@ import { isTab, useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { VOUCHER_DETAIL } from 'graphql/queries';
 import { LOGIN_SCREEN, VOUCHER_DETAIL as VOUCHERDETAIL } from 'navigation/routes';
+import { FadeInLeftAnim, ScaleAnim } from 'animation';
 import BuyVoucherModal from './buyVoucherModal';
 import AssuredGift from './assuredGift';
 import Rules from './rules';
@@ -110,14 +111,32 @@ const VoucherDetail = ({ navigation }) => {
                 refreshControl={<RefreshControl refreshing={reloading} onRefresh={() => reload()} />}
                 onRefresh={() => reload()}
               >
-                <VoucherInfo data={voucher} />
-                <Details data={voucher} />
-                {voucher?.product?.length > 0 && <GetProduct key={voucher?.product?.length} />}
-                {voucher?.assured_gift?.length > 0 && <AssuredGift data={voucher?.assured_gift[0]} />}
+                <FadeInLeftAnim>
+                  <VoucherInfo data={voucher} />
+                </FadeInLeftAnim>
+                <FadeInLeftAnim delay={100}>
+                  <Details data={voucher} />
+                </FadeInLeftAnim>
+                {voucher?.product?.length > 0 && (
+                  <FadeInLeftAnim delay={200}>
+                    <GetProduct key={voucher?.product?.length} />
+                  </FadeInLeftAnim>
+                )}
+                {voucher?.assured_gift?.length > 0 && (
+                  <FadeInLeftAnim delay={300}>
+                    <AssuredGift data={voucher?.assured_gift[0]} />
+                  </FadeInLeftAnim>
+                )}
                 {voucher?.draw_gift?.length > 0 ? (
                   <>
-                    {voucher?.assured_gift?.length > 0 && <CenterSymbol icon="plus" />}
-                    <Win voucher_id={voucher?.id} draw_status={voucher?.draw_status} data={voucher?.draw_gift} />
+                    {voucher?.assured_gift?.length > 0 && (
+                      <ScaleAnim delay={300}>
+                        <CenterSymbol icon="plus" />
+                      </ScaleAnim>
+                    )}
+                    <FadeInLeftAnim delay={400}>
+                      <Win voucher_id={voucher?.id} draw_status={voucher?.draw_status} data={voucher?.draw_gift} />
+                    </FadeInLeftAnim>
                   </>
                 ) : <Box marginBottom={10} />}
                 <Box
@@ -125,8 +144,12 @@ const VoucherDetail = ({ navigation }) => {
                   flexDirection={isTab() ? "row" : "column"}
                   marginBottom={['closed', 'publish'].includes(voucher?.draw_status) ? 10 : 0}
                 >
-                  <Rules data={data?.voucherRule} />
-                  {!['closed', 'publish'].includes(voucher?.draw_status) && <Help />}
+                  <FadeInLeftAnim delay={600}>
+                    <Rules data={data?.voucherRule} />
+                  </FadeInLeftAnim>
+                  <FadeInLeftAnim delay={800}>
+                    {!['closed', 'publish'].includes(voucher?.draw_status) && <Help />}
+                  </FadeInLeftAnim>
                 </Box>
               </ScrollView>
               {!['closed', 'publish'].includes(voucher?.draw_status) && (

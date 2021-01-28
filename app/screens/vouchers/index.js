@@ -14,6 +14,7 @@ import { VOUCHERS } from 'graphql/queries';
 import { VOUCHERS as NAV_VOUCHER } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN } from 'navigation/routes';
+import { FadeInLeftAnim } from 'animation';
 import Voucher from './voucher';
 import styles from './styles';
 
@@ -96,7 +97,11 @@ const Vouchers = () => {
             <FlatList
               keyExtractor={(item) => String(item.id)}
               data={data?.vouchers}
-              renderItem={({ item }) => <Voucher handleOpenModal={handleOpenModal} data={item} />}
+              renderItem={({ item, index }) => (
+                <FadeInLeftAnim delay={index * 100}>
+                  <Voucher handleOpenModal={handleOpenModal} data={item} />
+                </FadeInLeftAnim>
+              )}
               numColumns={isTab() ? 2 : 1}
               initialNumToRender={6}
               maxToRenderPerBatch={10}

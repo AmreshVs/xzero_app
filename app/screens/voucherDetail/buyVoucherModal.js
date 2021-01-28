@@ -15,6 +15,7 @@ import { isTab, useReduxAction, userVerified } from 'constants/commonFunctions';
 import { VOUCHER_QUEUE } from 'graphql/mutations';
 import { PAYMENT, VOUCHER_DETAIL } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
+import { FadeInLeftAnim, ScaleAnim } from 'animation';
 import styles from './styles';
 
 const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher }) => {
@@ -68,10 +69,10 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
     <Modalize
       ref={modalizeRef}
       childrenStyle={styles.modal}
-      modalTopOffset={100}
+      modalTopOffset={50}
       scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
       FooterComponent={
-        <View style={styles.footer}>
+        <ScaleAnim style={styles.footer}>
           <Button
             icon="money_bill"
             width={isTab() ? "30%" : "100%"}
@@ -80,16 +81,20 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
           >
             {promocodeData?.discountedPrice === 0 ? t('free') : `${t('continue_to_pay')} ${promocodeData?.discountedPrice} ${t('aed')}`}
           </Button>
-        </View>
+        </ScaleAnim>
       }
     >
       <Box flexDirection={isTab() ? "row" : "column"}>
-        <Card style={styles.addressContainer} margin={10}>
-          <DeliveryAddress />
-        </Card>
-        <Card style={styles.promocodeContainer} margin={10} marginTop={0}>
-          <ApplyPromocode voucher_id={voucher?.id} voucherPrice={userData?.membership === null ? voucher?.cost_for_non_members : voucher?.cost} price={promocodeData?.discountedPrice} setPromocodeData={setPromocodeData} />
-        </Card>
+        <FadeInLeftAnim>
+          <Card style={styles.addressContainer} margin={10}>
+            <DeliveryAddress />
+          </Card>
+        </FadeInLeftAnim>
+        <FadeInLeftAnim delay={100}>
+          <Card style={styles.promocodeContainer} margin={10} marginTop={0}>
+            <ApplyPromocode voucher_id={voucher?.id} voucherPrice={userData?.membership === null ? voucher?.cost_for_non_members : voucher?.cost} price={promocodeData?.discountedPrice} setPromocodeData={setPromocodeData} />
+          </Card>
+        </FadeInLeftAnim>
       </Box>
     </Modalize>
   );

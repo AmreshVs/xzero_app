@@ -20,6 +20,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN, OTP, PROFILE_TAB_SCREEN } from 'navigation/routes';
 import { ClearUserData } from 'redux/actions';
 import Icon from 'icon';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import { client } from '../../../helpers';
 import styles from './styles';
 
@@ -96,100 +97,126 @@ const ProfileView = ({ data, setEdit }) => {
   return (
     <>
       <Box marginTop={10}>
-        <Row vcenter>
-          <Box paddingLeft={20} flex={1}>
-            <Icon name="mobile_alt" color={colors.primary} size={23} wviewBox={300} />
-          </Box>
-          <Box flex={8}>
-            {(data?.mobile_number !== 0 && data?.mobile_number !== null) ? (
-              <Row vcenter justifyContent="space-between">
-                <Row vcenter>
-                  <Text style={styles.text}>
-                    {handleMobileNumber(data?.mobile_number)}
-                  </Text>
-                  <View style={styles.verifyContainer}>
-                    <Icon name="certificate" color={data?.confirmed ? colors.primary : colors.text_lite} size={25} />
-                    <View style={styles.tickIcon}>
-                      <Icon name="check" color={colors.white} size={10} />
+        <FadeInUpAnim>
+          <Row vcenter>
+            <Box paddingLeft={20} flex={1}>
+              <Icon name="mobile_alt" color={colors.primary} size={23} wviewBox={300} />
+            </Box>
+            <Box flex={8}>
+              {(data?.mobile_number !== 0 && data?.mobile_number !== null) ? (
+                <Row vcenter justifyContent="space-between">
+                  <Row vcenter>
+                    <Text style={styles.text}>
+                      {handleMobileNumber(data?.mobile_number)}
+                    </Text>
+                    <View style={styles.verifyContainer}>
+                      <ScaleAnim delay={100}>
+                        <Icon name="certificate" color={data?.confirmed ? colors.primary : colors.text_lite} size={25} />
+                      </ScaleAnim>
+                      <ScaleAnim delay={150} style={styles.tickIcon}>
+                        <Icon name="check" color={colors.white} size={10} />
+                      </ScaleAnim>
                     </View>
-                  </View>
+                  </Row>
+                  {!data?.confirmed &&
+                    <ScaleAnim delay={100}>
+                      <Box marginRight={20}>
+                        <Button
+                          size="small"
+                          icon="check"
+                          status="chip_1"
+                          onPress={() => handleVerify()}
+                        >
+                          {t('verify_now')}
+                        </Button>
+                      </Box>
+                    </ScaleAnim>
+                  }
                 </Row>
-                {!data?.confirmed &&
-                  <Box marginRight={20}>
-                    <Button
-                      size="small"
-                      icon="check"
-                      status="chip_1"
-                      onPress={() => handleVerify()}
-                    >
-                      {t('verify_now')}
-                    </Button>
-                  </Box>
-                }
-              </Row>
-            ) : (
-                <RippleFX onPress={() => setEdit(true)}>
-                  <Text style={styles.caption}>{t('fill_mobile')}</Text>
-                </RippleFX>
-              )}
-          </Box>
-        </Row>
+              ) : (
+                  <RippleFX onPress={() => setEdit(true)}>
+                    <FadeInUpAnim>
+                      <Text style={styles.caption}>{t('fill_mobile')}</Text>
+                    </FadeInUpAnim>
+                  </RippleFX>
+                )}
+            </Box>
+          </Row>
+        </FadeInUpAnim>
       </Box>
-      <Divider margin={0} marginHorizontal={10} />
+      <FadeInUpAnim delay={100}>
+        <Divider margin={0} marginHorizontal={10} />
+      </FadeInUpAnim>
       <Box>
-        <Row vcenter>
-          <Box paddingLeft={20} flex={1}>
-            <Icon name="at" color={colors.primary} size={23} />
-          </Box>
-          <Box flex={8}>
-            <Text style={styles.text}>{data?.email}</Text>
-          </Box>
-        </Row>
+        <FadeInUpAnim delay={50}>
+          <Row vcenter>
+            <Box paddingLeft={20} flex={1}>
+              <Icon name="at" color={colors.primary} size={23} />
+            </Box>
+            <Box flex={8}>
+              <Text style={styles.text}>{data?.email}</Text>
+            </Box>
+          </Row>
+        </FadeInUpAnim>
       </Box>
-      <Divider margin={0} marginHorizontal={10} />
+      <FadeInUpAnim delay={100}>
+        <Divider margin={0} marginHorizontal={10} />
+      </FadeInUpAnim>
       <Box>
-        <Row vcenter>
-          <Box paddingLeft={20} flex={1}>
-            <Icon name="birthday_cake" color={colors.primary} size={23} wviewBox={400} />
-          </Box>
-          <Box flex={8}>
-            {data?.birthday ? (
-              <Text style={styles.text}>{handleDOB(data?.birthday)}</Text>
-            ) : (
-                <RippleFX onPress={() => setEdit(true)}>
-                  <Text style={styles.caption}>{t('fill_birthday')}</Text>
-                </RippleFX>
-              )}
-          </Box>
-        </Row>
+        <FadeInUpAnim delay={100}>
+          <Row vcenter>
+            <Box paddingLeft={20} flex={1}>
+              <Icon name="birthday_cake" color={colors.primary} size={23} wviewBox={400} />
+            </Box>
+            <Box flex={8}>
+              {data?.birthday ? (
+                <Text style={styles.text}>{handleDOB(data?.birthday)}</Text>
+              ) : (
+                  <RippleFX onPress={() => setEdit(true)}>
+                    <Text style={styles.caption}>{t('fill_birthday')}</Text>
+                  </RippleFX>
+                )}
+            </Box>
+          </Row>
+        </FadeInUpAnim>
       </Box>
-      <Divider margin={0} marginHorizontal={10} />
+      <FadeInUpAnim delay={100}>
+        <Divider margin={0} marginHorizontal={10} />
+      </FadeInUpAnim>
       <Box>
-        <Row vcenter>
-          <Box paddingLeft={20} flex={1}>
-            <Icon name="language" color={colors.primary} size={23} wviewBox={630} />
-          </Box>
-          <Box flex={8}>
-            <RippleFX onPress={() => handleLangSelect()}>
-              <Text style={styles.text}>{language === 'en' ? 'AR' : 'EN'}</Text>
-            </RippleFX>
-          </Box>
-        </Row>
+        <FadeInUpAnim delay={150}>
+          <Row vcenter>
+            <Box paddingLeft={20} flex={1}>
+              <Icon name="language" color={colors.primary} size={23} wviewBox={630} />
+            </Box>
+            <Box flex={8}>
+              <RippleFX onPress={() => handleLangSelect()}>
+                <Text style={styles.text}>{language === 'en' ? 'AR' : 'EN'}</Text>
+              </RippleFX>
+            </Box>
+          </Row>
+        </FadeInUpAnim>
       </Box>
-      <Divider margin={0} marginHorizontal={10} />
+      <FadeInUpAnim delay={100}>
+        <Divider margin={0} marginHorizontal={10} />
+      </FadeInUpAnim>
       <Box>
-        <Row vcenter>
-          <Box paddingLeft={20} flex={1}>
-            <Icon name="sign_out_alt" color={colors.danger} size={20} wviewBox={450} />
-          </Box>
-          <Box flex={8}>
-            <RippleFX onPress={() => handlePress()}>
-              <Text style={styles.logout}>{t('logout')}</Text>
-            </RippleFX>
-          </Box>
-        </Row>
+        <FadeInUpAnim delay={200}>
+          <Row vcenter>
+            <Box paddingLeft={20} flex={1}>
+              <Icon name="sign_out_alt" color={colors.danger} size={20} wviewBox={450} />
+            </Box>
+            <Box flex={8}>
+              <RippleFX onPress={() => handlePress()}>
+                <Text style={styles.logout}>{t('logout')}</Text>
+              </RippleFX>
+            </Box>
+          </Row>
+        </FadeInUpAnim>
       </Box>
-      <Divider margin={0} marginHorizontal={10} />
+      <FadeInUpAnim delay={100}>
+        <Divider margin={0} marginHorizontal={10} />
+      </FadeInUpAnim>
     </>
   );
 }

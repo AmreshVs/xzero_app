@@ -17,6 +17,7 @@ import colors from 'constants/colors';
 import { calculatePercentage, smallUrl, thumbnailUrl, useReduxAction } from 'constants/commonFunctions';
 import { VOUCHER_DETAIL } from 'navigation/routes';
 import styles from './styles';
+import { FadeAnim, FadeInUpAnim, ScaleAnim } from 'animation';
 
 const Voucher = ({ data, handleOpenModal }) => {
   const { push } = useNavigation();
@@ -43,46 +44,56 @@ const Voucher = ({ data, handleOpenModal }) => {
               <View style={styles.closed} />
             </>
           )}
-          <ProgressiveImage
-            thumbailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
-            source={{ uri: IMAGE_URL + smallUrl(data?.featured_img?.url) }}
-            style={styles.voucherImg}
-          />
-          <View style={styles.costContainer}>
+          <ScaleAnim>
+            <ProgressiveImage
+              thumbailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
+              source={{ uri: IMAGE_URL + smallUrl(data?.featured_img?.url) }}
+              style={styles.voucherImg}
+            />
+          </ScaleAnim>
+          <FadeInUpAnim style={styles.costContainer}>
             <Text style={styles.cost}>{(!userData || userData?.membership === null) ? data?.cost_for_non_members : data?.cost || 0} {t('aed')}</Text>
-          </View>
+          </FadeInUpAnim>
         </RippleFX>
       </View>
       <Row padding={10} paddingBottom={5}>
         <Box width="70%">
           <RippleFX onPress={() => handleVoucherDetailNavigation()}>
-            <Text numberOfLines={1}>
-              <Text style={styles.title}>{t('buy')} </Text>
-              <Text style={styles.caption}>{data?.[`buy_title_${language}`]}</Text>
-              {(!userData || userData?.membership === null) && <Text style={styles.caption}> + {data?.membership_plans[0]?.[`name_${language}`]} {t('membership')}</Text>}
-            </Text>
-            <Text numberOfLines={1}>
-              <Text style={styles.title}>{t('win')} </Text>
-              <Text style={styles.caption} numberOfLines={1}>{data?.[`win_title_${language}`]}</Text>
-            </Text>
+            <FadeInUpAnim delay={100}>
+              <Text numberOfLines={1}>
+                <Text style={styles.title}>{t('buy')} </Text>
+                <Text style={styles.caption}>{data?.[`buy_title_${language}`]}</Text>
+                {(!userData || userData?.membership === null) && <Text style={styles.caption}> + {data?.membership_plans[0]?.[`name_${language}`]} {t('membership')}</Text>}
+              </Text>
+            </FadeInUpAnim>
+            <FadeInUpAnim delay={200}>
+              <Text numberOfLines={1}>
+                <Text style={styles.title}>{t('win')} </Text>
+                <Text style={styles.caption} numberOfLines={1}>{data?.[`win_title_${language}`]}</Text>
+              </Text>
+            </FadeInUpAnim>
           </RippleFX>
         </Box>
         <Box width="30%" marginTop={2}>
-          <Button
-            size="small"
-            icon="money_bill"
-            onPress={() => {
-              handleOpenModal(data);
-            }}
-            disabled={['closed', 'publish'].includes(data?.draw_status)}
-          >
-            {t('buy_now')}
-          </Button>
+          <ScaleAnim delay={1000}>
+            <Button
+              size="small"
+              icon="money_bill"
+              onPress={() => {
+                handleOpenModal(data);
+              }}
+              disabled={['closed', 'publish'].includes(data?.draw_status)}
+            >
+              {t('buy_now')}
+            </Button>
+          </ScaleAnim>
         </Box>
       </Row>
       <Divider />
       <Box padding={10} paddingTop={5}>
-        <Progress percent={calculatePercentage(data?.total_bought, data?.limit)} countText={`${data?.total_bought} ${t('out of')} ${data?.limit}`} colorful />
+        <FadeAnim>
+          <Progress percent={calculatePercentage(data?.total_bought, data?.limit)} countText={`${data?.total_bought} ${t('out of')} ${data?.limit}`} colorful />
+        </FadeAnim>
       </Box>
     </Card>
   )

@@ -14,6 +14,7 @@ import FormError from 'components/formError';
 import { ToastMsg } from 'components/toastMsg';
 import { getAuthenticationHeader, handleMobileNumber, useReduxAction } from 'constants/commonFunctions';
 import { borderRadius10, font17, marginTop10, textBoldDark, textLite } from 'constants/commonStyles';
+import { SetUserData } from 'redux/actions';
 import { EDIT_ADDRESS } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
 import { VOUCHER_DETAIL } from 'navigation/routes';
@@ -68,12 +69,11 @@ export default function DeliveryAddress({ ...otherStyles }) {
           ...userData,
           ...data?.updateUserData?.user
         }));
-
         setEdit(false);
       }
     }
     catch (error) {
-      // console.log('Edit address error', errror);
+      console.log('Edit address error', error);
     }
   }
 

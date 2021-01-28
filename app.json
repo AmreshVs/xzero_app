@@ -22,7 +22,7 @@
     "facebookAppId": "366021757877568",
     "facebookDisplayName": "Xzero App",
     "ios": {
-      "icon": "./assets/icon_ios.png",
+      "icon": "./assets/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.media.xzero",
       "usesAppleSignIn": true,

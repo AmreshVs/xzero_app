@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ProgressiveImage from 'components/progressiveImage';
 import Card from 'components/card';
 import { IMAGE_URL } from 'constants/common';
-import { smallUrl } from 'constants/commonFunctions';
+import { smallUrl, thumbnailUrl } from 'constants/commonFunctions';
 import ProductSlider from './productSlider';
 import styles from './styles';
 
@@ -22,6 +22,7 @@ const AssuredGift = ({ data }) => {
         :
         <ProgressiveImage
           style={styles.productImg}
+          preview={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img[0]?.url) }}
           source={{ uri: IMAGE_URL + smallUrl(data?.featured_img[0]?.url) }}
         />
       }

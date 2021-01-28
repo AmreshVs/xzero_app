@@ -20,6 +20,8 @@ import IsLoggedIn from 'hoc/isLoggedIn';
 import { GET_MEMBERSHIP_BY_USER, MEMBERSHIP_PLANS } from 'graphql/queries';
 import { MEMBERSHIP_TAB_SCREEN, PAYMENT } from 'navigation/routes';
 import { SetUserData } from 'redux/actions';
+import IsVerified from 'hoc/isVerified';
+import { FadeInLeftAnim, ScaleAnim } from 'animation';
 import GetHelp from './getHelp';
 import Plan from './plan';
 import Note from './note';
@@ -29,7 +31,6 @@ import Benefits from './benefits';
 import BuyMembership from './buyMembership';
 import QRCode from './qrcode';
 import styles from './styles';
-import IsVerified from 'hoc/isVerified';
 
 let numOfDays = null;
 let render = 0;
@@ -164,25 +165,47 @@ const Membership = () => {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
       >
-        <MembershipCard
-          member={member}
-          data={memberData}
-          expired={member && numOfDays !== null && numOfDays <= 0}
-        />
-        <Note data={note?.info} />
+        <FadeInLeftAnim>
+          <MembershipCard
+            member={member}
+            data={memberData}
+            expired={member && numOfDays !== null && numOfDays <= 0}
+          />
+        </FadeInLeftAnim>
+        <FadeInLeftAnim delay={200}>
+          <Note data={note?.info} />
+        </FadeInLeftAnim>
         <Box flexDirection={isTab() ? "row-reverse" : "column"} >
-          {member && <QRCode data={memberData} />}
-          <Benefits member={member} data={note?.benefits} />
+          {member && (
+            <FadeInLeftAnim delay={300}>
+              <QRCode data={memberData} />
+            </FadeInLeftAnim>
+          )}
+          <FadeInLeftAnim delay={400}>
+            <Benefits member={member} data={note?.benefits} />
+          </FadeInLeftAnim>
         </Box>
         <Box flexDirection={isTab() ? "row-reverse" : "column"} >
           {member && numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? (
-            <Renew membershipData={note.membershipData} />
+            <FadeInLeftAnim delay={500}>
+              <Renew membershipData={note.membershipData} />
+            </FadeInLeftAnim>
           ) : null}
           {member && numOfDays !== null && numOfDays <= 0 ? (
-            <Renew membershipData={note.membershipData} expired />
+            <FadeInLeftAnim delay={500}>
+              <Renew membershipData={note.membershipData} expired />
+            </FadeInLeftAnim>
           ) : null}
-          {!member && <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />}
-          {!member || numOfDays !== null && numOfDays < 10 ? <GetHelp /> : null}
+          {!member && (
+            <FadeInLeftAnim delay={500}>
+              <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />
+            </FadeInLeftAnim>
+          )}
+          {!member || numOfDays !== null && numOfDays < 10 ? (
+            <FadeInLeftAnim delay={500}>
+              <GetHelp />
+            </FadeInLeftAnim>
+          ) : null}
         </Box>
       </ScrollView>
       <Modalize
@@ -192,9 +215,9 @@ const Membership = () => {
         scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
         onClose={() => defaultData()}
         FooterComponent={
-          <View style={styles.footer}>
+          <ScaleAnim style={styles.footer}>
             <Button onPress={confirmBuy}>{promocodeData?.discountedPrice === 0 ? t('free') : `${t('buy_membership')} - ${promocodeData?.discountedPrice || firstPlanPrice} ${t('aed')}`}</Button>
-          </View>
+          </ScaleAnim>
         }
       >
         <Box padding={10} paddingBottom={0}>
@@ -203,30 +226,35 @@ const Membership = () => {
         <Box style={styles.plansContainer}>
           {membershipPlansData?.membershipPlans && membershipPlansData?.membershipPlans.map((plan, index) => {
             return (
-              <Plan
-                data={plan}
-                index={index}
-                planIndex={planData?.index}
-                setPlanData={setPlanData}
-                setPromocodeData={setPromocodeData}
-                key={index}
-              />
+              <FadeInLeftAnim delay={index * 100} key={index}>
+                <Plan
+                  data={plan}
+                  index={index}
+                  planIndex={planData?.index}
+                  setPlanData={setPlanData}
+                  setPromocodeData={setPromocodeData}
+                />
+              </FadeInLeftAnim>
             )
           })}
         </Box>
         <Box style={styles.tabWrapper}>
-          <Card style={styles.membershipBenefits} margin={10} marginBottom={0}>
-            <Text style={styles.planTitle}>{`${planData?.data?.[`name_${language}`] || membershipPlansData?.membershipPlans[0]?.[`name_${language}`]} ${t('benefits')}`}</Text>
-            <Text style={styles.caption}>{planData?.data?.[`desc_${language}`] || membershipPlansData?.membershipPlans[0]?.[`desc_${language}`]}</Text>
-          </Card>
-          <Card style={styles.promocode} margin={10}>
-            <ApplyPromocode
-              voucherPrice={Number(promocodeData?.discountedPrice || firstPlanPrice)}
-              plan={planData?.data?.id}
-              promocodeData={promocodeData}
-              setPromocodeData={setPromocodeData}
-            />
-          </Card>
+          <FadeInLeftAnim delay={600}>
+            <Card style={styles.membershipBenefits} margin={10} marginBottom={0}>
+              <Text style={styles.planTitle}>{`${planData?.data?.[`name_${language}`] || membershipPlansData?.membershipPlans[0]?.[`name_${language}`]} ${t('benefits')}`}</Text>
+              <Text style={styles.caption}>{planData?.data?.[`desc_${language}`] || membershipPlansData?.membershipPlans[0]?.[`desc_${language}`]}</Text>
+            </Card>
+          </FadeInLeftAnim>
+          <FadeInLeftAnim delay={600}>
+            <Card style={styles.promocode} margin={10}>
+              <ApplyPromocode
+                voucherPrice={Number(promocodeData?.discountedPrice || firstPlanPrice)}
+                plan={planData?.data?.id}
+                promocodeData={promocodeData}
+                setPromocodeData={setPromocodeData}
+              />
+            </Card>
+          </FadeInLeftAnim>
         </Box>
       </Modalize>
     </SafeView>

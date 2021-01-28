@@ -24,12 +24,11 @@ const styles = StyleSheet.create({
   symbolContainer: {
     alignItems: 'center',
     marginVertical: -10,
-    zIndex: 1
   },
   symbol: {
     backgroundColor: colors.chip_1,
     padding: 8,
-    borderRadius: 20
+    borderRadius: 20,
   },
   text: {
     color: colors.white,

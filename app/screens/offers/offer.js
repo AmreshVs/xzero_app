@@ -19,6 +19,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import Icon from 'icon';
 import addFavourite from './addFavourite';
 import styles from './styles';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 
 function Offer({ data, center, favourites }) {
 
@@ -67,22 +68,26 @@ function Offer({ data, center, favourites }) {
     <Row style={styles.offerContainer}>
       <Box flex={2} style={styles.imgContainer}>
         <RippleFX onPress={() => handlePress()}>
-          <ProgressiveImage
-            style={styles.image}
-            thumbnailSource={{ uri: IMAGE_URL + (isTab() ? data?.featured_img?.url : thumbnailUrl(data?.featured_img?.url)) }}
-            source={{ uri: IMAGE_URL + (isTab() ? data?.featured_img?.url : thumbnailUrl(data?.featured_img?.url)) }}
-            resizeMode="contain"
-          />
+          <ScaleAnim>
+            <ProgressiveImage
+              style={styles.image}
+              thumbnailSource={{ uri: IMAGE_URL + (isTab() ? data?.featured_img?.url : thumbnailUrl(data?.featured_img?.url)) }}
+              source={{ uri: IMAGE_URL + (isTab() ? data?.featured_img?.url : thumbnailUrl(data?.featured_img?.url)) }}
+              resizeMode="contain"
+            />
+          </ScaleAnim>
         </RippleFX>
       </Box>
       <Column flex={6} style={styles.nameContainer}>
         <RippleFX onPress={() => handlePress()}>
-          <Text style={styles.title} numberOfLines={2}>
-            {data?.[`title_${language}`]}
-          </Text>
-          <Text style={styles.caption} numberOfLines={2}>
-            {data?.[`desc_${language}`]}
-          </Text>
+          <FadeInUpAnim delay={5}>
+            <Text style={styles.title} numberOfLines={2}>
+              {data?.[`title_${language}`]}
+            </Text>
+            <Text style={styles.caption} numberOfLines={2}>
+              {data?.[`desc_${language}`]}
+            </Text>
+          </FadeInUpAnim>
           {data?.discount === 100 ? (
             <Row>
               <Chip style={styles.chip} marginBottom={10} title={t('free')} color={colors.danger} />
@@ -90,28 +95,32 @@ function Offer({ data, center, favourites }) {
           ) : (
               <Row width="120%">
                 {data?.discounted_price && data?.actual_price &&
+                  <ScaleAnim>
+                    <Chip
+                      color={colors.success}
+                      marginRight={5}
+                      marginBottom={10}
+                      title={
+                        <>
+                          <Text>{t('aed')} </Text>
+                          <Text>{data?.discounted_price} </Text>
+                          <Text style={styles.strike}>{data?.actual_price}</Text>
+                        </>
+                      }
+                    />
+                  </ScaleAnim>
+                }
+                <ScaleAnim>
                   <Chip
-                    color={colors.success}
-                    marginRight={5}
+                    color={colors.chip_1}
                     marginBottom={10}
                     title={
-                      <>
-                        <Text>{t('aed')} </Text>
-                        <Text>{data?.discounted_price} </Text>
-                        <Text style={styles.strike}>{data?.actual_price}</Text>
-                      </>
+                      language === 'en'
+                        ? `${data?.discount || 0}% ${t('discount')}`
+                        : `${t('discount')} ${data?.discount || 0}%`
                     }
                   />
-                }
-                <Chip
-                  color={colors.chip_1}
-                  marginBottom={10}
-                  title={
-                    language === 'en'
-                      ? `${data?.discount || 0}% ${t('discount')}`
-                      : `${t('discount')} ${data?.discount || 0}%`
-                  }
-                />
+                </ScaleAnim>
               </Row>
             )}
         </RippleFX>
@@ -119,10 +128,12 @@ function Offer({ data, center, favourites }) {
       <Row flex={1} height="100%" vcenter hcenter>
         {userData && (
           <RippleFX style={styles.iconContainer} onPress={() => handleFavourite(data?.id)}>
-            <Icon
-              name="heart"
-              color={favourite ? colors.danger : colors.text_lite}
-            />
+            <ScaleAnim delay={1000}>
+              <Icon
+                name="heart"
+                color={favourite ? colors.danger : colors.text_lite}
+              />
+            </ScaleAnim>
           </RippleFX>
         )}
       </Row>

@@ -3,9 +3,10 @@ import Carousel from 'react-native-banner-carousel';
 import { useTranslation } from 'react-i18next';
 
 import ProgressiveImage from 'components/progressiveImage';
-import { isTab, smallUrl, thumbnailUrl } from 'constants/commonFunctions';
+import { thumbnailUrl } from 'constants/commonFunctions';
 import { IMAGE_URL } from 'constants/common';
 import useScreenDimensions from 'hooks/useScreenDimensions';
+import { FadeInUpAnim } from 'animation';
 import styles from './styles';
 
 const Slider = ({ data }) => {
@@ -25,13 +26,14 @@ const Slider = ({ data }) => {
       {data &&
         data?.map((banner) => {
           return (
-            <ProgressiveImage
-              style={styles.sliderImage}
-              thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(banner?.[`banner_img_${language}`]?.url) }}
-              source={{ uri: IMAGE_URL + banner?.[`banner_img_${language}`]?.url }}
-              resizeMode="cover"
-              key={banner.id}
-            />
+            <FadeInUpAnim key={banner.id}>
+              <ProgressiveImage
+                style={styles.sliderImage}
+                thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(banner?.[`banner_img_${language}`]?.url) }}
+                source={{ uri: IMAGE_URL + banner?.[`banner_img_${language}`]?.url }}
+                resizeMode="cover"
+              />
+            </FadeInUpAnim>
           );
         })}
     </Carousel>

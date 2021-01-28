@@ -24,6 +24,7 @@ import Categories from './categories';
 import TopSection from './topSection';
 import TopCenters from './topCenters';
 import styles from './styles';
+import { FadeInUpAnim } from 'animation';
 
 let openLink = 0;
 let backupLink = "";
@@ -40,7 +41,7 @@ const Home = () => {
     variables: {
       user_id: Number(userData?.id || 0),
       user: Number(userData?.id || 0)
-    }
+    },
   });
 
   if (error) {
@@ -100,7 +101,7 @@ const Home = () => {
 
   const reload = async () => {
     setReloading(true);
-    await _refetch();
+    _refetch();
     setReloading(false);
   };
 
@@ -116,7 +117,9 @@ const Home = () => {
         </Box>
         <Box flexDirection={isTab() ? 'column-reverse' : 'column'}>
           <Box padding={10} paddingTop={0}>
-            <DrawCard />
+            <FadeInUpAnim>
+              <DrawCard />
+            </FadeInUpAnim>
           </Box>
           <Box padding={10} paddingVertical={0}>
             <Heading marginBottom={10}>{t('top_offers')}</Heading>
