@@ -1,5 +1,5 @@
 import React, { useRef, useState, memo } from 'react';
-import { RefreshControl, ScrollView, View } from 'react-native';
+import { RefreshControl, ScrollView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
@@ -14,7 +14,7 @@ import { isTab, useReduxAction } from 'constants/commonFunctions';
 import useErrorLog from 'hooks/useErrorLog';
 import { VOUCHER_DETAIL } from 'graphql/queries';
 import { LOGIN_SCREEN, VOUCHER_DETAIL as VOUCHERDETAIL } from 'navigation/routes';
-import { FadeInLeftAnim, ScaleAnim } from 'animation';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import BuyVoucherModal from './buyVoucherModal';
 import AssuredGift from './assuredGift';
 import Rules from './rules';
@@ -77,20 +77,20 @@ const VoucherDetail = ({ navigation }) => {
   const GetProduct = () => {
     if (userData?.membership !== null) {
       return (
-        <>
+        <FadeInUpAnim delay={200}>
           <Buy data={voucher?.product} />
           <CenterSymbol text={t('you_will_get')} />
-        </>
+        </FadeInUpAnim>
       )
     }
     else {
       return (
-        <>
+        <FadeInUpAnim delay={200}>
           <MembershipPlan data={voucher?.membership_plans[0]} />
           <CenterSymbol text={t('you_will_get')} />
           {voucher?.product && <Buy member={userData?.membership === null} data={voucher?.product} />}
           <CenterSymbol icon="plus" />
-        </>
+        </FadeInUpAnim>
       )
     }
   }
@@ -111,32 +111,20 @@ const VoucherDetail = ({ navigation }) => {
                 refreshControl={<RefreshControl refreshing={reloading} onRefresh={() => reload()} />}
                 onRefresh={() => reload()}
               >
-                <FadeInLeftAnim>
-                  <VoucherInfo data={voucher} />
-                </FadeInLeftAnim>
-                <FadeInLeftAnim delay={100}>
-                  <Details data={voucher} />
-                </FadeInLeftAnim>
+                <VoucherInfo data={voucher} />
+                <Details data={voucher} />
                 {voucher?.product?.length > 0 && (
-                  <FadeInLeftAnim delay={200}>
-                    <GetProduct key={voucher?.product?.length} />
-                  </FadeInLeftAnim>
+                  <GetProduct key={voucher?.product?.length} />
                 )}
                 {voucher?.assured_gift?.length > 0 && (
-                  <FadeInLeftAnim delay={300}>
-                    <AssuredGift data={voucher?.assured_gift[0]} />
-                  </FadeInLeftAnim>
+                  <AssuredGift data={voucher?.assured_gift[0]} />
                 )}
                 {voucher?.draw_gift?.length > 0 ? (
                   <>
                     {voucher?.assured_gift?.length > 0 && (
-                      <ScaleAnim delay={300}>
-                        <CenterSymbol icon="plus" />
-                      </ScaleAnim>
+                      <CenterSymbol icon="plus" />
                     )}
-                    <FadeInLeftAnim delay={400}>
-                      <Win voucher_id={voucher?.id} draw_status={voucher?.draw_status} data={voucher?.draw_gift} />
-                    </FadeInLeftAnim>
+                    <Win voucher_id={voucher?.id} draw_status={voucher?.draw_status} data={voucher?.draw_gift} />
                   </>
                 ) : <Box marginBottom={10} />}
                 <Box
@@ -144,16 +132,12 @@ const VoucherDetail = ({ navigation }) => {
                   flexDirection={isTab() ? "row" : "column"}
                   marginBottom={['closed', 'publish'].includes(voucher?.draw_status) ? 10 : 0}
                 >
-                  <FadeInLeftAnim delay={600}>
-                    <Rules data={data?.voucherRule} />
-                  </FadeInLeftAnim>
-                  <FadeInLeftAnim delay={800}>
-                    {!['closed', 'publish'].includes(voucher?.draw_status) && <Help />}
-                  </FadeInLeftAnim>
+                  <Rules data={data?.voucherRule} />
+                  {!['closed', 'publish'].includes(voucher?.draw_status) && <Help />}
                 </Box>
               </ScrollView>
               {!['closed', 'publish'].includes(voucher?.draw_status) && (
-                <View style={styles.buyNowButton}>
+                <ScaleAnim style={styles.buyNowButton} delay={300}>
                   <Button
                     icon="money_bill"
                     width={isTab() ? "40%" : "100%"}
@@ -161,7 +145,7 @@ const VoucherDetail = ({ navigation }) => {
                   >
                     {t('buy_now')} - {t('aed')} {(!userData || userData?.membership === null) ? voucher?.cost_for_non_members : voucher?.cost}
                   </Button>
-                </View>
+                </ScaleAnim>
               )}
             </>
           )}

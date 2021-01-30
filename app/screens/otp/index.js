@@ -19,6 +19,7 @@ import { SEND_SMS } from 'graphql/mutations';
 import { VERIFY_OTP } from 'graphql/queries';
 import { HOME_SCREEN } from 'navigation/routes';
 import { SetUserData } from 'redux/actions';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import { useInterval } from './helpers';
 import styles from './styles';
 
@@ -125,27 +126,37 @@ const Otp = () => {
   return (
     <KeyboardAvoidingView behavior="position">
       <View style={styles.container}>
-        <ProgressiveImage
-          style={styles.image}
-          thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl('/uploads/otp_security_71bddb259b.webp') }}
-          source={{ uri: IMAGE_URL + '/uploads/otp_security_71bddb259b.webp' }}
-        />
-        <Text style={styles.caption}>{t('otp_desc')}</Text>
-        <Text style={styles.mobile}>{handleMobileNumber(params?.mobile_number)}</Text>
-        <Row style={styles.inputsContainer}>
-          <Textbox
-            placeholder="XXXX"
-            value={otp}
-            style={styles.textbox}
-            keyboardType='numeric'
-            onChangeText={(text) => handleType(text)}
-            maxLength={4}
+        <ScaleAnim style={styles.image}>
+          <ProgressiveImage
+            style={styles.image}
+            thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl('/uploads/otp_security_71bddb259b.webp') }}
+            source={{ uri: IMAGE_URL + '/uploads/otp_security_71bddb259b.webp' }}
           />
-        </Row>
+        </ScaleAnim>
+        <FadeInUpAnim>
+          <Text style={styles.caption}>{t('otp_desc')}</Text>
+        </FadeInUpAnim>
+        <FadeInUpAnim delay={100}>
+          <Text style={styles.mobile}>{handleMobileNumber(params?.mobile_number)}</Text>
+        </FadeInUpAnim>
+        <FadeInUpAnim delay={200}>
+          <Row style={styles.inputsContainer}>
+            <Textbox
+              placeholder="XXXX"
+              value={otp}
+              style={styles.textbox}
+              keyboardType='numeric'
+              onChangeText={(text) => handleType(text)}
+              maxLength={4}
+            />
+          </Row>
+        </FadeInUpAnim>
         {runningStatus ?
-          <Box marginTop={20}>
-            <Text style={styles.caption}>{t('resend_otp')} {timer}</Text>
-          </Box>
+          <FadeInUpAnim delay={300}>
+            <Box marginTop={20}>
+              <Text style={styles.caption}>{t('resend_otp')} {timer}</Text>
+            </Box>
+          </FadeInUpAnim>
           :
           <Row marginTop={20}>
             <Button

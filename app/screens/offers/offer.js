@@ -19,7 +19,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import Icon from 'icon';
 import addFavourite from './addFavourite';
 import styles from './styles';
-import { FadeInUpAnim, ScaleAnim } from 'animation';
+import { FadeAnim, FadeInUpAnim, ScaleAnim } from 'animation';
 
 function Offer({ data, center, favourites }) {
 
@@ -80,14 +80,14 @@ function Offer({ data, center, favourites }) {
       </Box>
       <Column flex={6} style={styles.nameContainer}>
         <RippleFX onPress={() => handlePress()}>
-          <FadeInUpAnim delay={5}>
+          <FadeAnim>
             <Text style={styles.title} numberOfLines={2}>
               {data?.[`title_${language}`]}
             </Text>
             <Text style={styles.caption} numberOfLines={2}>
               {data?.[`desc_${language}`]}
             </Text>
-          </FadeInUpAnim>
+          </FadeAnim>
           {data?.discount === 100 ? (
             <Row>
               <Chip style={styles.chip} marginBottom={10} title={t('free')} color={colors.danger} />

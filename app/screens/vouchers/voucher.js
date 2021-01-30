@@ -44,14 +44,14 @@ const Voucher = ({ data, handleOpenModal }) => {
               <View style={styles.closed} />
             </>
           )}
-          <ScaleAnim>
+          <FadeAnim>
             <ProgressiveImage
-              thumbailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
+              thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
               source={{ uri: IMAGE_URL + smallUrl(data?.featured_img?.url) }}
               style={styles.voucherImg}
             />
-          </ScaleAnim>
-          <FadeInUpAnim style={styles.costContainer}>
+          </FadeAnim>
+          <FadeInUpAnim style={styles.costContainer} delay={100}>
             <Text style={styles.cost}>{(!userData || userData?.membership === null) ? data?.cost_for_non_members : data?.cost || 0} {t('aed')}</Text>
           </FadeInUpAnim>
         </RippleFX>
@@ -59,19 +59,17 @@ const Voucher = ({ data, handleOpenModal }) => {
       <Row padding={10} paddingBottom={5}>
         <Box width="70%">
           <RippleFX onPress={() => handleVoucherDetailNavigation()}>
-            <FadeInUpAnim delay={100}>
+            <FadeAnim delay={200}>
               <Text numberOfLines={1}>
                 <Text style={styles.title}>{t('buy')} </Text>
                 <Text style={styles.caption}>{data?.[`buy_title_${language}`]}</Text>
                 {(!userData || userData?.membership === null) && <Text style={styles.caption}> + {data?.membership_plans[0]?.[`name_${language}`]} {t('membership')}</Text>}
               </Text>
-            </FadeInUpAnim>
-            <FadeInUpAnim delay={200}>
               <Text numberOfLines={1}>
                 <Text style={styles.title}>{t('win')} </Text>
                 <Text style={styles.caption} numberOfLines={1}>{data?.[`win_title_${language}`]}</Text>
               </Text>
-            </FadeInUpAnim>
+            </FadeAnim>
           </RippleFX>
         </Box>
         <Box width="30%" marginTop={2}>

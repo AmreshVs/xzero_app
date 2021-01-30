@@ -17,7 +17,8 @@ import { FAVOURITES_TAB_SCREEN } from 'navigation/routes';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import useErrorLog from 'hooks/useErrorLog';
 import styles from './styles';
-import { FadeInLeftAnim } from 'animation';
+import { FadeInUpAnim } from 'animation';
+import { ANIM_COMPONENT_DELAY } from 'constants/common';
 
 const Favourites = () => {
   const { t } = useTranslation();
@@ -92,9 +93,9 @@ const Favourites = () => {
               key={(item) => String(item.id)}
               data={data?.favouritesByUser}
               renderItem={({ item, index }) => (
-                <FadeInLeftAnim delay={index * 100}>
+                <FadeInUpAnim delay={index * ANIM_COMPONENT_DELAY}>
                   <Offer data={{ ...item, is_favourite: true }} favourites={() => reload()} />
-                </FadeInLeftAnim>
+                </FadeInUpAnim>
               )}
               numColumns={isTab() ? 2 : 1}
               columnWrapperStyle={isTab() ? styles.columnWrapper : null}

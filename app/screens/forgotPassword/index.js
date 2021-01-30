@@ -19,6 +19,7 @@ import { smallUrl, thumbnailUrl } from 'constants/commonFunctions';
 import { FORGOT_PASSWORD } from 'graphql/mutations';
 import { FORGOT_PASSWORD as FORGET } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import styles from './styles';
 
 const inputsValidationSchema = () =>
@@ -65,12 +66,14 @@ const ForgotPassword = ({ navigation }) => {
       <SafeView style={styles.container}>
         <TopNavigator />
         <View style={styles.contentContainer}>
-          <ProgressiveImage
-            thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl('/uploads/reset_password_807004bac2.png') }}
-            source={{ uri: IMAGE_URL + smallUrl('/uploads/reset_password_807004bac2.png') }}
-            style={styles.image}
-          />
-          <HeadingCaption heading={t('reset_password')} caption={t('receive_email')} />
+          <FadeInUpAnim style={styles.contentContainer}>
+            <ProgressiveImage
+              thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl('/uploads/reset_password_807004bac2.png') }}
+              source={{ uri: IMAGE_URL + smallUrl('/uploads/reset_password_807004bac2.png') }}
+              style={styles.image}
+            />
+            <HeadingCaption heading={t('reset_password')} caption={t('receive_email')} />
+          </FadeInUpAnim>
           <View style={styles.inputsContainer}>
             <Formik
               onSubmit={(values) => handleForgetPassword(values)}
@@ -89,27 +92,31 @@ const ForgotPassword = ({ navigation }) => {
                 handleSubmit,
               }) => (
                 <>
-                  <Textbox
-                    placeholder="Email"
-                    icon="at"
-                    value={values.email}
-                    onChangeText={handleChange('email')}
-                    onBlur={() => setFieldTouched('email')}
-                    autoCapitalize="none"
-                    style={styles.email}
-                  />
+                  <FadeInUpAnim delay={200}>
+                    <Textbox
+                      placeholder="Email"
+                      icon="at"
+                      value={values.email}
+                      onChangeText={handleChange('email')}
+                      onBlur={() => setFieldTouched('email')}
+                      autoCapitalize="none"
+                      style={styles.email}
+                    />
+                  </FadeInUpAnim>
                   <Box marginBottom={-20} />
                   <FormError touched={touched.email} errorText={errors.email} />
                   <Box marginBottom={20} />
-                  <Button
-                    icon="unlock_alt"
-                    onPress={() => handleSubmit()}
-                    disabled={!isValid}
-                    loading={loading}
-                    style={styles.reset}
-                  >
-                    {t('get_reset_link')}
-                  </Button>
+                  <ScaleAnim delay={700}>
+                    <Button
+                      icon="unlock_alt"
+                      onPress={() => handleSubmit()}
+                      disabled={!isValid}
+                      loading={loading}
+                      style={styles.reset}
+                    >
+                      {t('get_reset_link')}
+                    </Button>
+                  </ScaleAnim>
                 </>
               )}
             </Formik>

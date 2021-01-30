@@ -17,8 +17,8 @@ export const inputsValidationSchema = () =>
 export const inputs = [
   { name: 'fullname', icon: 'user', marginTop: 0 },
   { name: 'email', icon: 'at' },
-  { name: 'phone', icon: 'phone-alt' },
+  { name: 'phone', icon: 'phone_alt' },
   { name: 'password', icon: 'key' },
   { name: 'repassword', icon: 'key' },
-  { name: 'dob', placeholder: 'DOB - DD-MM-YYYY', icon: 'birthday-cake' },
+  { name: 'dob', placeholder: 'DOB - DD-MM-YYYY', icon: 'birthday_cake' },
 ];

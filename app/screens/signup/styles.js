@@ -65,6 +65,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
   },
+  imageContainer: {
+    ...alignItemsCenter,
+  }
 });
 
 export default styles;

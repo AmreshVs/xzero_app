@@ -13,6 +13,7 @@ import { getAuthenticationHeader, isTab, thumbnailUrl, useReduxAction } from 'co
 import { GIFTS } from 'navigation/routes';
 import { GENERATE_GIFT } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import styles from './styles';
 
 const GenerateGift = ({ generated, refetch }) => {
@@ -127,58 +128,64 @@ const GenerateGift = ({ generated, refetch }) => {
 
   return (
     <>
-      <Card style={styles.lottieGiftContainer}>
-        <View style={styles.hideOverflow}>
-          <Animated.View
-            style={{
-              ...styles.giftReveal,
-              opacity: fadeAnim,
-              transform: [{ translateY: translateAnim }],
-            }}
-          >
-            <View style={styles.giftRevealImage}>
-              <Image
-                source={data?.won ? { uri: IMAGE_URL + thumbnailUrl(data?.gift?.featured_img?.url) } : require('../../../assets/sad.png')} style={styles.sadIcon}
-                resizeMode="contain"
-              />
-            </View>
-          </Animated.View>
-          <LottieView
-            ref={giftRef}
-            style={styles.generateGift}
-            source={require("../../../assets/gift_animation.json")}
-            loop={false}
-          />
-          <LottieView
-            ref={confettiRef}
-            style={styles.confetti}
-            source={require("../../../assets/confetti.json")}
-            loop={false}
-          />
-          <Animated.View
-            style={{
-              ...styles.giftReveal,
-              opacity: fadeAnim,
-              transform: [{ translateY: giftTextAnim }],
-            }}
-          >
-            <Text style={styles.giftRevealText}>{data?.won ? t('you_won') + data?.gift?.[`name_${language}`] : t('better_luck')}</Text>
-          </Animated.View>
-          <View style={styles.generate}>
-            <Button
-              status="chip_1"
-              width="50%"
-              onPress={() => handleGenerate()}
-              loading={loading}
-              disabled={tried !== true ? false : true}
-              timeout={false}
+      <FadeInUpAnim>
+        <Card style={styles.lottieGiftContainer}>
+          <View style={styles.hideOverflow}>
+            <Animated.View
+              style={{
+                ...styles.giftReveal,
+                opacity: fadeAnim,
+                transform: [{ translateY: translateAnim }],
+              }}
             >
-              {t('try_your_luck')}
-            </Button>
-            <Text style={styles.caption}>{t('gifts_open')}</Text>
+              <View style={styles.giftRevealImage}>
+                <Image
+                  source={data?.won ? { uri: IMAGE_URL + thumbnailUrl(data?.gift?.featured_img?.url) } : require('../../../assets/sad.png')} style={styles.sadIcon}
+                  resizeMode="contain"
+                />
+              </View>
+            </Animated.View>
+            <FadeInUpAnim>
+              <LottieView
+                ref={giftRef}
+                style={styles.generateGift}
+                source={require("../../../assets/gift_animation.json")}
+                loop={false}
+              />
+            </FadeInUpAnim>
+            <LottieView
+              ref={confettiRef}
+              style={styles.confetti}
+              source={require("../../../assets/confetti.json")}
+              loop={false}
+            />
+            <Animated.View
+              style={{
+                ...styles.giftReveal,
+                opacity: fadeAnim,
+                transform: [{ translateY: giftTextAnim }],
+              }}
+            >
+              <Text style={styles.giftRevealText}>{data?.won ? t('you_won') + data?.gift?.[`name_${language}`] : t('better_luck')}</Text>
+            </Animated.View>
+            <View style={styles.generate}>
+              <ScaleAnim>
+                <Button
+                  status="chip_1"
+                  width="50%"
+                  onPress={() => handleGenerate()}
+                  loading={loading}
+                  disabled={tried !== true ? false : true}
+                  timeout={false}
+                >
+                  {t('try_your_luck')}
+                </Button>
+              </ScaleAnim>
+              <Text style={styles.caption}>{t('gifts_open')}</Text>
+            </View>
           </View>
-        </View>
-      </Card>
+        </Card>
+      </FadeInUpAnim>
       <Modal
         animationType="slide"
         transparent={true}

@@ -20,6 +20,7 @@ import { LOGIN_SCREEN, OTP, SIGNUP_SCREEN } from 'navigation/routes';
 import { CREATE_USER, UPDATE_NOTIFICATION_TOKEN } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
 import { SetUserData } from 'redux/actions';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import { getNotificationToken } from '../../../helpers';
 import { inputsValidationSchema, inputs } from './helpers';
 import styles from './styles';
@@ -167,8 +168,10 @@ const Signup = ({ navigation }) => {
       <SafeView style={styles.container}>
         <TopNavigator style={styles.topNav} />
         <ScrollView contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps="always">
-          <Image source={require('../../../assets/logo.png')} style={styles.logo} />
-          <HeadingCaption heading={t('get_started')} caption={t('signup_note')} />
+          <ScaleAnim style={styles.imageContainer}>
+            <Image source={require('../../../assets/logo.png')} style={styles.logo} />
+            <HeadingCaption heading={t('get_started')} caption={t('signup_note')} />
+          </ScaleAnim>
           <View style={styles.inputsContainer}>
             <Formik
               onSubmit={(values) => handleSubmit(values)}
@@ -194,7 +197,7 @@ const Signup = ({ navigation }) => {
               }) => (
                 <>
                   {inputs.map(({ name, placeholder, icon, marginTop }, index) => (
-                    <View key={index}>
+                    <FadeInUpAnim delay={index * 100} key={index}>
                       <Textbox
                         placeholder={placeholder ? placeholder : firstLetterUpper(name)}
                         value={values[name]}
@@ -216,9 +219,9 @@ const Signup = ({ navigation }) => {
                         onTouchEnd={() => name === 'dob' && setDatePickerVisibility(true)}
                       />
                       <FormError touched={touched[name]} errorText={errors[name]} />
-                    </View>
+                    </FadeInUpAnim>
                   ))}
-                  <View style={styles.btnContainer}>
+                  <ScaleAnim style={styles.btnContainer} delay={600}>
                     <Button
                       icon="sign_in_alt"
                       width="100%"
@@ -228,7 +231,7 @@ const Signup = ({ navigation }) => {
                     >
                       {t('signup')}
                     </Button>
-                  </View>
+                  </ScaleAnim>
                   <DateTimePickerModal
                     isVisible={isDatePickerVisible}
                     mode="date"
@@ -244,12 +247,12 @@ const Signup = ({ navigation }) => {
               )}
             </Formik>
           </View>
-          <View style={styles.haveAccount}>
+          <FadeInUpAnim style={styles.haveAccount} delay={700}>
             <RenderHaveAccount />
-          </View>
-          <View style={styles.termsContainer}>
+          </FadeInUpAnim>
+          <FadeInUpAnim style={styles.termsContainer} delay={800}>
             <RenderTerms />
-          </View>
+          </FadeInUpAnim>
         </ScrollView>
       </SafeView>
     </KeyboardAvoidingView>

@@ -12,9 +12,11 @@ import SearchModal from 'components/searchModal';
 import { ToastMsg } from 'components/toastMsg';
 import ModalSearchHeader from 'components/modalSearchHeader';
 import { isTab, useReduxAction } from 'constants/commonFunctions';
+import { ANIM_COMPONENT_DELAY } from 'constants/common';
 import useErrorLog from 'hooks/useErrorLog';
 import { OFFERS_SCREEN } from 'navigation/routes';
 import { OFFERS_LIST } from 'graphql/queries';
+import { FadeInUpAnim } from 'animation';
 import Offer from './offer';
 import styles from './styles';
 
@@ -95,7 +97,11 @@ export default function Offers() {
             <FlatList
               keyExtractor={(item) => String(item.id)}
               data={data && data?.offerListWithFavourites}
-              renderItem={({ item }) => <Offer data={item} center={Number(params?.center)} />}
+              renderItem={({ item, index }) => (
+                <FadeInUpAnim delay={index * ANIM_COMPONENT_DELAY}>
+                  <Offer data={item} center={Number(params?.center)} />
+                </FadeInUpAnim>
+              )}
               initialNumToRender={6}
               maxToRenderPerBatch={10}
               windowSize={10}

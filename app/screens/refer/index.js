@@ -22,6 +22,7 @@ import IsVerified from 'hoc/isVerified';
 import { GET_REFER_HISTORY } from 'graphql/queries';
 import { REFER } from 'navigation/routes';
 import Icon from 'icon';
+import { FadeAnim, FadeInUpAnim, ScaleAnim } from 'animation';
 import ReferHistory from './referHistory';
 import Withdraw from './withdraw';
 import styles from './styles';
@@ -134,33 +135,39 @@ const Refer = () => {
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
       >
         <Box alignItems="center">
-          {Platform.OS === 'ios' ?
-            <RippleFX onPress={() => refer_program && handlePlayAnim()}>
-              <LottieView
-                ref={shareRef}
-                style={styles.share}
-                source={require("../../../assets/share.json")}
-                autoPlay={refer_program}
-              />
-            </RippleFX>
-            :
-            <Image style={styles.image} source={require('../../../assets/refer.png')} />
-          }
+          <FadeInUpAnim>
+            {Platform.OS === 'ios' ?
+              <RippleFX onPress={() => refer_program && handlePlayAnim()}>
+                <LottieView
+                  ref={shareRef}
+                  style={styles.share}
+                  source={require("../../../assets/share.json")}
+                  autoPlay={refer_program}
+                />
+              </RippleFX>
+              :
+              <Image style={styles.image} source={require('../../../assets/refer.png')} />
+            }
+          </FadeInUpAnim>
           {(refer_program === true && refer?.referralCode) ? (
             <>
               <Text style={styles.referTitle}>{refer?.label === 'affiliate' ? t('your_affiliate_code') : t('your_referral_code')}</Text>
-              <View style={styles.gradient}>
+              <ScaleAnim style={styles.gradient}>
                 <Text style={styles.code}>{refer?.referralCode || 'XXXXXX'}</Text>
-              </View>
-              <Row marginBottom={10}>
-                <ARChange>
-                  <Text style={styles.caption}>{refer?.referProgram?.discount}% {t('purchase_value')}, </Text>
-                  <Text style={styles.caption}>{t('max_discount')}{t('aed')} {refer?.referProgram?.allowed_maximum_discount}</Text>
-                </ARChange>
-              </Row>
-              <Box paddingHorizontal={isTab() ? 100 : 0}>
-                <Text style={styles.caption}>{t('refer_desc')}</Text>
-              </Box>
+              </ScaleAnim>
+              <FadeAnim>
+                <Row marginBottom={10}>
+                  <ARChange>
+                    <Text style={styles.caption}>{refer?.referProgram?.discount}% {t('purchase_value')}, </Text>
+                    <Text style={styles.caption}>{t('max_discount')}{t('aed')} {refer?.referProgram?.allowed_maximum_discount}</Text>
+                  </ARChange>
+                </Row>
+              </FadeAnim>
+              <FadeAnim delay={100}>
+                <Box paddingHorizontal={isTab() ? 100 : 0}>
+                  <Text style={styles.caption}>{t('refer_desc')}</Text>
+                </Box>
+              </FadeAnim>
             </>
           )
             : (
@@ -169,47 +176,57 @@ const Refer = () => {
           }
         </Box>
         <Row paddingHorizontal={isTab() ? 100 : 0} justifyContent="space-between" marginTop={10}>
-          <Column style={styles.countsContainer}>
-            <Box style={styles.iconContainer} backgroundColor="#d8ddfe">
-              <Icon name="bullhorn" size={25} color={colors.chip_1} wviewBox={580} />
-            </Box>
-            <Box width="100%">
-              <Text style={styles.count}>{refer?.totalReferred || 0}</Text>
-              <Text style={styles.referCaption}>{t('total_referred')}</Text>
-            </Box>
-          </Column>
-          <Column style={styles.countsContainer}>
-            <Box style={styles.iconContainer} backgroundColor="#fee5d0">
-              <Icon name="money_bill_wave" size={25} color={colors.chip_2} wviewBox={640} />
-            </Box>
-            <Box width="100%">
-              <Text style={styles.count}>{refer?.totalEarned} {t('aed')}</Text>
-              <Text style={styles.referCaption}>{t('total_earned')}</Text>
-            </Box>
-          </Column>
-          <Column style={styles.countsContainer}>
-            <Box style={styles.iconContainer} backgroundColor="#fbcfd0">
-              <Icon name="coins" size={25} color={colors.danger} />
-            </Box>
-            <Box width="100%">
-              <Text style={styles.count}>{refer?.balance || 0} {t('aed')}</Text>
-              <Text style={styles.referCaption}>{t('wallet_balance')}</Text>
-            </Box>
-          </Column>
+          <FadeInUpAnim style={styles.countsContainer} delay={100}>
+            <Column>
+              <Box style={styles.iconContainer} backgroundColor="#d8ddfe">
+                <Icon name="bullhorn" size={25} color={colors.chip_1} wviewBox={580} />
+              </Box>
+              <Box width="100%">
+                <Text style={styles.count}>{refer?.totalReferred || 0}</Text>
+                <Text style={styles.referCaption}>{t('total_referred')}</Text>
+              </Box>
+            </Column>
+          </FadeInUpAnim>
+          <FadeInUpAnim style={styles.countsContainer} delay={200}>
+            <Column>
+              <Box style={styles.iconContainer} backgroundColor="#fee5d0">
+                <Icon name="money_bill_wave" size={25} color={colors.chip_2} wviewBox={640} />
+              </Box>
+              <Box width="100%">
+                <Text style={styles.count}>{refer?.totalEarned} {t('aed')}</Text>
+                <Text style={styles.referCaption}>{t('total_earned')}</Text>
+              </Box>
+            </Column>
+          </FadeInUpAnim>
+          <FadeInUpAnim style={styles.countsContainer} delay={300}>
+            <Column>
+              <Box style={styles.iconContainer} backgroundColor="#fbcfd0">
+                <Icon name="coins" size={25} color={colors.danger} />
+              </Box>
+              <Box width="100%">
+                <Text style={styles.count}>{refer?.balance || 0} {t('aed')}</Text>
+                <Text style={styles.referCaption}>{t('wallet_balance')}</Text>
+              </Box>
+            </Column>
+          </FadeInUpAnim>
         </Row>
         <Box paddingHorizontal={isTab() ? 100 : 0}>
-          <Row style={styles.check} justifyContent="space-between">
-            <Button width="49%" status="chip_1" icon="history" onPress={() => handleOpenModal(true)}>{t('refer_history')}</Button>
-            <Button width="49%" status="chip_2" icon="coins" onPress={() => handleOpenModal(false)}>{(refer_program && refer?.referralCode) ? t('withdraw') : t('withdraw_history')}</Button>
-          </Row>
-          <Box marginTop={10} width="100%">
-            <Button
-              icon="share-alt"
-              onPress={() => handleShare()}
-            >
-              {t((refer_program && refer?.referralCode) ? 'refer_and_earn_now' : 'share_app')}
-            </Button>
-          </Box>
+          <ScaleAnim delay={300}>
+            <Row style={styles.check} justifyContent="space-between">
+              <Button width="49%" status="chip_1" icon="history" onPress={() => handleOpenModal(true)}>{t('refer_history')}</Button>
+              <Button width="49%" status="chip_2" icon="coins" onPress={() => handleOpenModal(false)}>{(refer_program && refer?.referralCode) ? t('withdraw') : t('withdraw_history')}</Button>
+            </Row>
+          </ScaleAnim>
+          <ScaleAnim delay={400}>
+            <Box marginTop={10} width="100%">
+              <Button
+                icon="share-alt"
+                onPress={() => handleShare()}
+              >
+                {t((refer_program && refer?.referralCode) ? 'refer_and_earn_now' : 'share_app')}
+              </Button>
+            </Box>
+          </ScaleAnim>
         </Box>
       </ScrollView>
       <Modalize ref={modalizeRef} childrenStyle={styles.modal} scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }} onClosed={() => reload()}>

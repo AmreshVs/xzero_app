@@ -4,23 +4,33 @@ import { SCREEN_WIDTH, THUMBNAIL_SLUG } from './common';
 import { ToastMsg } from 'components/toastMsg';
 import { useSelector, shallowEqual } from 'react-redux'
 
-export const getShadowStyle = () => {
+export const getShadowStyle = (shadow = true) => {
   if (Platform.OS === 'ios') {
-    return {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.15,
-      shadowRadius: 9.84,
-      elevation: 5,
+    if (shadow) {
+      return {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 9.84,
+        elevation: 5,
+      }
+    }
+    else {
+      return {};
     }
   }
 
-  return {
-    borderWidth: 1,
-    borderColor: '#EEE',
+  if (shadow) {
+    return {
+      borderWidth: 1,
+      borderColor: '#EEE',
+    }
+  }
+  else {
+    return {};
   }
 }
 

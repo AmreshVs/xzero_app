@@ -49,3 +49,5 @@ export const APP_STORE_URL = 'https://apps.apple.com/ae/app/xzeroo/id1526109721'
 export const GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.media.xzero';
 
 export const WHATSAPP_CONTACT = 971565255256;
+
+export const ANIM_COMPONENT_DELAY = 70;

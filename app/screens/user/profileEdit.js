@@ -20,6 +20,8 @@ import useErrorLog from 'hooks/useErrorLog';
 import { SetUserData } from 'redux/actions';
 import { inputsValidationSchema, passwordValidationSchema, inputs, passwordInputs } from './helpers';
 import styles from './styles';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
+import { ANIM_COMPONENT_DELAY } from 'constants/common';
 
 const ProfileEdit = ({ setEdit, data }) => {
   const { t } = useTranslation();
@@ -142,7 +144,7 @@ const ProfileEdit = ({ setEdit, data }) => {
           <>
             {(checked ? [...inputs, ...passwordInputs] : inputs).map(
               ({ name, icon, marginTop }, index) => (
-                <View key={index}>
+                <FadeInUpAnim delay={index * ANIM_COMPONENT_DELAY} key={index}>
                   <Textbox
                     placeholder={name.charAt(0).toUpperCase() + name.slice(1)}
                     value={values[name]}
@@ -157,39 +159,43 @@ const ProfileEdit = ({ setEdit, data }) => {
                     onTouchStart={() => name === 'dob' && (setDatePickerVisibility(true) && Keyboard.dismiss())}
                   />
                   <FormError touched={touched[name]} errorText={errors[name]} />
-                </View>
+                </FadeInUpAnim>
               )
             )}
             {!checked && (
               <Row marginTop={20}>
-                <Checkbox
-                  label={t('edit_password')}
-                  checked={checked}
-                  handleChecked={handleChecked}
-                />
+                <FadeInUpAnim delay={300}>
+                  <Checkbox
+                    label={t('edit_password')}
+                    checked={checked}
+                    handleChecked={handleChecked}
+                  />
+                </FadeInUpAnim>
               </Row>
             )}
-            <Row marginTop={20} spaceBetween>
-              <Button
-                width="48%"
-                icon="times"
-                status="text_lite"
-                onPress={() => setEdit(false)}
-                outline
-              >
-                {t('cancel')}
-              </Button>
-              <Button
-                width="48%"
-                icon="save"
-                status="success"
-                loading={loading}
-                onPress={() => handleSubmit()}
-                outline
-              >
-                {t('save')}
-              </Button>
-            </Row>
+            <ScaleAnim delay={500}>
+              <Row marginTop={20} spaceBetween>
+                <Button
+                  width="48%"
+                  icon="times"
+                  status="text_lite"
+                  onPress={() => setEdit(false)}
+                  outline
+                >
+                  {t('cancel')}
+                </Button>
+                <Button
+                  width="48%"
+                  icon="save"
+                  status="success"
+                  loading={loading}
+                  onPress={() => handleSubmit()}
+                  outline
+                >
+                  {t('save')}
+                </Button>
+              </Row>
+            </ScaleAnim>
             <DateTimePickerModal
               isVisible={isDatePickerVisible}
               mode="date"

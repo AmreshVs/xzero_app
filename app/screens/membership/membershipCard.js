@@ -25,7 +25,7 @@ const MembershipCard = ({ member, data, expired }) => {
       >
         <Row hcenter>
           <ProgressiveImage
-            preview={{ uri: IMAGE_URL + thumbnailUrl('/uploads/loader_d7d473e3bb.gif') }}
+            thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl('/uploads/loader_d7d473e3bb.gif') }}
             source={{ uri: IMAGE_URL + '/uploads/loader_d7d473e3bb.gif' }}
             style={styles.logo}
           />

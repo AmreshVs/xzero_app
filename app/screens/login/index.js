@@ -15,12 +15,12 @@ import FormError from 'components/formError';
 import Row from 'components/row';
 import { ToastMsg } from 'components/toastMsg';
 import { SOCIAL_TOKEN, ERROR_OCCURED } from 'constants/common';
-import { UserDataContext } from 'context';
 import { GET_USER_BY_EMAIL, NON_USER_CHECK } from 'graphql/queries';
 import { USER_LOGIN, CREATE_USER, UPDATE_NOTIFICATION_TOKEN, CREATE_NON_USER } from 'graphql/mutations';
 import { SIGNUP_SCREEN, HOME_SCREEN, FORGOT_PASSWORD, DRAWER_TERMS, LOGIN_SCREEN, MAIN_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
 import { SetUserData } from 'redux/actions';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import { getNotificationToken } from '../../../helpers';
 import { inputsValidationSchema, saveUserDataLocally } from './helpers';
 import AppleLoginButton from './appleLogin';
@@ -32,7 +32,6 @@ const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
   const { logError } = useErrorLog();
-  const { setUserData } = useContext(UserDataContext);
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   let language = i18n.language;
@@ -322,8 +321,10 @@ const Login = ({ navigation }) => {
     <KeyboardAvoidingView keyboardVerticalOffset={-250} behavior={'position'}>
       <SafeView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollview} keyboardShouldPersistTaps="always">
-          <Image source={require('../../../assets/logo.png')} style={styles.logo} />
-          <HeadingCaption heading={t('welcome')} caption={t('login_note')} />
+          <ScaleAnim style={styles.logoContainer}>
+            <Image source={require('../../../assets/logo.png')} style={styles.logo} />
+            <HeadingCaption heading={t('welcome')} caption={t('login_note')} />
+          </ScaleAnim>
           <View style={styles.inputsContainer}>
             <Formik
               onSubmit={(values) => handleSubmit(values)}
@@ -343,51 +344,59 @@ const Login = ({ navigation }) => {
                 handleSubmit,
               }) => (
                 <>
-                  <Textbox
-                    placeholder="Email"
-                    icon="at"
-                    value={values.email}
-                    onChangeText={handleChange('email')}
-                    onBlur={() => setFieldTouched('email')}
-                    autoCapitalize="none"
-                  />
+                  <FadeInUpAnim delay={100}>
+                    <Textbox
+                      placeholder="Email"
+                      icon="at"
+                      value={values.email}
+                      onChangeText={handleChange('email')}
+                      onBlur={() => setFieldTouched('email')}
+                      autoCapitalize="none"
+                    />
+                  </FadeInUpAnim>
                   <FormError touched={touched.email} errorText={errors.email} />
-                  <Textbox
-                    placeholder="Password"
-                    icon="key"
-                    value={values.password}
-                    onChangeText={handleChange('password')}
-                    onBlur={() => setFieldTouched('password')}
-                    autoCapitalize="none"
-                    secureTextEntry
-                  />
+                  <FadeInUpAnim delay={200}>
+                    <Textbox
+                      placeholder="Password"
+                      icon="key"
+                      value={values.password}
+                      onChangeText={handleChange('password')}
+                      onBlur={() => setFieldTouched('password')}
+                      autoCapitalize="none"
+                      secureTextEntry
+                    />
+                  </FadeInUpAnim>
                   <FormError touched={touched.password} errorText={errors.password} />
-                  <Text
-                    style={styles.forgotPassword}
-                    onPress={() => navigation.push(FORGOT_PASSWORD)}
-                  >
-                    {t('forgot_password')}
-                  </Text>
-                  <Button
-                    icon="sign_in_alt"
-                    onPress={() => handleSubmit()}
-                    disabled={!isValid}
-                    loading={loading}
-                    style={styles.loginButton}
-                  >
-                    {t('login')}
-                  </Button>
+                  <FadeInUpAnim delay={300}>
+                    <Text
+                      style={styles.forgotPassword}
+                      onPress={() => navigation.push(FORGOT_PASSWORD)}
+                    >
+                      {t('forgot_password')}
+                    </Text>
+                  </FadeInUpAnim>
+                  <ScaleAnim delay={400}>
+                    <Button
+                      icon="sign_in_alt"
+                      onPress={() => handleSubmit()}
+                      disabled={!isValid}
+                      loading={loading}
+                      style={styles.loginButton}
+                    >
+                      {t('login')}
+                    </Button>
+                  </ScaleAnim>
                 </>
               )}
             </Formik>
-            <View style={styles.noAccount}>
+            <FadeInUpAnim style={styles.noAccount} delay={300}>
               <RenderNoAccount />
-            </View>
+            </FadeInUpAnim>
           </View>
           <View style={styles.socialLoginContainer}>
             <Text style={styles.loginOptionText}>{t('login_using')}</Text>
             {Platform.OS !== 'ios' && (
-              <View style={styles.btnContainer}>
+              <FadeInUpAnim style={styles.btnContainer} delay={400}>
                 <Button
                   width="48%"
                   icon="facebook"
@@ -408,7 +417,7 @@ const Login = ({ navigation }) => {
                 >
                   {t('google')}
                 </Button>
-              </View>
+              </FadeInUpAnim>
             )}
             {Platform.OS === 'ios' && (
               <Row>
@@ -417,7 +426,9 @@ const Login = ({ navigation }) => {
             )}
           </View>
           <Row style={styles.termsContainer}>
-            <RenderTerms />
+            <FadeInUpAnim delay={300}>
+              <RenderTerms />
+            </FadeInUpAnim>
           </Row>
           <Text style={styles.skip} onPress={() => navigation.replace(HOME_SCREEN)}>
             {t('skip')}

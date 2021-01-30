@@ -48,7 +48,7 @@ const SpecialistHelp = () => {
           <FlatList
             keyExtractor={(item) => String(item.id)}
             data={data?.categoriesWithCenterCount}
-            renderItem={({ item }) => <Categories data={item} />}
+            renderItem={({ item, index }) => <Categories data={item} index={index} />}
             numColumns={isTab() ? 4 : 2}
             initialNumToRender={6}
             columnWrapperStyle={styles.centers}

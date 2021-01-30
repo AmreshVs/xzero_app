@@ -90,6 +90,7 @@ class Image extends React.Component<ImageProps, ImageState> {
 
   render() {
     const { preview, style, defaultSource, tint, ...otherProps } = this.props;
+
     const { uri, intensity } = this.state;
 
     const isImageReady = !!uri;

@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useDispatch } from 'react-redux';
-
-import { SetUserData } from 'redux/actions';
 
 export default function useUserData() {
   const [userData, setUserData] = useState(null);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     getUserData();
@@ -17,7 +13,7 @@ export default function useUserData() {
       let userDataString = await AsyncStorage.getItem('@xzero_user');
       if (userDataString !== null && userDataString !== '') {
         let userData = JSON.parse(userDataString);
-        dispatch(SetUserData(userData));
+        setUserData(userData);
       }
       return;
     }

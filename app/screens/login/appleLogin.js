@@ -10,6 +10,7 @@ import useErrorLog from 'hooks/useErrorLog';
 import { LOGIN_SCREEN } from 'navigation/routes';
 import Icon from 'icon';
 import styles from './styles';
+import { ScaleAnim } from 'animation';
 
 const AppleLoginButton = ({ handleSocialLogin }) => {
   const { t } = useTranslation();
@@ -58,27 +59,33 @@ const AppleLoginButton = ({ handleSocialLogin }) => {
 
   return (
     <View style={styles.appleBtnContainer}>
-      <RippleFX
-        cornerRadius={5}
-        style={styles.button}
-        onPress={() => handleAppleLogin()}
-      >
-        <Icon name="apple" color="#FFF" size={25} wviewBox={400} />
-      </RippleFX>
-      <RippleFX
-        cornerRadius={5}
-        style={[styles.button, { backgroundColor: '#3b5998' }]}
-        onPress={() => handleSocialLogin('fb')}
-      >
-        <Icon name="facebook" color="#FFF" size={25} />
-      </RippleFX>
-      <RippleFX
-        cornerRadius={5}
-        style={[styles.button, { backgroundColor: '#db3236' }]}
-        onPress={() => handleSocialLogin('g')}
-      >
-        <Icon name="google" color="#FFF" size={24} />
-      </RippleFX>
+      <ScaleAnim delay={800}>
+        <RippleFX
+          cornerRadius={5}
+          style={styles.button}
+          onPress={() => handleAppleLogin()}
+        >
+          <Icon name="apple" color="#FFF" size={25} wviewBox={400} />
+        </RippleFX>
+      </ScaleAnim>
+      <ScaleAnim delay={900}>
+        <RippleFX
+          cornerRadius={5}
+          style={[styles.button, { backgroundColor: '#3b5998' }]}
+          onPress={() => handleSocialLogin('fb')}
+        >
+          <Icon name="facebook" color="#FFF" size={25} />
+        </RippleFX>
+      </ScaleAnim>
+      <ScaleAnim delay={1000}>
+        <RippleFX
+          cornerRadius={5}
+          style={[styles.button, { backgroundColor: '#db3236' }]}
+          onPress={() => handleSocialLogin('g')}
+        >
+          <Icon name="google" color="#FFF" size={24} />
+        </RippleFX>
+      </ScaleAnim>
     </View>
   );
 }

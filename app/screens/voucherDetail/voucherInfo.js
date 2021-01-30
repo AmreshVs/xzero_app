@@ -12,7 +12,7 @@ import ProgressiveImage from 'components/progressiveImage';
 import { IMAGE_URL } from 'constants/common';
 import colors from 'constants/colors';
 import { calculatePercentage, isTab, thumbnailUrl, useReduxAction } from 'constants/commonFunctions';
-import { FadeInUpAnim, ScaleAnim } from 'animation';
+import { FadeAnim, FadeInUpAnim, ScaleAnim } from 'animation';
 import styles from './styles';
 
 const VoucherInfo = ({ data }) => {
@@ -35,60 +35,56 @@ const VoucherInfo = ({ data }) => {
   }
 
   return (
-    <Card style={styles.voucherContainer}>
-      <View style={styles.voucherImageContainer}>
-        {['closed', 'publish'].includes(data?.draw_status) && (
-          <>
-            <View style={styles.closedContainer}>
-              <Chip
-                color={data?.draw_status === 'closed' ? colors.danger : colors.success}
-                title={data?.draw_status === 'closed' ? t('draw_closed') : t('draw_publish')}
-              />
-            </View>
-            <View style={styles.closed} />
-          </>
-        )}
-        <ScaleAnim>
-          <ProgressiveImage
-            preview={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
-            source={{ uri: IMAGE_URL + data?.featured_img?.url }}
-            style={styles.voucherImg}
-          />
-        </ScaleAnim>
-      </View>
-      <Row padding={10} paddingBottom={5}>
-        <Box width="100%">
-          <FadeInUpAnim>
-            <Text numberOfLines={1}>
-              <Text style={styles.title}>{t('buy')} </Text>
-              <Text style={styles.caption}>{data?.[`buy_title_${language}`]}</Text>
-              {(!userData || userData?.membership === null) && <Text style={styles.caption}> + {data?.membership_plans[0]?.[`name_${language}`]} {t('membership')}</Text>}
-            </Text>
-          </FadeInUpAnim>
-          <FadeInUpAnim delay={100}>
-            <Text numberOfLines={1}>
-              <Text style={styles.title}>{t('win')} </Text>
-              <Text style={styles.caption} numberOfLines={1}>{data?.[`win_title_${language}`]}</Text>
-            </Text>
-          </FadeInUpAnim>
-        </Box>
-      </Row>
-      <Box padding={10} paddingTop={5}>
-        <FadeInUpAnim delay={150}>
+    <FadeInUpAnim>
+      <Card style={styles.voucherContainer}>
+        <View style={styles.voucherImageContainer}>
+          {['closed', 'publish'].includes(data?.draw_status) && (
+            <>
+              <View style={styles.closedContainer}>
+                <Chip
+                  color={data?.draw_status === 'closed' ? colors.danger : colors.success}
+                  title={data?.draw_status === 'closed' ? t('draw_closed') : t('draw_publish')}
+                />
+              </View>
+              <View style={styles.closed} />
+            </>
+          )}
+          <FadeAnim>
+            <ProgressiveImage
+              thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
+              source={{ uri: IMAGE_URL + data?.featured_img?.url }}
+              style={styles.voucherImg}
+            />
+          </FadeAnim>
+        </View>
+        <Row padding={10} paddingBottom={5}>
+          <Box width="100%">
+            <FadeAnim>
+              <Text numberOfLines={1}>
+                <Text style={styles.title}>{t('buy')} </Text>
+                <Text style={styles.caption}>{data?.[`buy_title_${language}`]}</Text>
+                {(!userData || userData?.membership === null) && <Text style={styles.caption}> + {data?.membership_plans[0]?.[`name_${language}`]} {t('membership')}</Text>}
+              </Text>
+              <Text numberOfLines={1}>
+                <Text style={styles.title}>{t('win')} </Text>
+                <Text style={styles.caption} numberOfLines={1}>{data?.[`win_title_${language}`]}</Text>
+              </Text>
+            </FadeAnim>
+          </Box>
+        </Row>
+        <Box padding={10} paddingTop={5}>
           <Progress percent={calculatePercentage(data?.total_bought, data?.limit)} countText={`${data?.total_bought} ${t('out of')} ${data?.limit}`} colorful />
-        </FadeInUpAnim>
-      </Box>
-      <Box padding={10} paddingTop={0}>
-        <FadeInUpAnim delay={200}>
-          <Text style={styles.caption}>{t('check_below_for_more')}</Text>
-        </FadeInUpAnim>
-      </Box>
-      <ScaleAnim>
-        <Box padding={10} paddingTop={0} alignItems="flex-end">
-          <Button width={isTab() ? "20%" : "100%"} status="chip_1" size="small" icon="share_alt" onPress={() => handleShare()}>{t('share')}</Button>
         </Box>
-      </ScaleAnim>
-    </Card>
+        <Box padding={10} paddingTop={0}>
+          <Text style={styles.caption}>{t('check_below_for_more')}</Text>
+        </Box>
+        <ScaleAnim>
+          <Box padding={10} paddingTop={0} alignItems="flex-end">
+            <Button width={isTab() ? "20%" : "100%"} status="chip_1" size="small" icon="share_alt" onPress={() => handleShare()}>{t('share')}</Button>
+          </Box>
+        </ScaleAnim>
+      </Card>
+    </FadeInUpAnim>
   )
 }
 

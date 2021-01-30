@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     ...alignItemsCenter
-  }
+  },
 });
 
 export default styles;

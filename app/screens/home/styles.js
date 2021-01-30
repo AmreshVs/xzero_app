@@ -219,8 +219,8 @@ const mobileStyles = StyleSheet.create({
     backgroundColor: colors.danger,
     borderRadius: 20,
     position: 'absolute',
-    top: 10,
-    right: 10,
+    top: -5,
+    right: -5,
     alignItems: 'center',
     height: 10,
     width: 10

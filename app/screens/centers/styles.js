@@ -14,7 +14,6 @@ const mobileStyles = StyleSheet.create({
     ...whiteBg
   },
   title: {
-    ...font15,
     ...fontWeight700,
     ...textAlignCenter,
   },
@@ -28,7 +27,7 @@ const mobileStyles = StyleSheet.create({
     ...overflowHidden,
   },
   image: {
-    height: 80,
+    height: 60,
     ...resizeModeContain,
     ...borderRadius10,
     ...w100px,

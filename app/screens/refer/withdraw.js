@@ -12,6 +12,7 @@ import WithdrawAmount from './withdrawAmount';
 import Transactions from './transactions';
 import BankInfo from './bankInfo';
 import styles from './styles';
+import { FadeInUpAnim } from 'animation';
 
 const Withdraw = ({ refer_program }) => {
   const userData = useReduxAction(state => state?.userReducer?.user);
@@ -42,9 +43,15 @@ const Withdraw = ({ refer_program }) => {
 
   return (
     <View style={styles.historyContainer}>
-      {(data?.TransactionInfo?.userBankDetails !== null && refer_program) && <WithdrawAmount loading={loading} balance={balance} min_withdraw={min_withdraw} reload={_refetch} />}
-      {refer_program && <BankInfo data={data?.TransactionInfo?.userBankDetails} loading={loading} reload={_refetch} />}
-      <Transactions data={data?.TransactionInfo?.withdrawalHistory} loading={loading} />
+      <FadeInUpAnim>
+        {(data?.TransactionInfo?.userBankDetails !== null && refer_program) && <WithdrawAmount loading={loading} balance={balance} min_withdraw={min_withdraw} reload={_refetch} />}
+      </FadeInUpAnim>
+      <FadeInUpAnim delay={100}>
+        {refer_program && <BankInfo data={data?.TransactionInfo?.userBankDetails} loading={loading} reload={_refetch} />}
+      </FadeInUpAnim>
+      <FadeInUpAnim delay={200}>
+        <Transactions data={data?.TransactionInfo?.withdrawalHistory} loading={loading} />
+      </FadeInUpAnim>
     </View>
   )
 }

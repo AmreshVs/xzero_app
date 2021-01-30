@@ -12,6 +12,7 @@ import { getAuthenticationHeader, getFormattedDateTime, useReduxAction } from 'c
 import { REFER_HISTORY } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
 import { REFER } from 'navigation/routes';
+import { FadeInUpAnim } from 'animation';
 import styles from './styles';
 
 const ReferHistory = () => {
@@ -39,7 +40,7 @@ const ReferHistory = () => {
   }
 
   return (
-    <View style={styles.historyContainer}>
+    <FadeInUpAnim style={styles.historyContainer}>
       <Card overflow="hidden">
         <Box marginBottom={10}>
           <Text style={styles.referTitle}>{t('refer_history')}</Text>
@@ -65,7 +66,7 @@ const ReferHistory = () => {
           }
         </Box>
       </Card>
-    </View>
+    </FadeInUpAnim>
   )
 }
 

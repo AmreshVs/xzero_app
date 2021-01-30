@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import Box from 'components/box';
+import { FadeInUpAnim } from 'animation';
 import Gift from './gift';
 import styles from './styles';
 
@@ -17,9 +18,9 @@ const AvailableGifts = ({ data }) => {
       </Box>
       <View style={styles.wrapper}>
         {data?.map((gift, index) => (
-          <View style={styles.giftContainer} key={index}>
+          <FadeInUpAnim style={styles.giftContainer} key={index} delay={index * 100}>
             <Gift data={gift} />
-          </View>
+          </FadeInUpAnim>
         ))}
       </View>
     </>

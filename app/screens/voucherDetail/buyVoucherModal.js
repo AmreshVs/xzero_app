@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import { View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +14,7 @@ import { isTab, useReduxAction, userVerified } from 'constants/commonFunctions';
 import { VOUCHER_QUEUE } from 'graphql/mutations';
 import { PAYMENT, VOUCHER_DETAIL } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
-import { FadeInLeftAnim, ScaleAnim } from 'animation';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import styles from './styles';
 
 const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher }) => {
@@ -69,7 +68,7 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
     <Modalize
       ref={modalizeRef}
       childrenStyle={styles.modal}
-      modalTopOffset={50}
+      modalTopOffset={100}
       scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
       FooterComponent={
         <ScaleAnim style={styles.footer}>
@@ -85,16 +84,16 @@ const BuyVoucherModal = ({ modalizeRef, promocodeData, setPromocodeData, voucher
       }
     >
       <Box flexDirection={isTab() ? "row" : "column"}>
-        <FadeInLeftAnim>
+        <FadeInUpAnim>
           <Card style={styles.addressContainer} margin={10}>
             <DeliveryAddress />
           </Card>
-        </FadeInLeftAnim>
-        <FadeInLeftAnim delay={100}>
+        </FadeInUpAnim>
+        <FadeInUpAnim delay={100}>
           <Card style={styles.promocodeContainer} margin={10} marginTop={0}>
             <ApplyPromocode voucher_id={voucher?.id} voucherPrice={userData?.membership === null ? voucher?.cost_for_non_members : voucher?.cost} price={promocodeData?.discountedPrice} setPromocodeData={setPromocodeData} />
           </Card>
-        </FadeInLeftAnim>
+        </FadeInUpAnim>
       </Box>
     </Modalize>
   );

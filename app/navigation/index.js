@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavigationContainer, CommonActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -62,7 +62,6 @@ import {
   OTP,
   INTRO,
 } from './routes';
-import { UserDataContext } from 'context';
 import Offline from 'screens/offline';
 import CustomDrawer from 'components/drawer';
 import Otp from 'screens/otp';
@@ -131,7 +130,6 @@ export const offlineReset = (navigation) => {
 
 function Navigation({ connection }) {
   const navigationRef = useRef();
-  const [userData, setUserData] = useState();
   const linking = {
     prefixes: prefix,
   };
@@ -150,21 +148,19 @@ function Navigation({ connection }) {
       linking={linking}
       fallback={<AppLoader />}
     >
-      <UserDataContext.Provider value={{ userData, setUserData }}>
-        <Drawer.Navigator
-          initialRouteName={DRAWER_HOME}
-          drawerType="slide"
-          drawerContent={props => <CustomDrawer {...props} />}
-          screenOptions={{ gestureEnabled: connection }}
-        >
-          <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
-          <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} options={{ unmountOnBlur: true }} />
-          <Drawer.Screen name={REFER} component={Refer} options={{ unmountOnBlur: true }} />
-          <Drawer.Screen name={GIFTS} component={Gifts} options={{ unmountOnBlur: true }} />
-          <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
-          <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
-        </Drawer.Navigator>
-      </UserDataContext.Provider>
+      <Drawer.Navigator
+        initialRouteName={DRAWER_HOME}
+        drawerType="slide"
+        drawerContent={props => <CustomDrawer {...props} />}
+        screenOptions={{ gestureEnabled: connection }}
+      >
+        <Drawer.Screen name={DRAWER_HOME} component={StackNavigation} />
+        <Drawer.Screen name={MY_VOUCHERS} component={MyVouchers} options={{ unmountOnBlur: true }} />
+        <Drawer.Screen name={REFER} component={Refer} options={{ unmountOnBlur: true }} />
+        <Drawer.Screen name={GIFTS} component={Gifts} options={{ unmountOnBlur: true }} />
+        <Drawer.Screen name={DRAWER_PRIVACY} component={Privacy} />
+        <Drawer.Screen name={DRAWER_TERMS} component={Terms} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }

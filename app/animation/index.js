@@ -3,10 +3,11 @@ import { useMemo } from 'react';
 import { useEffect } from 'react';
 import posed from 'react-native-pose';
 
-const spring = {
+const transition = {
   transition: {
-    type: 'spring',
-    stiffness: 100,
+    // type: 'spring',
+    // stiffness: 100,
+    duration: 500
   }
 };
 
@@ -16,12 +17,14 @@ export const ScaleAnim = ({ style, children, delay = 0 }) => {
   const Scale = useMemo(() => (
     posed.View({
       hidden: {
-        scale: 0,
-        ...spring
+        scale: 0.5,
+        opacity: 0,
+        ...transition
       },
       visible: {
         scale: 1,
-        ...spring
+        opacity: 1,
+        ...transition
       },
     })
   )
@@ -47,13 +50,13 @@ export const FadeAnim = ({ style, children, delay = 0 }) => {
     posed.View({
       hidden: {
         opacity: 0,
-        ...spring
+        ...transition
       },
       visible: {
         opacity: 1,
         delay,
         transition: {
-          ...spring.transition,
+          ...transition.transition,
           duration: 1000
         },
       },
@@ -81,13 +84,13 @@ export const FadeInUpAnim = ({ style, children, delay = 0 }) => {
       hidden: {
         opacity: 0,
         y: 50,
-        ...spring
+        ...transition
       },
       visible: {
         opacity: 1,
         y: 0,
         delay,
-        ...spring
+        ...transition
       },
     })
   ), [delay]);
@@ -113,13 +116,13 @@ export const FadeInLeftAnim = ({ style, children, delay = 0 }) => {
       hidden: {
         opacity: 0,
         x: -70,
-        ...spring
+        ...transition
       },
       visible: {
         opacity: 1,
         x: 0,
         delay,
-        ...spring
+        ...transition
       },
     })
   )

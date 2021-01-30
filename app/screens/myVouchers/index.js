@@ -13,11 +13,13 @@ import RippleFX from 'components/rippleFx';
 import { ToastMsg } from 'components/toastMsg';
 import NoData from 'components/noData';
 import { getAuthenticationHeader, isTab, useReduxAction } from 'constants/commonFunctions';
+import { ANIM_COMPONENT_DELAY } from 'constants/common';
 import IsLoggedIn from 'hoc/isLoggedIn';
 import IsVerified from 'hoc/isVerified';
 import useErrorLog from 'hooks/useErrorLog';
 import { MY_VOUCHERS } from 'navigation/routes';
 import { MY_VOUCHER_BOUGHT, MY_VOUCHER_WON } from 'graphql/queries';
+import { FadeInUpAnim } from 'animation';
 import VoucherList from './voucherList';
 import styles from './styles';
 
@@ -105,7 +107,11 @@ const MyVouchers = () => {
           <FlatList
             keyExtractor={(item) => String(item.id)}
             data={data}
-            renderItem={({ item }) => <VoucherList data={item} />}
+            renderItem={({ item, index }) => (
+              <FadeInUpAnim delay={index * ANIM_COMPONENT_DELAY}>
+                <VoucherList data={item} />
+              </FadeInUpAnim>
+            )}
             initialNumToRender={6}
             maxToRenderPerBatch={10}
             windowSize={10}

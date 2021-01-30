@@ -14,6 +14,7 @@ import { getAuthenticationHeader, useReduxAction } from 'constants/commonFunctio
 import { WITHDRAW_AMOUNT } from 'graphql/mutations';
 import useErrorLog from 'hooks/useErrorLog';
 import { REFER } from 'navigation/routes';
+import { ScaleAnim } from 'animation';
 import styles from './styles';
 
 const WithdrawAmount = ({ min_withdraw, balance, reload, loading: rootLoading }) => {
@@ -78,17 +79,21 @@ const WithdrawAmount = ({ min_withdraw, balance, reload, loading: rootLoading })
       </Column>
       <Row justifyContent="space-between">
         <Box width="58%">
-          <Textbox
-            placeholder={t('enter_amount')}
-            icon="money_bill"
-            value={String(amount)}
-            onChangeText={(text) => setAmount(text)}
-            keyboardType='numeric'
-            marginTop={0}
-          />
+          <ScaleAnim>
+            <Textbox
+              placeholder={t('enter_amount')}
+              icon="money_bill"
+              value={String(amount)}
+              onChangeText={(text) => setAmount(text)}
+              keyboardType='numeric'
+              marginTop={0}
+            />
+          </ScaleAnim>
         </Box>
         <Box width="40%">
-          <Button icon="coins" onPress={() => handleWithdraw()} disabled={amount === ''} loading={loading}>{t('withdraw')}</Button>
+          <ScaleAnim>
+            <Button icon="coins" onPress={() => handleWithdraw()} disabled={amount === ''} loading={loading}>{t('withdraw')}</Button>
+          </ScaleAnim>
         </Box>
       </Row>
       <Row paddingTop={10}>

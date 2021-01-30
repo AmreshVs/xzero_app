@@ -21,7 +21,7 @@ import { GET_MEMBERSHIP_BY_USER, MEMBERSHIP_PLANS } from 'graphql/queries';
 import { MEMBERSHIP_TAB_SCREEN, PAYMENT } from 'navigation/routes';
 import { SetUserData } from 'redux/actions';
 import IsVerified from 'hoc/isVerified';
-import { FadeInLeftAnim, ScaleAnim } from 'animation';
+import { FadeInLeftAnim, FadeInUpAnim, ScaleAnim } from 'animation';
 import GetHelp from './getHelp';
 import Plan from './plan';
 import Note from './note';
@@ -165,46 +165,46 @@ const Membership = () => {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={reloading} onRefresh={reload} />}
       >
-        <FadeInLeftAnim>
+        <FadeInUpAnim>
           <MembershipCard
             member={member}
             data={memberData}
             expired={member && numOfDays !== null && numOfDays <= 0}
           />
-        </FadeInLeftAnim>
-        <FadeInLeftAnim delay={200}>
+        </FadeInUpAnim>
+        <FadeInUpAnim delay={200}>
           <Note data={note?.info} />
-        </FadeInLeftAnim>
+        </FadeInUpAnim>
         <Box flexDirection={isTab() ? "row-reverse" : "column"} >
           {member && (
-            <FadeInLeftAnim delay={300}>
+            <FadeInUpAnim delay={300}>
               <QRCode data={memberData} />
-            </FadeInLeftAnim>
+            </FadeInUpAnim>
           )}
-          <FadeInLeftAnim delay={400}>
+          <FadeInUpAnim delay={400}>
             <Benefits member={member} data={note?.benefits} />
-          </FadeInLeftAnim>
+          </FadeInUpAnim>
         </Box>
         <Box flexDirection={isTab() ? "row-reverse" : "column"} >
           {member && numOfDays !== null && numOfDays >= 0 && numOfDays < 10 ? (
-            <FadeInLeftAnim delay={500}>
+            <FadeInUpAnim delay={500}>
               <Renew membershipData={note.membershipData} />
-            </FadeInLeftAnim>
+            </FadeInUpAnim>
           ) : null}
           {member && numOfDays !== null && numOfDays <= 0 ? (
-            <FadeInLeftAnim delay={500}>
+            <FadeInUpAnim delay={500}>
               <Renew membershipData={note.membershipData} expired />
-            </FadeInLeftAnim>
+            </FadeInUpAnim>
           ) : null}
           {!member && (
-            <FadeInLeftAnim delay={500}>
+            <FadeInUpAnim delay={500}>
               <BuyMembership handleBuy={handleBuy} membershipData={note.membershipData} />
-            </FadeInLeftAnim>
+            </FadeInUpAnim>
           )}
           {!member || numOfDays !== null && numOfDays < 10 ? (
-            <FadeInLeftAnim delay={500}>
+            <FadeInUpAnim delay={500}>
               <GetHelp />
-            </FadeInLeftAnim>
+            </FadeInUpAnim>
           ) : null}
         </Box>
       </ScrollView>

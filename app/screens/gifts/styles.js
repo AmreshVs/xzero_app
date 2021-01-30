@@ -193,7 +193,7 @@ const mobileStyles = StyleSheet.create({
   },
   deliveredContainer: {
     position: 'absolute',
-    right: 10,
+    left: 10,
     top: 10,
     zIndex: 5
   }

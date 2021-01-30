@@ -12,6 +12,7 @@ import colors from 'constants/colors';
 import { thumbnailUrl } from 'constants/commonFunctions';
 import { SPECIALIST_DETAIL } from 'navigation/routes';
 import Icon from 'icon';
+import { FadeAnim, ScaleAnim } from 'animation';
 import styles from './styles';
 
 const Specialist = ({ data }) => {
@@ -29,13 +30,13 @@ const Specialist = ({ data }) => {
     <Card style={styles.container}>
       <RippleFX onPress={() => handlePress(data?.id)}>
         <Row>
-          <View style={styles.imageContainer}>
+          <ScaleAnim style={styles.imageContainer}>
             <ProgressiveImage
               source={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
               style={styles.image}
             />
-          </View>
-          <View style={styles.infoContainer}>
+          </ScaleAnim>
+          <FadeAnim style={styles.infoContainer}>
             <Text style={styles.name} numberOfLines={1}>
               {data?.[`name_${language}`]}
             </Text>
@@ -55,7 +56,7 @@ const Specialist = ({ data }) => {
                 {data?.center?.place}, {data?.center?.city}
               </Text>
             </Row>
-          </View>
+          </FadeAnim>
         </Row>
       </RippleFX>
     </Card>

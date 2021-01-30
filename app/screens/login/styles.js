@@ -77,6 +77,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%'
   },
+  logoContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 export default styles;

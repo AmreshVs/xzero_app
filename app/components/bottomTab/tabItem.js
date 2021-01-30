@@ -53,7 +53,7 @@ const TabItem = ({ options, route, index, state, navigation }) => {
     }).start();
 
     if (!isFocused && !event.defaultPrevented) {
-      navigation.navigate(route.name, {
+      navigation.jumpTo(route.name, {
         drawer: true
       });
     }

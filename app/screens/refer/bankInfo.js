@@ -7,6 +7,7 @@ import Card from 'components/card';
 import Column from 'components/column';
 import Row from 'components/row';
 import Button from 'components/button';
+import { ScaleAnim } from 'animation';
 import ViewBankInfo from './viewBankInfo';
 import EditBankInfo from './editBankInfo';
 import styles from './styles';
@@ -31,7 +32,9 @@ const BankInfo = ({ data, loading, reload }) => {
           </Column>
         </Box>
         <Box width="30%" paddingLeft={10}>
-          {!edit && <Button size="small" icon="pen" onPress={() => setEdit(true)}>{t('edit')}</Button>}
+          <ScaleAnim>
+            {!edit && <Button size="small" icon="pen" onPress={() => setEdit(true)}>{t('edit')}</Button>}
+          </ScaleAnim>
         </Box>
       </Row>
       <Box loading={loading}>

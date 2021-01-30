@@ -22,7 +22,7 @@ const AssuredGift = ({ data }) => {
         :
         <ProgressiveImage
           style={styles.productImg}
-          preview={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img[0]?.url) }}
+          thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img[0]?.url) }}
           source={{ uri: IMAGE_URL + smallUrl(data?.featured_img[0]?.url) }}
         />
       }

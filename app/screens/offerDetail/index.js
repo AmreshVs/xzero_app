@@ -25,6 +25,7 @@ import OfferDescription from './offerDescription';
 import AvailDiscount from './availDiscount';
 import ContactCenter from './contactCenter';
 import styles from './styles';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 
 const OfferDetail = () => {
   const userData = useReduxAction(state => state?.userReducer?.user);
@@ -69,7 +70,9 @@ const OfferDetail = () => {
   const RightIcon = () => {
     return (
       <RippleFX style={styles.rightIcon} onPress={() => handleFavourite(data?.offer?.id)}>
-        <Icon name="heart" color={favourite ? colors.danger : colors.white} size={15} />
+        <ScaleAnim>
+          <Icon name="heart" color={favourite ? colors.danger : colors.white} size={15} />
+        </ScaleAnim>
       </RippleFX>
     );
   };
@@ -89,10 +92,12 @@ const OfferDetail = () => {
           <PriceDetails offer={offer} center={params?.center} />
           <OfferDescription offer={offer} />
           <AvailDiscount data={data?.offerGuideline} />
-          <Row justifyContent="space-between">
-            <ContactCenter username={userData?.username} mobile_number={offer?.mobile_number} />
-            <ShareOffer data={offer} />
-          </Row>
+          <FadeInUpAnim>
+            <Row justifyContent="space-between">
+              <ContactCenter username={userData?.username} mobile_number={offer?.mobile_number} />
+              <ShareOffer data={offer} />
+            </Row>
+          </FadeInUpAnim>
         </ScrollView>
       </SafeView>
     </>

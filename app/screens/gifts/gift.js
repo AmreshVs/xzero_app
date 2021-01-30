@@ -10,6 +10,7 @@ import { IMAGE_URL } from 'constants/common';
 import { thumbnailUrl } from 'constants/commonFunctions';
 import colors from 'constants/colors';
 import Icon from 'icon';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import styles from './styles';
 
 const Gift = ({ data, availed }) => {
@@ -25,8 +26,12 @@ const Gift = ({ data, availed }) => {
             <RippleFX style={styles.closeContainer} onPress={() => setShowDesc(!showDesc)}>
               <Icon name="times" />
             </RippleFX>
-            <Text style={styles.imageTitle}>{data?.[`name_${language}`]}</Text>
-            <Text style={styles.imageDesc}>{data?.[`desc_${language}`]}</Text>
+            <FadeInUpAnim>
+              <Text style={styles.imageTitle}>{data?.[`name_${language}`]}</Text>
+            </FadeInUpAnim>
+            <FadeInUpAnim delay={50}>
+              <Text style={styles.imageDesc}>{data?.[`desc_${language}`]}</Text>
+            </FadeInUpAnim>
           </View>
         )}
         {data?.is_delivered && (
@@ -36,12 +41,12 @@ const Gift = ({ data, availed }) => {
         )}
         <RippleFX onPress={() => setShowDesc(!showDesc)}>
           <View style={styles.giftImageContainer}>
-            <View style={styles.giftImages}>
+            <ScaleAnim style={styles.giftImages}>
               <ProgressiveImage
                 source={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
                 style={styles.gift}
               />
-            </View>
+            </ScaleAnim>
             <Image source={availed ? require('../../../assets/gift2.png') : require('../../../assets/gift3.png')} style={styles.giftImage} />
             <Text style={styles.title} numberOfLines={1}>{data?.[`name_${language}`]}</Text>
           </View>

@@ -17,6 +17,7 @@ import { SCREEN_HEIGHT } from 'constants/common';
 import { HOME_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
 import { HOME_SEARCH } from 'graphql/queries';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import ListItem from './listItem';
 import styles from './styles';
 
@@ -79,71 +80,77 @@ const SearchModal = ({ modalizeRef }) => {
       snapPoint={SCREEN_HEIGHT / 2}
       scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
     >
-      <Card margin={10}>
-        <Text style={styles.heading}>{t('search_home')}</Text>
-        <Formik
-          onSubmit={(values) => handleSearch(values.search)}
-          validationSchema={inputsValidationSchema}
-          enableReinitialize
-          initialValues={{
-            search: String(searched) || '',
-          }}
-        >
-          {({
-            values,
-            handleChange,
-            errors,
-            touched,
-            setFieldTouched,
-            handleSubmit,
-          }) => (
-            <>
-              <Row justifyContent="space-between">
-                <Box width="68%">
-                  <Textbox
-                    placeholder={t('search_home_textbox')}
-                    value={values[name]}
-                    onChangeText={handleChange(name)}
-                    icon="search"
-                    marginTop={0}
-                    onBlur={() => setFieldTouched(name)}
-                    autoCapitalize="none"
-                  />
-                </Box>
-                <Box width="30%">
-                  <Button
-                    icon="check"
-                    onPress={() => handleSubmit()}
-                    disabled={Object.keys(errors).length}
-                  >
-                    {t('search')}
-                  </Button>
-                </Box>
-              </Row>
-              <FormError touched={touched[name]} errorText={errors[name]} />
-            </>
-          )}
-        </Formik>
-      </Card>
-      <Card margin={10} marginTop={0}>
-        <Text style={styles.heading}>{t('search_results')}</Text>
-        {searched !== '' && <ModalSearchHeader handleClear={handleClear} searched={searched || ""} marginTop={-5} />}
-        <Box loading={loading}>
-          {data !== undefined && (
-            <>
-              {((data.centers !== undefined && data?.centers.length === 0) && (data?.offers !== undefined && data?.offers.length === 0) && (data?.specialists !== undefined && data?.specialists.length === 0)) ?
-                <Text style={styles.caption}>{t('data_not_found')}</Text>
-                :
-                <>
-                  <ListItem name="Centers" data={data?.centers} />
-                  <ListItem name="Offers" data={data?.offers} />
-                  <ListItem name="Specialists" data={data?.specialists} />
-                </>
-              }
-            </>
-          )}
-        </Box>
-      </Card>
+      <FadeInUpAnim>
+        <Card margin={10}>
+          <Text style={styles.heading}>{t('search_home')}</Text>
+          <Formik
+            onSubmit={(values) => handleSearch(values.search)}
+            validationSchema={inputsValidationSchema}
+            enableReinitialize
+            initialValues={{
+              search: String(searched) || '',
+            }}
+          >
+            {({
+              values,
+              handleChange,
+              errors,
+              touched,
+              setFieldTouched,
+              handleSubmit,
+            }) => (
+              <>
+                <Row justifyContent="space-between">
+                  <Box width="68%">
+                    <Textbox
+                      placeholder={t('search_home_textbox')}
+                      value={values[name]}
+                      onChangeText={handleChange(name)}
+                      icon="search"
+                      marginTop={0}
+                      onBlur={() => setFieldTouched(name)}
+                      autoCapitalize="none"
+                    />
+                  </Box>
+                  <Box width="30%">
+                    <ScaleAnim>
+                      <Button
+                        icon="check"
+                        onPress={() => handleSubmit()}
+                        disabled={Object.keys(errors).length}
+                      >
+                        {t('search')}
+                      </Button>
+                    </ScaleAnim>
+                  </Box>
+                </Row>
+                <FormError touched={touched[name]} errorText={errors[name]} />
+              </>
+            )}
+          </Formik>
+        </Card>
+      </FadeInUpAnim>
+      <FadeInUpAnim delay={100}>
+        <Card margin={10} marginTop={0}>
+          <Text style={styles.heading}>{t('search_results')}</Text>
+          {searched !== '' && <ModalSearchHeader handleClear={handleClear} searched={searched || ""} marginTop={-5} />}
+          <Box loading={loading}>
+            {data !== undefined && (
+              <>
+                {((data.centers !== undefined && data?.centers.length === 0) && (data?.offers !== undefined && data?.offers.length === 0) && (data?.specialists !== undefined && data?.specialists.length === 0)) ?
+                  <Text style={styles.caption}>{t('data_not_found')}</Text>
+                  :
+                  <>
+                    <ListItem name="Centers" data={data?.centers} />
+                    <ListItem name="Offers" data={data?.offers} />
+                    <ListItem name="Specialists" data={data?.specialists} />
+                  </>
+                }
+              </>
+            )}
+          </Box>
+        </Card>
+      </FadeInUpAnim>
     </Modalize>
   );
 };

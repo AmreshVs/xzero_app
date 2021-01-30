@@ -12,18 +12,21 @@ import FloatingButton from 'components/floatingButton';
 import ModalSearchHeader from 'components/modalSearchHeader';
 import { ToastMsg } from 'components/toastMsg';
 import { isTab } from 'constants/commonFunctions';
+import { ANIM_COMPONENT_DELAY } from 'constants/common';
 import { SPECIALISTS } from 'navigation/routes';
 import { SPECIALISTS_BY_CENTER } from 'graphql/queries';
 import useErrorLog from 'hooks/useErrorLog';
+import { FadeInUpAnim } from 'animation';
 import Specialist from './specialist';
 import styles from './styles';
 
-let initialWhereCondition = {
-  _limit: -1
-};
-let headerCondition = 1;
 
 const Specialists = () => {
+  let initialWhereCondition = {
+    _limit: -1
+  };
+  let headerCondition = 1;
+
   const [reloading, setReloading] = useState(false);
   const { logError } = useErrorLog();
   const { params } = useRoute();
@@ -90,7 +93,11 @@ const Specialists = () => {
             <FlatList
               keyExtractor={(item) => String(item.id)}
               data={data?.specialists}
-              renderItem={({ item }) => <Specialist data={item} />}
+              renderItem={({ item, index }) => (
+                <FadeInUpAnim delay={index * ANIM_COMPONENT_DELAY}>
+                  <Specialist data={item} />
+                </FadeInUpAnim>
+              )}
               initialNumToRender={6}
               maxToRenderPerBatch={10}
               windowSize={10}

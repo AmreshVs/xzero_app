@@ -1,5 +1,4 @@
 import React, { useState, memo } from 'react';
-import { View } from 'react-native';
 import { Formik } from 'formik';
 import { useApolloClient } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
@@ -11,9 +10,11 @@ import Button from 'components/button';
 import Box from 'components/box';
 import { ToastMsg } from 'components/toastMsg';
 import { getAuthenticationHeader, useReduxAction } from 'constants/commonFunctions';
+import { ANIM_COMPONENT_DELAY } from 'constants/common';
 import useErrorLog from 'hooks/useErrorLog';
 import { CREATE_BANK_INFO, UPDATE_BANK_INFO } from 'graphql/mutations';
 import { REFER } from 'navigation/routes';
+import { FadeInUpAnim, ScaleAnim } from 'animation';
 import { inputsValidationSchema, inputs } from './helpers';
 
 const EditBankInfo = ({ setEdit, data, reload }) => {
@@ -101,7 +102,7 @@ const EditBankInfo = ({ setEdit, data, reload }) => {
               ({ name, icon, marginTop }, index) => {
                 let newName = name.replace('_', ' ');
                 return (
-                  <View key={index}>
+                  <FadeInUpAnim delay={index * ANIM_COMPONENT_DELAY} key={index}>
                     <Textbox
                       placeholder={newName.charAt(0).toUpperCase() + newName.slice(1)}
                       value={values[name]}
@@ -112,38 +113,40 @@ const EditBankInfo = ({ setEdit, data, reload }) => {
                       autoCapitalize="none"
                     />
                     <FormError touched={touched[name]} errorText={errors[name]} />
-                  </View>
+                  </FadeInUpAnim>
                 )
               }
             )}
-            <Row marginTop={20} justifyContent="flex-end">
-              {data !== null && (
-                <>
-                  <Button
-                    width="30%"
-                    size="small"
-                    icon="times"
-                    status="text_lite"
-                    onPress={() => setEdit(false)}
-                    outline
-                  >
-                    {t('cancel')}
-                  </Button>
-                  <Box marginHorizontal={5} />
-                </>
-              )}
-              <Button
-                width="30%"
-                size="small"
-                icon="save"
-                status="success"
-                loading={loading}
-                onPress={() => handleSubmit()}
-                outline
-              >
-                {t('save')}
-              </Button>
-            </Row>
+            <ScaleAnim delay={400}>
+              <Row marginTop={20} justifyContent="flex-end">
+                {data !== null && (
+                  <>
+                    <Button
+                      width="30%"
+                      size="small"
+                      icon="times"
+                      status="text_lite"
+                      onPress={() => setEdit(false)}
+                      outline
+                    >
+                      {t('cancel')}
+                    </Button>
+                    <Box marginHorizontal={5} />
+                  </>
+                )}
+                <Button
+                  width="30%"
+                  size="small"
+                  icon="save"
+                  status="success"
+                  loading={loading}
+                  onPress={() => handleSubmit()}
+                  outline
+                >
+                  {t('save')}
+                </Button>
+              </Row>
+            </ScaleAnim>
           </>
         )}
       </Formik>

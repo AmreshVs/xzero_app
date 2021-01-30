@@ -38,7 +38,7 @@ const ShareOffer = ({ data }) => {
 
   return (
     <Row marginTop={10} width="48.7%">
-      <Card style={styles.descContainer} marginBottom={10}>
+      <Card style={styles.descContainer} marginBottom={10} shadow={false}>
         <Text style={styles.title} numberOfLines={1}>
           {t('share_offer')}
         </Text>

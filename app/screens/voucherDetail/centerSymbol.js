@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
 import colors from 'constants/colors';
@@ -18,17 +18,19 @@ const CenterSymbol = ({ icon = "equals", text = "" }) => {
   )
 }
 
-export default memo(CenterSymbol);
+export default CenterSymbol;
 
 const styles = StyleSheet.create({
   symbolContainer: {
     alignItems: 'center',
     marginVertical: -10,
+    zIndex: 999
   },
   symbol: {
     backgroundColor: colors.chip_1,
     padding: 8,
     borderRadius: 20,
+    zIndex: 999
   },
   text: {
     color: colors.white,

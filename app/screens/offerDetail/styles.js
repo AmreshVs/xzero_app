@@ -73,7 +73,7 @@ const mobileStyles = StyleSheet.create({
   descText: {
     ...textLite,
     ...marginTop5,
-    lineHeight: 20
+    lineHeight: 24,
   },
   rightIcon: {
     borderRadius: 70,

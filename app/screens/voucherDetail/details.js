@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import Card from 'components/card';
 import Box from 'components/box';
+import { FadeInUpAnim } from 'animation';
 import styles from './styles';
 
 const Details = ({ data }) => {
@@ -11,14 +12,16 @@ const Details = ({ data }) => {
   let language = i18n.language;
 
   return (
-    <Card marginBottom={10}>
-      <Text style={styles.title} numberOfLines={1}>
-        {t('details')}
-      </Text>
-      <Box>
-        <Text style={styles.caption}>{data?.[`desc_${language}`]}</Text>
-      </Box>
-    </Card>
+    <FadeInUpAnim delay={100}>
+      <Card marginBottom={10}>
+        <Text style={styles.title} numberOfLines={1}>
+          {t('details')}
+        </Text>
+        <Box>
+          <Text style={styles.caption}>{data?.[`desc_${language}`]}</Text>
+        </Box>
+      </Card>
+    </FadeInUpAnim>
   );
 };
 

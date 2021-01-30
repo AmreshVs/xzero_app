@@ -18,12 +18,13 @@ import useErrorLog from 'hooks/useErrorLog';
 import Center from './center';
 import styles from './styles';
 
-let initialWhereCondition = {
-  _limit: -1
-};
-let headerCondition = 1;
 
 const Centers = () => {
+  let initialWhereCondition = {
+    _limit: -1
+  };
+  let headerCondition = 1;
+
   const { params } = useRoute();
   const { logError } = useErrorLog();
 
@@ -51,7 +52,7 @@ const Centers = () => {
     logError({
       screen: CENTERS_SCREEN,
       module: 'Centers Query',
-      input: JSON.stringify(whereConditionwhereCondition),
+      input: JSON.stringify(whereCondition),
       error: JSON.stringify(error)
     });
   }
@@ -89,7 +90,7 @@ const Centers = () => {
             <FlatList
               keyExtractor={(item) => String(item.id)}
               data={data?.topCenters}
-              renderItem={({ item }) => <Center data={item} />}
+              renderItem={({ item, index }) => <Center data={item} index={index} />}
               numColumns={isTab() ? 4 : 2}
               initialNumToRender={6}
               maxToRenderPerBatch={10}

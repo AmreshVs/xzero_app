@@ -9,7 +9,6 @@ import Box from 'components/box';
 import Heading from 'components/heading';
 import Row from 'components/row';
 import { GET_HOME } from 'graphql/queries';
-import { UserDataContext } from 'context';
 import { isTab, useReduxAction } from 'constants/commonFunctions';
 import { HOME_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
@@ -157,4 +156,9 @@ const Home = () => {
   );
 }
 
-export default memo(Home);
+
+export default memo(Home, propsAreEqual);
+
+function propsAreEqual(prevProps, nextProps) {
+  return true;
+}
