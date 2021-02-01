@@ -21,7 +21,7 @@ export const REFER = 'Refer';
 export const OFFLINE = 'Offline';
 export const OTP = 'Otp';
 export const INTRO = 'Intro';
-export const EXPO_UPDATE = 'ExpoUpdate';
+export const NEWS = 'News';
 
 // Tab Routes
 export const HOME_TAB_SCREEN = 'THome';

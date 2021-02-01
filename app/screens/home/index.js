@@ -12,6 +12,7 @@ import { GET_HOME } from 'graphql/queries';
 import { isTab, useReduxAction } from 'constants/commonFunctions';
 import { HOME_SCREEN } from 'navigation/routes';
 import useErrorLog from 'hooks/useErrorLog';
+import { FadeInUpAnim } from 'animation';
 import ReferCard from './referCard';
 import GiftCard from './giftsCard';
 import DrawCard from './drawCard';
@@ -22,8 +23,8 @@ import Popup from './popup';
 import Categories from './categories';
 import TopSection from './topSection';
 import TopCenters from './topCenters';
+import Stories from './stories';
 import styles from './styles';
-import { FadeInUpAnim } from 'animation';
 
 let openLink = 0;
 let backupLink = "";
@@ -133,6 +134,10 @@ const Home = () => {
             <GiftCard />
           </Box>
         </Row>
+        <Box padding={10} paddingTop={0}>
+          <Heading marginBottom={10}>Latest Stories</Heading>
+          <Stories />
+        </Box>
       </>
     );
   };

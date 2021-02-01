@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
+
 import colors from 'constants/colors';
 
 export default function Heading({ children, paddingBottom, marginBottom, size, color }) {
@@ -8,11 +9,25 @@ export default function Heading({ children, paddingBottom, marginBottom, size, c
       fontSize: size || 18,
       fontWeight: '700',
       color: color || colors.text_dark,
-      paddingBottom: paddingBottom || 0,
-      marginBottom: marginBottom || 0,
+      paddingBottom: 5,
       textAlign: 'left',
     },
+    bottomBorder: {
+      width: 30,
+      height: 7,
+      backgroundColor: colors.primary,
+      paddingBottom: paddingBottom || 0,
+      marginBottom: marginBottom || 0,
+      borderRadius: 10
+    }
   });
 
-  return <Text style={styles.heading}>{children}</Text>;
+  return (
+    <>
+      <Text style={styles.heading}>
+        {children}
+      </Text>
+      <View style={styles.bottomBorder} />
+    </>
+  )
 }

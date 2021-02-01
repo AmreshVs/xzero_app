@@ -236,6 +236,35 @@ const mobileStyles = StyleSheet.create({
     ...colorWhite,
     ...fontWeight700,
   },
+  newsContainer: {
+    width: '48.5%',
+    padding: 0,
+    borderRadius: 10,
+    marginBottom: 10
+  },
+  newsImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  newsTitle: {
+    color: colors.text_dark,
+    fontWeight: '700'
+  },
+  newsCaption: {
+    color: colors.text_lite,
+    textAlign: 'right',
+    fontSize: 12,
+    marginTop: 5
+  },
+  newsImageContainer: {
+    height: 130
+  },
+  category: {
+    borderRadius: 1
+  }
 });
 
 const tabStyles = StyleSheet.create({

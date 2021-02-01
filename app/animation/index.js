@@ -24,6 +24,7 @@ export const ScaleAnim = ({ style, children, delay = 0 }) => {
       visible: {
         scale: 1,
         opacity: 1,
+        delay,
         ...transition
       },
     })

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import colors from 'constants/colors';
 
-export default function Chip({ title, color, paddingVertical, style = {}, ...otherStyles }) {
+export default function Chip({ title, color, paddingVertical, numOfLines, style = {}, ...otherStyles }) {
   const styles = useMemo(
     () =>
       StyleSheet.create({
@@ -23,7 +23,7 @@ export default function Chip({ title, color, paddingVertical, style = {}, ...oth
 
   return (
     <View style={[style, styles.container]}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.text} numberOfLines={numOfLines}>{title}</Text>
     </View>
   );
 }
