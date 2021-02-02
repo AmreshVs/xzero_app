@@ -22,7 +22,7 @@ export default function Chip({ title, color, paddingVertical, numOfLines, style 
   );
 
   return (
-    <View style={[style, styles.container]}>
+    <View style={[styles.container, style]}>
       <Text style={styles.text} numberOfLines={numOfLines}>{title}</Text>
     </View>
   );

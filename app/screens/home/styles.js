@@ -102,6 +102,9 @@ const mobileStyles = StyleSheet.create({
   icon5Color: {
     color: '#32d6c6'
   },
+  icon6: {
+    backgroundColor: '#fcb6cc'
+  },
   count: {
     ...marginTop5,
     ...font16,
@@ -263,7 +266,7 @@ const mobileStyles = StyleSheet.create({
     height: 130
   },
   category: {
-    borderRadius: 1
+    borderRadius: 5
   }
 });
 

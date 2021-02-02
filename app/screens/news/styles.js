@@ -1,75 +1,42 @@
-import { Platform, StyleSheet } from 'react-native';
-
-import colors from "constants/colors";
-import { getShadowStyle } from 'constants/commonFunctions';
+import colors from 'constants/colors';
+import { responsiveHeight } from 'constants/commonFunctions';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
-    paddingBottom: 700
+    padding: 10
   },
-  newsImage: {
+  image: {
     width: '100%',
-    height: 400,
-    resizeMode: 'cover',
+    height: 127,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
-  gradient: {
+  videoImage: {
     width: '100%',
-    height: 400,
-    position: 'absolute',
-    zIndex: 1
+    height: 200,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   title: {
-    color: colors.white,
-    fontWeight: '700',
-    fontSize: 16,
-    lineHeight: 23
+    fontSize: 15,
+    color: colors.text_dark,
+    fontWeight: '700'
   },
   caption: {
     color: colors.text_lite,
-    marginTop: 5,
-    lineHeight: 25
+    textAlign: 'right',
+    fontSize: 12,
+    marginTop: 5
   },
-  dateCaption: {
-    color: colors.white,
+  articleContainer: {
+    marginBottom: 10
   },
-  bookmarkContainer: {
-    position: 'absolute',
-    right: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 9,
-    paddingRight: 6,
-    borderRadius: 30,
-    overflow: 'hidden',
-    zIndex: 2
-  },
-  btnContainer: {
+  poster: {
     width: '100%',
-    position: 'absolute',
-    paddingHorizontal: 10,
-  },
-  titleContainer: {
-    width: '100%',
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    bottom: 50,
-    zIndex: 2,
-    paddingHorizontal: 10,
-  },
-  categoryContainer: {
-    width: '100%',
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    bottom: 10,
-    zIndex: 2,
-    paddingHorizontal: 10,
-  },
-  bookmark: {
-    // ...getShadowStyle()
+    height: '100%',
+    resizeMode: 'cover',
+    zIndex: -1,
   }
 });
 

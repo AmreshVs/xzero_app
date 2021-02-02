@@ -2,7 +2,7 @@ import React, { useState, memo } from 'react';
 import { View, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useApolloClient } from '@apollo/client';
-import { useNavigation } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Offer from 'screens/offers/offer';
 import NoData from 'components/noData';
@@ -20,13 +20,13 @@ import styles from './styles';
 import { FadeInUpAnim } from 'animation';
 import { ANIM_COMPONENT_DELAY } from 'constants/common';
 
-const Favourites = () => {
+const Favourites = ({ navigation }) => {
   const { t } = useTranslation();
   const [reloading, setReloading] = useState(false);
   const userData = useReduxAction(state => state?.userReducer?.user);
   const client = useApolloClient();
   const { logError } = useErrorLog();
-  const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
 
   const { data, loading, refetch: _refetch, error } = useQuery(FAVOURITES_BY_USER, {
     variables: { user_id: Number(userData?.id) || 0 },
@@ -78,7 +78,7 @@ const Favourites = () => {
   };
 
   return (
-    <SafeView noBottom loading={loading}>
+    <SafeView loading={loading} topNav>
       <TopNavigator
         leftIconName="bars"
         leftClick={() => navigation.toggleDrawer()}
@@ -104,7 +104,7 @@ const Favourites = () => {
               refreshing={reloading}
               onRefresh={() => reload()}
             />
-            <View style={styles.clearButton}>
+            <View style={[styles.clearButton, { marginBottom: insets.bottom ? insets.bottom - 5 : 10 }]}>
               <Button
                 icon="broom"
                 status="danger"

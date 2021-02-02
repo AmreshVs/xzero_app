@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, Image, View } from 'react-native';
+import { Text } from 'react-native';
 
 import Card from 'components/card';
 import styles from './styles';
 import Box from 'components/box';
 import RippleFX from 'components/rippleFx';
 import { useNavigation } from '@react-navigation/native';
-import { NEWS } from 'navigation/routes';
+import { NEWS_DETAIL } from 'navigation/routes';
 import ProgressiveImage from 'components/progressiveImage';
 import Chip from 'components/chip';
 import colors from 'constants/colors';
@@ -23,16 +23,16 @@ const News = () => {
 
   return (
     <Card style={styles.newsContainer}>
-      <RippleFX onPress={() => push(NEWS, {
+      <RippleFX onPress={() => push(NEWS_DETAIL, {
         ...params
       })}>
         <Box style={styles.newsImageContainer}>
           <ProgressiveImage style={styles.newsImage} source={{ uri: params?.uri }} />
         </Box>
         <Row padding={10} paddingBottom={0}>
-          <Chip style={styles.category} borderRadius={5} title="Amresh" color={colors.chip_1} numOfLines={1} />
+          <Chip style={styles.category} title="Category" color={colors.chip_1} numOfLines={1} />
         </Row>
-        <Box padding={10} paddingBottom={0}>
+        <Box padding={10} paddingTop={5} paddingBottom={0}>
           <Text style={styles.newsTitle}>{params?.title}</Text>
         </Box>
         <Box padding={10} paddingTop={0}>

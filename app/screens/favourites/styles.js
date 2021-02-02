@@ -5,16 +5,16 @@ import { w100, padding10, positionAbsolute, padding15, paddingBottom10, zIndex1,
 
 const styles = StyleSheet.create({
   flatlist: {
-    paddingBottom: Platform?.OS === 'ios' ? SCREEN_HEIGHT / 5 : SCREEN_HEIGHT / 6.5,
+    paddingBottom: 60,
     minHeight: '100%',
     paddingTop: 0,
     ...padding10,
   },
   clearButton: {
     bottom: 50,
+    paddingHorizontal: 10,
     ...zIndex1,
     ...paddingBottom10,
-    ...padding15,
     ...positionAbsolute,
     ...w100,
     ...alignItemsCenter

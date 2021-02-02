@@ -22,6 +22,7 @@ export const OFFLINE = 'Offline';
 export const OTP = 'Otp';
 export const INTRO = 'Intro';
 export const NEWS = 'News';
+export const NEWS_DETAIL = 'News Detail';
 
 // Tab Routes
 export const HOME_TAB_SCREEN = 'THome';

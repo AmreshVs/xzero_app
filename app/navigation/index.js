@@ -62,6 +62,7 @@ import {
   OTP,
   INTRO,
   NEWS,
+  NEWS_DETAIL,
 } from './routes';
 import Offline from 'screens/offline';
 import CustomDrawer from 'components/drawer';
@@ -69,6 +70,7 @@ import Otp from 'screens/otp';
 import Intro from 'screens/intro';
 import AppLoader from 'components/appLoader';
 import News from 'screens/news';
+import NewsDetail from 'screens/newsDetail';
 
 const Tab = createBottomTabNavigator();
 
@@ -78,7 +80,7 @@ function HomeNavigation() {
       tabBar={(props) => <BottomTab {...props} />}
     >
       <Tab.Screen name={HOME_TAB_SCREEN} component={Home} />
-      <Tab.Screen name={FAVOURITES_TAB_SCREEN} component={Favourites} options={{ unmountOnBlur: true }} />
+      <Tab.Screen name={NEWS} component={News} options={{ unmountOnBlur: true }} />
       <Tab.Screen name={MEMBERSHIP_TAB_SCREEN} component={Membership} options={{ unmountOnBlur: true }} />
       <Tab.Screen name={VOUCHERS} component={Vouchers} options={{ unmountOnBlur: true }} />
       <Tab.Screen name={PROFILE_TAB_SCREEN} component={User} options={{ unmountOnBlur: true }} />
@@ -115,6 +117,8 @@ function StackNavigation() {
       <Stack.Screen name={OTP} component={Otp} />
       <Stack.Screen name={INTRO} component={Intro} />
       <Stack.Screen name={NEWS} component={News} />
+      <Stack.Screen name={NEWS_DETAIL} component={NewsDetail} />
+      <Stack.Screen name={FAVOURITES_TAB_SCREEN} component={Favourites} />
     </Stack.Navigator>
   );
 }

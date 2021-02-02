@@ -10,7 +10,7 @@ import Column from 'components/column';
 import RippleFX from 'components/rippleFx';
 import { getFormatedDate } from 'constants/commonFunctions';
 import colors from 'constants/colors';
-import { CENTERS_SCREEN, GIFTS, MEMBERSHIP_TAB_SCREEN, OFFERS_SCREEN, SPECIALISTS, VOUCHERS } from 'navigation/routes';
+import { CENTERS_SCREEN, FAVOURITES_TAB_SCREEN, GIFTS, MEMBERSHIP_TAB_SCREEN, OFFERS_SCREEN, SPECIALISTS, VOUCHERS } from 'navigation/routes';
 import Icon from 'icon';
 import styles from './styles';
 import { FadeInUpAnim, FadeInLeftAnim, ScaleAnim, FadeAnim } from 'animation';
@@ -47,12 +47,24 @@ const MembershipBox = ({ data, expiry }) => {
             <ScaleAnim>
               <Column vcenter style={styles.countContainer}>
                 <RippleFX
+                  style={[styles.iconContainer, styles.icon6]}
+                  onPress={() => push(FAVOURITES_TAB_SCREEN, { title: t('centers') })}
+                >
+                  <Icon name="heart" color="#ff0051" size={22} wviewBox={510} hviewBox={470} />
+                </RippleFX>
+                <Text style={styles.count}>{data.centersCount || 0}</Text>
+                <Text style={styles.secondaryText}>{t('favourites')}</Text>
+              </Column>
+            </ScaleAnim>
+            <ScaleAnim>
+              <Column vcenter style={styles.countContainer}>
+                <RippleFX
                   style={[styles.iconContainer, styles.icon1]}
                   onPress={() => push(CENTERS_SCREEN, { title: t('centers') })}
                 >
                   <Icon name="store" color="#b81fff" size={25} wviewBox={620} hviewBox={490} />
                 </RippleFX>
-                <Text style={styles.count}>{data.centersCount || 0}+</Text>
+                <Text style={styles.count}>{data.centersCount || 0}</Text>
                 <Text style={styles.secondaryText}>{t('centers')}</Text>
               </Column>
             </ScaleAnim>
@@ -64,7 +76,7 @@ const MembershipBox = ({ data, expiry }) => {
                 >
                   <Icon name="percentage" color={colors.primary} size={22} wviewBox={400} />
                 </RippleFX>
-                <Text style={styles.count}>{data.offersCount || 0}+</Text>
+                <Text style={styles.count}>{data.offersCount || 0}</Text>
                 <Text style={styles.secondaryText}>{t('offers')}</Text>
               </Column>
             </ScaleAnim>
@@ -76,7 +88,7 @@ const MembershipBox = ({ data, expiry }) => {
                 >
                   <Icon name="user_md" color={colors.chip_2} size={25} wviewBox={450} />
                 </RippleFX>
-                <Text style={styles.count}>{data.specialistsCount || 0}+</Text>
+                <Text style={styles.count}>{data.specialistsCount || 0}</Text>
                 <Text style={styles.secondaryText}>{t('specialist')}</Text>
               </Column>
             </ScaleAnim>
@@ -88,7 +100,7 @@ const MembershipBox = ({ data, expiry }) => {
                 >
                   <Icon name="ticket_alt" color={styles.icon5Color.color} size={25} wviewBox={580} />
                 </RippleFX>
-                <Text style={styles.count}>{data.vouchersCount || 0}+</Text>
+                <Text style={styles.count}>{data.vouchersCount || 0}</Text>
                 <Text style={styles.secondaryText}>{t('vouchers')}</Text>
               </Column>
             </ScaleAnim>
@@ -100,7 +112,7 @@ const MembershipBox = ({ data, expiry }) => {
                 >
                   <Icon name="gifts" color={colors.danger} size={25} wviewBox={640} />
                 </RippleFX>
-                <Text style={styles.count}>{data.giftsCount || 0}+</Text>
+                <Text style={styles.count}>{data.giftsCount || 0}</Text>
                 <Text style={styles.secondaryText}>{t('gifts')}</Text>
               </Column>
             </ScaleAnim>

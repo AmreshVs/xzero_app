@@ -1,4 +1,4 @@
-import { PROFILE_TAB_SCREEN, MEMBERSHIP_TAB_SCREEN, FAVOURITES_TAB_SCREEN, HOME_TAB_SCREEN, VOUCHERS } from "navigation/routes";
+import { PROFILE_TAB_SCREEN, MEMBERSHIP_TAB_SCREEN, FAVOURITES_TAB_SCREEN, HOME_TAB_SCREEN, VOUCHERS, NEWS } from "navigation/routes";
 
 export default function getIconName(routeName) {
   switch (routeName) {
@@ -8,8 +8,8 @@ export default function getIconName(routeName) {
       return 'user';
     case MEMBERSHIP_TAB_SCREEN:
       return 'id_card';
-    case FAVOURITES_TAB_SCREEN:
-      return 'heart';
+    case NEWS:
+      return 'news';
     case VOUCHERS:
       return 'ticket_alt';
     default:
