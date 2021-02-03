@@ -16,6 +16,7 @@ export default function Chip({ title, color, paddingVertical, numOfLines, style 
           paddingHorizontal: 10,
           paddingVertical: paddingVertical || 4,
           fontWeight: '700',
+          zIndex: 2,
         },
       }),
     [color]

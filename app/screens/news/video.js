@@ -1,29 +1,37 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import React, { memo, useState } from 'react';
+import { Platform, Text, View } from 'react-native';
 import { Video as VideoPlayer } from 'expo-av';
 import { Viewport } from '@skele/components';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import Row from 'components/row';
-import styles from './styles';
-import ProgressiveImage from 'components/progressiveImage';
 import Card from 'components/card';
 import Box from 'components/box';
 import Chip from 'components/chip';
 import colors from 'constants/colors';
-import { responsiveWidth } from 'constants/commonFunctions';
-import { useState } from 'react';
-import { useRef } from 'react';
+import styles from './styles';
 
 const Video = () => {
-  const [resizeMode, setResizeMode] = useState(true);
-  const [play, setPlay] = useState(true);
-  const player = useRef(null);
+  const [play, setPlay] = useState(false);
   const ViewportAwareVideo = Viewport.Aware(VideoPlayer);
 
   const params = {
     uri: 'https://imagevars.gulfnews.com/2021/01/10/Stock-Dubai-skyline_176ebfa19ae_medium.jpg',
     title: 'Hello welcome to the news! Checkout the latest news now! and offers from xzero',
     posted_on: '20 mins ago'
+  }
+
+  const onFullscreenUpdate = async ({ fullscreenUpdate }) => {
+    if (Platform.OS === 'android') {
+      switch (fullscreenUpdate) {
+        case VideoPlayer.FULLSCREEN_UPDATE_PLAYER_DID_PRESENT:
+          await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE)
+          break;
+        case VideoPlayer.FULLSCREEN_UPDATE_PLAYER_WILL_DISMISS:
+          await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT)
+          break;
+      }
+    }
   }
 
   return (
@@ -37,13 +45,14 @@ const Video = () => {
           uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg'
         }}
         posterStyle={styles.poster}
-        resizeMode={'contain'}
-        shouldPlay={false}
-        // preTriggerRatio={-0.5}
-        // onViewportEnter={() => setPlay(false)}
-        // onViewportLeave={() => setPlay(true)}
+        resizeMode={'cover'}
+        shouldPlay={play}
+        preTriggerRatio={-0.5}
+        onViewportEnter={() => setPlay(true)}
+        onViewportLeave={() => setPlay(false)}
+        onFullscreenUpdate={(e) => onFullscreenUpdate(e)}
         useNativeControls
-        usePoster={false}
+        usePoster={true}
       />
       <Box padding={10}>
         <Text style={styles.title} numberOfLines={2}>{params?.title}</Text>
@@ -56,4 +65,4 @@ const Video = () => {
   )
 }
 
-export default Video;
+export default memo(Video);

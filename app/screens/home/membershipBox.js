@@ -50,7 +50,7 @@ const MembershipBox = ({ data, expiry }) => {
                   style={[styles.iconContainer, styles.icon6]}
                   onPress={() => push(FAVOURITES_TAB_SCREEN, { title: t('centers') })}
                 >
-                  <Icon name="heart" color="#ff0051" size={22} wviewBox={510} hviewBox={470} />
+                  <Icon name="heart" color={colors.danger} size={22} wviewBox={510} hviewBox={470} />
                 </RippleFX>
                 <Text style={styles.count}>{data.centersCount || 0}</Text>
                 <Text style={styles.secondaryText}>{t('favourites')}</Text>
