@@ -14,6 +14,7 @@ const colors = {
   gradient2: '#0398fc',
   chip_1: '#5067fa',
   chip_2: '#fa9f50',
+  ccc: '#CCC'
 };
 
 export default colors;

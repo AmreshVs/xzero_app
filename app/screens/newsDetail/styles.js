@@ -67,6 +67,11 @@ const styles = StyleSheet.create({
     zIndex: 2,
     paddingHorizontal: 10,
   },
+  newsCaption: {
+    color: colors.white,
+    fontSize: 14,
+    marginLeft: 5,
+  }
 });
 
 export default styles;

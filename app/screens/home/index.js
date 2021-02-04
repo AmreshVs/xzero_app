@@ -134,7 +134,7 @@ const Home = () => {
             <GiftCard />
           </Box>
         </Row>
-        <Box padding={10} paddingTop={0}>
+        <Box paddingHorizontal={10}>
           <Heading marginBottom={10}>Latest Stories</Heading>
           <Stories />
         </Box>

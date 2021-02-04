@@ -258,16 +258,18 @@ const mobileStyles = StyleSheet.create({
   },
   newsCaption: {
     color: colors.text_lite,
-    textAlign: 'right',
     fontSize: 12,
-    marginTop: 5
+    marginLeft: 5
   },
   newsImageContainer: {
     height: 130
   },
   category: {
     borderRadius: 5
-  }
+  },
+  chipText: {
+    fontSize: 12
+  },
 });
 
 const tabStyles = StyleSheet.create({

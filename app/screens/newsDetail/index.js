@@ -13,6 +13,7 @@ import colors from 'constants/colors';
 import { FadeInUpAnim, ScaleAnim, FadeInLeftAnim } from 'animation';
 import Icon from 'icon';
 import styles from './styles';
+import Row from 'components/row';
 
 const NewsDetail = ({ route }) => {
   const params = route?.params;
@@ -39,9 +40,28 @@ const NewsDetail = ({ route }) => {
               <FadeInLeftAnim delay={500}>
                 <Chip borderRadius={5} title="Category" color={colors.chip_1} />
               </FadeInLeftAnim>
-              <FadeInLeftAnim delay={700}>
-                <Text style={styles.dateCaption}>Posted on 12/12/21</Text>
-              </FadeInLeftAnim>
+              <Row padding={10} justifyContent="space-around" alignItems="center">
+                <FadeInLeftAnim delay={600}>
+                  <RippleFX>
+                    <Row vcenter width={70}>
+                      <Icon name="like" size={19} color={colors.gradient2} hviewBox={520} />
+                      <Text style={styles.newsCaption}>20k</Text>
+                    </Row>
+                  </RippleFX>
+                </FadeInLeftAnim>
+                <FadeInLeftAnim delay={700}>
+                  <Row vcenter width={70}>
+                    <Icon name="eye" size={19} color={colors.white} wviewBox={560} hviewBox={500} />
+                    <Text style={styles.newsCaption}>20k</Text>
+                  </Row>
+                </FadeInLeftAnim>
+                <FadeInLeftAnim delay={800}>
+                  <Row vcenter width={70}>
+                    <Icon name="clock" size={16} color={colors.white} hviewBox={490} />
+                    <Text style={styles.newsCaption}>{params?.posted_on}</Text>
+                  </Row>
+                </FadeInLeftAnim>
+              </Row>
             </Box>
           </ScaleAnim>
           <Box padding={10} paddingTop={0} paddingBottom={insets.bottom ? insets.bottom + 15 : 50}>

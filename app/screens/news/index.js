@@ -3,11 +3,14 @@ import { ScrollView, Text } from 'react-native';
 import { Viewport } from '@skele/components';
 
 import SafeView from 'components/safeView';
-import TopNavigator from 'components/topNavigator';
 import Article from './article';
 import styles from './styles';
 import Video from './video';
 import RippleFX from 'components/rippleFx';
+import Icon from 'icon';
+import Box from 'components/box';
+import { LinearGradient } from 'expo-linear-gradient';
+import colors from 'constants/colors';
 
 const categories = [
   { name: 'Beauty' },
@@ -29,7 +32,28 @@ const NewsDetail = () => {
   let position = 0;
 
   const handleTabSelect = (index) => {
-    position = index >= selected ? index * 80 : xPosition / 1.5;
+    let categoriesLength = categories.length;
+
+    if (index > selected) {
+      if ([categoriesLength - 1, categoriesLength - 2, categoriesLength - 3].includes(index)) {
+        position = categoriesLength * 90;
+      }
+      else {
+        position = index * 100;
+      }
+    }
+    else {
+      if ([0, 1, 2].includes(index)) {
+        position = 0;
+      }
+      else if (index === categoriesLength - 3) {
+        position = xPosition - 150;
+      }
+      else {
+        position = xPosition - 100;
+      }
+    }
+
     tabView.current.scrollTo({ x: position, y: 0, animated: true });
     setXPosition(position);
     setSelected(index);
@@ -37,21 +61,26 @@ const NewsDetail = () => {
 
   const RenderItem = ({ index, item }) => {
     return (
-      <RippleFX style={selected === index ? styles.selectedTab : styles.tab} onPress={() => handleTabSelect(index)}>
-        <Text style={styles.chip}>
-          {item.name}
-        </Text>
+      <RippleFX style={[selected === index ? styles.selectedTab : styles.tab, index === categories.length - 1 ? { marginRight: 10 } : {}]} onPress={() => handleTabSelect(index)}>
+        <Box style={styles.chipContainer}>
+          <Icon name="archive" size={15} color={selected === index ? colors.primary : colors.text_lite} />
+          <Text style={selected === index ? styles.selectedChip : styles.chip}>
+            {item.name}
+          </Text>
+        </Box>
       </RippleFX>
     )
   }
 
   return (
     <SafeView topNav noBottom>
-      <TopNavigator
-        title={'News'}
-        gradient
-      />
-      <ScrollView horizontal={true} ref={tabView} showsHorizontalScrollIndicator={false}>
+      <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={styles.gradient} />
+      <ScrollView
+        ref={tabView}
+        style={styles.categories}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      >
         {categories.map((item, index) => {
           return <RenderItem index={index} item={item} key={index} />
         })}
@@ -74,6 +103,7 @@ const NewsDetail = () => {
           <Video key={5} index={5} />
           <Article />
           <Video key={6} index={6} />
+          <Box marginBottom={10} />
         </ScrollView>
       </Viewport.Tracker>
     </SafeView>
