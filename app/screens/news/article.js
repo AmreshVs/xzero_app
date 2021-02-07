@@ -17,7 +17,7 @@ const Article = () => {
   const params = {
     uri: 'https://imagevars.gulfnews.com/2021/01/10/Stock-Dubai-skyline_176ebfa19ae_medium.jpg',
     title: 'Hello welcome to the news! Checkout the latest news now! and offers from xzero',
-    posted_on: '20m'
+    posted_on: '200m'
   }
 
   return (
@@ -39,16 +39,16 @@ const Article = () => {
           <Text style={styles.title} numberOfLines={4}>{params?.title}</Text>
           <Row marginTop={10} justifyContent="space-around" alignItems="center">
             <RippleFX>
-              <Row vcenter maxWidth={50}>
+              <Row vcenter maxWidth={70}>
                 <Icon name="like" size={16} color={colors.gradient2} hviewBox={520} />
-                <Text style={styles.caption}>20k</Text>
+                <Text style={styles.caption}>200k</Text>
               </Row>
             </RippleFX>
-            <Row vcenter maxWidth={50}>
+            <Row vcenter maxWidth={70}>
               <Icon name="eye" size={19} color={colors.ccc} wviewBox={560} hviewBox={500} />
-              <Text style={styles.caption}>20k</Text>
+              <Text style={styles.caption}>200k</Text>
             </Row>
-            <Row vcenter maxWidth={50}>
+            <Row vcenter maxWidth={70}>
               <Icon name="clock" size={15} color={colors.ccc} hviewBox={490} />
               <Text style={styles.caption}>{params?.posted_on}</Text>
             </Row>

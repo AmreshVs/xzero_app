@@ -42,50 +42,24 @@ export const GET_USER_BY_EMAIL = gql`
 
 export const GET_HOME = gql`
   query GetHome($user_id: Int!, $user: ID!){
+    HomeCounts(user: $user_id)
     user(id: $user) {
       membership {
         expiry
       }
     }
     notificationCount(user: $user_id)
-    centersCount: centersConnection {
-      aggregate {
-        totalCount
-      }
-    }
-    offersCount: offersConnection {
-      aggregate {
-        totalCount
-      }
-    }
-    specialistsCount: specialistsConnection {
-      aggregate {
-        totalCount
-      }
-    }
-    vouchersCount: vouchersConnection {
-      aggregate {
-        totalCount
-      }
-    }
-    giftsCount: giftsConnection {
-      aggregate{
-        totalCount
-      }
-    }
-    banners{
+    banners {
       id
-      banner_img_en{
+      banner_img_en {
         url
       }
-      banner_img_ar{
+      banner_img_ar {
         url
       }
     }
     categoriesWithCenterCount
-    topCenters(where:{
-      homescreen: true
-    })
+    topCenters(where: { homescreen: true })
   }
 `;
 
@@ -735,6 +709,48 @@ export const NOTIFICATIONS_BY_USER = gql`
       data
       is_read
       created_at
+    }
+  }
+`;
+
+export const RECENT_ARTICLES = gql`
+  query{
+    RecentArticles{
+      recentArticles{
+        id
+        featured_img{
+          url
+        }
+        title_en
+        title_ar
+        desc_en
+        desc_ar
+        views
+        likes
+        article_category{
+          category_name_en
+          category_name_ar
+          color_code
+        }
+      }
+      recentVideos{
+        id
+        featured_img{
+          url
+        }
+        title_en
+        title_ar
+        video_url
+        desc_en
+        desc_ar
+        views
+        likes
+        article_category{
+          category_name_en
+          category_name_ar
+          color_code
+        }
+      }
     }
   }
 `;

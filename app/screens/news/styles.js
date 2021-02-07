@@ -1,10 +1,11 @@
-import colors from 'constants/colors';
 import { StyleSheet } from 'react-native';
+
+import colors from 'constants/colors';
 
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    marginBottom: 52
+    marginBottom: 50
   },
   image: {
     width: '100%',
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   chipContainer: {
-    paddingVertical: 13,
+    paddingVertical: 12,
     paddingHorizontal: 10,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -94,7 +95,6 @@ const styles = StyleSheet.create({
   },
   gradient: {
     position: 'absolute',
-    height: 93.2,
     width: '100%'
   },
   categories: {

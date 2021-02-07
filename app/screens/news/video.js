@@ -12,8 +12,9 @@ import colors from 'constants/colors';
 import styles from './styles';
 import RippleFX from 'components/rippleFx';
 import Icon from 'icon';
+import { IMAGE_URL } from 'constants/common';
 
-const Video = () => {
+const Video = ({ data }) => {
   const [play, setPlay] = useState(false);
   const ViewportAwareVideo = Viewport.Aware(VideoPlayer);
 
@@ -41,29 +42,29 @@ const Video = () => {
       <ViewportAwareVideo
         style={styles.videoImage}
         source={{
-          uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+          uri: 'https://be.xzero.app/v3/uploads/Determinants_of_Health_A_practical_approach_fdb833a090.mp4',
         }}
-        posterSource={{
-          uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg'
-        }}
-        posterStyle={styles.poster}
-        resizeMode={'cover'}
-        shouldPlay={false}
+        // posterSource={{
+        //   uri: IMAGE_URL + data?.featured_img?.url
+        // }}
+        // posterStyle={styles.poster}
+        // resizeMode={'cover'}
+        // shouldPlay={false}
         preTriggerRatio={-0.5}
         // onViewportEnter={() => setPlay(true)}
         // onViewportLeave={() => setPlay(false)}
         // onFullscreenUpdate={(e) => onFullscreenUpdate(e)}
         useNativeControls
-        usePoster={true}
+      // usePoster={true}
       />
       <Box padding={10}>
         <Row marginBottom={5} justifyContent="space-between" alignItems="center">
-          <Chip borderRadius={5} title="Category" textStyle={styles.chipText} color={colors.chip_1} numOfLines={1} maxWidth={120} />
+          <Chip borderRadius={5} title={data?.article_category?.category_name_en} textStyle={styles.chipText} color={data?.article_category?.color_code} numOfLines={1} maxWidth={120} />
           <RippleFX style={styles.bookmark}>
             <Icon name="bookmark" size={17} color={colors.danger} hviewBox={520} wviewBox={400} />
           </RippleFX>
         </Row>
-        <Text style={styles.title} numberOfLines={2}>{params?.title}</Text>
+        <Text style={styles.title} numberOfLines={2}>{data?.title_en}</Text>
         <Row marginTop={10} marginBottom={5} justifyContent="space-around" alignItems="center">
           <Row vcenter maxWidth={100}>
             <Icon name="like" size={18} color={colors.ccc} hviewBox={520} />

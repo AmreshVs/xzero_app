@@ -23,6 +23,7 @@ const mobileStyles = StyleSheet.create({
   title: {
     ...textBoldDark,
     ...marginBottom5,
+    maxWidth: '95%'
   },
   image: {
     ...w100,

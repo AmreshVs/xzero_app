@@ -1,27 +1,30 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
+import { useQuery } from '@apollo/client';
 
+import { RECENT_ARTICLES } from 'graphql/queries';
 import News from './news';
+import Video from 'screens/news/video';
+import styles from './styles';
 
 const Stories = () => {
+
+  const { data, loading, error } = useQuery(RECENT_ARTICLES);
+
+  let articles = data?.RecentArticles;
+
   return (
-    <View style={styles.container}>
-      <News />
-      <News />
-      <News />
-      <News />
-      <News />
-      <News />
-    </View>
+    <>
+      {articles?.recentVideos?.map((item, index) => (
+        <Video data={item} key={index} />
+      ))}
+      <View style={styles.container}>
+        {articles?.recentArticles?.map((item, index) => (
+          <News data={item} key={index} />
+        ))}
+      </View>
+    </>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    flexDirection: 'row'
-  }
-});
 
 export default Stories;

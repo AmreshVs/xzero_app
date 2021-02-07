@@ -1,16 +1,17 @@
 import React, { useRef, useState } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { Viewport } from '@skele/components';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import SafeView from 'components/safeView';
+import RippleFX from 'components/rippleFx';
+import Box from 'components/box';
+import colors from 'constants/colors';
+import Icon from 'icon';
 import Article from './article';
 import styles from './styles';
 import Video from './video';
-import RippleFX from 'components/rippleFx';
-import Icon from 'icon';
-import Box from 'components/box';
-import { LinearGradient } from 'expo-linear-gradient';
-import colors from 'constants/colors';
 
 const categories = [
   { name: 'Beauty' },
@@ -22,12 +23,13 @@ const categories = [
   { name: 'Konoz' },
   { name: 'User' },
   { name: 'Beauty' },
-]
+];
 
 const NewsDetail = () => {
 
   const [selected, setSelected] = useState(0);
   const [xPosition, setXPosition] = useState(0);
+  const insets = useSafeAreaInsets();
   let tabView = useRef(null);
   let position = 0;
 
@@ -74,7 +76,7 @@ const NewsDetail = () => {
 
   return (
     <SafeView topNav noBottom>
-      <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={styles.gradient} />
+      <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={[styles.gradient, { height: insets.top + 47.4 }]} />
       <ScrollView
         ref={tabView}
         style={styles.categories}
@@ -86,7 +88,7 @@ const NewsDetail = () => {
         })}
       </ScrollView>
       <Viewport.Tracker>
-        <ScrollView style={styles.container} scrollEventThrottle={16} removeClippedSubviews={true} initialNumToRender={2}>
+        <ScrollView style={styles.container} scrollEventThrottle={16} removeClippedSubviews={true} initialNumToRender={4}>
           <Article />
           <Article />
           <Video key={1} index={1} />

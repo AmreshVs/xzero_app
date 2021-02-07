@@ -52,7 +52,7 @@ const MembershipBox = ({ data, expiry }) => {
                 >
                   <Icon name="heart" color={colors.danger} size={22} wviewBox={510} hviewBox={470} />
                 </RippleFX>
-                <Text style={styles.count}>{data.centersCount || 0}</Text>
+                <Text style={styles.count}>{data.favoritesCount || 0}</Text>
                 <Text style={styles.secondaryText}>{t('favourites')}</Text>
               </Column>
             </ScaleAnim>

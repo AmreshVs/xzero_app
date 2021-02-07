@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef, memo, useContext } from 'react';
+import React, { useState, useEffect, createRef, memo } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
@@ -54,11 +54,12 @@ const Home = () => {
   }
 
   counts = {
-    centersCount: data?.centersCount?.aggregate?.totalCount,
-    offersCount: data?.offersCount?.aggregate?.totalCount,
-    specialistsCount: data?.specialistsCount?.aggregate?.totalCount,
-    vouchersCount: data?.vouchersCount?.aggregate?.totalCount,
-    giftsCount: data?.giftsCount?.aggregate?.totalCount,
+    centersCount: data?.HomeCounts?.centersCount,
+    offersCount: data?.HomeCounts?.offersCount,
+    specialistsCount: data?.HomeCounts?.specialistsCount,
+    vouchersCount: data?.HomeCounts?.konozCount,
+    giftsCount: data?.HomeCounts?.konozCount,
+    favoritesCount: data?.HomeCounts?.favorites,
   };
 
   let banners = data?.banners || [];
