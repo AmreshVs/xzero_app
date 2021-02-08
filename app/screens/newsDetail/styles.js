@@ -71,7 +71,13 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 14,
     marginLeft: 5,
-  }
+  },
+  videoImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    overflow: 'hidden'
+  },
 });
 
 export default styles;

@@ -13,6 +13,7 @@ import { IMAGE_URL } from 'constants/common';
 import { NEWS_DETAIL } from 'navigation/routes';
 import Icon from 'icon';
 import styles from './styles';
+import { thumbnailUrl } from 'constants/commonFunctions';
 
 const News = ({ data }) => {
   const { push } = useNavigation();
@@ -23,40 +24,51 @@ const News = ({ data }) => {
     posted_on: '20m'
   }
 
+  const handlePress = () => {
+    push(NEWS_DETAIL, {
+      ...data
+    });
+  }
+
   return (
     <Card style={styles.newsContainer}>
-      <RippleFX onPress={() => push(NEWS_DETAIL, {
-        ...data
-      })}>
-        <Box style={styles.newsImageContainer}>
-          <ProgressiveImage style={styles.newsImage} source={{ uri: IMAGE_URL + data?.featured_img?.url }} />
-        </Box>
-        <Row padding={10} paddingBottom={5} justifyContent="space-between" alignItems="center">
-          <Chip borderRadius={5} textStyle={styles.chipText} title={data?.article_category?.category_name_en} color={data?.article_category?.color_code} numOfLines={1} maxWidth={120} />
-          <RippleFX style={styles.bookmark}>
-            <Icon name="bookmark" size={15} textStyle={styles.chipText} color={colors.ccc} hviewBox={520} wviewBox={400} />
-          </RippleFX>
-        </Row>
-        <Box padding={10} paddingTop={0} paddingBottom={0} minHeight={50}>
-          <Text style={styles.newsTitle} numberOfLines={3}>{data?.title_en}</Text>
-        </Box>
-        <Row padding={10} justifyContent="space-around" alignItems="center">
-          <RippleFX>
-            <Row vcenter maxWidth={50}>
-              <Icon name="like" size={13} color={colors.gradient2} hviewBox={520} />
-              <Text style={styles.newsCaption}>{data?.likes}</Text>
-            </Row>
-          </RippleFX>
-          <Row vcenter maxWidth={50}>
-            <Icon name="eye" size={15} color={colors.ccc} wviewBox={560} hviewBox={500} />
-            <Text style={styles.newsCaption}>{data?.views}</Text>
-          </Row>
-          <Row vcenter maxWidth={50}>
-            <Icon name="clock" size={13} color={colors.ccc} hviewBox={490} />
-            <Text style={styles.newsCaption}>{params?.posted_on}</Text>
-          </Row>
-        </Row>
+      <RippleFX
+        style={styles.newsImageContainer}
+        onPress={() => handlePress()}
+      >
+        <ProgressiveImage
+          style={styles.newsImage}
+          thumbnailSource={{ uri: IMAGE_URL + thumbnailUrl(data?.featured_img?.url) }}
+          source={{ uri: IMAGE_URL + data?.featured_img?.url }}
+        />
       </RippleFX>
+      <Row padding={10} paddingBottom={5} justifyContent="space-between" alignItems="center">
+        <Chip borderRadius={5} textStyle={styles.chipText} title={data?.article_category?.category_name_en} color={data?.article_category?.color_code} numOfLines={1} maxWidth={120} />
+        <RippleFX style={styles.bookmark}>
+          <Icon name="bookmark" size={15} textStyle={styles.chipText} color={colors.ccc} hviewBox={520} wviewBox={400} />
+        </RippleFX>
+      </Row>
+      <Box padding={10} paddingTop={0} paddingBottom={0} minHeight={50}>
+        <RippleFX onPress={() => handlePress()}>
+          <Text style={styles.newsTitle} numberOfLines={3}>{data?.title_en}</Text>
+        </RippleFX>
+      </Box>
+      <Row padding={10} justifyContent="space-around" alignItems="center">
+        <RippleFX>
+          <Row vcenter maxWidth={50}>
+            <Icon name="like" size={13} color={colors.gradient2} hviewBox={520} />
+            <Text style={styles.newsCaption}>{data?.likes}</Text>
+          </Row>
+        </RippleFX>
+        <Row vcenter maxWidth={50}>
+          <Icon name="eye" size={15} color={colors.ccc} wviewBox={560} hviewBox={500} />
+          <Text style={styles.newsCaption}>{data?.views}</Text>
+        </Row>
+        <Row vcenter maxWidth={50}>
+          <Icon name="clock" size={13} color={colors.ccc} hviewBox={490} />
+          <Text style={styles.newsCaption}>{params?.posted_on}</Text>
+        </Row>
+      </Row>
     </Card>
   )
 }

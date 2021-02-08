@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { ScrollView, Text } from 'react-native';
-import { Viewport } from '@skele/components';
+
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -9,65 +9,64 @@ import RippleFX from 'components/rippleFx';
 import Box from 'components/box';
 import colors from 'constants/colors';
 import Icon from 'icon';
-import Article from './article';
+import { getPosition } from './helpers';
 import styles from './styles';
-import Video from './video';
+import { useQuery } from '@apollo/client';
+import { GET_ARTICLE_CATEGORIES } from 'graphql/queries';
+import Loader from 'components/loader';
+import { useEffect } from 'react';
+import RenderArticles from './renderArticles';
 
 const categories = [
-  { name: 'Beauty' },
-  { name: 'Health' },
-  { name: 'Gym' },
-  { name: 'Spa' },
-  { name: 'Specialist' },
-  { name: 'News' },
-  { name: 'Konoz' },
-  { name: 'User' },
-  { name: 'Beauty' },
+  { id: 1, name: 'Beauty' },
+  { id: 2, name: 'Health' },
+  { id: 3, name: 'Gym' },
+  { id: 4, name: 'Spa' },
+  { id: 5, name: 'Specialist' },
+  { id: 6, name: 'News' },
+  { id: 7, name: 'Konoz' },
+  { id: 8, name: 'User' },
+  { id: 9, name: 'Beauty' },
 ];
 
 const NewsDetail = () => {
-
-  const [selected, setSelected] = useState(0);
   const [xPosition, setXPosition] = useState(0);
+  const [selected, setSelected] = useState(0);
   const insets = useSafeAreaInsets();
   let tabView = useRef(null);
-  let position = 0;
+
+  const { data, loading, error } = useQuery(GET_ARTICLE_CATEGORIES, {
+    variables: {
+      input: {
+        user: 65,
+      }
+    }
+  });
+
+  useEffect(() => {
+    if (!loading && data?.articleCategories[0].id) {
+      setSelected(data?.articleCategories[0].id);
+    }
+  }, [data]);
 
   const handleTabSelect = (index) => {
     let categoriesLength = categories.length;
-
-    if (index > selected) {
-      if ([categoriesLength - 1, categoriesLength - 2, categoriesLength - 3].includes(index)) {
-        position = categoriesLength * 90;
-      }
-      else {
-        position = index * 100;
-      }
-    }
-    else {
-      if ([0, 1, 2].includes(index)) {
-        position = 0;
-      }
-      else if (index === categoriesLength - 3) {
-        position = xPosition - 150;
-      }
-      else {
-        position = xPosition - 100;
-      }
-    }
-
+    let position = getPosition(index, categoriesLength, xPosition, selected);
     tabView.current.scrollTo({ x: position, y: 0, animated: true });
     setXPosition(position);
     setSelected(index);
   }
 
-  const RenderItem = ({ index, item }) => {
+  const RenderItem = ({ item }) => {
     return (
-      <RippleFX style={[selected === index ? styles.selectedTab : styles.tab, index === categories.length - 1 ? { marginRight: 10 } : {}]} onPress={() => handleTabSelect(index)}>
+      <RippleFX
+        style={[selected === item.id ? styles.selectedTab : styles.tab, item.id === categories.length - 1 ? { marginRight: 10 } : {}]}
+        onPress={() => handleTabSelect(item.id)}
+      >
         <Box style={styles.chipContainer}>
-          <Icon name="archive" size={15} color={selected === index ? colors.primary : colors.text_lite} />
-          <Text style={selected === index ? styles.selectedChip : styles.chip}>
-            {item.name}
+          <Icon d={item.icon} size={15} color={selected === item.id ? colors.primary : colors.text_lite} />
+          <Text style={selected === item.id ? styles.selectedChip : styles.chip}>
+            {item.category_name_en}
           </Text>
         </Box>
       </RippleFX>
@@ -75,42 +74,23 @@ const NewsDetail = () => {
   }
 
   return (
-    <SafeView topNav noBottom>
-      <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={[styles.gradient, { height: insets.top + 47.4 }]} />
-      <ScrollView
-        ref={tabView}
-        style={styles.categories}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-      >
-        {categories.map((item, index) => {
-          return <RenderItem index={index} item={item} key={index} />
-        })}
-      </ScrollView>
-      <Viewport.Tracker>
-        <ScrollView style={styles.container} scrollEventThrottle={16} removeClippedSubviews={true} initialNumToRender={4}>
-          <Article />
-          <Article />
-          <Video key={1} index={1} />
-          <Article />
-          <Article />
-          <Video key={2} index={2} />
-          <Article />
-          <Article />
-          <Video key={3} index={3} />
-          <Article />
-          <Video key={4} index={4} />
-          <Article />
-          <Article />
-          <Video key={5} index={5} />
-          <Article />
-          <Video key={6} index={6} />
-          <Box marginBottom={10} />
+    loading ? <Loader />
+      :
+      <SafeView topNav noBottom>
+        <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={[styles.gradient, { height: insets.top + 47.4 }]} />
+        <ScrollView
+          ref={tabView}
+          style={styles.categories}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        >
+          {data?.articleCategories.map((item, index) => {
+            return <RenderItem item={item} key={index} />
+          })}
         </ScrollView>
-      </Viewport.Tracker>
-    </SafeView>
+        <RenderArticles />
+      </SafeView>
   )
 }
 
 export default NewsDetail;
-

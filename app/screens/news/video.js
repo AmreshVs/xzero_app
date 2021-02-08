@@ -42,7 +42,7 @@ const Video = ({ data }) => {
       <ViewportAwareVideo
         style={styles.videoImage}
         source={{
-          uri: 'https://be.xzero.app/v3/uploads/Determinants_of_Health_A_practical_approach_fdb833a090.mp4',
+          uri: IMAGE_URL + data?.video_url,
         }}
         // posterSource={{
         //   uri: IMAGE_URL + data?.featured_img?.url

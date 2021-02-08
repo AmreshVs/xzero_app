@@ -754,3 +754,39 @@ export const RECENT_ARTICLES = gql`
     }
   }
 `;
+
+export const GET_ARTICLES = gql`
+  query GetArticles($input: ArticlesInputs){
+    GetArticles(input: $input) {
+      id
+      featured_img {
+        url
+      }
+      video_url
+      title_en
+      title_ar
+      desc_en
+      desc_ar
+      views
+      likes
+      article_category {
+        category_name_en
+        category_name_ar
+        color_code
+      }
+    }
+  }
+`;
+
+export const GET_ARTICLE_CATEGORIES = gql`
+  query{
+    articleCategories(where: {
+      status: 1
+    }){
+      id
+      category_name_en
+      category_name_ar
+      icon
+    }
+  }
+`;

@@ -16,6 +16,7 @@ import Icon from 'icon';
 import styles from './styles';
 import Row from 'components/row';
 import { IMAGE_URL } from 'constants/common';
+import { markdownStyles, markdownRules } from './helpers';
 
 const NewsDetail = ({ route }) => {
   const data = route?.params;
@@ -40,21 +41,21 @@ const NewsDetail = ({ route }) => {
             </Box>
             <Box style={styles.categoryContainer}>
               <FadeInLeftAnim delay={500}>
-                <Chip borderRadius={5} title="Category" color={colors.chip_1} />
+                <Chip borderRadius={5} title={data?.article_category?.category_name_en} color={data?.article_category?.color_code} />
               </FadeInLeftAnim>
               <Row padding={10} justifyContent="space-around" alignItems="center">
                 <FadeInLeftAnim delay={600}>
                   <RippleFX>
                     <Row vcenter width={70}>
                       <Icon name="like" size={19} color={colors.gradient2} hviewBox={520} />
-                      <Text style={styles.newsCaption}>20k</Text>
+                      <Text style={styles.newsCaption}>{data?.likes}</Text>
                     </Row>
                   </RippleFX>
                 </FadeInLeftAnim>
                 <FadeInLeftAnim delay={700}>
                   <Row vcenter width={70}>
                     <Icon name="eye" size={19} color={colors.white} wviewBox={560} hviewBox={500} />
-                    <Text style={styles.newsCaption}>20k</Text>
+                    <Text style={styles.newsCaption}>{data?.views}</Text>
                   </Row>
                 </FadeInLeftAnim>
                 <FadeInLeftAnim delay={800}>
@@ -68,7 +69,10 @@ const NewsDetail = ({ route }) => {
           </ScaleAnim>
           <Box padding={10} paddingTop={0} paddingBottom={insets.bottom ? insets.bottom + 15 : 50}>
             <FadeInUpAnim delay={500}>
-              <Markdown mergeStyle={styles.caption}>
+              <Markdown
+                style={markdownStyles}
+                rules={markdownRules}
+              >
                 {data?.desc_en}
               </Markdown>
             </FadeInUpAnim>
