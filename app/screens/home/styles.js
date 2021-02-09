@@ -270,6 +270,12 @@ const mobileStyles = StyleSheet.create({
   chipText: {
     fontSize: 12
   },
+  bookmark: {
+    padding: 10,
+    margin: -10,
+    borderRadius: 20,
+    overflow: 'hidden'
+  }
 });
 
 const tabStyles = StyleSheet.create({

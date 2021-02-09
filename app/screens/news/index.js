@@ -35,36 +35,30 @@ const NewsDetail = () => {
   const insets = useSafeAreaInsets();
   let tabView = useRef(null);
 
-  const { data, loading, error } = useQuery(GET_ARTICLE_CATEGORIES, {
-    variables: {
-      input: {
-        user: 65,
-      }
-    }
-  });
+  const { data, loading, error } = useQuery(GET_ARTICLE_CATEGORIES);
 
   useEffect(() => {
-    if (!loading && data?.articleCategories[0].id) {
+    if (!loading && data?.articleCategories[0].id && ![0, 1].includes(data?.articleCategories[0].id)) {
       setSelected(data?.articleCategories[0].id);
     }
   }, [data]);
 
-  const handleTabSelect = (index) => {
-    let categoriesLength = categories.length;
-    let position = getPosition(index, categoriesLength, xPosition, selected);
+  const handleTabSelect = (id, index) => {
+    let categoriesLength = data?.articleCategories?.length;
+    let position = getPosition(index, categoriesLength, xPosition, selected, id);
     tabView.current.scrollTo({ x: position, y: 0, animated: true });
     setXPosition(position);
-    setSelected(index);
+    setSelected(id);
   }
 
-  const RenderItem = ({ item }) => {
+  const RenderItem = ({ item, index }) => {
     return (
       <RippleFX
-        style={[selected === item.id ? styles.selectedTab : styles.tab, item.id === categories.length - 1 ? { marginRight: 10 } : {}]}
-        onPress={() => handleTabSelect(item.id)}
+        style={[selected === item.id ? styles.selectedTab : styles.tab, index === data?.articleCategories?.length - 1 ? { marginRight: 10 } : {}]}
+        onPress={() => handleTabSelect(item.id, index)}
       >
         <Box style={styles.chipContainer}>
-          <Icon d={item.icon} size={15} color={selected === item.id ? colors.primary : colors.text_lite} />
+          <Icon d={item.icon} size={15} color={selected === item.id ? colors.primary : colors.text_lite} wviewBox={550} hviewBox={450} />
           <Text style={selected === item.id ? styles.selectedChip : styles.chip}>
             {item.category_name_en}
           </Text>
@@ -77,7 +71,6 @@ const NewsDetail = () => {
     loading ? <Loader />
       :
       <SafeView topNav noBottom>
-        <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={[styles.gradient, { height: insets.top + 47.4 }]} />
         <ScrollView
           ref={tabView}
           style={styles.categories}
@@ -85,10 +78,11 @@ const NewsDetail = () => {
           showsHorizontalScrollIndicator={false}
         >
           {data?.articleCategories.map((item, index) => {
-            return <RenderItem item={item} key={index} />
+            return <RenderItem item={item} key={index} index={index} />
           })}
         </ScrollView>
-        <RenderArticles />
+        <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={[styles.gradient, { height: insets.top + 47.4 }]} />
+        <RenderArticles category={selected} />
       </SafeView>
   )
 }

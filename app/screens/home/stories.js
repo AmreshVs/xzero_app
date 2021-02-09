@@ -16,7 +16,7 @@ const Stories = () => {
   return (
     <>
       {articles?.recentVideos?.map((item, index) => (
-        <Video data={item} key={index} />
+        <Video data={item} key={index} autoPlay={false} />
       ))}
       <View style={styles.container}>
         {articles?.recentArticles?.map((item, index) => (

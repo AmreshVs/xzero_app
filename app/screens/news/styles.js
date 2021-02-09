@@ -1,11 +1,12 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 import colors from 'constants/colors';
+import { isTab } from 'constants/commonFunctions';
+import { SCREEN_HEIGHT } from 'constants/common';
 
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    marginBottom: 50
   },
   image: {
     width: '100%',
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
   },
   articleContainer: {
     marginBottom: 10,
-    height: 150
+    height: 130
   },
   videoContainer: {
     marginBottom: 10,
@@ -69,7 +70,9 @@ const styles = StyleSheet.create({
     margin: 10,
     marginRight: 0,
     marginTop: 0,
-    opacity: 0.6
+    marginBottom: 14,
+    opacity: 0.6,
+    height: 37
   },
   selectedTab: {
     backgroundColor: colors.white,
@@ -80,7 +83,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     margin: 10,
     marginTop: 0,
-    marginRight: 0
+    marginBottom: 14,
+    marginRight: 0,
+    height: 37
   },
   selectedChip: {
     color: colors.primary,
@@ -95,10 +100,15 @@ const styles = StyleSheet.create({
   },
   gradient: {
     position: 'absolute',
-    width: '100%'
+    width: '100%',
   },
   categories: {
-    paddingRight: 10
+    paddingRight: 10,
+    height: 50,
+  },
+  articlesScrollView: {
+    padding: 10,
+    marginBottom: 50
   }
 });
 
