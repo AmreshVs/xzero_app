@@ -727,6 +727,8 @@ export const RECENT_ARTICLES = gql`
         desc_ar
         views
         likes
+        is_liked
+        is_saved
         article_category{
           category_name_en
           category_name_ar
@@ -745,6 +747,8 @@ export const RECENT_ARTICLES = gql`
         desc_ar
         views
         likes
+        is_liked
+        is_saved
         article_category{
           category_name_en
           category_name_ar
@@ -769,6 +773,33 @@ export const GET_ARTICLES = gql`
       desc_ar
       views
       likes
+      is_liked
+      is_saved
+      article_category {
+        category_name_en
+        category_name_ar
+        color_code
+      }
+    }
+  }
+`;
+
+export const SAVED_ARTICLES = gql`
+  query SavedArticlesByUser($user_id: Int){
+    SavedArticlesByUser(user: $user_id) {
+      id
+      featured_img {
+        url
+      }
+      video_url
+      title_en
+      title_ar
+      desc_en
+      desc_ar
+      views
+      likes
+      is_liked
+      is_saved
       article_category {
         category_name_en
         category_name_ar

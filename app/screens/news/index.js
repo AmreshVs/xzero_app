@@ -16,18 +16,7 @@ import { GET_ARTICLE_CATEGORIES } from 'graphql/queries';
 import Loader from 'components/loader';
 import { useEffect } from 'react';
 import RenderArticles from './renderArticles';
-
-const categories = [
-  { id: 1, name: 'Beauty' },
-  { id: 2, name: 'Health' },
-  { id: 3, name: 'Gym' },
-  { id: 4, name: 'Spa' },
-  { id: 5, name: 'Specialist' },
-  { id: 6, name: 'News' },
-  { id: 7, name: 'Konoz' },
-  { id: 8, name: 'User' },
-  { id: 9, name: 'Beauty' },
-];
+import Column from 'components/column';
 
 const NewsDetail = () => {
   const [xPosition, setXPosition] = useState(0);
@@ -71,18 +60,20 @@ const NewsDetail = () => {
     loading ? <Loader />
       :
       <SafeView topNav noBottom>
-        <ScrollView
-          ref={tabView}
-          style={styles.categories}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        >
-          {data?.articleCategories.map((item, index) => {
-            return <RenderItem item={item} key={index} index={index} />
-          })}
-        </ScrollView>
-        <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={[styles.gradient, { height: insets.top + 47.4 }]} />
-        <RenderArticles category={selected} />
+        <LinearGradient colors={[colors.gradient1, colors.gradient2]} style={[styles.gradient, { height: insets.top + 55 }]} />
+        <Column>
+          <ScrollView
+            ref={tabView}
+            style={styles.categories}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          >
+            {data?.articleCategories.map((item, index) => {
+              return <RenderItem item={item} key={index} index={index} />
+            })}
+          </ScrollView>
+          <RenderArticles category={selected} />
+        </Column>
       </SafeView>
   )
 }

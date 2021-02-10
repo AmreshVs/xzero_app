@@ -370,3 +370,15 @@ export const UPDATE_LANGUAGE = gql`
     }
   }
 `;
+
+export const SAVE_ARTICLE = gql`
+  mutation SaveForLater($user_id: Int!, $article_id: Int!){
+    SaveForLater(user: $user_id, article: $article_id)
+  }
+`;
+
+export const LIKE_ARTICLE = gql`
+  mutation LikeArticle($user_id: Int!, $article_id: Int!){
+    Like(user: $user_id, article: $article_id)
+  }
+`;

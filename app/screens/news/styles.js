@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   articleContainer: {
     marginBottom: 10,
-    height: 130
+    height: 140
   },
   videoContainer: {
     marginBottom: 10,
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
     opacity: 0.6,
+    zIndex: -1
   },
   chipContainer: {
     paddingVertical: 12,
@@ -69,10 +70,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     margin: 10,
     marginRight: 0,
-    marginTop: 0,
-    marginBottom: 14,
-    opacity: 0.6,
-    height: 37
+    marginTop: 10,
+    marginBottom: 10,
+    opacity: 0.7,
+    height: 35,
   },
   selectedTab: {
     backgroundColor: colors.white,
@@ -82,10 +83,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 15,
     margin: 10,
-    marginTop: 0,
-    marginBottom: 14,
+    marginTop: 10,
+    marginBottom: 10,
     marginRight: 0,
-    height: 37
+    height: 35
   },
   selectedChip: {
     color: colors.primary,
@@ -104,11 +105,17 @@ const styles = StyleSheet.create({
   },
   categories: {
     paddingRight: 10,
-    height: 50,
   },
   articlesScrollView: {
     padding: 10,
-    marginBottom: 50
+    width: '100%',
+  },
+  noDataImage: {
+    marginTop: 0
+  },
+  noDataContainer: {
+    borderRadius: 10,
+    overflow: 'hidden',
   }
 });
 

@@ -8,7 +8,7 @@ import TopStatusBar from 'components/topStatusBar';
 import { isTab } from 'constants/commonFunctions';
 import { useTranslation } from 'react-i18next';
 
-export default function NoData({ topNav, reload, reloading }) {
+export default function NoData({ topNav, reload, reloading, imageStyle = {} }) {
   const { t } = useTranslation();
 
   const styles = StyleSheet.create({
@@ -30,7 +30,7 @@ export default function NoData({ topNav, reload, reloading }) {
     <>
       {!topNav && <TopStatusBar />}
       <View style={styles.container}>
-        <Image source={require('../../../assets/no_data.jpg')} style={styles.image} />
+        <Image source={require('../../../assets/no_data.jpg')} style={[styles.image, imageStyle]} />
         {reload && (
           <Button width={isTab() ? "30%" : "50%"} icon="redo" onPress={() => reload()} loading={reloading}>
             {t('reload')}

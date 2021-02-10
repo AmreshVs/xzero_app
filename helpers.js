@@ -61,7 +61,8 @@ export const client = new ApolloClient({
           GetReferHistory: useIncomingData,
           Vouchers: useIncomingData,
           assured_gift: useIncomingData,
-          user: useIncomingData
+          user: useIncomingData,
+          SavedArticlesByUser: useIncomingData
         }
       }
     }

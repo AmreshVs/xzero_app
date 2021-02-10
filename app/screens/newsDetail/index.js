@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import Markdown from 'react-native-markdown-display';
+import { Video as VideoPlayer } from 'expo-av';
 
 import ProgressiveImage from 'components/progressiveImage';
 import SafeView from 'components/safeView';
@@ -17,10 +18,31 @@ import styles from './styles';
 import Row from 'components/row';
 import { IMAGE_URL } from 'constants/common';
 import { markdownStyles, markdownRules } from './helpers';
+import { likeArticle, saveArticle } from 'screens/news/helpers';
+import { useApolloClient } from '@apollo/client';
 
 const NewsDetail = ({ route }) => {
   const data = route?.params;
+  const [saved, setSaved] = useState(data?.is_saved);
+  const [liked, setLiked] = useState(data?.is_liked);
   const insets = useSafeAreaInsets();
+  const client = useApolloClient();
+
+  const handleLike = async () => {
+    setLiked(true);
+    let likeStatus = await likeArticle(client, 65, Number(data?.id));
+    if (liked !== likeStatus) {
+      setLiked(likeStatus);
+    }
+  }
+
+  const handleSave = async () => {
+    setSaved(true);
+    let savedArticle = await saveArticle(client, 65, Number(data?.id));
+    if (saved !== savedArticle) {
+      setSaved(savedArticle);
+    }
+  }
 
   return (
     <>
@@ -29,9 +51,12 @@ const NewsDetail = ({ route }) => {
           <ScaleAnim>
             <LinearGradient colors={['#1415181f', '#1415181f', colors.text_dark]} style={styles.gradient} />
             <ProgressiveImage style={styles.newsImage} source={{ uri: IMAGE_URL + data?.featured_img?.url }} />
-            <RippleFX style={[styles.bookmarkContainer, { top: insets.top ? insets.top : 15 }]}>
+            <RippleFX
+              style={[styles.bookmarkContainer, { top: insets.top ? insets.top : 15 }]}
+              onPress={() => handleSave()}
+            >
               <ScaleAnim delay={600}>
-                <Icon style={styles.bookmark} name="bookmark" />
+                <Icon style={styles.bookmark} color={saved ? colors.danger : colors.white} name="bookmark" />
               </ScaleAnim>
             </RippleFX>
             <Box style={styles.titleContainer}>
@@ -45,9 +70,9 @@ const NewsDetail = ({ route }) => {
               </FadeInLeftAnim>
               <Row padding={10} justifyContent="space-around" alignItems="center">
                 <FadeInLeftAnim delay={600}>
-                  <RippleFX>
+                  <RippleFX onPress={() => handleLike()}>
                     <Row vcenter width={70}>
-                      <Icon name="like" size={19} color={colors.gradient2} hviewBox={520} />
+                      <Icon name="like" size={19} color={liked ? colors.gradient2 : colors.white} hviewBox={520} />
                       <Text style={styles.newsCaption}>{data?.likes}</Text>
                     </Row>
                   </RippleFX>
@@ -67,6 +92,18 @@ const NewsDetail = ({ route }) => {
               </Row>
             </Box>
           </ScaleAnim>
+          {data?.video_url && (
+            <Box marginTop={20} padding={10}>
+              <VideoPlayer
+                style={styles.videoImage}
+                source={{
+                  uri: data?.video_url,
+                }}
+                shouldPlay={true}
+                useNativeControls
+              />
+            </Box>
+          )}
           <Box padding={10} paddingTop={0} paddingBottom={insets.bottom ? insets.bottom + 15 : 50}>
             <FadeInUpAnim delay={500}>
               <Markdown
