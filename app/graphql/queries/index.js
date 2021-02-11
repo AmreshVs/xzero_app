@@ -714,46 +714,26 @@ export const NOTIFICATIONS_BY_USER = gql`
 `;
 
 export const RECENT_ARTICLES = gql`
-  query{
-    RecentArticles{
-      recentArticles{
-        id
-        featured_img{
-          url
-        }
-        title_en
-        title_ar
-        desc_en
-        desc_ar
-        views
-        likes
-        is_liked
-        is_saved
-        article_category{
-          category_name_en
-          category_name_ar
-          color_code
-        }
+  query {
+    RecentArticles {
+      id
+      featured_img {
+        url
       }
-      recentVideos{
-        id
-        featured_img{
-          url
-        }
-        title_en
-        title_ar
-        video_url
-        desc_en
-        desc_ar
-        views
-        likes
-        is_liked
-        is_saved
-        article_category{
-          category_name_en
-          category_name_ar
-          color_code
-        }
+      video_url
+      title_en
+      title_ar
+      desc_en
+      desc_ar
+      views
+      likes
+      is_liked
+      is_saved
+      added_on
+      article_category {
+        category_name_en
+        category_name_ar
+        color_code
       }
     }
   }

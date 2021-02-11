@@ -275,6 +275,9 @@ const mobileStyles = StyleSheet.create({
     margin: -10,
     borderRadius: 20,
     overflow: 'hidden'
+  },
+  videoContainer: {
+    width: '100%'
   }
 });
 

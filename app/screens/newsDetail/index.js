@@ -4,6 +4,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import Markdown from 'react-native-markdown-display';
 import { Video as VideoPlayer } from 'expo-av';
+import { useApolloClient } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
 import ProgressiveImage from 'components/progressiveImage';
 import SafeView from 'components/safeView';
@@ -11,15 +13,15 @@ import Box from 'components/box';
 import RippleFX from 'components/rippleFx';
 import Button from 'components/button';
 import Chip from 'components/chip';
+import Row from 'components/row';
 import colors from 'constants/colors';
+import { IMAGE_URL } from 'constants/common';
+import { useReduxAction } from 'constants/commonFunctions';
+import { handleShare, likeArticle, saveArticle } from 'screens/news/helpers';
 import { FadeInUpAnim, ScaleAnim, FadeInLeftAnim } from 'animation';
 import Icon from 'icon';
-import styles from './styles';
-import Row from 'components/row';
-import { IMAGE_URL } from 'constants/common';
 import { markdownStyles, markdownRules } from './helpers';
-import { likeArticle, saveArticle } from 'screens/news/helpers';
-import { useApolloClient } from '@apollo/client';
+import styles from './styles';
 
 const NewsDetail = ({ route }) => {
   const data = route?.params;
@@ -27,10 +29,13 @@ const NewsDetail = ({ route }) => {
   const [liked, setLiked] = useState(data?.is_liked);
   const insets = useSafeAreaInsets();
   const client = useApolloClient();
+  const { t, i18n } = useTranslation();
+  const userData = useReduxAction(state => state?.userReducer?.user);
+  let language = i18n.language;
 
   const handleLike = async () => {
     setLiked(true);
-    let likeStatus = await likeArticle(client, 65, Number(data?.id));
+    let likeStatus = await likeArticle(client, Number(userData?.id), Number(data?.id));
     if (liked !== likeStatus) {
       setLiked(likeStatus);
     }
@@ -38,7 +43,7 @@ const NewsDetail = ({ route }) => {
 
   const handleSave = async () => {
     setSaved(true);
-    let savedArticle = await saveArticle(client, 65, Number(data?.id));
+    let savedArticle = await saveArticle(client, Number(userData?.id), Number(data?.id));
     if (saved !== savedArticle) {
       setSaved(savedArticle);
     }
@@ -61,12 +66,12 @@ const NewsDetail = ({ route }) => {
             </RippleFX>
             <Box style={styles.titleContainer}>
               <FadeInUpAnim delay={300}>
-                <Text style={styles.title}>{data?.title_en}</Text>
+                <Text style={styles.title}>{data?.[`title_${language}`]}</Text>
               </FadeInUpAnim>
             </Box>
             <Box style={styles.categoryContainer}>
               <FadeInLeftAnim delay={500}>
-                <Chip borderRadius={5} title={data?.article_category?.category_name_en} color={data?.article_category?.color_code} />
+                <Chip borderRadius={5} title={data?.article_category?.[`category_name_${language}`]} color={data?.article_category?.color_code} />
               </FadeInLeftAnim>
               <Row padding={10} justifyContent="space-around" alignItems="center">
                 <FadeInLeftAnim delay={600}>
@@ -110,14 +115,19 @@ const NewsDetail = ({ route }) => {
                 style={markdownStyles}
                 rules={markdownRules}
               >
-                {data?.desc_en}
+                {data?.[`desc_${language}`]}
               </Markdown>
             </FadeInUpAnim>
           </Box>
         </ScrollView>
       </SafeView>
       <ScaleAnim style={[styles.btnContainer, { bottom: insets.bottom + 5 }]} delay={800}>
-        <Button icon="share_alt">Share</Button>
+        <Button
+          icon="share_alt"
+          onPress={() => handleShare(data, i18n)}
+        >
+          {t('share')}
+        </Button>
       </ScaleAnim>
     </>
   )

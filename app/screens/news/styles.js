@@ -1,8 +1,6 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import colors from 'constants/colors';
-import { isTab } from 'constants/commonFunctions';
-import { SCREEN_HEIGHT } from 'constants/common';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,6 +18,17 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     overflow: 'hidden'
+  },
+  video: {
+    width: '100%',
+    height: '100%',
+    zIndex: 1
+  },
+  videoPlaceholder: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: -2,
   },
   title: {
     fontSize: 15,
@@ -108,14 +117,32 @@ const styles = StyleSheet.create({
   },
   articlesScrollView: {
     padding: 10,
-    width: '100%',
+    minWidth: '100%',
+    minHeight: '100%',
   },
   noDataImage: {
     marginTop: 0
   },
   noDataContainer: {
-    borderRadius: 10,
-    overflow: 'hidden',
+    width: '100%',
+    marginTop: -4
+  },
+  articles: {
+    width: '100%'
+  },
+  playButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: 10,
+  },
+  playIcon: {
+    backgroundColor: '#0000009e',
+    padding: 20,
+    borderRadius: 50,
+    paddingRight: -1
   }
 });
 

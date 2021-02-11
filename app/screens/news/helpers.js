@@ -56,8 +56,9 @@ export const likeArticle = async (client, user_id, article_id) => {
   return false;
 }
 
-export const handleShare = async (data) => {
-  let message = `${data?.title_en}\n\nRead the full post on Xzero App \nhttps://xzero.app/open?q=xzero://DHome/Main/OfferDetail`;
+export const handleShare = async (data, i18n) => {
+  let { t, language } = i18n;
+  let message = `${data?.[`title_${language}`]}\n\nRead the full post on Xzero App \nhttps://xzero.app/open?q=xzero://DHome/Main/OfferDetail`;
 
   try {
     await Share.share({

@@ -1,34 +1,32 @@
 import React, { useState } from 'react';
 import { Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
+import { useApolloClient } from '@apollo/client';
 
 import Row from 'components/row';
-import styles from './styles';
 import ProgressiveImage from 'components/progressiveImage';
 import Card from 'components/card';
 import Box from 'components/box';
 import Chip from 'components/chip';
-import colors from 'constants/colors';
-import Icon from 'icon';
 import RippleFX from 'components/rippleFx';
+import colors from 'constants/colors';
 import { IMAGE_URL } from 'constants/common';
-import { thumbnailUrl } from 'constants/commonFunctions';
-import { useNavigation } from '@react-navigation/native';
+import { thumbnailUrl, useReduxAction } from 'constants/commonFunctions';
 import { NEWS_DETAIL } from 'navigation/routes';
-import { likeArticle, saveArticle } from './helpers';
-import { useApolloClient } from '@apollo/client';
-import { FadeAnim, FadeInLeftAnim, FadeInUpAnim, ScaleAnim } from 'animation';
+import { FadeAnim, ScaleAnim } from 'animation';
+import Icon from 'icon';
+import { handleShare, likeArticle, saveArticle } from './helpers';
+import styles from './styles';
 
 const Article = ({ data, refetch, savedTab }) => {
   const { push } = useNavigation();
   const client = useApolloClient();
   const [saved, setSaved] = useState(data?.is_saved);
   const [liked, setLiked] = useState(data?.is_liked);
-
-  const params = {
-    uri: 'https://imagevars.gulfnews.com/2021/01/10/Stock-Dubai-skyline_176ebfa19ae_medium.jpg',
-    title: 'Hello welcome to the news! Checkout the latest news now! and offers from xzero',
-    posted_on: '20m'
-  }
+  const userData = useReduxAction(state => state?.userReducer?.user);
+  const { i18n } = useTranslation();
+  let language = i18n.language;
 
   const handleNavigate = () => {
     push(NEWS_DETAIL, {
@@ -38,7 +36,7 @@ const Article = ({ data, refetch, savedTab }) => {
 
   const handleLike = async () => {
     setLiked(true);
-    let likeStatus = await likeArticle(client, 65, Number(data?.id));
+    let likeStatus = await likeArticle(client, Number(userData?.id), Number(data?.id));
     if (liked !== likeStatus) {
       setLiked(likeStatus);
     }
@@ -46,7 +44,7 @@ const Article = ({ data, refetch, savedTab }) => {
 
   const handleSave = async () => {
     setSaved(true);
-    let savedArticle = await saveArticle(client, 65, Number(data?.id));
+    let savedArticle = await saveArticle(client, Number(userData?.id), Number(data?.id));
     if (saved !== savedArticle) {
       setSaved(savedArticle);
       if (savedTab) {
@@ -72,7 +70,7 @@ const Article = ({ data, refetch, savedTab }) => {
         <Box width="60%" padding={10}>
           <Row marginBottom={5} justifyContent="space-between" alignItems="center">
             <ScaleAnim delay={200}>
-              <Chip borderRadius={5} textStyle={styles.chipText} title={data?.article_category?.category_name_en} color={data?.article_category?.color_code} numOfLines={1} maxWidth={120} />
+              <Chip borderRadius={5} textStyle={styles.chipText} title={data?.article_category?.[`category_name_${language}`]} color={data?.article_category?.color_code} numOfLines={1} maxWidth={120} />
             </ScaleAnim>
             <Row>
               <ScaleAnim delay={300}>
@@ -82,7 +80,7 @@ const Article = ({ data, refetch, savedTab }) => {
               </ScaleAnim>
               <Box marginHorizontal={8} />
               <ScaleAnim delay={400}>
-                <RippleFX style={styles.bookmark}>
+                <RippleFX style={styles.bookmark} onPress={() => handleShare(data, i18n)}>
                   <Icon name="share_alt" size={17} color={colors.ccc} hviewBox={520} wviewBox={400} />
                 </RippleFX>
               </ScaleAnim>
@@ -91,7 +89,7 @@ const Article = ({ data, refetch, savedTab }) => {
           <Box minHeight={60}>
             <FadeAnim delay={500}>
               <RippleFX onPress={() => handleNavigate()}>
-                <Text style={styles.title} numberOfLines={3}>{data?.title_en}</Text>
+                <Text style={styles.title} numberOfLines={3}>{data?.[`title_${language}`]}</Text>
               </RippleFX>
             </FadeAnim>
           </Box>
@@ -113,7 +111,7 @@ const Article = ({ data, refetch, savedTab }) => {
             <ScaleAnim delay={600}>
               <Row vcenter maxWidth={70}>
                 <Icon name="clock" size={15} color={colors.ccc} hviewBox={490} />
-                <Text style={styles.caption}>{params?.posted_on}</Text>
+                <Text style={styles.caption}>20m</Text>
               </Row>
             </ScaleAnim>
           </Row>
